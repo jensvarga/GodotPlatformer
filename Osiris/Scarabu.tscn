@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scarabu.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/scarabu.png" type="Texture" id=2]
+[ext_resource path="res://Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://HurtBox.gd" type="Script" id=4]
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 8 ) ],
+"loop": false,
+"name": "Shell",
+"speed": 6.0
+}, {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10, 6.125 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 13, 4.25 )
+
+[node name="Scarabu" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 5 )
+animation = "Shell"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 7.875 )
+shape = SubResource( 6 )
+
+[node name="LedgeCheckRight" type="RayCast2D" parent="."]
+position = Vector2( -10, 9 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+
+[node name="LedgeCheckLeft" type="RayCast2D" parent="."]
+position = Vector2( 11, 9 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 3 )]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( 0, 7.75 )
+shape = SubResource( 7 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( 0, 5.75 )
+shape = SubResource( 6 )
+
+[connection signal="body_entered" from="HurtBox" to="HurtBox" method="_on_HurtBox_body_entered"]
