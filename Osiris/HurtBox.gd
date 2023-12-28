@@ -14,11 +14,11 @@ func _on_HurtBox_body_entered(body):
 				kinematic_body.enter_shell()
 			kinematic_body.SHELL:
 				body.bounce(bounce_strenght)
-				var direction = -1
+				var direction = 1
 				var shell_center_x = global_transform.origin.x + collision_shape.shape.extents.x / 2
 				var player_center_x = body.global_transform.origin.x + body.collision_shape.shape.extents.x / 2
 				if player_center_x > shell_center_x:
-					direction = 1
+					direction = -1
 					
 				kinematic_body.enter_kicked(direction)
 			kinematic_body.KICKED:

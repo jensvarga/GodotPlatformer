@@ -27,10 +27,21 @@ position = Vector2( 1165, 225 )
 scale = Vector2( 4.47222, 4.47222 )
 texture = ExtResource( 10 )
 
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 5445, 225 )
+scale = Vector2( 4.47222, 4.47222 )
+texture = ExtResource( 10 )
+
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2( 1165, 225 )
+scale = Vector2( 4.47222, 4.47222 )
+texture = ExtResource( 10 )
+flip_h = true
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2( 5450, 225 )
 scale = Vector2( 4.47222, 4.47222 )
 texture = ExtResource( 10 )
 flip_h = true
@@ -43,7 +54,7 @@ show_collision = true
 tile_data = PoolIntArray( -720894, 1, 0, -655358, 1, 65536, -589822, 1, 65536, -524286, 1, 65536, -458750, 1, 131072, -458731, 1, 0, -393195, 1, 65536, -327659, 1, 65536, -262123, 1, 65536, -196587, 1, 131072 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 307, -113 )
+position = Vector2( 19, -17 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
@@ -82,16 +93,19 @@ position = Vector2( 446, 110 )
 scale = Vector2( 1196.76, -3.6607 )
 
 [node name="Scorpiu" parent="." instance=ExtResource( 3 )]
-position = Vector2( 585, -64 )
+position = Vector2( 657, -64 )
 
 [node name="Scorpiu2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 359, -192 )
 
 [node name="Scarabu" parent="." instance=ExtResource( 9 )]
-position = Vector2( 415, -45 )
+position = Vector2( 413, -46 )
+
+[node name="Scarabu4" parent="." instance=ExtResource( 9 )]
+position = Vector2( 496, -77 )
 
 [node name="Scarabu3" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1023, -78 )
 
 [node name="Scarabu2" parent="." instance=ExtResource( 9 )]
-position = Vector2( 201, -206 )
+position = Vector2( 150, -205 )

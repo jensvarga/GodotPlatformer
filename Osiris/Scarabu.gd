@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Enemy
 
 class_name Scarabu
 
@@ -17,9 +17,6 @@ onready var hitbox = $Hitbox
 onready var hitbox_collider = $Hitbox/CollisionShape2D
 onready var sprite = $AnimatedSprite
 
-enum { MOVE, SHELL, KICKED }
-var state = MOVE
-
 var frame_counter = 0
 
 func _ready():
@@ -27,6 +24,8 @@ func _ready():
 	
 func _physics_process(delta):
 	match state:
+		STASIS:
+			update_stasis()
 		MOVE:
 			update_move(delta)
 		SHELL:
@@ -36,7 +35,7 @@ func _physics_process(delta):
 	
 func enter_move():
 	state = MOVE
-	hitbox_collider.disabled = true
+	hitbox_collider.disabled = false
 	sprite.animation = "Walk"
 	
 func enter_shell():
@@ -47,16 +46,27 @@ func enter_shell():
 	
 func enter_kicked(dir):
 	state = KICKED
-	velocity.x = dir * KICKED_SPEED
+	hitbox_collider.disabled = false
+	direction.x = dir
+	velocity.x = direction.x * KICKED_SPEED
 	sprite.animation = "Shell"
 	
+func enter_stasis():
+	state = STASIS
+	
 func update_kicked(delta):
+	sprite.scale * direction.x
 	if is_on_wall():
+		velocity.x = 0
 		direction *= -1
+		#flip_sprite()
 	
 	apply_gravity()
 	apply_acceleration(direction.x, KICKED_SPEED, KICKED_ACCELERATION)
 	velocity = move_and_slide(velocity, Vector2.UP)
+
+func update_stasis():
+	pass
 	
 func update_move(delta):
 	var found_wall = is_on_wall()
@@ -67,9 +77,8 @@ func update_move(delta):
 	if found_wall or found_ledge:
 		direction *= -1
 		flip_sprite()
-
-	apply_gravity()
-	apply_acceleration(direction.x, MOVE_SPEED, MOVE_ACCELERATION)
+		
+	velocity = direction * MOVE_SPEED
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func apply_acceleration(amount, speed, acceleration):
@@ -84,3 +93,10 @@ func flip_sprite():
 func apply_gravity():
 	velocity.y += gravity
 	velocity.y = min(velocity.y, 200)
+
+func _on_VisibilityNotifier2D_screen_entered():
+	state = previous_state
+
+func _on_VisibilityNotifier2D_screen_exited():
+	previous_state = state
+	enter_stasis()

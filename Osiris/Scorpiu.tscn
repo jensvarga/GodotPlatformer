@@ -43,7 +43,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 10.5, 6.5 )
+extents = Vector2( 10, 6.5 )
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 13, 4.5 )
@@ -59,7 +59,7 @@ animation = "Idle"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.5, -6.5 )
+position = Vector2( 0, -6.5 )
 shape = SubResource( 5 )
 
 [node name="LedgeCheckRight" type="RayCast2D" parent="."]

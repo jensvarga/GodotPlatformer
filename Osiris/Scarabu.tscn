@@ -59,14 +59,14 @@ position = Vector2( 0, 7.875 )
 shape = SubResource( 6 )
 
 [node name="LedgeCheckRight" type="RayCast2D" parent="."]
-position = Vector2( -10, 9 )
+position = Vector2( -10, 5 )
 enabled = true
-cast_to = Vector2( 0, 15 )
+cast_to = Vector2( 0, 20 )
 
 [node name="LedgeCheckLeft" type="RayCast2D" parent="."]
-position = Vector2( 11, 9 )
+position = Vector2( 11, 5 )
 enabled = true
-cast_to = Vector2( 0, 15 )
+cast_to = Vector2( 0, 20 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 3 )]
 
@@ -83,4 +83,8 @@ script = ExtResource( 4 )
 position = Vector2( 0, 5.75 )
 shape = SubResource( 6 )
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
 [connection signal="body_entered" from="HurtBox" to="HurtBox" method="_on_HurtBox_body_entered"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

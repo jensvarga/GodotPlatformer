@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Enemy
 
 export (int) var MOVE_SPEED = 25
 

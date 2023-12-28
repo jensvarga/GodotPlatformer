@@ -10,10 +10,14 @@ enum { MOVE, CLIMB }
 var state = MOVE
 var climb_speed = 50
 var max_extra_height = -10
+var buffered_jump = false
+var coyote_jump = false
 
-onready var sprite = $AnimatedSprite
-onready var ladder_check = $LadderCheck
-onready var collision_shape = $CollisionShape2D
+onready var sprite: = $AnimatedSprite
+onready var ladder_check: = $LadderCheck
+onready var collision_shape: = $CollisionShape2D
+onready var jump_buffer_timer: = $JumpBufferTimer
+onready var coyote_timer: = $CoyoteTimer
 
 func _ready():
 	enter_move()
@@ -39,6 +43,8 @@ func update_move():
 		return
 		
 	apply_gravity()
+	clamp_jump_force()
+	
 	if crouch && Input.is_action_just_released("ui_down"):
 		crouch = false
 	
@@ -61,8 +67,8 @@ func update_move():
 		sprite.animation = "Run"
 		
 	var extra = 0
-	if is_on_floor():
-		if Input.is_action_just_pressed("ui_jump"):
+	if is_on_floor() or coyote_jump:
+		if Input.is_action_just_pressed("ui_jump") or buffered_jump:
 			var horizontal_speed = abs(velocity.x)
 			
 			if horizontal_speed > 0:
@@ -70,6 +76,8 @@ func update_move():
 				
 			var height = player_move_data.MAX_JUMP_HEIGHT + extra
 			velocity.y = height
+			
+			buffered_jump = false
 	else:
 		if not crouch:
 			sprite.animation = "Jump"
@@ -77,14 +85,24 @@ func update_move():
 		if Input.is_action_just_released("ui_jump") and velocity.y < player_move_data.MIN_JUMP_HEIGHT:
 			var height = player_move_data.MIN_JUMP_HEIGHT + extra
 			velocity.y = height
-			
+		
+		if Input.is_action_just_pressed("ui_jump"):
+			buffered_jump = true
+			jump_buffer_timer.start()
+		
 		if velocity.y > 0:
 			apply_gravity()
 			
 			if not crouch:
 				sprite.animation = "Fall"
 	
+	var was_on_floor = is_on_floor()
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	var just_left_ground = not is_on_floor() and was_on_floor
+	if just_left_ground and velocity.y >= 0:
+		coyote_jump = true
+		coyote_timer.start()
 
 func update_climb():
 	if !is_on_ladder():
@@ -139,9 +157,17 @@ func get_input():
 		velocity.y -= 1
 	velocity = velocity.normalized() * climb_speed
 
-# Public functions
+func clamp_jump_force():
+	velocity.y = max(velocity.y, player_move_data.MAX_JUMP_HEIGHT - 100)
+	
 func die():
 	get_tree().reload_current_scene()
 	
 func bounce(amount):
 	velocity.y += -amount
+
+func _on_JumpBufferTimer_timeout():
+	buffered_jump = false
+
+func _on_CoyoteTimer_timeout():
+	coyote_jump = false
