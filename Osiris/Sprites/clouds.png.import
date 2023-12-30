@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/desert_bg.png-e9a0d0bbc1322d1b8b38c17d05acb09e.stex"
+path="res://.import/clouds.png-c494529ae4f242ae409edfb01257a115.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/desert_bg.png"
-dest_files=[ "res://.import/desert_bg.png-e9a0d0bbc1322d1b8b38c17d05acb09e.stex" ]
+source_file="res://Sprites/clouds.png"
+dest_files=[ "res://.import/clouds.png-c494529ae4f242ae409edfb01257a115.stex" ]
 
 [params]
 

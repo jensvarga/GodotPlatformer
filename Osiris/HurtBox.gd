@@ -24,3 +24,7 @@ func _on_HurtBox_body_entered(body):
 			kinematic_body.KICKED:
 				body.bounce(bounce_strenght)
 				kinematic_body.enter_shell()
+			kinematic_body.FLYING:
+				print("Hekko?")
+				body.bounce(bounce_strenght)
+				kinematic_body.die()

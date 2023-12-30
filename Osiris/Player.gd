@@ -6,7 +6,7 @@ export (Resource) var player_move_data
 
 var velocity = Vector2.ZERO
 var crouch = false
-enum { MOVE, CLIMB }
+enum { MOVE, CLIMB, DEAD }
 var state = MOVE
 var climb_speed = 50
 var max_extra_height = -10
@@ -18,6 +18,7 @@ onready var ladder_check: = $LadderCheck
 onready var collision_shape: = $CollisionShape2D
 onready var jump_buffer_timer: = $JumpBufferTimer
 onready var coyote_timer: = $CoyoteTimer
+onready var death_timer: = $DeathTimer
 
 func _ready():
 	enter_move()
@@ -28,7 +29,15 @@ func _physics_process(delta):
 			update_move()
 		CLIMB:
 			update_climb()
+		DEAD:
+			update_dead()
 
+func enter_dead():
+	state = DEAD
+	death_timer.start()
+	collision_shape.disabled = true
+	sprite.animation = "Dead"
+	
 func enter_move():
 	sprite.animation = "Idle"
 	state = MOVE
@@ -37,6 +46,9 @@ func enter_climb():
 	sprite.animation = "ClimbIdle"
 	state = CLIMB
 
+func update_dead():
+	apply_gravity()
+	
 func update_move():
 	if is_on_ladder() and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")):
 		enter_climb()
@@ -114,9 +126,9 @@ func update_climb():
 	
 	get_input()
 	
-	if velocity.y > 0:
+	if velocity.y > 0 or velocity.x > 0:
 		sprite.animation = "ClimbDown"
-	elif velocity.y < 0:
+	elif velocity.y < 0 or velocity.x < 0:
 		sprite.animation = "ClimbUp"
 	else:
 		sprite.animation = "ClimbIdle"
@@ -146,22 +158,17 @@ func flip_sprite(input_x):
 	sprite.flip_h = input_x < 0
 
 func get_input():
-	velocity = Vector2()
-	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
-	elif Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
-	elif Input.is_action_pressed("ui_down"):
-		velocity.y += 1
-	elif Input.is_action_pressed("ui_up"):
-		velocity.y -= 1
-	velocity = velocity.normalized() * climb_speed
+	var input = Vector2.ZERO
+	input.x = Input.get_axis("ui_left", "ui_right")
+	input.y = Input.get_axis("ui_up", "ui_down")
+	
+	velocity = input.normalized() * climb_speed
 
 func clamp_jump_force():
 	velocity.y = max(velocity.y, player_move_data.MAX_JUMP_HEIGHT - 100)
 	
 func die():
-	get_tree().reload_current_scene()
+	if state != DEAD: enter_dead()
 	
 func bounce(amount):
 	velocity.y += -amount
@@ -171,3 +178,6 @@ func _on_JumpBufferTimer_timeout():
 
 func _on_CoyoteTimer_timeout():
 	coyote_jump = false
+
+func _on_DeathTimer_timeout():
+	get_tree().reload_current_scene()

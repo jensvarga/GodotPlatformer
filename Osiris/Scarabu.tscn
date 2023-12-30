@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scarabu.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/scarabu.png" type="Texture" id=2]
@@ -44,6 +44,9 @@ extents = Vector2( 10, 6.125 )
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 13, 4.25 )
 
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 12, 3.5 )
+
 [node name="Scarabu" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 3
@@ -69,6 +72,7 @@ enabled = true
 cast_to = Vector2( 0, 20 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 3 )]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( 0, 7.75 )
@@ -80,8 +84,8 @@ collision_mask = 2
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2( 0, 5.75 )
-shape = SubResource( 6 )
+position = Vector2( 0, 2.5 )
+shape = SubResource( 9 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 

@@ -9,6 +9,7 @@ func _on_Hitbox_body_entered(body):
 		return
 			
 	if body is Player and kinematic_body.state != kinematic_body.SHELL:
+		kinematic_body.attack(body)
 		body.die()
 	elif body is Enemy and kinematic_body.state == kinematic_body.KICKED:
 		body.die()

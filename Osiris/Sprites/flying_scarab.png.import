@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/desert_bg.png-e9a0d0bbc1322d1b8b38c17d05acb09e.stex"
+path="res://.import/flying_scarab.png-bdf216a8ed4951f9ec82f5080a7866ae.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/desert_bg.png"
-dest_files=[ "res://.import/desert_bg.png-e9a0d0bbc1322d1b8b38c17d05acb09e.stex" ]
+source_file="res://Sprites/flying_scarab.png"
+dest_files=[ "res://.import/flying_scarab.png-bdf216a8ed4951f9ec82f5080a7866ae.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
