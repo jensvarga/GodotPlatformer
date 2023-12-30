@@ -68,8 +68,8 @@ tracks/0/keys = {
 curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2( 0, -92 )
-offset = 115.934
+position = Vector2( 0, -40.0393 )
+offset = 64.0047
 rotate = false
 
 [node name="FlyingSkarabu" type="KinematicBody2D" parent="PathFollow2D"]
@@ -78,7 +78,6 @@ script = ExtResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D/FlyingSkarabu"]
 frames = SubResource( 4 )
 animation = "Fly"
-frame = 1
 playing = true
 
 [node name="Hitbox" parent="PathFollow2D/FlyingSkarabu" instance=ExtResource( 2 )]

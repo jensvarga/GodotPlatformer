@@ -42,7 +42,7 @@ animations = [ {
 extents = Vector2( 10, 6.125 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 13, 4.25 )
+extents = Vector2( 14.5, 3 )
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 12, 3.5 )
@@ -75,7 +75,7 @@ cast_to = Vector2( 0, 20 )
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( 0, 7.75 )
+position = Vector2( 0.5, 9 )
 shape = SubResource( 7 )
 
 [node name="HurtBox" type="Area2D" parent="."]
