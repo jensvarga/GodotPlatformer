@@ -12,6 +12,7 @@ var climb_speed = 50
 var max_extra_height = -10
 var buffered_jump = false
 var coyote_jump = false
+var gorund_speed_bonus = 5
 
 onready var sprite: = $AnimatedSprite
 onready var ladder_check: = $LadderCheck
@@ -19,6 +20,7 @@ onready var collision_shape: = $CollisionShape2D
 onready var jump_buffer_timer: = $JumpBufferTimer
 onready var coyote_timer: = $CoyoteTimer
 onready var death_timer: = $DeathTimer
+onready var remote_transform: = $RemoteTransform2D
 
 func _ready():
 	enter_move()
@@ -35,7 +37,6 @@ func _physics_process(delta):
 func enter_dead():
 	state = DEAD
 	death_timer.start()
-	collision_shape.disabled = true
 	sprite.animation = "Dead"
 	
 func enter_move():
@@ -47,9 +48,11 @@ func enter_climb():
 	state = CLIMB
 
 func update_dead():
-	apply_gravity()
+	pass
 	
 func update_move():
+	var grounded = is_on_floor()
+	
 	if is_on_ladder() and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")):
 		enter_climb()
 		return
@@ -75,11 +78,11 @@ func update_move():
 			sprite.animation = "Idle"
 	else:
 		flip_sprite(input.x)
-		apply_acceleration(input.x)
+		apply_acceleration(input.x, grounded)
 		sprite.animation = "Run"
 		
 	var extra = 0
-	if is_on_floor() or coyote_jump:
+	if grounded or coyote_jump:
 		if Input.is_action_just_pressed("ui_jump") or buffered_jump:
 			var horizontal_speed = abs(velocity.x)
 			
@@ -108,7 +111,7 @@ func update_move():
 			if not crouch:
 				sprite.animation = "Fall"
 	
-	var was_on_floor = is_on_floor()
+	var was_on_floor = grounded
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	var just_left_ground = not is_on_floor() and was_on_floor
@@ -148,8 +151,11 @@ func apply_gravity():
 func apply_friction():
 	velocity.x = move_toward(velocity.x, 0, player_move_data.FRICTION)
 
-func apply_acceleration(amount):
-	velocity.x = move_toward(velocity.x, player_move_data.MOVE_SPEED * amount, player_move_data.ACCELERATION)
+func apply_acceleration(amount, is_grounded):
+	if is_grounded:
+		velocity.x = move_toward(velocity.x, (player_move_data.MOVE_SPEED + gorund_speed_bonus) * amount, player_move_data.ACCELERATION)
+	else:
+		velocity.x = move_toward(velocity.x, player_move_data.MOVE_SPEED * amount, player_move_data.ACCELERATION)
 	
 func apply_climb_acceleration(amount):
 	velocity.y = move_toward(velocity.y, player_move_data.MOVE_SPEED * amount, player_move_data.ACCELERATION)
@@ -172,6 +178,10 @@ func die():
 	
 func bounce(amount):
 	velocity.y += -amount
+	
+func connect_camera(camera):
+	var camera_path = camera.get_path()
+	remote_transform.remote_path = camera_path
 
 func _on_JumpBufferTimer_timeout():
 	buffered_jump = false
@@ -180,4 +190,6 @@ func _on_CoyoteTimer_timeout():
 	coyote_jump = false
 
 func _on_DeathTimer_timeout():
+	Events.emit_signal("player_died")
+	queue_free()
 	get_tree().reload_current_scene()

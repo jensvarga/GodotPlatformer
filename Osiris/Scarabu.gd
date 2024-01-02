@@ -5,20 +5,22 @@ class_name Scarabu
 export (int) var MOVE_SPEED = 15
 export (int) var MOVE_ACCELERATION = 5
 export (int) var KICKED_SPEED = 150
-export (int) var KICKED_TOP_SPEED = 200
+export (int) var KICKED_TOP_SPEED = 204
 export (int) var KICKED_ACCELERATION = 20
-
-var direction = Vector2.LEFT
-var velocity = Vector2.ZERO
-var gravity = 9
+export (int) var DEATH_BOUNCE = -200
 
 onready var ledgeCheckRight: = $LedgeCheckRight
 onready var ledgeCheckLeft: = $LedgeCheckLeft
 onready var hitbox = $Hitbox
 onready var hitbox_collider = $Hitbox/CollisionShape2D
 onready var sprite = $AnimatedSprite
-
+onready var collision_shape: = $CollisionShape2D
+onready var hurt_area_collision: = $HurtBox/CollisionShape2D
+onready var hitbox_timer: = $HitboxTimer
+	
 var frame_counter = 0
+var rng = RandomNumberGenerator.new()
+var wobble_time:float = 0
 
 func _ready():
 	enter_move()
@@ -33,6 +35,8 @@ func _physics_process(delta):
 			update_shell()
 		KICKED:
 			update_kicked(delta)
+		DEAD:
+			update_dead(delta)
 	
 func enter_move():
 	state = MOVE
@@ -41,16 +45,18 @@ func enter_move():
 	
 func enter_shell():
 	set_collision_layer_bit(4, false)
+	hitbox_collider.set_deferred("disabled", true)
 	velocity.x = 0
 	state = SHELL
 	hitbox_collider.disabled = true
 	sprite.animation = "Shell"
 	
 func enter_kicked(dir):
+	hitbox_timer.start()
 	set_collision_layer_bit(4, true)
 	state = KICKED
 	hitbox_collider.disabled = false
-	direction.x = dir
+	direction.x = -dir
 	velocity.x = direction.x * KICKED_SPEED
 	sprite.animation = "Shell"
 	if dir > 0 and sprite.flip_h:
@@ -58,10 +64,18 @@ func enter_kicked(dir):
 	
 func enter_stasis():
 	state = STASIS
+
+func enter_dead():
+	state = DEAD
+	random_spinn = rng.randi_range(-45, 45)
+	disable_colliders()
+	sprite.animation = "Dead"
+	velocity.y = DEATH_BOUNCE
 	
 func update_kicked(delta):
+	sprite_wobbel(delta)
 	sprite.scale * direction.x
-	if is_on_wall():
+	if is_on_wall() and hitbox_timer.time_left == 0:
 		velocity.x = 0
 		direction *= -1
 		flip_sprite()
@@ -72,6 +86,11 @@ func update_kicked(delta):
 
 func update_stasis():
 	pass
+	
+func update_dead(delta):
+	spinn_sprite(delta)
+	apply_gravity()
+	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func update_move(delta):
 	var found_wall = is_on_wall()
@@ -91,9 +110,10 @@ func apply_acceleration(direction, speed, acceleration):
 		velocity.x = move_toward(velocity.x, speed * direction, acceleration)
 	else:
 		velocity.x = move_toward(velocity.x, KICKED_TOP_SPEED * direction, 0.1)
-	
+
 func update_shell():
-	pass
+	apply_gravity()
+	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func flip_sprite():
 	sprite.flip_h = not sprite.flip_h
@@ -101,6 +121,21 @@ func flip_sprite():
 func apply_gravity():
 	velocity.y += gravity
 	velocity.y = min(velocity.y, 200)
+	
+func die():
+	enter_dead()
+	
+func disable_colliders():
+	hitbox_collider.set_deferred("disabled", true)
+	hurt_area_collision.set_deferred("disabled", true)
+	collision_shape.set_deferred("disabled", true)
+	
+func spinn_sprite(delta):
+	sprite.rotate(delta * deg2rad(360 + random_spinn))
+	
+func sprite_wobbel(delta):
+	sprite.rotation = sin(wobble_time * 20) * 0.05
+	wobble_time += delta
 
 func _on_VisibilityNotifier2D_screen_entered():
 	state = previous_state
@@ -108,3 +143,6 @@ func _on_VisibilityNotifier2D_screen_entered():
 func _on_VisibilityNotifier2D_screen_exited():
 	previous_state = state
 	enter_stasis()
+
+func _on_HitboxTimer_timeout():
+	hitbox_collider.set_deferred("disabled", false)

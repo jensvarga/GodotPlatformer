@@ -1,10 +1,7 @@
 extends Enemy
 
 export (int) var MOVE_SPEED = 25
-
-var direction = Vector2.LEFT
-var velocity = Vector2.ZERO
-var gravity = 9
+export (int) var DEATH_BOUNCE = -200
 
 onready var ledgeCheckRight: = $LedgeCheckRight
 onready var ledgeCheckLeft: = $LedgeCheckLeft
@@ -13,11 +10,19 @@ onready var shell_check_back: = $ShellCheckBack
 onready var collision_shape: = $CollisionShape2D
 onready var hitbox = $Hitbox
 onready var sprite: = $AnimatedSprite
+onready var hurt_area_collision: = $HurtArea/CollisionShape2D
+onready var hitbox_collision = $Hitbox/CollisionShape2D
 
+var rng = RandomNumberGenerator.new()
 var freeze = false
 
 func _physics_process(delta):
 	if freeze: return
+	if dead:
+		spinn_sprite(delta)
+		apply_gravity()
+		velocity = move_and_slide(velocity, Vector2.UP)
+		return
 	
 	apply_gravity()
 	
@@ -46,6 +51,9 @@ func flip_sprite():
 func apply_gravity():
 	velocity.y += gravity
 
+func spinn_sprite(delta):
+	sprite.rotate(delta * deg2rad(360 + random_spinn))
+
 func face(body):
 	var direction = -1
 	var shell_center_x = global_transform.origin.x + collision_shape.shape.extents.x / 2
@@ -56,6 +64,19 @@ func face(body):
 	if (direction > 0 and not sprite.flip_h) or (direction < 0 and sprite.flip_h):
 		flip_sprite()
 
+func die():
+	disable_colliders()
+	dead = true
+	state = DEAD
+	sprite.animation = "Dead"
+	velocity.y = DEATH_BOUNCE
+	random_spinn = rng.randi_range(0, 45)
+	
+func disable_colliders():
+	hitbox_collision.set_deferred("disabled", true)
+	hurt_area_collision.set_deferred("disabled", true)
+	collision_shape.set_deferred("disabled", true)
+			
 func _on_Area2D_body_entered(body):
 	if body is Scarabu:
 		if body.state == body.KICKED:

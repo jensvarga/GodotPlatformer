@@ -119,6 +119,7 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
 animation = "ClimbDown"
+frame = 1
 playing = true
 
 [node name="LadderCheck" type="RayCast2D" parent="."]
@@ -136,6 +137,8 @@ one_shot = true
 
 [node name="DeathTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 
 [connection signal="timeout" from="JumpBufferTimer" to="." method="_on_JumpBufferTimer_timeout"]
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_CoyoteTimer_timeout"]

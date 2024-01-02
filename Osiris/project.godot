@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "Scarabu",
 "language": "GDScript",
 "path": "res://Scarabu.gd"
+}, {
+"base": "Node2D",
+"class": "Spawn",
+"language": "GDScript",
+"path": "res://SpawnPoint.gd"
 } ]
 _global_script_class_icons={
 "Enemy": "",
 "Player": "",
 "PlayerMovementData": "",
-"Scarabu": ""
+"Scarabu": "",
+"Spawn": ""
 }
 
 [application]
@@ -41,6 +47,10 @@ _global_script_class_icons={
 config/name="Osiris"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Events="*res://Events.gd"
 
 [display]
 
@@ -99,6 +109,7 @@ ui_jump={
 2d_physics/layer_2="Characters"
 2d_physics/layer_3="Ladders"
 2d_physics/layer_4="KickedShells"
+2d_physics/layer_5="Checkpoints"
 
 [mono]
 
