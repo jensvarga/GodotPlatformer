@@ -37,7 +37,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 11.25, 8 )
+extents = Vector2( 10.5, 6.27789 )
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 13.5, 4.51994 )
@@ -49,14 +49,14 @@ loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("PathFollow2D:unit_offset")
 tracks/0/interp = 2
-tracks/0/loop_wrap = true
+tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 0.98 ]
+"values": [ 0.01, 0.98, 0.0 ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -78,8 +78,8 @@ tracks/0/keys = {
 curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2( 0, -40.0393 )
-offset = 64.0047
+position = Vector2( -0.685327, -41.4442 )
+offset = 65.7733
 rotate = false
 
 [node name="FlyingSkarabu" type="KinematicBody2D" parent="PathFollow2D"]
@@ -87,13 +87,14 @@ script = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D/FlyingSkarabu"]
 frames = SubResource( 4 )
-animation = "Dead"
+animation = "Fly"
+frame = 1
 playing = true
 
 [node name="Hitbox" parent="PathFollow2D/FlyingSkarabu" instance=ExtResource( 2 )]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/FlyingSkarabu/Hitbox"]
-position = Vector2( -0.75, 4 )
+position = Vector2( -0.814673, 5.72211 )
 shape = SubResource( 5 )
 
 [node name="HurtArea" type="Area2D" parent="PathFollow2D/FlyingSkarabu"]

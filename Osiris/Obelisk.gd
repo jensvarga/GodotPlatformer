@@ -10,5 +10,6 @@ func _ready():
 	
 func _on_Obelisk_body_entered(body):
 	if body is Player and not Events.check_point_reached:
+		AudioManager.play_random_checkpoint_sound()
 		sprite.animation = "Active"
 		Events.emit_signal("checkpoint_reached")

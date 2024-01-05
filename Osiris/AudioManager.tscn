@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sound/FX/Jump/Jump1.wav" type="AudioStream" id=1]
+[ext_resource path="res://AudioManager.gd" type="Script" id=2]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource( 2 )
+
+[node name="AudioPlayers" type="Node2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AudioPlayers"]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="AudioPlayers"]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="AudioPlayers"]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="AudioPlayers"]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="AudioPlayers"]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="AudioStreamPlayer6" type="AudioStreamPlayer" parent="AudioPlayers"]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="AudioStreamPlayer7" type="AudioStreamPlayer" parent="AudioPlayers"]
+stream = ExtResource( 1 )
+bus = "Effects"
+
+[node name="MusicPlayer" type="Node2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MusicPlayer"]
+bus = "Music"

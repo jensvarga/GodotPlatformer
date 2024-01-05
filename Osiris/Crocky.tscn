@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Sprites/crocodile.png" type="Texture" id=1]
+[ext_resource path="res://Crocky.gd" type="Script" id=2]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 2 ), SubResource( 1 ) ],
+"loop": false,
+"name": "Attack",
+"speed": 7.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "Frozen",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 12 ) ],
+"loop": false,
+"name": "Stepped",
+"speed": 3.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 15, 3 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 13.5, 4.5 )
+
+[node name="Crocky" type="Area2D"]
+collision_mask = 2
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 7 )
+animation = "Idle"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1, -2 )
+shape = SubResource( 8 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+position = Vector2( 0.5, 2.5 )
+shape = SubResource( 9 )
+
+[node name="AttackDelay" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="AttackTime" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_Crocky_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_Crocky_body_exited"]
+[connection signal="timeout" from="AttackDelay" to="." method="_on_AttackDelay_timeout"]
+[connection signal="timeout" from="AttackTime" to="." method="_on_AttackTime_timeout"]

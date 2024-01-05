@@ -20,11 +20,11 @@ func _physics_process(delta):
 	if freeze: return
 	if dead:
 		spinn_sprite(delta)
-		apply_gravity()
+		apply_gravity(delta)
 		velocity = move_and_slide(velocity, Vector2.UP)
 		return
 	
-	apply_gravity()
+	apply_gravity(delta)
 	
 	var found_wall = is_on_wall()
 	var found_ledge_right = not ledgeCheckRight.is_colliding()
@@ -48,8 +48,8 @@ func attack(body):
 func flip_sprite():
 	sprite.flip_h = not sprite.flip_h
 
-func apply_gravity():
-	velocity.y += gravity
+func apply_gravity(delta):
+	velocity.y += gravity * delta
 
 func spinn_sprite(delta):
 	sprite.rotate(delta * deg2rad(360 + random_spinn))
@@ -65,6 +65,8 @@ func face(body):
 		flip_sprite()
 
 func die():
+	if dead: return
+	AudioManager.play_random_hit_sound()
 	disable_colliders()
 	dead = true
 	state = DEAD

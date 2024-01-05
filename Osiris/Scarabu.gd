@@ -3,10 +3,10 @@ extends Enemy
 class_name Scarabu
 
 export (int) var MOVE_SPEED = 15
-export (int) var MOVE_ACCELERATION = 5
+export (int) var MOVE_ACCELERATION = 5 * 60
 export (int) var KICKED_SPEED = 150
 export (int) var KICKED_TOP_SPEED = 204
-export (int) var KICKED_ACCELERATION = 20
+export (int) var KICKED_ACCELERATION = 20 * 60
 export (int) var DEATH_BOUNCE = -200
 
 onready var ledgeCheckRight: = $LedgeCheckRight
@@ -17,7 +17,7 @@ onready var sprite = $AnimatedSprite
 onready var collision_shape: = $CollisionShape2D
 onready var hurt_area_collision: = $HurtBox/CollisionShape2D
 onready var hitbox_timer: = $HitboxTimer
-	
+
 var frame_counter = 0
 var rng = RandomNumberGenerator.new()
 var wobble_time:float = 0
@@ -32,7 +32,7 @@ func _physics_process(delta):
 		MOVE:
 			update_move(delta)
 		SHELL:
-			update_shell()
+			update_shell(delta)
 		KICKED:
 			update_kicked(delta)
 		DEAD:
@@ -66,6 +66,7 @@ func enter_stasis():
 	state = STASIS
 
 func enter_dead():
+	AudioManager.play_random_hit_sound()
 	state = DEAD
 	random_spinn = rng.randi_range(-45, 45)
 	disable_colliders()
@@ -76,12 +77,13 @@ func update_kicked(delta):
 	sprite_wobbel(delta)
 	sprite.scale * direction.x
 	if is_on_wall() and hitbox_timer.time_left == 0:
+		AudioManager.play_random_hit_sound()
 		velocity.x = 0
 		direction *= -1
 		flip_sprite()
 	
-	apply_gravity()
-	apply_acceleration(direction.x, KICKED_SPEED, KICKED_ACCELERATION)
+	apply_gravity(delta)
+	apply_acceleration(direction.x, KICKED_SPEED, KICKED_ACCELERATION, delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func update_stasis():
@@ -89,7 +91,7 @@ func update_stasis():
 	
 func update_dead(delta):
 	spinn_sprite(delta)
-	apply_gravity()
+	apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func update_move(delta):
@@ -105,25 +107,25 @@ func update_move(delta):
 	velocity = direction * MOVE_SPEED
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
-func apply_acceleration(direction, speed, acceleration):
+func apply_acceleration(direction, speed, acceleration, delta):
 	if abs(velocity.x) < speed:
-		velocity.x = move_toward(velocity.x, speed * direction, acceleration)
+		velocity.x = move_toward(velocity.x, speed * direction, acceleration * delta)
 	else:
-		velocity.x = move_toward(velocity.x, KICKED_TOP_SPEED * direction, 0.1)
+		velocity.x = move_toward(velocity.x, KICKED_TOP_SPEED * direction, 0.1 * delta)
 
-func update_shell():
-	apply_gravity()
+func update_shell(delta):
+	apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func flip_sprite():
 	sprite.flip_h = not sprite.flip_h
 	
-func apply_gravity():
-	velocity.y += gravity
+func apply_gravity(delta):
+	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 200)
 	
 func die():
-	enter_dead()
+	if state != DEAD: enter_dead()
 	
 func disable_colliders():
 	hitbox_collider.set_deferred("disabled", true)
