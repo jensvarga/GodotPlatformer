@@ -60,14 +60,14 @@ func update_dead():
 	pass
 	
 func update_move(delta):
-	if velocity == Vector2.ZERO && look_up:
-		sprite.animation = "LookUp"
-		return
-		
 	var grounded = is_on_floor()
 	
 	if is_on_ladder() and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")):
 		enter_climb()
+		return
+	
+	if velocity == Vector2.ZERO && look_up:
+		sprite.animation = "LookUp"
 		return
 		
 	apply_gravity(delta)
@@ -105,12 +105,12 @@ func update_move(delta):
 				
 			var height = player_move_data.MAX_JUMP_HEIGHT + extra
 			velocity.y = height
-			
+
 			buffered_jump = false
 	else:
 		if not crouch:
 			sprite.animation = "Jump"
-			
+
 		if Input.is_action_just_released("ui_jump") and velocity.y < player_move_data.MIN_JUMP_HEIGHT:
 			var height = player_move_data.MIN_JUMP_HEIGHT + extra
 			velocity.y = height
@@ -125,7 +125,7 @@ func update_move(delta):
 			if not crouch:
 				sprite.animation = "Fall"
 	
-	var was_on_floor = grounded		
+	var was_on_floor = grounded
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	var just_left_ground = not is_on_floor() and was_on_floor

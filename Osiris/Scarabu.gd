@@ -111,7 +111,7 @@ func apply_acceleration(direction, speed, acceleration, delta):
 	if abs(velocity.x) < speed:
 		velocity.x = move_toward(velocity.x, speed * direction, acceleration * delta)
 	else:
-		velocity.x = move_toward(velocity.x, KICKED_TOP_SPEED * direction, 0.1 * delta)
+		velocity.x = move_toward(velocity.x, KICKED_TOP_SPEED * direction, 0.1 * 60 * delta)
 
 func update_shell(delta):
 	apply_gravity(delta)

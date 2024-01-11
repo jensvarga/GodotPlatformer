@@ -1,5 +1,9 @@
 extends Node2D
 
+export (Color) var sky_color = Color.deepskyblue
+export (String, FILE, "*.tscn") var previous_level_path
+export (String, FILE, "*.tscn") var next_level_path
+
 onready var player: = $Player
 onready var camera: = $Camera2D
 onready var spawn_point: = $SpawnPoint
@@ -10,8 +14,8 @@ const PlayerScene = preload("res://Player.tscn")
 func _ready():
 	Events.connect("player_died", self, "_on_player_died")
 	Events.connect("checkpoint_reached", self, "_on_checkpoint_reached")
-	#VisualServer.set_default_clear_color(Color.lightskyblue)
-	VisualServer.set_default_clear_color(Color.deepskyblue)
+	Events.connect("stage_cleared", self, "_on_stage_cleared")
+	VisualServer.set_default_clear_color(sky_color)
 	spawn_player()
 		
 func _on_player_died():
@@ -19,6 +23,11 @@ func _on_player_died():
 	
 func _on_checkpoint_reached():
 	Events.check_point_reached = true
+	
+func _on_stage_cleared():
+	if next_level_path == null: return
+	Events.check_point_reached = false
+	get_tree().change_scene(next_level_path)
 	
 func spawn_player():
 	var player = PlayerScene.instance()
@@ -29,4 +38,6 @@ func spawn_player():
 		player.position = check_point.position
 	else:
 		player.position = spawn_point.position
+		
+
 

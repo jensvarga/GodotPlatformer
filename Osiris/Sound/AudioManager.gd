@@ -25,6 +25,11 @@ const DIE_SOUND = [
 	preload("res://Sound/FX/Die/Explosion1.wav")
 ]
 
+const EXPLOSION_SOUNDS = [
+	preload("res://Sound/FX/Hurt/Explosion.wav"),
+	preload("res://Sound/FX/Die/Explosion1.wav")
+]
+
 const MUSIC_TRACKS = [
 	preload("res://Sound/Music/Song01-The_Apocalypse_Under.wav"),
 	preload("res://Sound/Music/Song02-Crimson City.wav"),
@@ -51,6 +56,9 @@ func play_music(level):
 	print(MUSIC_TRACKS[level - 1])
 	music_player.stream = MUSIC_TRACKS[level - 1]
 	music_player.play()
+
+func play_random_explosion_sound():
+	play_random_sound(EXPLOSION_SOUNDS)
 	
 func play_random_checkpoint_sound():
 	play_random_sound(CHECKPOINT_SOUNDS)

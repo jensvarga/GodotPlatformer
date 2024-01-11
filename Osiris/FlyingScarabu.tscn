@@ -78,8 +78,8 @@ tracks/0/keys = {
 curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2( -0.685327, -41.4442 )
-offset = 65.7733
+position = Vector2( 0.863437, 15.1389 )
+offset = 8.90152
 rotate = false
 
 [node name="FlyingSkarabu" type="KinematicBody2D" parent="PathFollow2D"]

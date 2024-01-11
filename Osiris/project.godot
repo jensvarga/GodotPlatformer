@@ -45,13 +45,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Osiris"
-run/main_scene="res://World.tscn"
+run/main_scene="res://Levels/Level1.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Events="*res://Scripts/Events.gd"
-AudioManager="*res://AudioManager.tscn"
+AudioManager="*res://Sound/AudioManager.tscn"
 
 [display]
 

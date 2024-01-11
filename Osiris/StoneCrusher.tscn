@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Sprites/stone_crusher.png" type="Texture" id=1]
+[ext_resource path="res://StoneCrusher.gd" type="Script" id=2]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, -253, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 40, 10.832 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 48, 155 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.99 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Stomp"
+length = 2.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 1, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0, 0.99, 0.0 ]
+}
+
+[node name="StoneCrusher" type="Path2D"]
+curve = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( 0, -13.3307 )
+offset = 239.624
+rotate = false
+
+[node name="Sprite" type="Sprite" parent="PathFollow2D"]
+texture = ExtResource( 1 )
+
+[node name="Hittbox" type="Area2D" parent="PathFollow2D"]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Hittbox"]
+position = Vector2( 0, 150.163 )
+shape = SubResource( 4 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="PathFollow2D"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/KinematicBody2D"]
+position = Vector2( 0, -4.66928 )
+shape = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Stomp"
+anims/RESET = SubResource( 2 )
+anims/Stomp = SubResource( 3 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+position = Vector2( 1, -101 )
+scale = Vector2( 31.45, 40.05 )
+
+[connection signal="body_entered" from="PathFollow2D/Hittbox" to="." method="_on_Hittbox_body_entered"]
