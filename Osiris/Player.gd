@@ -17,6 +17,7 @@ var gorund_speed_bonus = 5
 onready var sprite: = $AnimatedSprite
 onready var ladder_check: = $LadderCheck
 onready var collision_shape: = $CollisionShape2D
+onready var crouch_collider: = $CrouchCollider
 onready var jump_buffer_timer: = $JumpBufferTimer
 onready var coyote_timer: = $CoyoteTimer
 onready var death_timer: = $DeathTimer
@@ -26,6 +27,7 @@ var look_up = false
 
 func _ready():
 	enter_move()
+	crouch_collider.set_deferred("disabled", true)
 
 func _physics_process(delta):
 	match state:
@@ -68,6 +70,8 @@ func update_move(delta):
 	
 	if velocity == Vector2.ZERO && look_up:
 		sprite.animation = "LookUp"
+		crouch_collider.set_deferred("disabled", true)
+		collision_shape.set_deferred("disabled", false)
 		return
 		
 	apply_gravity(delta)
@@ -87,12 +91,18 @@ func update_move(delta):
 		apply_friction(delta)
 		if crouch:
 			sprite.animation = "Crouch"
+			crouch_collider.set_deferred("disabled", false)
+			collision_shape.set_deferred("disabled", true)
 		else:
 			sprite.animation = "Idle"
+			crouch_collider.set_deferred("disabled", true)
+			collision_shape.set_deferred("disabled", false)
 	else:
 		flip_sprite(input.x)
 		apply_acceleration(input.x, grounded, delta)
 		sprite.animation = "Run"
+		crouch_collider.set_deferred("disabled", true)
+		collision_shape.set_deferred("disabled", false)
 		
 	var extra = 0
 	if grounded or coyote_jump:

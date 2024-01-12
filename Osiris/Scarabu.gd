@@ -21,6 +21,7 @@ onready var hitbox_timer: = $HitboxTimer
 var frame_counter = 0
 var rng = RandomNumberGenerator.new()
 var wobble_time:float = 0
+var has_hit_wall = false
 
 func _ready():
 	enter_move()
@@ -76,11 +77,15 @@ func enter_dead():
 func update_kicked(delta):
 	sprite_wobbel(delta)
 	sprite.scale * direction.x
-	if is_on_wall() and hitbox_timer.time_left == 0:
+	var found_wall = is_on_wall()
+	if (found_wall and not has_hit_wall) and hitbox_timer.time_left == 0:
 		AudioManager.play_random_hit_sound()
 		velocity.x = 0
 		direction *= -1
 		flip_sprite()
+		has_hit_wall = true
+	elif not found_wall:
+		has_hit_wall = false
 	
 	apply_gravity(delta)
 	apply_acceleration(direction.x, KICKED_SPEED, KICKED_ACCELERATION, delta)
@@ -100,9 +105,12 @@ func update_move(delta):
 	var found_ledge_left = not ledgeCheckLeft.is_colliding()
 	var found_ledge = found_ledge_right or found_ledge_left
 		
-	if found_wall or found_ledge:
+	if (found_wall or found_ledge) and not has_hit_wall:
 		direction *= -1
 		flip_sprite()
+		has_hit_wall = true
+	elif not (found_wall or found_ledge):
+		has_hit_wall = false
 		
 	velocity = direction * MOVE_SPEED
 	velocity = move_and_slide(velocity, Vector2.UP)

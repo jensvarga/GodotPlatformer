@@ -3,11 +3,13 @@ extends Node2D
 export (Color) var sky_color = Color.deepskyblue
 export (String, FILE, "*.tscn") var previous_level_path
 export (String, FILE, "*.tscn") var next_level_path
+export (bool) var test_spawn = false
 
 onready var player: = $Player
 onready var camera: = $Camera2D
 onready var spawn_point: = $SpawnPoint
 onready var check_point: = $CheckPoint
+onready var test_point: = $TestSpawn
 
 const PlayerScene = preload("res://Player.tscn")
 
@@ -20,7 +22,7 @@ func _ready():
 		
 func _on_player_died():
 	spawn_player()
-	
+
 func _on_checkpoint_reached():
 	Events.check_point_reached = true
 	
@@ -34,10 +36,11 @@ func spawn_player():
 	add_child(player)
 	player.connect_camera(camera)
 	
+	if test_spawn:
+		player.position = test_point.position
+		return
 	if Events.check_point_reached:
 		player.position = check_point.position
 	else:
 		player.position = spawn_point.position
 		
-
-

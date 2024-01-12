@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 class_name Enemy
 
-enum { STASIS, MOVE, SHELL, KICKED, FLYING, DEAD }
+enum { STASIS, MOVE, SHELL, KICKED, FLYING, DEAD, AIM, IDLE, ATTACK, FROZEN }
 var state = MOVE
 var previous_state = MOVE
 var random_spinn = 0

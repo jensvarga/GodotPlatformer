@@ -1,0 +1,120 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Sprites/apophis_door.png" type="Texture" id=1]
+[ext_resource path="res://AphopisDoor.gd" type="Script" id=2]
+[ext_resource path="res://FireBall.tscn" type="PackedScene" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 65, 55 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 65, 55 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 65, 0, 65, 55 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 130, 0, 65, 55 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 195, 0, 65, 55 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "Closed",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": false,
+"name": "Open",
+"speed": 1.0
+} ]
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 260, 0, 65, 55 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 1 )
+region = Rect2( 325, 0, 65, 55 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "Closed",
+"speed": 5.0
+}, {
+"frames": [ null, null, SubResource( 7 ), SubResource( 8 ) ],
+"loop": false,
+"name": "Open",
+"speed": 1.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 32, 16 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 31.5, 4 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 76, 54 )
+
+[node name="AphopisDoor" type="StaticBody2D"]
+script = ExtResource( 2 )
+
+[node name="AnimatedSpriteFront" type="AnimatedSprite" parent="."]
+z_index = 10
+frames = SubResource( 6 )
+animation = "Closed"
+playing = true
+
+[node name="AnimatedSpriteBack" type="AnimatedSprite" parent="."]
+frames = SubResource( 9 )
+animation = "Closed"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 11 )
+shape = SubResource( 10 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( -4, 21 )
+rotation = 0.059828
+scale = Vector2( 2.85, 0.6 )
+polygon = PoolVector2Array( 0.175438, -8.33333, 11.4035, 8.33333, -9.64912, 8.33333, -9.64912, -8.33333 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( -0.5, -19 )
+shape = SubResource( 12 )
+disabled = true
+
+[node name="DoorTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="TrollTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 44, -27 )
+shape = SubResource( 11 )
+
+[node name="FireBall" parent="." instance=ExtResource( 3 )]
+position = Vector2( 10, 7 )
+
+[connection signal="timeout" from="DoorTimer" to="." method="_on_DoorTimer_timeout"]
+[connection signal="timeout" from="TrollTimer" to="." method="_on_TrollTimer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

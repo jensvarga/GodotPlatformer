@@ -43,19 +43,26 @@ const MUSIC_TRACKS = [
 	preload("res://Sound/Music/Song10-The Beginning.wav")
 ]
 
+const STONE_DOOR = preload("res://Sound/FX/MISC/stone_door.wav")
+
+const APHOPIS_ENTRANCE = preload("res://Sound/FX/MISC/aphopis_entrance.wav")
+
 onready var audio_players: = $AudioPlayers
 onready var music_player: = $MusicPlayer/AudioStreamPlayer
 
 var audio_stream_players : Array = []
 
 func _ready():
-	play_music(1)
+	#play_music(1)
 	audio_stream_players = audio_players.get_children()
 
 func play_music(level):
 	print(MUSIC_TRACKS[level - 1])
 	music_player.stream = MUSIC_TRACKS[level - 1]
 	music_player.play()
+	
+func play_aphopis_entrance_sound():
+	play_sound(APHOPIS_ENTRANCE)
 
 func play_random_explosion_sound():
 	play_random_sound(EXPLOSION_SOUNDS)
@@ -71,6 +78,9 @@ func play_random_jump_sound():
 	
 func play_random_hit_sound():
 	play_random_sound(HIT_SOUNDS)
+	
+func play_stone_door_sound():
+	play_sound(STONE_DOOR)
 
 func play_random_sound(sounds):
 	if sounds.size() > 0:
