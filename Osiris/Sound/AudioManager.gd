@@ -43,9 +43,30 @@ const MUSIC_TRACKS = [
 	preload("res://Sound/Music/Song10-The Beginning.wav")
 ]
 
+const LEVEL_MUSIC = {
+	1: preload("res://Sound/Music/Song02-Crimson City.wav"),
+	2: preload("res://Sound/Music/Song01-The_Apocalypse_Under.wav"),
+	3: null
+}
+
 const STONE_DOOR = preload("res://Sound/FX/MISC/stone_door.wav")
 
-const APHOPIS_ENTRANCE = preload("res://Sound/FX/MISC/aphopis_entrance.wav")
+var music_playing = false
+var current_level = 0
+
+func start_music_for_level(index):
+	if LEVEL_MUSIC[index] == null and not Events.check_point_reached:
+		stop_music()
+	if not music_playing and LEVEL_MUSIC.has(index) or (LEVEL_MUSIC.has(index) and current_level < index):
+		current_level = index
+		play_music(LEVEL_MUSIC[index])
+		music_playing = true
+	else:
+		print("Invalid level index or music is already playing")
+	
+func stop_music():
+	music_player.stop()
+	music_playing = false
 
 onready var audio_players: = $AudioPlayers
 onready var music_player: = $MusicPlayer/AudioStreamPlayer
@@ -53,16 +74,11 @@ onready var music_player: = $MusicPlayer/AudioStreamPlayer
 var audio_stream_players : Array = []
 
 func _ready():
-	#play_music(1)
 	audio_stream_players = audio_players.get_children()
 
-func play_music(level):
-	print(MUSIC_TRACKS[level - 1])
-	music_player.stream = MUSIC_TRACKS[level - 1]
+func play_music(track):
+	music_player.stream = track
 	music_player.play()
-	
-func play_aphopis_entrance_sound():
-	play_sound(APHOPIS_ENTRANCE)
 
 func play_random_explosion_sound():
 	play_random_sound(EXPLOSION_SOUNDS)
@@ -93,3 +109,20 @@ func play_sound(sound):
 			audio_stream_player.stream = sound
 			audio_stream_player.play()
 			break
+
+# Aphopis boss sounds
+const APHOPIS_ENTRANCE = preload("res://Sound/FX/MISC/aphopis_entrance.wav")
+const APHOPIS_HURT = preload("res://Sound/FX/MISC/aphopis_hurt.wav")
+const APHOPIS_TELEGRAPH = preload("res://Sound/FX/MISC/aphopis_telegraph.wav")
+
+func play_boss_music():
+	play_music(MUSIC_TRACKS[3])
+	
+func play_aphopis_entrance_sound():
+	play_sound(APHOPIS_ENTRANCE)
+	
+func play_aphopis_hurt_sound():
+	play_sound(APHOPIS_HURT)
+	
+func play_aphopis_telegraph_sound():
+	play_sound(APHOPIS_TELEGRAPH)

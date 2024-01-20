@@ -21,4 +21,10 @@ physics_process_parent = true
 [node name="FireBall" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -13 )
 
+[node name="VisibilityEnabler2D2" type="VisibilityEnabler2D" parent="."]
+process_parent = true
+physics_process_parent = true
+
 [connection signal="timeout" from="FireRateTimer" to="." method="_on_FireRateCannon_timeout"]
+[connection signal="screen_entered" from="VisibilityEnabler2D2" to="." method="_on_VisibilityEnabler2D2_screen_entered"]
+[connection signal="screen_exited" from="VisibilityEnabler2D2" to="." method="_on_VisibilityEnabler2D2_screen_exited"]

@@ -1,50 +1,100 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Sprites/apophis.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/apophis_tail.png" type="Texture" id=2]
 [ext_resource path="res://Aphopis.gd" type="Script" id=3]
+[ext_resource path="res://BossHurtbox.gd" type="Script" id=4]
+[ext_resource path="res://Sprites/tail_attack.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/trowable_rock.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/aphopis_bite_attack.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/aphopis_lazer_attack.png" type="Texture" id=8]
+[ext_resource path="res://CustomScenes/LaserBeam2D.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
 "points": PoolVector2Array( -0.458646, -1.41508, 0.458646, 1.41508, 20.2858, -4.37613, 0.52547, -0.787256, -0.52547, 0.787256, 21.1657, -0.800593, 3.81347, 0.0392064, -3.81347, -0.0392064, 16.4503, 1.09139, 1.93881, 0.709634, -1.93881, -0.709634, 10.9996, 0.089195, 1.5492, 1.91418, -1.5492, -1.91418, 3.04044, -4.97551, 2.5244, -0.152316, -2.5244, 0.152316, -5.92683, -9.04836, 0.0820287, -2.02908, -0.0820287, 2.02908, -11.9834, -2.09724, -2.54398, 0.256974, 2.54398, -0.256974, -5.9998, -0.0486518, -1.69192, 0.94309, 1.69192, -0.94309, 5.04038, -4.95929, 0, 0, 0, 0, 11.2085, -8.06042, -4.3227, 1.09969, 4.3227, -1.09969, 14.2534, -8.94298, -0.493728, -1.5758, 0.493728, 1.5758, 20.0399, -4.83766, 0, 0, 0, 0, 20.2858, -4.37613 )
 }
 
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 1 )
-region = Rect2( 590, 0, 118, 127 )
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 118, 127 )
+[sub_resource type="SpriteFrames" id=52]
+animations = [ {
+"frames": [ SubResource( 51 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=26]
 atlas = ExtResource( 1 )
-region = Rect2( 118, 0, 118, 127 )
+region = Rect2( 590, 0, 118, 148 )
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 1 )
-region = Rect2( 236, 0, 118, 127 )
+region = Rect2( 708, 0, 118, 148 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=25]
 atlas = ExtResource( 1 )
-region = Rect2( 354, 0, 118, 127 )
+region = Rect2( 826, 0, 118, 148 )
 
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=32]
 atlas = ExtResource( 1 )
-region = Rect2( 472, 0, 118, 127 )
+region = Rect2( 708, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 1 )
+region = Rect2( 708, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 1 )
+region = Rect2( 826, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 1 )
+region = Rect2( 708, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 1 )
+region = Rect2( 118, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 1 )
+region = Rect2( 236, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 1 )
+region = Rect2( 354, 0, 118, 148 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 1 )
+region = Rect2( 472, 0, 118, 148 )
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
-"frames": [ SubResource( 21 ) ],
+"frames": [ SubResource( 26 ) ],
 "loop": true,
 "name": "Entrance",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
+"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
+"loop": true,
+"name": "Hurt",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 5.0
 } ]
+
+[sub_resource type="RectangleShape2D" id=23]
+extents = Vector2( 23.5138, 17.0233 )
 
 [sub_resource type="Curve2D" id=15]
 _data = {
@@ -55,13 +105,33 @@ _data = {
 atlas = ExtResource( 2 )
 region = Rect2( 336, 0, 84, 153 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 2 )
+region = Rect2( 84, 0, 84, 153 )
+
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 2 )
+region = Rect2( 168, 0, 84, 153 )
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 2 )
+region = Rect2( 420, 0, 84, 153 )
+
+[sub_resource type="AtlasTexture" id=39]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 84, 153 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=41]
 atlas = ExtResource( 2 )
 region = Rect2( 84, 0, 84, 153 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 2 )
+region = Rect2( 420, 0, 84, 153 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 84, 153 )
 
 [sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 2 )
@@ -71,6 +141,18 @@ region = Rect2( 168, 0, 84, 153 )
 atlas = ExtResource( 2 )
 region = Rect2( 252, 0, 84, 153 )
 
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 2 )
+region = Rect2( 168, 0, 84, 153 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 2 )
+region = Rect2( 84, 0, 84, 153 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 2 )
+region = Rect2( 84, 0, 84, 153 )
+
 [sub_resource type="SpriteFrames" id=20]
 animations = [ {
 "frames": [ SubResource( 22 ) ],
@@ -78,11 +160,85 @@ animations = [ {
 "name": "Entrance",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"frames": [ SubResource( 36 ), SubResource( 38 ), SubResource( 37 ), SubResource( 39 ), SubResource( 41 ), SubResource( 40 ) ],
+"loop": true,
+"name": "Hurt",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 18 ), SubResource( 19 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 3.0
+}, {
+"frames": [ SubResource( 42 ), SubResource( 43 ), SubResource( 44 ) ],
+"loop": true,
+"name": "Telegraph",
+"speed": 10.0
 } ]
+
+[sub_resource type="Animation" id=49]
+resource_name = "Attack"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("TailAttackPathRight/PathFollow2D:unit_offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.588, 0.98 ]
+}
+
+[sub_resource type="Animation" id=50]
+resource_name = "AttackLeft"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("TailAttackPathLeft/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.5938, 0.98 ]
+}
+
+[sub_resource type="Animation" id=55]
+resource_name = "BiteAttackLeft"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("BiteAttackLeft/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.3572, 0.5536, 0.98 ]
+}
+
+[sub_resource type="Animation" id=59]
+resource_name = "BiteAttackRight"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("BiteAttackRight/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.3572, 0.5536, 0.98 ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "Idle"
@@ -137,16 +293,192 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 1.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("TailAttackPathRight/PathFollow2D:unit_offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.98 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TailAttackPathLeft/PathFollow2D:unit_offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.5938 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BiteAttackLeft/PathFollow2D:unit_offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.3572 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("BiteAttackRight/PathFollow2D:unit_offset")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.3572 ]
+}
+
+[sub_resource type="Curve2D" id=45]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 351.075, -131.158, 0, 0, 0, 0, 257.729, -88.9131, 0, 0, 0, 0, 209.431, -52.3035, 0, 0, 0, 0, 185.213, -25.499, 0, 0, 0, 0, 165.043, -4.66188, 0, 0, 0, 0, 131.736, 33.0693, 0, 0, 0, 0, 107.429, 70.8734, 0, 0, 0, 0, 193.867, 140.577, 0, 0, 0, 0, 250.313, 209.037 )
+}
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 84, 178 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 5 )
+region = Rect2( 84, 0, 84, 178 )
+
+[sub_resource type="SpriteFrames" id=48]
+animations = [ {
+"frames": [ SubResource( 46 ), SubResource( 47 ) ],
+"loop": false,
+"name": "Attack",
+"speed": 2.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=53]
+extents = Vector2( 11.5084, 42.0796 )
+
+[sub_resource type="RectangleShape2D" id=54]
+extents = Vector2( 9.76331, 49.1966 )
+
+[sub_resource type="Curve2D" id=56]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -202.477, 181.364, 0, 0, 0, 0, -98.3049, 37.2041, 0, 0, 0, 0, 3.78904, 26.0316, 0, 0, 0, 0, 93.7942, 25.7614, 0, 0, 0, 0, 162.711, 36.3206, 0, 0, 0, 0, 304.368, 202.475 )
+}
+
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 174, 88 )
+
+[sub_resource type="SpriteFrames" id=58]
+animations = [ {
+"frames": [ SubResource( 57 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=60]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 98, 140 )
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 8 )
+region = Rect2( 98, 0, 98, 140 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 8 )
+region = Rect2( 196, 0, 98, 140 )
+
+[sub_resource type="SpriteFrames" id=63]
+animations = [ {
+"frames": [ SubResource( 60 ), SubResource( 61 ), SubResource( 62 ) ],
+"loop": true,
+"name": "LazerAttack",
+"speed": 3.0
+} ]
 
 [node name="Aphopis" type="Path2D"]
 rotation = -0.00810872
 curve = SubResource( 1 )
 script = ExtResource( 3 )
 
+[node name="RightDrop1" type="Position2D" parent="."]
+position = Vector2( 141.727, -79.7727 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop1"]
+visible = false
+frames = SubResource( 52 )
+
+[node name="RightDrop4" type="Position2D" parent="."]
+position = Vector2( 162.652, -79.6837 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop4"]
+visible = false
+frames = SubResource( 52 )
+
+[node name="RightDrop2" type="Position2D" parent="."]
+position = Vector2( 117.727, -79.7727 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop2"]
+visible = false
+frames = SubResource( 52 )
+
+[node name="RightDrop3" type="Position2D" parent="."]
+position = Vector2( 94.7272, -79.7727 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop3"]
+visible = false
+frames = SubResource( 52 )
+
+[node name="LeftDrop1" type="Position2D" parent="."]
+position = Vector2( 35.7272, -79.7727 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop1"]
+visible = false
+frames = SubResource( 52 )
+
+[node name="LeftDrop2" type="Position2D" parent="."]
+position = Vector2( 11.7272, -79.7727 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop2"]
+visible = false
+frames = SubResource( 52 )
+
+[node name="LeftDrop3" type="Position2D" parent="."]
+position = Vector2( -13.2728, -79.7727 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop3"]
+visible = false
+frames = SubResource( 52 )
+
+[node name="LeftDrop4" type="Position2D" parent="."]
+position = Vector2( -32.3502, -80.265 )
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop4"]
+visible = false
+frames = SubResource( 52 )
+
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 position = Vector2( 20.2858, -4.37613 )
 rotation = 0.499347
-offset = 78.5961
+offset = 78.5932
 rotate = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D"]
@@ -157,9 +489,17 @@ frames = SubResource( 7 )
 animation = "Entrance"
 playing = true
 
+[node name="KinematicBody2D" type="KinematicBody2D" parent="PathFollow2D/AnimatedSprite"]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/AnimatedSprite/KinematicBody2D"]
+position = Vector2( 12.751, -27.7744 )
+shape = SubResource( 23 )
+
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2( 28.8936, 13.2347 )
-scale = Vector2( 1, 1 )
 curve = SubResource( 15 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
@@ -176,5 +516,150 @@ playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
+anims/Attack = SubResource( 49 )
+anims/AttackLeft = SubResource( 50 )
+anims/BiteAttackLeft = SubResource( 55 )
+anims/BiteAttackRight = SubResource( 59 )
 anims/Idle = SubResource( 8 )
 anims/RESET = SubResource( 9 )
+
+[node name="TelegraphTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="RockTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="StateTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="BiteTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="LazerTelegraphTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="TailAttackPathRight" type="Path2D" parent="."]
+position = Vector2( -0.00810863, 0.999967 )
+curve = SubResource( 45 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="TailAttackPathRight"]
+position = Vector2( 351.075, -131.158 )
+rotation = 2.50543
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="TailAttackPathRight/PathFollow2D"]
+frames = SubResource( 48 )
+animation = "Attack"
+frame = 1
+playing = true
+flip_v = true
+
+[node name="HitareaRight" type="Area2D" parent="TailAttackPathRight/PathFollow2D/AnimatedSprite"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TailAttackPathRight/PathFollow2D/AnimatedSprite/HitareaRight"]
+position = Vector2( 19.9835, 15.3842 )
+rotation = -0.305609
+scale = Vector2( 1, 1 )
+shape = SubResource( 53 )
+
+[node name="TailAttackPathLeft" type="Path2D" parent="."]
+position = Vector2( 157.002, 2.14886 )
+scale = Vector2( -1, 1 )
+curve = SubResource( 45 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="TailAttackPathLeft"]
+position = Vector2( 351.075, -131.158 )
+rotation = 2.50543
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="TailAttackPathLeft/PathFollow2D"]
+frames = SubResource( 48 )
+animation = "Attack"
+frame = 1
+playing = true
+flip_v = true
+
+[node name="HitareaLeft" type="Area2D" parent="TailAttackPathLeft/PathFollow2D/AnimatedSprite"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TailAttackPathLeft/PathFollow2D/AnimatedSprite/HitareaLeft"]
+position = Vector2( 19.4816, 11.9034 )
+rotation = -0.303955
+shape = SubResource( 54 )
+
+[node name="BiteAttackLeft" type="Path2D" parent="."]
+curve = SubResource( 56 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="BiteAttackLeft"]
+position = Vector2( -202.477, 181.364 )
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="BiteAttackLeft/PathFollow2D"]
+position = Vector2( 1.52588e-05, -1.52588e-05 )
+rotation = -0.197028
+frames = SubResource( 58 )
+
+[node name="BiteAreaLeft" type="Area2D" parent="BiteAttackLeft/PathFollow2D/AnimatedSprite"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BiteAttackLeft/PathFollow2D/AnimatedSprite/BiteAreaLeft"]
+rotation = 0.0148013
+polygon = PoolVector2Array( 68.4839, -22.4491, 47.3315, -18.3773, 36.1878, -13.3956, 30.215, 1.74786, 32.4401, 11.3421, 52.8356, 11.1981, 64.0874, 21.513, 76.4022, 15.7386, 59.0337, 0.171524, 66.8532, -3.41385, 73.2404, -15.4223 )
+
+[node name="BiteAttackRight" type="Path2D" parent="."]
+position = Vector2( 65.9978, -0.53517 )
+scale = Vector2( -1, 1 )
+curve = SubResource( 56 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="BiteAttackRight"]
+position = Vector2( -202.477, 181.364 )
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="BiteAttackRight/PathFollow2D"]
+position = Vector2( 1.52588e-05, -1.52588e-05 )
+rotation = -0.197028
+frames = SubResource( 58 )
+
+[node name="BiteAreaRight" type="Area2D" parent="BiteAttackRight/PathFollow2D/AnimatedSprite"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BiteAttackRight/PathFollow2D/AnimatedSprite/BiteAreaRight"]
+rotation = 0.0148013
+polygon = PoolVector2Array( 68.4839, -22.4491, 47.3315, -18.3773, 36.1878, -13.3956, 30.215, 1.74786, 32.4401, 11.3421, 52.8356, 11.1981, 64.0874, 21.513, 76.4022, 15.7386, 59.0337, 0.171524, 66.8532, -3.41385, 73.2404, -15.4223 )
+
+[node name="LazerAttackSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 69.1654, -143.444 )
+frames = SubResource( 63 )
+animation = "LazerAttack"
+frame = 2
+playing = true
+
+[node name="LaserBeam2D" parent="LazerAttackSprite" instance=ExtResource( 9 )]
+position = Vector2( 11.9347, 8.09706 )
+cast_to = Vector2( 3.99986, 0.0324402 )
+
+[node name="LaserBeam2D2" parent="LazerAttackSprite" instance=ExtResource( 9 )]
+position = Vector2( -11.0645, 7.91055 )
+cast_to = Vector2( 3.99986, 0.0324402 )
+
+[connection signal="animation_finished" from="PathFollow2D/AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="TelegraphTimer" to="." method="_on_TelegraphTimer_timeout"]
+[connection signal="timeout" from="RockTimer" to="." method="_on_RockTimer_timeout"]
+[connection signal="timeout" from="StateTimer" to="." method="_on_StateTimer_timeout"]
+[connection signal="timeout" from="BiteTimer" to="." method="_on_BiteTimer_timeout"]
+[connection signal="timeout" from="LazerTelegraphTimer" to="." method="_on_LazerTelegraphTimer_timeout"]
+[connection signal="body_entered" from="TailAttackPathRight/PathFollow2D/AnimatedSprite/HitareaRight" to="." method="_on_HitareaRight_body_entered"]
+[connection signal="body_entered" from="TailAttackPathLeft/PathFollow2D/AnimatedSprite/HitareaLeft" to="." method="_on_HitareaLeft_body_entered"]
+[connection signal="body_entered" from="BiteAttackLeft/PathFollow2D/AnimatedSprite/BiteAreaLeft" to="." method="_on_BiteAreaLeft_body_entered"]
+[connection signal="body_entered" from="BiteAttackRight/PathFollow2D/AnimatedSprite/BiteAreaRight" to="." method="_on_BiteAreaRight_body_entered"]

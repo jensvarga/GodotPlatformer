@@ -12,7 +12,7 @@ var open = false
 
 func _ready():
 	fire_ball.deactivate()
-
+	
 func open_door():
 	open = true
 	sprite_front.animation = "Open"
@@ -33,3 +33,4 @@ func _on_TrollTimer_timeout():
 func _on_DoorTimer_timeout():
 	closed_collider.set_deferred("disabled", true)
 	open_collider.set_deferred("disabled", false)
+

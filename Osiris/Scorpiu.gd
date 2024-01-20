@@ -5,8 +5,6 @@ export (int) var DEATH_BOUNCE = -200
 
 onready var ledgeCheckRight: = $LedgeCheckRight
 onready var ledgeCheckLeft: = $LedgeCheckLeft
-onready var shell_check_front: = $ShellCheckFront
-onready var shell_check_back: = $ShellCheckBack
 onready var collision_shape: = $CollisionShape2D
 onready var hitbox = $Hitbox
 onready var sprite: = $AnimatedSprite
