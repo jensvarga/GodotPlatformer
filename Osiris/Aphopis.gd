@@ -8,6 +8,7 @@ var rock_object
 enum { ENTRANCE, IDLE, HURT, TELEGRAPH, TAIL_ATTACK, DEAD, TELEGRAPH_BITE, BITE_ATTACK, EXIT_BITE, TELEGRAPH_LAZER, LAZER_ATTACK, EXIT_LAZER}
 var state = ENTRANCE
 
+# region onready
 onready var head_sprite: = $PathFollow2D/AnimatedSprite
 onready var tail_sprite: = $Path2D/PathFollow2D/AnimatedSprite
 onready var animation_player: = $AnimationPlayer
@@ -22,8 +23,9 @@ onready var lazer_sprite: = $LazerAttackSprite
 onready var lazer_beam_1: = $LazerAttackSprite/LaserBeam2D
 onready var lazer_beam_2: = $LazerAttackSprite/LaserBeam2D2
 onready var game_over_timer := $GameOverTimer
+# endregion
 
-# funcy appendages
+# region funcy appendages
 onready var funky_tail_sprite := $TailAttackPathRight/PathFollow2D/AnimatedSprite
 onready var funky_tail_collider := $TailAttackPathRight/PathFollow2D/AnimatedSprite/HitareaRight/CollisionShape2D
 onready var funky_tail_left_sprite := $TailAttackPathLeft/PathFollow2D/AnimatedSprite
@@ -32,7 +34,11 @@ onready var bite_attack_right_sprite := $BiteAttackRight/PathFollow2D/AnimatedSp
 onready var bite_attack_right_collider := $BiteAttackRight/PathFollow2D/AnimatedSprite/BiteAreaRight/CollisionPolygon2D
 onready var bite_attack_left_sprite := $BiteAttackLeft/PathFollow2D/AnimatedSprite
 onready var bite_attack_left_collider := $BiteAttackLeft/PathFollow2D/AnimatedSprite/BiteAreaLeft/CollisionPolygon2D
-
+onready var path_follower_1 := $TailAttackPathRight/PathFollow2D
+onready var path_follower_2 := $TailAttackPathLeft/PathFollow2D
+onready var path_follower_3 := $BiteAttackLeft/PathFollow2D
+onready var path_follower_4 := $BiteAttackRight/PathFollow2D
+# endregion
 
 var RIGHT_DROPS : Array
 var LEFT_DROPS : Array
@@ -50,20 +56,9 @@ var player
 
 var prevoius_state = IDLE
 
-func hide_appendages(boolean: bool):
-	funky_tail_sprite.visible = !boolean
-	funky_tail_collider.set_deferred("disabled", boolean)
-	funky_tail_left_sprite.visible = !boolean
-	funky_tail_left_collider.set_deferred("disabled", boolean)
-	bite_attack_right_sprite.visible = !boolean
-	bite_attack_right_collider.set_deferred("disabled", boolean)
-	bite_attack_left_sprite.visible = !boolean
-	bite_attack_left_collider.set_deferred("disabled", boolean)
-	
 func _ready():
 	hit_points = max_hit_points
 	AudioManager.stop_laser_sound()
-	hide_appendages(true)
 	RIGHT_DROPS = [
 		$RightDrop1,
 		$RightDrop2,
@@ -76,9 +71,9 @@ func _ready():
 		$LeftDrop3,
 		$LeftDrop4
 	]
-		
 	rock_object = load(ROCK_OBJECT_PATH)
 	lazer_sprite.visible = false
+	hide_appendages()
 	if not Events.check_point_reached:
 		hide_sprites()
 		head_sprite.animation = "Entrance"
@@ -116,9 +111,7 @@ func _physics_process(delta):
 
 # Enter states
 func enter_idle():
-	#funky_tail_sprite.visible = true
-	#funky_tail_collider.set_deferred("disabled", false)
-	hide_appendages(false)
+	enable_appendages()
 	state_timer.start()
 	state = IDLE
 	collider.set_deferred("disabled", false)
@@ -263,6 +256,31 @@ func update_bite(delta):
 func hide_sprites():
 	head_sprite.visible = false
 	tail_sprite.visible = false
+
+func hide_appendages():
+	funky_tail_sprite.visible = false
+	funky_tail_collider.set_deferred("disabled", true)
+	funky_tail_left_sprite.visible = false
+	funky_tail_left_collider.set_deferred("disabled", true)
+	bite_attack_right_sprite.visible = false
+	bite_attack_right_collider.set_deferred("disabled", true)
+	bite_attack_left_sprite.visible = false
+	bite_attack_left_collider.set_deferred("disabled", true)
+	
+	path_follower_1.unit_offset = 0
+	path_follower_2.unit_offset = 0
+	path_follower_3.unit_offset = 0
+	path_follower_4.unit_offset = 0
+	
+func enable_appendages():
+	funky_tail_sprite.visible = true
+	funky_tail_collider.set_deferred("disabled", false)
+	funky_tail_left_sprite.visible = true
+	funky_tail_left_collider.set_deferred("disabled", false)
+	bite_attack_right_sprite.visible = true
+	bite_attack_right_collider.set_deferred("disabled", false)
+	bite_attack_left_sprite.visible = true
+	bite_attack_left_collider.set_deferred("disabled", false)
 	
 func show_sprites():
 	head_sprite.visible = true
