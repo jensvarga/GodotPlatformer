@@ -2,6 +2,7 @@ extends Enemy
 
 onready var sprite: = $AnimatedSprite
 onready var hitbox_collider: = $Hitbox/CollisionShape2D
+onready var remove_timer := $"../../RemoveTimer"
 
 func _ready():
 	sprite.animation = "Fly"
@@ -15,3 +16,7 @@ func _physics_process(delta):
 func die():
 	sprite.animation = "Dead"
 	state = DEAD
+	remove_timer.start()
+
+func _on_RemoveTimer_timeout():
+	queue_free()

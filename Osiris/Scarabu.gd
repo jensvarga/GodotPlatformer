@@ -21,6 +21,7 @@ onready var sprite = $AnimatedSprite
 onready var collision_shape: = $CollisionShape2D
 onready var hurt_area_collision: = $HurtBox/CollisionShape2D
 onready var hitbox_timer: = $HitboxTimer
+onready var remove_timer := $RemoveTimer
 
 #Animations
 var walk_anim
@@ -154,7 +155,9 @@ func apply_gravity(delta):
 	velocity.y = min(velocity.y, 200)
 	
 func die():
-	if state != DEAD: enter_dead()
+	if state != DEAD: 
+		enter_dead()
+		remove_timer.start()
 	
 func pickup_enabled():
 	return state == SHELL
@@ -193,3 +196,6 @@ func sprite_wobbel(delta):
 func _on_HitboxTimer_timeout():
 	if not carried:
 		hitbox_collider.set_deferred("disabled", false)
+
+func _on_RemoveTimer_timeout():
+	queue_free()

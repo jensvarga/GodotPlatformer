@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Toto - Africa.mp3-bf678adc7715afd636e4cde0b3ae9ad4.mp3str"
+
+[deps]
+
+source_file="res://Sound/Music/Toto - Africa.mp3"
+dest_files=[ "res://.import/Toto - Africa.mp3-bf678adc7715afd636e4cde0b3ae9ad4.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

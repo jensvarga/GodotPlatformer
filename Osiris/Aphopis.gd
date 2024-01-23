@@ -1,6 +1,7 @@
 extends Path2D
 
-export (int) var hit_points = 50
+export (int) var max_hit_points = 4
+var hit_points
 export (String, FILE, "*.tscn") var ROCK_OBJECT_PATH = "res://ThrowableRock.tscn"
 var rock_object
 
@@ -20,6 +21,17 @@ onready var lazer_telegraph_timer: = $LazerTelegraphTimer
 onready var lazer_sprite: = $LazerAttackSprite
 onready var lazer_beam_1: = $LazerAttackSprite/LaserBeam2D
 onready var lazer_beam_2: = $LazerAttackSprite/LaserBeam2D2
+onready var game_over_timer := $GameOverTimer
+
+# funcy appendages
+onready var funky_tail_sprite := $TailAttackPathRight/PathFollow2D/AnimatedSprite
+onready var funky_tail_collider := $TailAttackPathRight/PathFollow2D/AnimatedSprite/HitareaRight/CollisionShape2D
+onready var funky_tail_left_sprite := $TailAttackPathLeft/PathFollow2D/AnimatedSprite
+onready var funky_tail_left_collider := $TailAttackPathLeft/PathFollow2D/AnimatedSprite/HitareaLeft/CollisionShape2D
+onready var bite_attack_right_sprite := $BiteAttackRight/PathFollow2D/AnimatedSprite
+onready var bite_attack_right_collider := $BiteAttackRight/PathFollow2D/AnimatedSprite/BiteAreaRight/CollisionPolygon2D
+onready var bite_attack_left_sprite := $BiteAttackLeft/PathFollow2D/AnimatedSprite
+onready var bite_attack_left_collider := $BiteAttackLeft/PathFollow2D/AnimatedSprite/BiteAreaLeft/CollisionPolygon2D
 
 
 var RIGHT_DROPS : Array
@@ -38,7 +50,20 @@ var player
 
 var prevoius_state = IDLE
 
+func hide_appendages(boolean: bool):
+	funky_tail_sprite.visible = !boolean
+	funky_tail_collider.set_deferred("disabled", boolean)
+	funky_tail_left_sprite.visible = !boolean
+	funky_tail_left_collider.set_deferred("disabled", boolean)
+	bite_attack_right_sprite.visible = !boolean
+	bite_attack_right_collider.set_deferred("disabled", boolean)
+	bite_attack_left_sprite.visible = !boolean
+	bite_attack_left_collider.set_deferred("disabled", boolean)
+	
 func _ready():
+	hit_points = max_hit_points
+	AudioManager.stop_laser_sound()
+	hide_appendages(true)
 	RIGHT_DROPS = [
 		$RightDrop1,
 		$RightDrop2,
@@ -91,6 +116,9 @@ func _physics_process(delta):
 
 # Enter states
 func enter_idle():
+	#funky_tail_sprite.visible = true
+	#funky_tail_collider.set_deferred("disabled", false)
+	hide_appendages(false)
 	state_timer.start()
 	state = IDLE
 	collider.set_deferred("disabled", false)
@@ -109,9 +137,19 @@ func enter_hurt():
 	CameraShaker.add_trauma(0.5)
 	head_sprite.animation = "Hurt"
 	tail_sprite.animation = "Hurt"
+	tail_sprite.speed_scale = 1 +  2 * (max_hit_points - hit_points) / max_hit_points
 	
 func enter_dead():
+	game_over_timer.start()
 	state = DEAD
+	animation_player.stop()
+	head_sprite.animation = "Die"
+	tail_sprite.speed_scale = 1
+	tail_sprite.animation = "Die"
+	AudioManager.stop_music()
+	AudioManager.play_aphopis_die_sound()
+	CameraShaker.add_trauma(0.5)
+	CameraShaker.add_trauma(0.5)
 	
 func enter_telegraph():
 	tail_sprite.animation = "Idle"
@@ -145,6 +183,8 @@ func enter_tail_attack():
 func enter_bite():
 	state = BITE_ATTACK
 	bite_timer.start()
+	AudioManager.play_aphopis_bite_sound()
+	CameraShaker.add_trauma(0.3)
 	if attack_direction < 0:
 		animation_player.play("BiteAttackLeft")
 	else:
@@ -192,12 +232,12 @@ func update_telegraph_lazer(delta):
 		var movement = Vector2.DOWN * move_speed * delta * 1.5
 		lazer_sprite.position += movement
 	else:	
-		var movement = Vector2.LEFT * move_speed * delta * 2
+		var movement = Vector2(-1, 0.5) * move_speed * delta * 2
 		head_sprite.position += movement
 		
 func update_exit_lazer(delta):
 	if lazer_telegraph_second_face:
-		var movement = Vector2.LEFT * move_speed * delta * 2
+		var movement = Vector2(-1, 0.5) * move_speed * delta * 2
 		head_sprite.position -= movement
 	else:
 		var movement = Vector2.DOWN * move_speed * delta * 1.5
@@ -229,7 +269,11 @@ func show_sprites():
 	tail_sprite.visible = true
 	
 func hurt():
-	if hit_points - 1 <= 0:
+	if hit_points == 1:
+		hit_points = 0.5
+		enter_hurt()
+	elif hit_points == 0.5:
+		hit_points = 0
 		enter_dead()
 	else:
 		hit_points -= 1
@@ -237,27 +281,29 @@ func hurt():
 	
 	print("hit points:", hit_points)
 	
-func spawn_rock_right():
+func spawn_rock_right(added_height = false):
 	if RIGHT_DROPS.size() > 0:
 		var random_index = randi() % RIGHT_DROPS.size()
-		spawn_rock_at(RIGHT_DROPS[random_index])
+		spawn_rock_at(RIGHT_DROPS[random_index], added_height)
 		
-func spawn_rock_left():
+func spawn_rock_left(added_height = false):
 	if LEFT_DROPS.size() > 0:
 		var random_index = randi() % LEFT_DROPS.size()
-		spawn_rock_at(LEFT_DROPS[random_index])
+		spawn_rock_at(LEFT_DROPS[random_index], added_height)
 
 func spawn_random_rock():
 	var rand = randi() % 2
 	match rand:
 		0:
-			spawn_rock_right()
+			spawn_rock_right(true)
 		1:
-			spawn_rock_left()
+			spawn_rock_left(true)
 			
-func spawn_rock_at(drop_node):
+func spawn_rock_at(drop_node, added_height = false):
 	var rock_instance = rock_object.instance()
 	drop_node.add_child(rock_instance)
+	if added_height:
+		rock_instance.position.y -= 50
 	rock_instance.scale = Vector2(0.5, 0.5)
 	CameraShaker.add_trauma(0.7)
 	AudioManager.play_random_explosion_sound()
@@ -283,29 +329,35 @@ func lazer_switching():
 		CameraShaker.add_trauma(0.5)
 		lazer_beam_1.activate(true)
 		lazer_beam_2.activate(false)
+		AudioManager.play_laser_sound()
 		yield(get_tree().create_timer(1.0), "timeout")
 
 		lazer_beam_1.activate(false)
 		lazer_beam_2.activate(false)
+		AudioManager.stop_laser_sound()
 		yield(get_tree().create_timer(0.5), "timeout")
 		
 		CameraShaker.add_trauma(0.5)
 		lazer_beam_1.activate(false)
 		lazer_beam_2.activate(true)
+		AudioManager.play_laser_sound()
 		yield(get_tree().create_timer(1.0), "timeout")
 		
 		lazer_beam_1.activate(false)
 		lazer_beam_2.activate(false)
+		AudioManager.stop_laser_sound()
 		yield(get_tree().create_timer(0.7), "timeout")
 		
 		CameraShaker.add_trauma(0.7)
 		spawn_random_rock()
 		lazer_beam_1.activate(true)
 		lazer_beam_2.activate(true)
+		AudioManager.play_laser_sound()
 		yield(get_tree().create_timer(1.0), "timeout")
 		
 		lazer_beam_1.activate(false)
 		lazer_beam_2.activate(false)
+		AudioManager.stop_laser_sound()
 		yield(get_tree().create_timer(1), "timeout")
 		
 		lazer_active = false
@@ -317,7 +369,15 @@ func update_player_history():
 	while player_history.size() > HISTORY_LENGTH:
 		player_history.remove(0)
 		
+func hit_body(body):
+	if body is Player:
+		body.die()
+	if body is ThrowableRock:
+		body.destroy()
+	AudioManager.play_random_explosion_sound()
+	
 func _on_AnimatedSprite_animation_finished():
+	if state == DEAD: return
 	if state == HURT:
 		enter_idle()
 
@@ -345,14 +405,9 @@ func _on_HitareaRight_body_entered(body):
 func _on_HitareaLeft_body_entered(body):
 	hit_body(body)
 	
-func hit_body(body):
-	if body is Player:
-		body.die()
-	if body is ThrowableRock:
-		body.destroy()
-	AudioManager.play_random_explosion_sound()
-
 func _on_StateTimer_timeout():
+	if state == DEAD: return
+	if state == HURT: return
 	state_timer.wait_time = rand_range(1, 4)
 	select_attack_state()
 
@@ -385,3 +440,6 @@ func _on_LazerTelegraphTimer_timeout():
 			
 		lazer_telegraph_second_face = true
 		lazer_telegraph_timer.start()
+
+func _on_GameOverTimer_timeout():
+	Events.emit_signal("stage_cleared")

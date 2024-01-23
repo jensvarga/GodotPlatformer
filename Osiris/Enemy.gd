@@ -23,6 +23,7 @@ func apply_gravity(delta):
 
 func attack(body):
 	pass
-
+ 
 func _on_player_died():
 	pass
+

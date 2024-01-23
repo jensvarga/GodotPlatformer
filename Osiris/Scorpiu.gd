@@ -10,6 +10,7 @@ onready var hitbox = $Hitbox
 onready var sprite: = $AnimatedSprite
 onready var hurt_area_collision: = $HurtArea/CollisionShape2D
 onready var hitbox_collision = $Hitbox/CollisionShape2D
+onready var remove_timer := $RemoveTimer
 
 var rng = RandomNumberGenerator.new()
 var freeze = false
@@ -71,6 +72,7 @@ func die():
 	sprite.animation = "Dead"
 	velocity.y = DEATH_BOUNCE
 	random_spinn = rng.randi_range(0, 45)
+	remove_timer.start()
 	
 func disable_colliders():
 	hitbox_collision.set_deferred("disabled", true)
@@ -81,3 +83,7 @@ func _on_Area2D_body_entered(body):
 	if body is Scarabu:
 		if body.state == body.KICKED:
 			die()
+
+
+func _on_RemoveTimer_timeout():
+	queue_free()

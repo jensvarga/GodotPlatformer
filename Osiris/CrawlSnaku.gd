@@ -5,6 +5,7 @@ var freeze = false
 var has_hit_wall = false
 
 onready var sprite: = $AnimatedSprite
+onready var remove_timer := $RemoveTimer
 
 func _ready():
 	direction.x *= scale.x
@@ -43,6 +44,7 @@ func die():
 	$Hitbox/CollisionShape2D.set_deferred("disabled", true)
 	$Hurtbox/CollisionShape2D.set_deferred("disabled", true)
 	$CollisionShape2D.set_deferred("disabled", true)
+	remove_timer.start()
 	
 func _on_Hurtbox_body_entered(body):
 	if body is Player:
@@ -54,3 +56,7 @@ func _on_Hitbox_body_entered(body):
 		freeze = true
 		sprite.animation = "Attack"
 		body.die()
+
+
+func _on_RemoveTimer_timeout():
+	queue_free()

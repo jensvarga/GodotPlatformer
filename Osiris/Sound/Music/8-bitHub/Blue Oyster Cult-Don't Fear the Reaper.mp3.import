@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Blue Oyster Cult-Don't Fear the Reaper.mp3-d877bffb160bb608391c94e3f0e70b06.mp3str"
+
+[deps]
+
+source_file="res://Sound/Music/8-bitHub/Blue Oyster Cult-Don't Fear the Reaper.mp3"
+dest_files=[ "res://.import/Blue Oyster Cult-Don't Fear the Reaper.mp3-d877bffb160bb608391c94e3f0e70b06.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -4,6 +4,7 @@ onready var sprite: = $AnimatedSprite
 onready var attack_timer: = $AttackTimer
 onready var hitbox_collider_right: = $Hitbox/CollisionShape2DRight
 onready var hitbox_collider_left: = $Hitbox/CollisionShape2DLeft
+onready var remove_timer := $RemoveTimer
 
 var player
 var player_position = Vector2.ZERO
@@ -85,6 +86,7 @@ func update_aim():
 func update_dead(delta):
 	apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
+	remove_timer.start()
 	
 func apply_gravity(delta):
 	velocity.y += gravity * delta
@@ -140,3 +142,7 @@ func _on_Hurtbox_body_entered(body):
 	if body is Player:
 		body.bounce(bounce_strenght)
 		die()
+
+
+func _on_RemoveTimer_timeout():
+	queue_free()

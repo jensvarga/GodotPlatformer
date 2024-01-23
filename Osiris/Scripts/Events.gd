@@ -11,6 +11,8 @@ var check_point_reached = false
 var stage = 0
 var death_counter = 0
 
+var unlocked_level_2 = false
+
 func _ready():
 	Events.connect("player_died", self, "_on_player_died")
 	

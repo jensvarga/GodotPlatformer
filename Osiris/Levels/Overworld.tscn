@@ -1,0 +1,172 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://OverworldTree.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/Overworld/overworld_pyramid.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Overworld/yellow_pyramid.png" type="Texture" id=3]
+[ext_resource path="res://RoadTiles.tscn" type="PackedScene" id=4]
+[ext_resource path="res://OverworldPlayer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/Overworld/overworld.png" type="Texture" id=6]
+[ext_resource path="res://Overworld.gd" type="Script" id=7]
+[ext_resource path="res://Sprites/Overworld/overworld_mountain.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Overworld/overworld_waves.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Overworld/overworld_dune.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Overworld/overworld_obelisk.png" type="Texture" id=11]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -136, -119, 0, 0, 0, 0, -136, -119, 0, 0, 0, 0, -136, -119, 0, 0, 0, 0, -136, -119, 0, 0, 0, 0, -136, -119, -3.04034, 1.32189, 3.04034, -1.32189, -72, -119, 0, 0, 0, 0, -72, -167 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "1-2"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Path2D/PathFollow2D:unit_offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Path2D/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 9 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 9 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 9 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 3.0
+} ]
+
+[node name="Overworld" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="Map" type="Sprite" parent="."]
+position = Vector2( 151, -175 )
+texture = ExtResource( 6 )
+offset = Vector2( -152, 174 )
+
+[node name="RoadTiles" parent="." instance=ExtResource( 4 )]
+tile_data = PoolIntArray( -851981, 0, 65537, -851970, 0, 65537, -786446, 0, 65536, -786445, 0, 2, -786444, 536870912, 65536, -786437, 0, 5, -786436, 0, 65541, -786435, 0, 65541, -786434, 0, 2, -786433, 0, 65541, -851968, 0, 65541, -851967, 0, 6, -720909, 0, 65542, -720901, 0, 65542, -720898, 0, 65539, -786431, 0, 4, -786424, 0, 65537, -655373, 0, 4, -655366, 0, 131072, -655365, 0, 131075, -655364, 0, 131074, -720896, 0, 65536, -720895, 0, 2, -720894, 0, 0, -720893, 0, 0, -720892, 0, 0, -720891, 0, 0, -720890, 0, 0, -720889, 0, 0, -720888, 0, 2, -720887, 536870912, 65536, -589837, 0, 65542, -589829, 0, 65542, -655359, 0, 4, -655352, 0, 65539, -524301, 0, 4, -524297, 0, 65537, -524293, 0, 4, -589823, 0, 4, -458765, 0, 131077, -458764, 0, 65541, -458763, 0, 65541, -458762, 0, 65541, -458761, 0, 1, -458760, 0, 65541, -458759, 0, 65541, -458758, 0, 65541, -458757, 0, 131078, -524287, 0, 4, -393225, 0, 65542, -458751, 0, 4, -327689, 0, 65542, -393215, 0, 4, -262156, 0, 65537, -262153, 0, 65542, -327679, 0, 4, -196621, 0, 65536, -196620, 0, 2, -196619, 0, 65541, -196618, 0, 65541, -196617, 0, 131078, -262143, 0, 4, -131084, 0, 65539, -196607, 0, 4, -131071, 0, 4, -131069, 0, 65537, -65535, 0, 131077, -65534, 0, 65541, -65533, 0, 2, -65532, 536870912, 65536, 3, 0, 65539 )
+
+[node name="YellowPyramid" type="Sprite" parent="."]
+position = Vector2( -80, -176 )
+texture = ExtResource( 3 )
+offset = Vector2( 8, 8 )
+
+[node name="LevelSprite" type="Sprite" parent="."]
+
+[node name="Pyrmid" type="Sprite" parent="."]
+position = Vector2( -72, -179 )
+texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -15, -107 )
+current = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2( -136, -119 )
+rotation = 0.0203105
+rotate = false
+
+[node name="OverworldPlayer" parent="Path2D/PathFollow2D" instance=ExtResource( 5 )]
+position = Vector2( -0.243713, -11.9975 )
+rotation = -0.0203105
+frame = 0
+
+[node name="OverworldTree" parent="." instance=ExtResource( 1 )]
+position = Vector2( 80, -43 )
+
+[node name="OverworldTree2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 12, -30 )
+
+[node name="OverworldTree3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 85, 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/1-2 = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+
+[node name="Mountain" type="Sprite" parent="."]
+position = Vector2( 111, -194 )
+texture = ExtResource( 8 )
+
+[node name="Mountain2" type="Sprite" parent="."]
+position = Vector2( 133, -102 )
+texture = ExtResource( 8 )
+
+[node name="Mountain3" type="Sprite" parent="."]
+position = Vector2( 163, -198 )
+texture = ExtResource( 8 )
+
+[node name="Mountain4" type="Sprite" parent="."]
+position = Vector2( 122, -152 )
+texture = ExtResource( 8 )
+
+[node name="WaveSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 176, 0 )
+frames = SubResource( 8 )
+frame = 3
+playing = true
+
+[node name="WaveSprite2" type="AnimatedSprite" parent="."]
+position = Vector2( -96, -224 )
+frames = SubResource( 8 )
+frame = 2
+playing = true
+
+[node name="WaveSprite3" type="AnimatedSprite" parent="."]
+position = Vector2( -16, -240 )
+frames = SubResource( 8 )
+frame = 2
+playing = true
+
+[node name="OvweworldDune" type="Sprite" parent="."]
+position = Vector2( -224, -96 )
+texture = ExtResource( 10 )
+
+[node name="OvweworldDune2" type="Sprite" parent="."]
+position = Vector2( -144, -48 )
+texture = ExtResource( 10 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -208, -48 )
+texture = ExtResource( 11 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

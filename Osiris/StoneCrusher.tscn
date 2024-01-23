@@ -51,7 +51,7 @@ curve = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2( 0, -13.3307 )
+position = Vector2( 0, -13.3312 )
 offset = 239.624
 rotate = false
 
@@ -82,4 +82,9 @@ anims/Stomp = SubResource( 3 )
 position = Vector2( 1, -101 )
 scale = Vector2( 31.45, 40.05 )
 
+[node name="ActivationTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="body_entered" from="PathFollow2D/Hittbox" to="." method="_on_Hittbox_body_entered"]
+[connection signal="timeout" from="ActivationTimer" to="." method="_on_ActivationTimer_timeout"]

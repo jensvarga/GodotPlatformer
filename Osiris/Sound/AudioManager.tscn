@@ -40,3 +40,6 @@ bus = "Effects"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MusicPlayer"]
 bus = "Music"
+
+[node name="LaserPlayer" type="AudioStreamPlayer" parent="."]
+bus = "Effects"

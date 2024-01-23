@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/aphopis_bite.wav-d8f369cc6a57d95c814a3bc7c71b40f2.sample"
+
+[deps]
+
+source_file="res://Sound/FX/MISC/aphopis_bite.wav"
+dest_files=[ "res://.import/aphopis_bite.wav-d8f369cc6a57d95c814a3bc7c71b40f2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

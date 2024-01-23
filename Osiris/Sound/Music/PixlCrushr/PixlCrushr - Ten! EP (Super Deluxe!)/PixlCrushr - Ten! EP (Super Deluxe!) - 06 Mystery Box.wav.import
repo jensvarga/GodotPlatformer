@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PixlCrushr - Ten! EP (Super Deluxe!) - 06 Mystery Box.wav-2ef84300ffcdb7102574cde747e68888.sample"
+
+[deps]
+
+source_file="res://Sound/Music/PixlCrushr/PixlCrushr - Ten! EP (Super Deluxe!)/PixlCrushr - Ten! EP (Super Deluxe!) - 06 Mystery Box.wav"
+dest_files=[ "res://.import/PixlCrushr - Ten! EP (Super Deluxe!) - 06 Mystery Box.wav-2ef84300ffcdb7102574cde747e68888.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

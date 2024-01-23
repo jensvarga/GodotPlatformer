@@ -39,6 +39,7 @@ func _on_checkpoint_reached():
 func _on_stage_cleared():
 	stage_cleared = true
 	Events.check_point_reached = false
+	Events.unlocked_level_2 = true
 	Transition.play_exit_transition()
 	
 func spawn_player():
@@ -61,4 +62,5 @@ func _on_transition_started():
 func _on_transition_completed():
 	if not stage_cleared: return
 	if next_level_path == null: return
+	AudioManager.current_level = 0
 	get_tree().change_scene(next_level_path)
