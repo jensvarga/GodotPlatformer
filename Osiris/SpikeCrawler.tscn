@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Sprites/spiku.png" type="Texture" id=1]
+[ext_resource path="res://SpikeCrawler.gd" type="Script" id=2]
+
+[sub_resource type="Curve2D" id=8]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -25.6389, -1.90735e-06, 0, 0, 0, 0, -25.6389, 52.8429, 0, 0, 0, 0, 25.6389, 52.8429, 0, 0, 0, 0, 25.6389, -1.90735e-06, 0, 0, 0, 0, -25.6389, -1.90735e-06 )
+}
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 10.1961, 9.86116 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "Loop"
+length = 20.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 20 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[node name="SpikeCrawler" type="Path2D"]
+position = Vector2( -0.450703, 0.0408163 )
+scale = Vector2( 1.01408, 1.04082 )
+curve = SubResource( 8 )
+script = ExtResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( -25.6389, -1.90735e-06 )
+rotation = 1.5708
+scale = Vector2( -1, -1 )
+cubic_interp = false
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="PathFollow2D"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D/KinematicBody2D"]
+frames = SubResource( 4 )
+animation = "Walk"
+frame = 1
+playing = true
+
+[node name="Area2D" type="Area2D" parent="PathFollow2D/KinematicBody2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/KinematicBody2D/Area2D"]
+position = Vector2( 0.411753, 1.43048 )
+shape = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Loop"
+anims/Loop = SubResource( 6 )
+anims/RESET = SubResource( 7 )
+
+[connection signal="body_entered" from="PathFollow2D/KinematicBody2D/Area2D" to="." method="_on_Area2D_body_entered"]

@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready():
-	AudioManager.play_africa()
+	AudioManager.play_victori()
 	Transition.play_start_transition()
 	
 func _process(delta):

@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Sprites/slime_blob.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/slime_particle.png" type="Texture" id=2]
+[ext_resource path="res://SlimeBall.gd" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0.0158371, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.39643 ), -1.38411, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0.00761421, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.511748, 0.511748, 0.511748, 1 )
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 7.0
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 8, 8 )
+
+[node name="SlimeBall" type="RigidBody2D"]
+z_index = 31
+collision_layer = 0
+collision_mask = 256
+gravity_scale = 3.0
+script = ExtResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 4 )
+playing = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 0, -5 )
+amount = 10
+texture = ExtResource( 2 )
+emission_shape = 1
+emission_sphere_radius = 5.0
+spread = 180.0
+gravity = Vector2( 0, 5 )
+initial_velocity = 12.0
+initial_velocity_random = 0.46
+orbit_velocity = 0.5
+orbit_velocity_random = 0.56
+scale_amount_random = 0.5
+scale_amount_curve = SubResource( 5 )
+color_ramp = SubResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 7 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 258
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 8 )
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

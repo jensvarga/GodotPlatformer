@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Labbed - Labhits 2015 - 03 Water Safety.wav-5a544a3a1d0e2ea792dc5609ed9cf82d.sample"
+
+[deps]
+
+source_file="res://Sound/Music/Labbed/Labbed - Labhits 2015/Labbed - Labhits 2015 - 03 Water Safety.wav"
+dest_files=[ "res://.import/Labbed - Labhits 2015 - 03 Water Safety.wav-5a544a3a1d0e2ea792dc5609ed9cf82d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

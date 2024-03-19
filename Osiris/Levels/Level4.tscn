@@ -1,0 +1,815 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://DesertTiles.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=2]
+[ext_resource path="res://FallingPlatform.tscn" type="PackedScene" id=3]
+[ext_resource path="res://TileMap.tscn" type="PackedScene" id=4]
+[ext_resource path="res://WaterBlock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://DeathArea.gd" type="Script" id=6]
+[ext_resource path="res://Turtle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://AnimationTrigger.gd" type="Script" id=8]
+[ext_resource path="res://Scarabu.tscn" type="PackedScene" id=9]
+[ext_resource path="res://WaterGate.tscn" type="PackedScene" id=10]
+[ext_resource path="res://FlyingScarabu.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Sprites/bubble.png" type="Texture" id=12]
+[ext_resource path="res://Bubbles.gd" type="Script" id=13]
+[ext_resource path="res://Sprites/river_bg.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/clouds.png" type="Texture" id=15]
+[ext_resource path="res://ScrollingParallaxBackground.gd" type="Script" id=16]
+[ext_resource path="res://Frogger.tscn" type="PackedScene" id=17]
+[ext_resource path="res://SpikeCrawler.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scorpiu.tscn" type="PackedScene" id=19]
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 2
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 784, 180 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 2
+atlas = ExtResource( 14 )
+region = Rect2( 784, 0, 784, 180 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 2
+atlas = ExtResource( 14 )
+region = Rect2( 1568, 0, 784, 180 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2194, 49 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "SwimPath"
+length = 50.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 50 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.01, 0.98 ]
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 49.5, 5.5 )
+
+[sub_resource type="Curve2D" id=4]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -1, -1, 0, 0, 0, 0, 149, 2, 0, 0, 0, 0, 262, -4, -17.0891, -3.54679, 17.0891, 3.54679, 351, 1, 0, 0, 0, 0, 438, 22, 0, 0, 0, 0, 482, 21, 0, 0, 0, 0, 559, 19, -17.4032, 3.05213, 17.4032, -3.05213, 585, -1, -20.5059, -3.68055, 20.5059, 3.68055, 752, 0, 0, 0, 0, 0, 808, 20, 0, 0, 0, 0, 938, 18, 0, 0, 0, 0, 986, 0, 0, 0, 0, 0, 1159, 0, 0, 0, 0, 0, 1231, 3, 0, 0, 0, 0, 1348, 5, 0, 0, 0, 0, 1415, 6, 0, 0, 0, 0, 1475, 6, 0, 0, 0, 0, 1584, 6, 0, 0, 0, 0, 1695, 4, 0, 0, 0, 0, 1745, 3, 0, 0, 0, 0, 1804, 1, 0, 0, 0, 0, 1846, 7, 0, 0, 0, 0, 1871, 19, 0, 0, 0, 0, 1889, 34, 0, 0, 0, 0, 1916, 45, 0, 0, 0, 0, 2070, 45, 0, 0, 0, 0, 2134, 42, 0, 0, 0, 0, 2174, 27, 0, 0, 0, 0, 2206, 2, 0, 0, 0, 0, 2244, 1, 0, 0, 0, 0, 2296, 42, 0, 0, 0, 0, 2441, 42, 0, 0, 0, 0, 2544, 42, 0, 0, 0, 0, 2585, 7, 0, 0, 0, 0, 2645, 8, 0, 0, 0, 0, 2765, 6, 0, 0, 0, 0, 2816, 2, 0, 0, 0, 0, 2943, 5, 0, 0, 0, 0, 3004, 4, 0, 0, 0, 0, 3145, 4, 0, 0, 0, 0, 3319, 2, 0, 0, 0, 0, 3388, 3, 0, 0, 0, 0, 3643, 6, 0, 0, 0, 0, 3643, 6 )
+}
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 39, 22.5 )
+
+[sub_resource type="Curve2D" id=11]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -283.015, 108.568, 0, 0, 0, 0, 25.6392, 108.568, 0, 0, 0, 0, 25.6392, -1.92156, 0, 0, 0, 0, -282.029, -2.88234, 0, 0, 0, 0, -283.015, 108.568 )
+}
+
+[sub_resource type="Curve2D" id=15]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -283.015, -1.92156, 0, 0, 0, 0, -283.015, 110.49, 0, 0, 0, 0, 25.6392, 110.49, 0, 0, 0, 0, 24.6533, -0.960781, 0, 0, 0, 0, -283.015, -1.92156 )
+}
+
+[sub_resource type="Curve2D" id=13]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 25.6389, -1.90735e-06, 0, 0, 0, 0, -279.612, 0.921566, 0, 0, 0, 0, -282.571, 108.529, 0, 0, 0, 0, 26.083, 108.529, 0, 0, 0, 0, 25.6389, -1.90735e-06 )
+}
+
+[sub_resource type="Curve2D" id=14]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 26.083, 108.529, 0, 0, 0, 0, 26.0835, -0.0392151, 0, 0, 0, 0, -278.626, 1.88235, 0, 0, 0, 0, -280.598, 110.451, 0, 0, 0, 0, 26.083, 108.529 )
+}
+
+[node name="Level4" instance=ExtResource( 2 )]
+level_index = 4
+sky_color = Color( 0.341176, 0.835294, 1, 1 )
+
+[node name="TestSpawn" parent="." index="3"]
+position = Vector2( 4250, 0 )
+
+[node name="Camera2D" parent="PlayerRoot/Anchor" index="0"]
+limit_left = -100
+limit_top = -150
+limit_right = 5400
+
+[node name="ScrollingParallaxBackground" type="ParallaxBackground" parent="." index="5"]
+offset = Vector2( 0, -100 )
+transform = Transform2D( 1, 0, 0, 1, 0, -100 )
+follow_viewport_enable = true
+follow_viewport_scale = 0.2
+script = ExtResource( 16 )
+scroll_speed = 16
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ScrollingParallaxBackground" index="0"]
+position = Vector2( 0, -195 )
+motion_scale = Vector2( -1, 1 )
+motion_mirroring = Vector2( 5505, 0 )
+
+[node name="Sprite" type="Sprite" parent="ScrollingParallaxBackground/ParallaxLayer3" index="0"]
+position = Vector2( -15, -515 )
+texture = ExtResource( 15 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 16512, 1140 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="6"]
+follow_viewport_enable = true
+
+[node name="RiverBG" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
+position = Vector2( -129, -134 )
+motion_scale = Vector2( -0.98, -0.6 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/RiverBG" index="0"]
+frames = SubResource( 10 )
+frame = 1
+playing = true
+
+[node name="TileMap" parent="." index="7" instance=ExtResource( 4 )]
+tile_data = PoolIntArray( -196542, 0, 327680, -196534, 0, 393216, -196533, 536870912, 393217, -196532, 0, 393217, -196531, 536870912, 393217, -196530, 536870912, 393216, -196521, 0, 393216, -196520, 536870912, 393217, -196519, 536870912, 393217, -196518, 536870912, 393216, -131006, 0, 327680, -130999, 0, 327680, -130998, 536870912, 393221, -130997, 536870912, 393221, -130996, 536870912, 393221, -130995, 536870912, 393221, -130994, 536870912, 393221, -130993, 536870912, 262148, -130992, 536870912, 393217, -130991, 536870912, 393217, -130990, 536870912, 393217, -130989, 536870912, 393217, -130988, 536870912, 393217, -130987, 536870912, 393217, -130986, 0, 262148, -130985, 536870912, 262149, -130984, 536870912, 262149, -130983, 536870912, 262149, -130982, 536870912, 262149, -130981, 536870912, 262147, -65470, 0, 327680, -65463, 0, 393220, -65462, 0, 262152, -65461, 0, 393222, -65460, 536870912, 327680, -65459, 536870912, 327685, -65458, 0, 262152, -65457, 536870912, 262149, -65456, 536870912, 262149, -65455, 0, 262149, -65454, 0, 262149, -65453, 0, 262149, -65452, 0, 262149, -65451, 0, 262149, -65450, 536870912, 262149, -65449, 536870912, 262152, -65448, 536870912, 262149, -65447, 536870912, 262149, -65446, 536870912, 262152, -65445, 536870912, 393220, 59, 0, 393216, 60, 0, 393218, 61, 0, 393218, 62, 0, 393218, 66, 536870912, 393219, 67, 536870912, 393218, 68, 0, 393219, 73, 0, 393220, 74, 0, 327688, 75, 536870912, 327685, 76, 0, 327680, 77, 0, 327685, 78, 0, 327688, 79, 536870912, 393220, 86, 0, 393220, 87, 536870912, 327688, 88, 536870912, 262149, 89, 536870912, 262149, 90, 536870912, 327688, 91, 536870912, 393220, 65609, 0, 393220, 65610, 0, 393224, 65611, 536870912, 262148, 65612, 0, 262145, 65613, 0, 262148, 65614, 0, 393224, 65615, 536870912, 393220, 65622, 0, 393220, 65623, 536870912, 393224, 65624, 0, 262149, 65625, 0, 262149, 65626, 536870912, 393224, 65627, 536870912, 393220, 196611, 1610612736, 9, 196612, 1610612736, 9, 196613, 1610612736, 9, 196614, 1610612736, 9, 196615, 1610612736, 9, 196616, 1610612736, 9, 196617, 1610612736, 9, 196618, 1610612736, 9, 196619, 1610612736, 9, 196620, 1610612736, 9, 196621, 1610612736, 9, 196622, 1610612736, 9, 196623, 1610612736, 9, 196624, 1610612736, 9, 196625, 1610612736, 9, 196626, 1610612736, 9, 196627, 1610612736, 9, 196628, 1610612736, 9, 196629, 1610612736, 9, 196630, 1610612736, 9, 196631, 1610612736, 9, 196632, 1610612736, 9, 196633, 1610612736, 9, 196634, 1610612736, 9, 196635, 1610612736, 9, 196636, 1610612736, 9, 196637, 1610612736, 9, 196638, 1610612736, 9, 196639, 1610612736, 9, 196640, 1610612736, 9, 196641, 1610612736, 9, 196642, 1610612736, 9, 196643, 1610612736, 9, 196644, 1610612736, 9, 196645, 1610612736, 9, 196646, 1610612736, 9, 196647, 1610612736, 9, 196648, 1610612736, 9, 196649, 1610612736, 9, 196650, 1610612736, 9, 196651, 1610612736, 9, 196652, 1610612736, 9, 196653, 1610612736, 9, 196654, 1610612736, 9, 196655, 1610612736, 9, 196656, 1610612736, 9, 196657, 1610612736, 9, 196658, 1610612736, 9, 196659, 1610612736, 9, 196660, 1610612736, 9, 196661, 1610612736, 9, 196662, 1610612736, 9, 196663, 1610612736, 9, 196664, 1610612736, 9, 196665, 1610612736, 9, 196666, 1610612736, 9, 196667, 1610612736, 9, 196668, 1610612736, 9, 196669, 1610612736, 9, 196670, 1610612736, 9, 196671, 1610612736, 9, 196672, 1610612736, 9, 196673, 1610612736, 9, 196674, 1610612736, 9, 196675, 1073741824, 9, 196676, 1073741824, 9, 196677, 1073741824, 9, 196678, 1073741824, 9, 196679, 1073741824, 9, 196680, 1073741824, 9, 196681, 1073741824, 9, 196682, 1073741824, 9, 196683, 1073741824, 9, 196684, 1073741824, 9, 196685, 1073741824, 9, 196686, 1073741824, 9, 196687, 1073741824, 9, 196688, 1073741824, 9, 196689, 1073741824, 9, 196690, 1073741824, 9, 196691, 1073741824, 9, 196692, 1073741824, 9, 196693, 1073741824, 9, 196694, 1073741824, 9, 196695, 1073741824, 9, 196696, 1073741824, 9, 196697, 1073741824, 9, 196698, 1073741824, 9, 196699, 1073741824, 9, 196700, 1073741824, 9, 196701, 1073741824, 9, 196702, 1073741824, 9, 196703, 1073741824, 9, 196704, 1073741824, 9, 196705, 1073741824, 9, 196706, 1073741824, 9, 196707, 1073741824, 9, 196708, 1073741824, 9, 196709, 1073741824, 9, 196710, 1073741824, 9, 196711, 1073741824, 9, 196712, 1073741824, 9, 196713, 1073741824, 9, 196714, 1073741824, 9, 196715, 1073741824, 9, 196716, 1073741824, 9, 196717, 1073741824, 9, 196718, 1073741824, 9, 196719, 1073741824, 9, 196720, 1073741824, 9, 196721, 1073741824, 9, 196722, 1073741824, 9, 196723, 1073741824, 9, 196724, 1073741824, 9, 196725, 1073741824, 9, 196726, 1073741824, 9, 196727, 1073741824, 9, 196728, 1073741824, 9, 196729, 1073741824, 9, 196730, 1073741824, 9, 196731, 1073741824, 9, 196732, 1073741824, 9, 196733, 1073741824, 9, 196734, 1073741824, 9, 196735, 1073741824, 9, 196736, 1073741824, 9, 196737, 1073741824, 9, 196747, 536870912, 9, 262147, 1610612736, 9, 262148, 1610612736, 9, 262149, 1610612736, 9, 262150, 1610612736, 9, 262151, 1610612736, 9, 262152, 1610612736, 9, 262153, 1610612736, 9, 262154, 1610612736, 9, 262155, 1610612736, 9, 262156, 1610612736, 9, 262157, 1610612736, 9, 262158, 1073741824, 9, 262159, 1610612736, 9, 262160, 1610612736, 9, 262161, 1610612736, 9, 262162, 1610612736, 9, 262163, 1610612736, 9, 262164, 1610612736, 9, 262165, 1610612736, 9, 262166, 1610612736, 9, 262167, 1610612736, 9, 262168, 1610612736, 9, 262169, 1610612736, 9, 262170, 1610612736, 9, 262171, 1610612736, 9, 262172, 1610612736, 9, 262173, 1610612736, 9, 262174, 1610612736, 9, 262175, 1610612736, 9, 262176, 1610612736, 9, 262177, 1610612736, 9, 262178, 1610612736, 9, 262179, 1610612736, 9, 262180, 1610612736, 9, 262181, 1610612736, 9, 262182, 1610612736, 9, 262183, 1610612736, 9, 262184, 1610612736, 9, 262185, 1610612736, 9, 262186, 1610612736, 9, 262187, 1610612736, 9, 262188, 1610612736, 9, 262189, 1610612736, 9, 262190, 1610612736, 9, 262191, 1610612736, 9, 262192, 1610612736, 9, 262193, 1610612736, 9, 262194, 1610612736, 9, 262195, 1610612736, 9, 262196, 1610612736, 9, 262197, 1610612736, 9, 262198, 1610612736, 9, 262199, 1610612736, 9, 262200, 1610612736, 9, 262201, 1610612736, 9, 262202, 1610612736, 9, 262203, 1610612736, 9, 262204, 1610612736, 9, 262205, 1610612736, 9, 262206, 1610612736, 9, 262207, 1610612736, 9, 262208, 1610612736, 9, 262209, 1610612736, 9, 262210, 1610612736, 9, 262211, 1073741824, 9, 262212, 1073741824, 9, 262213, 1073741824, 9, 262214, 1073741824, 9, 262215, 1073741824, 9, 262216, 1073741824, 9, 262217, 1073741824, 9, 262218, 1073741824, 9, 262219, 1073741824, 9, 262220, 1073741824, 9, 262221, 1073741824, 9, 262222, 1073741824, 9, 262223, 1073741824, 9, 262224, 1073741824, 9, 262225, 1073741824, 9, 262226, 1073741824, 9, 262227, 1073741824, 9, 262228, 1073741824, 9, 262229, 1073741824, 9, 262230, 1073741824, 9, 262231, 1073741824, 9, 262232, 1073741824, 9, 262233, 1073741824, 9, 262234, 1073741824, 9, 262235, 1073741824, 9, 262236, 1073741824, 9, 262237, 1073741824, 9, 262238, 1073741824, 9, 262239, 1073741824, 9, 262240, 1073741824, 9, 262241, 1073741824, 9, 262242, 1073741824, 9, 262243, 1073741824, 9, 262244, 1073741824, 9, 262245, 1073741824, 9, 262246, 1073741824, 9, 262247, 1073741824, 9, 262248, 1073741824, 9, 262249, 1073741824, 9, 262250, 1073741824, 9, 262251, 1073741824, 9, 262252, 1073741824, 9, 262253, 1073741824, 9, 262254, 1073741824, 9, 262255, 1073741824, 9, 262256, 1073741824, 9, 262257, 1073741824, 9, 262258, 1073741824, 9, 262259, 1073741824, 9, 262260, 1073741824, 9, 262261, 1073741824, 9, 262262, 1073741824, 9, 262263, 1073741824, 9, 262264, 1073741824, 9, 262265, 1073741824, 9, 262266, 1073741824, 9, 262267, 1073741824, 9, 262268, 1073741824, 9, 262269, 1073741824, 9, 262270, 1073741824, 9, 262271, 1073741824, 9, 262272, 1073741824, 9, 262273, 1073741824, 9, 262274, 536870912, 9, 262275, 536870912, 9, 262276, 536870912, 9, 262277, 536870912, 9, 262278, 536870912, 9, 262279, 536870912, 9, 262280, 536870912, 9, 262281, 536870912, 9, 262282, 536870912, 9, 262283, 536870912, 9 )
+
+[node name="DesertTiles" parent="." index="8" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -655368, 536870912, 65537, -655367, 536870912, 65537, -655366, 536870912, 65537, -655365, 536870912, 65537, -655364, 536870912, 65537, -655363, 536870912, 65537, -655362, 1610612736, 65536, -589832, 536870912, 65537, -589831, 1610612736, 65537, -589830, 1073741824, 65537, -589829, 1610612736, 65537, -589828, 0, 65537, -589827, 0, 65537, -589826, 536870912, 65536, -524296, 536870912, 65537, -524295, 1610612736, 65537, -524294, 1073741824, 65537, -524293, 1610612736, 65537, -524292, 536870912, 65537, -524291, 0, 65537, -524290, 536870912, 65536, -458760, 536870912, 65537, -458759, 1610612736, 65537, -458758, 1073741824, 65537, -458757, 1610612736, 65537, -458756, 0, 65537, -458755, 0, 65537, -458754, 536870912, 65536, -393224, 536870912, 65537, -393223, 1610612736, 65537, -393222, 1073741824, 65537, -393221, 1610612736, 65537, -393220, 1073741824, 65537, -393219, 536870912, 65537, -393218, 1610612736, 65536, -327688, 536870912, 65537, -327687, 1610612736, 65537, -327686, 1073741824, 65537, -327685, 1610612736, 65537, -327684, 1073741824, 65537, -327683, 1073741824, 65537, -327682, 536870912, 65536, -262152, 536870912, 65537, -262151, 1610612736, 65537, -262150, 1073741824, 65537, -262149, 1610612736, 65537, -262148, 536870912, 65537, -262147, 536870912, 65537, -262146, 536870912, 65536, -196616, 536870912, 65537, -196615, 1610612736, 65537, -196614, 1073741824, 65537, -196613, 1610612736, 65537, -196612, 1073741824, 65537, -196611, 1073741824, 65537, -196610, 1610612736, 65536, -131080, 536870912, 65537, -131079, 1610612736, 65537, -131078, 1073741824, 65537, -131077, 1610612736, 65537, -131076, 1073741824, 65537, -131075, 536870912, 65537, -131074, 536870912, 65536, -196570, 0, 9, -196568, 0, 11, -196567, 536870912, 11, -196566, 0, 65543, -196468, 0, 65543, -196467, 536870912, 11, -196466, 0, 11, -196465, 536870912, 65547, -196464, 0, 65547, -196463, 536870912, 65547, -196462, 536870912, 65547, -196461, 0, 65547, -196460, 536870912, 65547, -196459, 536870912, 11, -65544, 536870912, 65537, -65543, 1610612736, 65537, -65542, 1073741824, 65537, -65541, 1610612736, 65537, -65540, 536870912, 65537, -65539, 0, 65537, -65538, 1610612736, 65536, -131034, 0, 9, -131030, 0, 65544, -130938, 536870912, 9, -130934, 536870912, 9, -130933, 0, 11, -130932, 1073741824, 65543, -130920, 0, 9, -8, 536870912, 65537, -7, 1610612736, 65537, -6, 1073741824, 65537, -5, 1610612736, 65537, -4, 536870912, 65537, -3, 536870912, 65537, -2, 536870912, 65536, -65498, 0, 11, -65497, 536870912, 65547, -65496, 536870912, 11, -65494, 1073741824, 65543, -65433, 0, 9, -65430, 0, 9, -65427, 0, 131072, -65426, 0, 131073, -65425, 0, 131073, -65424, 536870912, 131073, -65423, 536870912, 131073, -65422, 536870912, 131072, 65528, 536870912, 65537, 65529, 1610612736, 65537, 65530, 1073741824, 65537, 65531, 1610612736, 65537, 65532, 536870912, 65537, 65533, 536870912, 65537, 65534, 1610612736, 65536, 42, 0, 9, 101, 0, 9, 140, 0, 65545, 141, 0, 65546, 142, 536870912, 65546, 143, 0, 65546, 144, 536870912, 65546, 145, 0, 65546, 146, 0, 65546, 147, 536870912, 65546, 148, 536870912, 65546, 149, 536870912, 65546, 150, 536870912, 65546, 151, 536870912, 65545, 131064, 536870912, 65537, 131065, 536870912, 65537, 131066, 536870912, 65537, 131067, 536870912, 65537, 131068, 536870912, 65537, 131069, 536870912, 65537, 131070, 536870912, 10, 131071, 0, 65546, 65536, 0, 65546, 65537, 0, 65546, 65538, 536870912, 65545, 65574, 0, 11, 65575, 536870912, 65547, 65576, 536870912, 65547, 65577, 536870912, 65547, 65578, 536870912, 11, 65666, 0, 65545, 65667, 0, 65546, 65668, 536870912, 65546, 65669, 536870912, 65546, 65670, 0, 65546, 65671, 0, 65546, 65672, 0, 65546, 65673, 536870912, 65546, 65674, 536870912, 65545, 65676, 0, 65536, 65677, 1073741824, 65537, 65678, 1073741824, 65537, 65679, 1073741824, 65537, 65680, 1073741824, 65537, 65681, 1073741824, 65537, 65682, 1073741824, 65537, 65683, 1073741824, 65537, 65684, 1073741824, 65537, 65685, 1073741824, 65537, 65686, 1073741824, 65537, 65687, 536870912, 10, 65688, 536870912, 65546, 65689, 536870912, 65546, 65690, 0, 65546, 65691, 536870912, 65546, 65692, 0, 65546, 65693, 536870912, 65546, 65694, 0, 65546, 65695, 536870912, 65546, 65696, 0, 65546, 65697, 536870912, 65546, 65698, 0, 65546, 65699, 536870912, 65546, 65700, 0, 65546, 65701, 536870912, 65546, 65702, 0, 65546, 65703, 536870912, 65546, 65704, 0, 65546, 65705, 536870912, 65545, 196600, 1610612736, 65537, 196601, 1610612736, 65537, 196602, 1610612736, 65537, 196603, 1610612736, 65537, 196604, 1610612736, 65537, 196605, 1610612736, 65537, 196606, 1073741824, 65537, 196607, 0, 65537, 131072, 536870912, 65537, 131073, 1610612736, 65537, 131074, 536870912, 65536, 131145, 0, 131072, 131146, 536870912, 131073, 131147, 0, 131073, 131148, 536870912, 131073, 131149, 0, 131073, 131150, 0, 131073, 131151, 536870912, 131072, 131158, 0, 131072, 131159, 0, 131073, 131160, 0, 131073, 131161, 0, 131073, 131162, 0, 131073, 131163, 536870912, 131072, 131202, 0, 65536, 131203, 0, 65537, 131204, 1073741824, 65537, 131205, 0, 65537, 131206, 0, 65537, 131207, 0, 65537, 131208, 0, 65537, 131209, 0, 65537, 131210, 536870912, 65536, 131212, 0, 65536, 131213, 536870912, 65537, 131214, 1073741824, 65537, 131215, 0, 65537, 131216, 1073741824, 65537, 131217, 536870912, 65537, 131218, 536870912, 65537, 131219, 536870912, 65537, 131220, 536870912, 65537, 131221, 536870912, 65537, 131222, 536870912, 65537, 131223, 0, 65537, 131224, 0, 65537, 131225, 536870912, 65537, 131226, 0, 65537, 131227, 536870912, 65537, 131228, 0, 65537, 131229, 536870912, 65537, 131230, 0, 65537, 131231, 536870912, 65537, 131232, 0, 65537, 131233, 536870912, 65537, 131234, 0, 65537, 131235, 536870912, 65537, 131236, 0, 65537, 131237, 536870912, 65537, 131238, 0, 65537, 131239, 536870912, 65537, 131240, 536870912, 65537, 131241, 536870912, 65536, 262136, 1610612736, 65537, 262137, 1610612736, 65537, 262138, 1610612736, 65537, 262139, 1610612736, 65537, 262140, 1610612736, 65537, 262141, 536870912, 65537, 262142, 1073741824, 65537, 262143, 0, 65537, 196608, 536870912, 65537, 196609, 1610612736, 65537, 196610, 536870912, 65536, 196738, 0, 65538, 196739, 0, 65539, 196740, 0, 65539, 196741, 536870912, 65539, 196742, 0, 65539, 196743, 536870912, 65539, 196744, 0, 65539, 196745, 0, 65539, 196746, 536870912, 65538, 196748, 0, 65536, 196749, 1073741824, 65537, 196750, 0, 65537, 196751, 536870912, 65537, 196752, 1073741824, 65537, 196753, 536870912, 65537, 196754, 536870912, 65537, 196755, 536870912, 65537, 196756, 536870912, 65537, 196757, 536870912, 65537, 196758, 536870912, 65537, 196759, 0, 65537, 196760, 0, 65537, 196761, 0, 65537, 196762, 536870912, 65537, 196763, 0, 65537, 196764, 536870912, 65537, 196765, 0, 65537, 196766, 536870912, 65537, 196767, 0, 65537, 196768, 536870912, 65537, 196769, 0, 65537, 196770, 536870912, 65537, 196771, 0, 65537, 196772, 536870912, 65537, 196773, 0, 65537, 196774, 536870912, 65537, 196775, 536870912, 65537, 196776, 0, 65537, 196777, 1610612736, 65536, 327672, 1610612736, 65537, 327673, 1610612736, 65537, 327674, 1610612736, 65537, 327675, 1610612736, 65537, 327676, 1610612736, 65537, 327677, 1610612736, 65537, 327678, 1073741824, 65537, 327679, 0, 65537, 262144, 536870912, 65537, 262145, 1610612736, 65537, 262146, 1610612736, 65536, 262284, 0, 65538, 262285, 536870912, 65539, 262286, 536870912, 65539, 262287, 536870912, 65539, 262288, 536870912, 65539, 262289, 0, 65539, 262290, 1073741824, 2, 262291, 0, 65537, 262292, 0, 65537, 262293, 0, 65537, 262294, 0, 65537, 262295, 0, 65537, 262296, 0, 65537, 262297, 536870912, 65537, 262298, 0, 65537, 262299, 1610612736, 2, 262300, 0, 65539, 262301, 0, 65539, 262302, 0, 65539, 262303, 0, 65539, 262304, 0, 65539, 262305, 0, 65539, 262306, 0, 65539, 262307, 0, 65539, 262308, 0, 65539, 262309, 0, 65539, 262310, 0, 65539, 262311, 0, 65539, 262312, 0, 65539, 262313, 536870912, 65538, 393208, 1610612736, 65537, 393209, 1610612736, 65537, 393210, 1610612736, 65537, 393211, 1610612736, 65537, 393212, 1610612736, 65537, 393213, 1073741824, 65537, 393214, 1073741824, 65537, 393215, 0, 65537, 327680, 536870912, 65537, 327681, 1610612736, 65537, 327682, 1610612736, 65536, 327826, 1073741824, 65536, 327827, 1073741824, 65537, 327828, 1073741824, 65537, 327829, 1073741824, 65537, 327830, 1073741824, 65537, 327831, 1073741824, 65537, 327832, 1073741824, 65537, 327833, 1073741824, 65537, 327834, 1073741824, 65537, 327835, 1610612736, 65536, 458744, 1610612736, 65537, 458745, 1610612736, 65537, 458746, 1610612736, 65537, 458747, 1610612736, 65537, 458748, 1610612736, 65537, 458749, 1610612736, 65537, 458750, 1073741824, 65537, 458751, 0, 65537, 393216, 536870912, 65537, 393217, 1610612736, 65537, 393218, 1610612736, 65536, 393362, 0, 65538, 393363, 1073741824, 65537, 393364, 1073741824, 2, 393365, 1073741824, 65537, 393366, 0, 65543, 393367, 536870912, 65547, 393368, 0, 65543, 393369, 1073741824, 65537, 393370, 1610612736, 2, 393371, 536870912, 65538, 458900, 1073741824, 65536, 458901, 1073741824, 65537, 458902, 0, 9, 458903, 536870912, 65547, 458904, 0, 9, 458905, 1073741824, 65537, 458906, 1610612736, 65536, 524436, 0, 65538, 524437, 1073741824, 2, 524438, 0, 11, 524439, 1073741824, 65543, 524440, 536870912, 11, 524441, 1610612736, 2, 524442, 536870912, 65538, 589973, 1073741824, 65536, 589974, 0, 11, 589975, 536870912, 65547, 589976, 536870912, 11, 589977, 1610612736, 65536, 655509, 1073741824, 65536, 655510, 1073741824, 65537, 655511, 1073741824, 65537, 655512, 1610612736, 2, 655513, 536870912, 65538, 721045, 0, 65538, 721046, 0, 65539, 721047, 0, 65539, 721048, 536870912, 65538 )
+
+[node name="FallingPlatform" parent="." index="9" instance=ExtResource( 3 )]
+position = Vector2( 185, -2 )
+
+[node name="FallingPlatform2" parent="." index="10" instance=ExtResource( 3 )]
+position = Vector2( 321, 26 )
+
+[node name="FallingPlatform3" parent="." index="11" instance=ExtResource( 3 )]
+position = Vector2( 858, 60 )
+
+[node name="FallingPlatform4" parent="." index="12" instance=ExtResource( 3 )]
+position = Vector2( 952, 57 )
+
+[node name="FallingPlatform5" parent="." index="13" instance=ExtResource( 3 )]
+position = Vector2( 115, 38 )
+
+[node name="WaterBlocks" type="Node2D" parent="." index="14"]
+position = Vector2( 112, 80 )
+z_index = 1
+
+[node name="WaterBlock" parent="WaterBlocks" index="0" instance=ExtResource( 5 )]
+
+[node name="WaterBlock2" parent="WaterBlocks" index="1" instance=ExtResource( 5 )]
+position = Vector2( 32, 0 )
+
+[node name="WaterBlock3" parent="WaterBlocks" index="2" instance=ExtResource( 5 )]
+position = Vector2( 64, 0 )
+
+[node name="WaterBlock4" parent="WaterBlocks" index="3" instance=ExtResource( 5 )]
+position = Vector2( 96, 0 )
+
+[node name="WaterBlock5" parent="WaterBlocks" index="4" instance=ExtResource( 5 )]
+position = Vector2( 127, 0 )
+
+[node name="WaterBlock6" parent="WaterBlocks" index="5" instance=ExtResource( 5 )]
+position = Vector2( 159, 0 )
+
+[node name="WaterBlock7" parent="WaterBlocks" index="6" instance=ExtResource( 5 )]
+position = Vector2( 191, 0 )
+
+[node name="WaterBlock8" parent="WaterBlocks" index="7" instance=ExtResource( 5 )]
+position = Vector2( 223, 0 )
+
+[node name="WaterBlock9" parent="WaterBlocks" index="8" instance=ExtResource( 5 )]
+position = Vector2( 255, 0 )
+
+[node name="WaterBlock10" parent="WaterBlocks" index="9" instance=ExtResource( 5 )]
+position = Vector2( 287, 0 )
+
+[node name="WaterBlock11" parent="WaterBlocks" index="10" instance=ExtResource( 5 )]
+position = Vector2( 319, 0 )
+
+[node name="WaterBlock12" parent="WaterBlocks" index="11" instance=ExtResource( 5 )]
+position = Vector2( 351, 0 )
+
+[node name="WaterBlock13" parent="WaterBlocks" index="12" instance=ExtResource( 5 )]
+position = Vector2( 382, 0 )
+
+[node name="WaterBlock14" parent="WaterBlocks" index="13" instance=ExtResource( 5 )]
+position = Vector2( 414, 0 )
+
+[node name="WaterBlock15" parent="WaterBlocks" index="14" instance=ExtResource( 5 )]
+position = Vector2( 446, 0 )
+
+[node name="WaterBlock16" parent="WaterBlocks" index="15" instance=ExtResource( 5 )]
+position = Vector2( 478, 0 )
+
+[node name="WaterBlock17" parent="WaterBlocks" index="16" instance=ExtResource( 5 )]
+position = Vector2( 510, 0 )
+
+[node name="WaterBlock18" parent="WaterBlocks" index="17" instance=ExtResource( 5 )]
+position = Vector2( 542, 0 )
+
+[node name="WaterBlock19" parent="WaterBlocks" index="18" instance=ExtResource( 5 )]
+position = Vector2( 574, 0 )
+
+[node name="WaterBlock20" parent="WaterBlocks" index="19" instance=ExtResource( 5 )]
+position = Vector2( 606, 0 )
+
+[node name="WaterBlock21" parent="WaterBlocks" index="20" instance=ExtResource( 5 )]
+position = Vector2( 637, 0 )
+
+[node name="WaterBlock22" parent="WaterBlocks" index="21" instance=ExtResource( 5 )]
+position = Vector2( 669, 0 )
+
+[node name="WaterBlock23" parent="WaterBlocks" index="22" instance=ExtResource( 5 )]
+position = Vector2( 701, 0 )
+
+[node name="WaterBlock24" parent="WaterBlocks" index="23" instance=ExtResource( 5 )]
+position = Vector2( 733, 0 )
+
+[node name="WaterBlock25" parent="WaterBlocks" index="24" instance=ExtResource( 5 )]
+position = Vector2( 765, 0 )
+
+[node name="WaterBlock26" parent="WaterBlocks" index="25" instance=ExtResource( 5 )]
+position = Vector2( 797, 0 )
+
+[node name="WaterBlock27" parent="WaterBlocks" index="26" instance=ExtResource( 5 )]
+position = Vector2( 829, 0 )
+
+[node name="WaterBlock28" parent="WaterBlocks" index="27" instance=ExtResource( 5 )]
+position = Vector2( 861, 0 )
+
+[node name="WaterBlock29" parent="WaterBlocks" index="28" instance=ExtResource( 5 )]
+position = Vector2( 892, 0 )
+
+[node name="WaterBlock30" parent="WaterBlocks" index="29" instance=ExtResource( 5 )]
+position = Vector2( 924, 0 )
+
+[node name="WaterBlock31" parent="WaterBlocks" index="30" instance=ExtResource( 5 )]
+position = Vector2( 956, 0 )
+
+[node name="WaterBlock32" parent="WaterBlocks" index="31" instance=ExtResource( 5 )]
+position = Vector2( 988, 0 )
+
+[node name="WaterBlock33" parent="WaterBlocks" index="32" instance=ExtResource( 5 )]
+position = Vector2( 1020, 0 )
+
+[node name="WaterBlock34" parent="WaterBlocks" index="33" instance=ExtResource( 5 )]
+position = Vector2( 1052, 0 )
+
+[node name="WaterBlock35" parent="WaterBlocks" index="34" instance=ExtResource( 5 )]
+position = Vector2( 1084, 0 )
+
+[node name="WaterBlock36" parent="WaterBlocks" index="35" instance=ExtResource( 5 )]
+position = Vector2( 1116, 0 )
+
+[node name="WaterBlock37" parent="WaterBlocks" index="36" instance=ExtResource( 5 )]
+position = Vector2( 1147, 0 )
+
+[node name="WaterBlock38" parent="WaterBlocks" index="37" instance=ExtResource( 5 )]
+position = Vector2( 1179, 0 )
+
+[node name="WaterBlock39" parent="WaterBlocks" index="38" instance=ExtResource( 5 )]
+position = Vector2( 1211, 0 )
+
+[node name="WaterBlock40" parent="WaterBlocks" index="39" instance=ExtResource( 5 )]
+position = Vector2( 1243, 0 )
+
+[node name="WaterBlock41" parent="WaterBlocks" index="40" instance=ExtResource( 5 )]
+position = Vector2( 1275, 0 )
+
+[node name="WaterBlock42" parent="WaterBlocks" index="41" instance=ExtResource( 5 )]
+position = Vector2( 1307, 0 )
+
+[node name="WaterBlock43" parent="WaterBlocks" index="42" instance=ExtResource( 5 )]
+position = Vector2( 1339, 0 )
+
+[node name="WaterBlock44" parent="WaterBlocks" index="43" instance=ExtResource( 5 )]
+position = Vector2( 1371, 0 )
+
+[node name="WaterBlock45" parent="WaterBlocks" index="44" instance=ExtResource( 5 )]
+position = Vector2( 1402, 0 )
+
+[node name="WaterBlock46" parent="WaterBlocks" index="45" instance=ExtResource( 5 )]
+position = Vector2( 1434, 0 )
+
+[node name="WaterBlock47" parent="WaterBlocks" index="46" instance=ExtResource( 5 )]
+position = Vector2( 1466, 0 )
+
+[node name="WaterBlock48" parent="WaterBlocks" index="47" instance=ExtResource( 5 )]
+position = Vector2( 1498, 0 )
+
+[node name="WaterBlock49" parent="WaterBlocks" index="48" instance=ExtResource( 5 )]
+position = Vector2( 1530, 0 )
+
+[node name="WaterBlock50" parent="WaterBlocks" index="49" instance=ExtResource( 5 )]
+position = Vector2( 1562, 0 )
+
+[node name="WaterBlock51" parent="WaterBlocks" index="50" instance=ExtResource( 5 )]
+position = Vector2( 1594, 0 )
+
+[node name="WaterBlock52" parent="WaterBlocks" index="51" instance=ExtResource( 5 )]
+position = Vector2( 1626, 0 )
+
+[node name="WaterBlock53" parent="WaterBlocks" index="52" instance=ExtResource( 5 )]
+position = Vector2( 1657, 0 )
+
+[node name="WaterBlock54" parent="WaterBlocks" index="53" instance=ExtResource( 5 )]
+position = Vector2( 1689, 0 )
+
+[node name="WaterBlock55" parent="WaterBlocks" index="54" instance=ExtResource( 5 )]
+position = Vector2( 1721, 0 )
+
+[node name="WaterBlock56" parent="WaterBlocks" index="55" instance=ExtResource( 5 )]
+position = Vector2( 1753, 0 )
+
+[node name="WaterBlock57" parent="WaterBlocks" index="56" instance=ExtResource( 5 )]
+position = Vector2( 1785, 0 )
+
+[node name="WaterBlock58" parent="WaterBlocks" index="57" instance=ExtResource( 5 )]
+position = Vector2( 1817, 0 )
+
+[node name="WaterBlock59" parent="WaterBlocks" index="58" instance=ExtResource( 5 )]
+position = Vector2( 1849, 0 )
+
+[node name="WaterBlock60" parent="WaterBlocks" index="59" instance=ExtResource( 5 )]
+position = Vector2( 1881, 0 )
+
+[node name="WaterBlock61" parent="WaterBlocks" index="60" instance=ExtResource( 5 )]
+position = Vector2( 1912, 0 )
+
+[node name="WaterBlock62" parent="WaterBlocks" index="61" instance=ExtResource( 5 )]
+position = Vector2( 1944, 0 )
+
+[node name="WaterBlock63" parent="WaterBlocks" index="62" instance=ExtResource( 5 )]
+position = Vector2( 1976, 0 )
+
+[node name="WaterBlock64" parent="WaterBlocks" index="63" instance=ExtResource( 5 )]
+position = Vector2( 2008, 0 )
+
+[node name="WaterBlock65" parent="WaterBlocks" index="64" instance=ExtResource( 5 )]
+position = Vector2( 2040, 0 )
+
+[node name="WaterBlock66" parent="WaterBlocks" index="65" instance=ExtResource( 5 )]
+position = Vector2( 2072, 0 )
+
+[node name="WaterBlock67" parent="WaterBlocks" index="66" instance=ExtResource( 5 )]
+position = Vector2( 2104, 0 )
+
+[node name="WaterBlock68" parent="WaterBlocks" index="67" instance=ExtResource( 5 )]
+position = Vector2( 2136, 0 )
+
+[node name="WaterBlock69" parent="WaterBlocks" index="68" instance=ExtResource( 5 )]
+position = Vector2( 2167, 0 )
+
+[node name="WaterBlock70" parent="WaterBlocks" index="69" instance=ExtResource( 5 )]
+position = Vector2( 2199, 0 )
+
+[node name="WaterBlock71" parent="WaterBlocks" index="70" instance=ExtResource( 5 )]
+position = Vector2( 2231, 0 )
+
+[node name="WaterBlock72" parent="WaterBlocks" index="71" instance=ExtResource( 5 )]
+position = Vector2( 2263, 0 )
+
+[node name="WaterBlock73" parent="WaterBlocks" index="72" instance=ExtResource( 5 )]
+position = Vector2( 2295, 0 )
+
+[node name="WaterBlock74" parent="WaterBlocks" index="73" instance=ExtResource( 5 )]
+position = Vector2( 2327, 0 )
+
+[node name="WaterBlock75" parent="WaterBlocks" index="74" instance=ExtResource( 5 )]
+position = Vector2( 2359, 0 )
+
+[node name="WaterBlock76" parent="WaterBlocks" index="75" instance=ExtResource( 5 )]
+position = Vector2( 2391, 0 )
+
+[node name="WaterBlock77" parent="WaterBlocks" index="76" instance=ExtResource( 5 )]
+position = Vector2( 2422, 0 )
+
+[node name="WaterBlock78" parent="WaterBlocks" index="77" instance=ExtResource( 5 )]
+position = Vector2( 2454, 0 )
+
+[node name="WaterBlock79" parent="WaterBlocks" index="78" instance=ExtResource( 5 )]
+position = Vector2( 2486, 0 )
+
+[node name="WaterBlock80" parent="WaterBlocks" index="79" instance=ExtResource( 5 )]
+position = Vector2( 2518, 0 )
+
+[node name="WaterBlock81" parent="WaterBlocks" index="80" instance=ExtResource( 5 )]
+position = Vector2( 2550, 0 )
+
+[node name="WaterBlock82" parent="WaterBlocks" index="81" instance=ExtResource( 5 )]
+position = Vector2( 2582, 0 )
+
+[node name="WaterBlock83" parent="WaterBlocks" index="82" instance=ExtResource( 5 )]
+position = Vector2( 2614, 0 )
+
+[node name="WaterBlock84" parent="WaterBlocks" index="83" instance=ExtResource( 5 )]
+position = Vector2( 2646, 0 )
+
+[node name="WaterBlock85" parent="WaterBlocks" index="84" instance=ExtResource( 5 )]
+position = Vector2( 2677, 0 )
+
+[node name="WaterBlock86" parent="WaterBlocks" index="85" instance=ExtResource( 5 )]
+position = Vector2( 2709, 0 )
+
+[node name="WaterBlock87" parent="WaterBlocks" index="86" instance=ExtResource( 5 )]
+position = Vector2( 2741, 0 )
+
+[node name="WaterBlock88" parent="WaterBlocks" index="87" instance=ExtResource( 5 )]
+position = Vector2( 2773, 0 )
+
+[node name="WaterBlock89" parent="WaterBlocks" index="88" instance=ExtResource( 5 )]
+position = Vector2( 2805, 0 )
+
+[node name="WaterBlock90" parent="WaterBlocks" index="89" instance=ExtResource( 5 )]
+position = Vector2( 2837, 0 )
+
+[node name="WaterBlock91" parent="WaterBlocks" index="90" instance=ExtResource( 5 )]
+position = Vector2( 2869, 0 )
+
+[node name="WaterBlock92" parent="WaterBlocks" index="91" instance=ExtResource( 5 )]
+position = Vector2( 2901, 0 )
+
+[node name="WaterBlock93" parent="WaterBlocks" index="92" instance=ExtResource( 5 )]
+position = Vector2( 2932, 0 )
+
+[node name="WaterBlock94" parent="WaterBlocks" index="93" instance=ExtResource( 5 )]
+position = Vector2( 2964, 0 )
+
+[node name="WaterBlock95" parent="WaterBlocks" index="94" instance=ExtResource( 5 )]
+position = Vector2( 2996, 0 )
+
+[node name="WaterBlock96" parent="WaterBlocks" index="95" instance=ExtResource( 5 )]
+position = Vector2( 3028, 0 )
+
+[node name="WaterBlock97" parent="WaterBlocks" index="96" instance=ExtResource( 5 )]
+position = Vector2( 3060, 0 )
+
+[node name="WaterBlock98" parent="WaterBlocks" index="97" instance=ExtResource( 5 )]
+position = Vector2( 3092, 0 )
+
+[node name="WaterBlock99" parent="WaterBlocks" index="98" instance=ExtResource( 5 )]
+position = Vector2( 3124, 0 )
+
+[node name="WaterBlock100" parent="WaterBlocks" index="99" instance=ExtResource( 5 )]
+position = Vector2( 3156, 0 )
+
+[node name="WaterBlock101" parent="WaterBlocks" index="100" instance=ExtResource( 5 )]
+position = Vector2( 3187, 0 )
+
+[node name="WaterBlock102" parent="WaterBlocks" index="101" instance=ExtResource( 5 )]
+position = Vector2( 3219, 0 )
+
+[node name="WaterBlock103" parent="WaterBlocks" index="102" instance=ExtResource( 5 )]
+position = Vector2( 3251, 0 )
+
+[node name="WaterBlock104" parent="WaterBlocks" index="103" instance=ExtResource( 5 )]
+position = Vector2( 3283, 0 )
+
+[node name="WaterBlock105" parent="WaterBlocks" index="104" instance=ExtResource( 5 )]
+position = Vector2( 3315, 0 )
+
+[node name="WaterBlock106" parent="WaterBlocks" index="105" instance=ExtResource( 5 )]
+position = Vector2( 3347, 0 )
+
+[node name="WaterBlock107" parent="WaterBlocks" index="106" instance=ExtResource( 5 )]
+position = Vector2( 3379, 0 )
+
+[node name="WaterBlock108" parent="WaterBlocks" index="107" instance=ExtResource( 5 )]
+position = Vector2( 3411, 0 )
+
+[node name="WaterBlock109" parent="WaterBlocks" index="108" instance=ExtResource( 5 )]
+position = Vector2( 3442, 0 )
+
+[node name="WaterBlock110" parent="WaterBlocks" index="109" instance=ExtResource( 5 )]
+position = Vector2( 3474, 0 )
+
+[node name="WaterBlock111" parent="WaterBlocks" index="110" instance=ExtResource( 5 )]
+position = Vector2( 3506, 0 )
+
+[node name="WaterBlock112" parent="WaterBlocks" index="111" instance=ExtResource( 5 )]
+position = Vector2( 3538, 0 )
+
+[node name="WaterBlock113" parent="WaterBlocks" index="112" instance=ExtResource( 5 )]
+position = Vector2( 3570, 0 )
+
+[node name="WaterBlock114" parent="WaterBlocks" index="113" instance=ExtResource( 5 )]
+position = Vector2( 3602, 0 )
+
+[node name="WaterBlock115" parent="WaterBlocks" index="114" instance=ExtResource( 5 )]
+position = Vector2( 3634, 0 )
+
+[node name="WaterBlock116" parent="WaterBlocks" index="115" instance=ExtResource( 5 )]
+position = Vector2( 3666, 0 )
+
+[node name="WaterBlock117" parent="WaterBlocks" index="116" instance=ExtResource( 5 )]
+position = Vector2( 3697, 0 )
+
+[node name="WaterBlock118" parent="WaterBlocks" index="117" instance=ExtResource( 5 )]
+position = Vector2( 3729, 0 )
+
+[node name="WaterBlock119" parent="WaterBlocks" index="118" instance=ExtResource( 5 )]
+position = Vector2( 3761, 0 )
+
+[node name="WaterBlock120" parent="WaterBlocks" index="119" instance=ExtResource( 5 )]
+position = Vector2( 3793, 0 )
+
+[node name="WaterBlock121" parent="WaterBlocks" index="120" instance=ExtResource( 5 )]
+position = Vector2( 3825, 0 )
+z_index = 2
+
+[node name="WaterBlock122" parent="WaterBlocks" index="121" instance=ExtResource( 5 )]
+position = Vector2( 3857, 0 )
+z_index = 2
+
+[node name="WaterBlock123" parent="WaterBlocks" index="122" instance=ExtResource( 5 )]
+position = Vector2( 3889, 0 )
+z_index = 2
+
+[node name="WaterBlock124" parent="WaterBlocks" index="123" instance=ExtResource( 5 )]
+position = Vector2( 3921, 0 )
+z_index = 2
+
+[node name="WaterBlock125" parent="WaterBlocks" index="124" instance=ExtResource( 5 )]
+position = Vector2( 3952, 0 )
+z_index = 2
+
+[node name="WaterBlock126" parent="WaterBlocks" index="125" instance=ExtResource( 5 )]
+position = Vector2( 3984, 0 )
+z_index = 2
+
+[node name="WaterBlock127" parent="WaterBlocks" index="126" instance=ExtResource( 5 )]
+position = Vector2( 4016, 0 )
+z_index = 2
+
+[node name="WaterBlock128" parent="WaterBlocks" index="127" instance=ExtResource( 5 )]
+position = Vector2( 4032, 0 )
+z_index = 2
+
+[node name="WaterBlock129" parent="WaterBlocks" index="128" instance=ExtResource( 5 )]
+position = Vector2( 4352, 0 )
+z_index = 2
+
+[node name="DeathArea" type="Area2D" parent="." index="15"]
+position = Vector2( 434, 159 )
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathArea" index="0"]
+position = Vector2( 1858, -36 )
+shape = SubResource( 1 )
+
+[node name="TurtleAnimationPlayer" type="AnimationPlayer" parent="." index="16"]
+root_node = NodePath("../TurtlePath")
+anims/RESET = SubResource( 2 )
+anims/SwimPath = SubResource( 3 )
+
+[node name="AnimationTrigger" type="Area2D" parent="." index="17"]
+position = Vector2( 435, 73 )
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimationTrigger" index="0"]
+position = Vector2( 8.5, -24.5 )
+shape = SubResource( 5 )
+
+[node name="TurtlePath" type="Path2D" parent="." index="18"]
+position = Vector2( 435, 73 )
+curve = SubResource( 4 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="TurtlePath" index="0"]
+position = Vector2( -0.404524, -0.98809 )
+rotation = 0.0199973
+offset = 0.897705
+
+[node name="Turtle" parent="TurtlePath/PathFollow2D" index="0" instance=ExtResource( 7 )]
+
+[node name="Scarabu" parent="." index="19" instance=ExtResource( 9 )]
+position = Vector2( 1341, -111 )
+
+[node name="WaterGate" parent="." index="20" instance=ExtResource( 10 )]
+position = Vector2( 2080, -32 )
+
+[node name="FlyingScarabu" parent="." index="21" instance=ExtResource( 11 )]
+position = Vector2( 659, 31 )
+
+[node name="FlyingScarabu2" parent="." index="22" instance=ExtResource( 11 )]
+position = Vector2( 751, 30 )
+
+[node name="Bubbles" type="Area2D" parent="." index="23"]
+position = Vector2( 2638, 102 )
+z_index = 50
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubbles" index="0"]
+position = Vector2( -29, 0 )
+shape = SubResource( 6 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Bubbles" index="1"]
+position = Vector2( 2, -17 )
+emitting = false
+amount = 6
+one_shot = true
+randomness = 0.14
+fixed_fps = 60
+texture = ExtResource( 12 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 106.02
+gravity = Vector2( 0, -20 )
+initial_velocity = 10.0
+initial_velocity_random = 0.12
+angular_velocity = 10.0
+damping = 3.39
+damping_random = 0.29
+angle = 18.3
+angle_random = 0.44
+scale_amount = 0.5
+scale_amount_random = 1.0
+
+[node name="Bubbles4" type="Area2D" parent="." index="24"]
+position = Vector2( 3019, 100 )
+z_index = 50
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubbles4" index="0"]
+position = Vector2( -29, 0 )
+shape = SubResource( 6 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Bubbles4" index="1"]
+position = Vector2( 2, -17 )
+emitting = false
+amount = 6
+one_shot = true
+randomness = 0.14
+fixed_fps = 60
+texture = ExtResource( 12 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 106.02
+gravity = Vector2( 0, -20 )
+initial_velocity = 10.0
+initial_velocity_random = 0.12
+angular_velocity = 10.0
+damping = 3.39
+damping_random = 0.29
+angle = 18.3
+angle_random = 0.44
+scale_amount = 0.5
+scale_amount_random = 1.0
+
+[node name="Bubbles2" type="Area2D" parent="." index="25"]
+position = Vector2( 1004, 104 )
+z_index = 50
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubbles2" index="0"]
+position = Vector2( -3, -10.5 )
+shape = SubResource( 6 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Bubbles2" index="1"]
+position = Vector2( 2, -17 )
+emitting = false
+amount = 6
+one_shot = true
+randomness = 0.14
+fixed_fps = 60
+texture = ExtResource( 12 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 106.02
+gravity = Vector2( 0, -20 )
+initial_velocity = 10.0
+initial_velocity_random = 0.12
+angular_velocity = 10.0
+damping = 3.39
+damping_random = 0.29
+angle = 18.3
+angle_random = 0.44
+scale_amount = 0.5
+scale_amount_random = 1.0
+
+[node name="Bubbles3" type="Area2D" parent="." index="26"]
+position = Vector2( 539, 103 )
+z_index = 50
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubbles3" index="0"]
+position = Vector2( -3, -10.5 )
+shape = SubResource( 6 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Bubbles3" index="1"]
+position = Vector2( -119, -15 )
+emitting = false
+amount = 6
+one_shot = true
+randomness = 0.14
+fixed_fps = 60
+texture = ExtResource( 12 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 106.02
+gravity = Vector2( 0, -20 )
+initial_velocity = 10.0
+initial_velocity_random = 0.12
+angular_velocity = 10.0
+damping = 3.39
+damping_random = 0.29
+angle = 18.3
+angle_random = 0.44
+scale_amount = 0.5
+scale_amount_random = 1.0
+
+[node name="FallingPlatform6" parent="." index="27" instance=ExtResource( 3 )]
+position = Vector2( 4096, 53 )
+
+[node name="Frogger" parent="." index="28" instance=ExtResource( 17 )]
+position = Vector2( 3530, -44 )
+
+[node name="Frogger2" parent="." index="29" instance=ExtResource( 17 )]
+position = Vector2( 3639, -44 )
+
+[node name="Frogger3" parent="." index="30" instance=ExtResource( 17 )]
+position = Vector2( 4431, -76 )
+
+[node name="Frogger4" parent="." index="31" instance=ExtResource( 17 )]
+position = Vector2( 4305, -76 )
+
+[node name="SpikeCrawler" parent="." index="32" instance=ExtResource( 18 )]
+position = Vector2( 4434, 22 )
+curve = SubResource( 11 )
+
+[node name="SpikeCrawler2" parent="." index="33" instance=ExtResource( 18 )]
+position = Vector2( 4434, 22 )
+curve = SubResource( 15 )
+
+[node name="SpikeCrawler3" parent="." index="34" instance=ExtResource( 18 )]
+position = Vector2( 4432.55, 20.0408 )
+curve = SubResource( 13 )
+
+[node name="SpikeCrawler4" parent="." index="35" instance=ExtResource( 18 )]
+position = Vector2( 4432.55, 20.0408 )
+curve = SubResource( 14 )
+
+[node name="Frogger5" parent="." index="36" instance=ExtResource( 17 )]
+position = Vector2( 4573, -107 )
+
+[node name="Frogger6" parent="." index="37" instance=ExtResource( 17 )]
+position = Vector2( 4614, -107 )
+
+[node name="Frogger7" parent="." index="38" instance=ExtResource( 17 )]
+position = Vector2( 4656, -107 )
+
+[node name="Frogger8" parent="." index="39" instance=ExtResource( 17 )]
+position = Vector2( 4698, -107 )
+
+[node name="Frogger9" parent="." index="40" instance=ExtResource( 17 )]
+position = Vector2( 4740, -107 )
+
+[node name="Frogger10" parent="." index="41" instance=ExtResource( 17 )]
+position = Vector2( 4783, -107 )
+
+[node name="Scorpiu" parent="." index="42" instance=ExtResource( 19 )]
+position = Vector2( 4800, 0 )
+
+[node name="Scorpiu2" parent="." index="43" instance=ExtResource( 19 )]
+position = Vector2( 4690, 0 )
+
+[node name="Scorpiu3" parent="." index="44" instance=ExtResource( 19 )]
+position = Vector2( 4597, 0 )
+
+[connection signal="body_entered" from="DeathArea" to="DeathArea" method="_on_DeathArea_body_entered"]
+[connection signal="body_entered" from="AnimationTrigger" to="AnimationTrigger" method="_on_AnimationTrigger_body_entered"]
+[connection signal="body_entered" from="Bubbles" to="Bubbles" method="_on_Bubbles_body_entered"]
+[connection signal="body_entered" from="Bubbles4" to="Bubbles4" method="_on_Bubbles_body_entered"]
+[connection signal="body_entered" from="Bubbles2" to="Bubbles2" method="_on_Bubbles_body_entered"]
+[connection signal="body_entered" from="Bubbles3" to="Bubbles3" method="_on_Bubbles_body_entered"]

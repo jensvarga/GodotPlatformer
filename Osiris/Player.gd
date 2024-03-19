@@ -42,8 +42,9 @@ func _ready():
 
 func _physics_process(delta):
 	# item check
-	if not carrying and carry_item != null and Input.is_action_just_pressed("ui_grab"):
-		grab_item()
+	if state != DEAD:
+		if not carrying and carry_item != null and Input.is_action_just_pressed("ui_grab"):
+			grab_item()
 		
 	match state:
 		MOVE:
@@ -132,8 +133,10 @@ func update_move(delta):
 		collision_shape.set_deferred("disabled", false)
 		
 	var extra = 0
+	var jump = false
 	if grounded or coyote_jump:
-		if Input.is_action_just_pressed("ui_jump") or buffered_jump:
+		jump = Input.is_action_just_pressed("ui_jump") or buffered_jump
+		if jump:
 			AudioManager.play_random_jump_sound()
 			var horizontal_speed = abs(velocity.x)
 			
@@ -169,7 +172,8 @@ func update_move(delta):
 					sprite.animation = "Fall"
 	
 	var was_on_floor = grounded
-	velocity = move_and_slide(velocity, Vector2.UP)
+	var snap = Vector2.DOWN * 32 if !jump else Vector2.ZERO
+	velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP)
 	
 	var just_left_ground = not is_on_floor() and was_on_floor
 	if just_left_ground and velocity.y >= 0:

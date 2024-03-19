@@ -3,7 +3,7 @@ extends Node2D
 export (int) var level_index 
 export (Color) var sky_color = Color.deepskyblue
 export (String, FILE, "*.tscn") var previous_level_path
-export (String, FILE, "*.tscn") var next_level_path
+export (String, FILE, "*.tscn") var next_level_path = "res://Levels/Overworld.tscn"
 export (bool) var test_spawn = false
 
 #onready var player: = $Player
@@ -22,6 +22,7 @@ func _ready():
 	Events.connect("player_died", self, "_on_player_died")
 	Events.connect("checkpoint_reached", self, "_on_checkpoint_reached")
 	Events.connect("stage_cleared", self, "_on_stage_cleared")
+	Events.current_level = level_index
 	Transition.connect("transition_started", self, "_on_transition_started")
 	Transition.connect("transition_completed", self, "_on_transition_completed")
 	VisualServer.set_default_clear_color(sky_color)
@@ -40,6 +41,7 @@ func _on_stage_cleared():
 	stage_cleared = true
 	Events.check_point_reached = false
 	Events.unlocked_level_2 = true
+	Events.unlocked_level_3 = true
 	Transition.play_exit_transition()
 	
 func spawn_player():

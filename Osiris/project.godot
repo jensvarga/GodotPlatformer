@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Enemy.gd"
 }, {
+"base": "CarryItem",
+"class": "Key",
+"language": "GDScript",
+"path": "res://KeyCarry.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -48,16 +53,23 @@ _global_script_classes=[ {
 "class": "ThrowableRock",
 "language": "GDScript",
 "path": "res://ThrowableRock.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Turtle",
+"language": "GDScript",
+"path": "res://TurtleKinematicBody2D.gd"
 } ]
 _global_script_class_icons={
 "Boss": "",
 "CarryItem": "",
 "Enemy": "",
+"Key": "",
 "Player": "",
 "PlayerMovementData": "",
 "Scarabu": "",
 "Spawn": "",
-"ThrowableRock": ""
+"ThrowableRock": "",
+"Turtle": ""
 }
 
 [application]

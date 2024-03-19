@@ -234,67 +234,83 @@ position = Vector2( 644, 351 )
 
 [node name="LavaBlock" parent="." index="63" instance=ExtResource( 5 )]
 position = Vector2( 528, 464 )
+frame = 3
 
 [node name="LavaBlock2" parent="." index="64" instance=ExtResource( 5 )]
 position = Vector2( 592, 464 )
+frame = 3
 
 [node name="LavaBlock3" parent="." index="65" instance=ExtResource( 5 )]
 position = Vector2( 624, 464 )
+frame = 3
 
 [node name="LavaBlock4" parent="." index="66" instance=ExtResource( 5 )]
 position = Vector2( 656, 464 )
+frame = 3
 
 [node name="LavaBlock5" parent="." index="67" instance=ExtResource( 5 )]
 position = Vector2( 1584, 464 )
+frame = 3
 
 [node name="LavaBlock6" parent="." index="68" instance=ExtResource( 5 )]
 position = Vector2( 1616, 464 )
+frame = 3
 
 [node name="LavaBlock7" parent="." index="69" instance=ExtResource( 5 )]
 position = Vector2( 1648, 464 )
+frame = 3
 
 [node name="LavaBlock8" parent="." index="70" instance=ExtResource( 5 )]
 position = Vector2( 1680, 464 )
+frame = 3
 
 [node name="LavaBlock9" parent="." index="71" instance=ExtResource( 5 )]
 position = Vector2( 1840, 432 )
+frame = 3
 
 [node name="LavaBlock10" parent="." index="72" instance=ExtResource( 5 )]
 position = Vector2( 1872, 432 )
+frame = 3
 
 [node name="LavaBlock11" parent="." index="73" instance=ExtResource( 5 )]
 position = Vector2( 1904, 432 )
+frame = 3
 
 [node name="LavaBlock12" parent="." index="74" instance=ExtResource( 5 )]
 position = Vector2( 2032, 432 )
+frame = 3
 
 [node name="LavaBlock13" parent="." index="75" instance=ExtResource( 5 )]
 position = Vector2( 2064, 432 )
+frame = 3
 
 [node name="LavaBlock18" parent="." index="76" instance=ExtResource( 5 )]
 position = Vector2( 1264, 1614 )
-frame = 2
+frame = 0
 
 [node name="LavaBlock19" parent="." index="77" instance=ExtResource( 5 )]
 position = Vector2( 1296, 1614 )
+frame = 3
 
 [node name="LavaBlock20" parent="." index="78" instance=ExtResource( 5 )]
 position = Vector2( 1424, 1615 )
+frame = 3
 
 [node name="LavaBlock21" parent="." index="79" instance=ExtResource( 5 )]
 position = Vector2( 1456, 1615 )
+frame = 3
 
 [node name="LavaBlock22" parent="." index="80" instance=ExtResource( 5 )]
 position = Vector2( 1648, 1614 )
-frame = 0
+frame = 2
 
 [node name="LavaBlock23" parent="." index="81" instance=ExtResource( 5 )]
 position = Vector2( 1680, 1614 )
-frame = 0
+frame = 2
 
 [node name="LavaBlock24" parent="." index="82" instance=ExtResource( 5 )]
 position = Vector2( 1712, 1614 )
-frame = 2
+frame = 0
 
 [node name="GateIndoor" parent="." index="83" instance=ExtResource( 7 )]
 position = Vector2( 148, -150 )
@@ -305,18 +321,19 @@ tile_data = PoolIntArray( 131071, 1, 0, 196607, 1, 65536, 262143, 1, 65536, 3276
 
 [node name="LavaBlock14" parent="." index="85" instance=ExtResource( 5 )]
 position = Vector2( 1168, 1198 )
+frame = 3
 
 [node name="LavaBlock15" parent="." index="86" instance=ExtResource( 5 )]
 position = Vector2( 1200, 1198 )
-frame = 0
+frame = 2
 
 [node name="LavaBlock16" parent="." index="87" instance=ExtResource( 5 )]
 position = Vector2( 1232, 1198 )
-frame = 0
+frame = 2
 
 [node name="LavaBlock17" parent="." index="88" instance=ExtResource( 5 )]
 position = Vector2( 1264, 1198 )
-frame = 2
+frame = 0
 
 [node name="AphopisDoor" parent="." index="89" instance=ExtResource( 11 )]
 position = Vector2( 192, 1603 )

@@ -1,0 +1,98 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Sprites/turtle.png" type="Texture" id=1]
+[ext_resource path="res://Turtle.gd" type="Script" id=2]
+[ext_resource path="res://TurtleKinematicBody2D.gd" type="Script" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, -10, -5 )
+}
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 81, 41 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 81, 41 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 81, 0, 81, 41 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "Swim",
+"speed": 2.0
+} ]
+
+[sub_resource type="Animation" id=6]
+resource_name = "Bob"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.02, 0.98, 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[node name="Turtle" type="Path2D"]
+z_index = -2
+curve = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( -2.82309, -0.0578305 )
+offset = 2.98664
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D"]
+frames = SubResource( 5 )
+animation = "Idle"
+playing = true
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="PathFollow2D"]
+collision_layer = 258
+collision_mask = 2
+script = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PathFollow2D/KinematicBody2D"]
+position = Vector2( -10.1769, -5.94217 )
+polygon = PoolVector2Array( -25, -4.76837e-07, -7, -12, 18, -12, 27, -9, 29, -6, 37, -11, 44, -10, 46, -6, 46, -4.76837e-07, 20, 6, -17, 7 )
+
+[node name="Tween" type="Tween" parent="PathFollow2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Bob"
+anims/Bob = SubResource( 6 )
+anims/RESET = SubResource( 7 )

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Troth.mp3-e69959396cf1c0e57b2931d45a4e8203.mp3str"
+
+[deps]
+
+source_file="res://Sound/Music/Labbed/Troth.mp3"
+dest_files=[ "res://.import/Troth.mp3-e69959396cf1c0e57b2931d45a4e8203.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

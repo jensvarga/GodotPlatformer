@@ -26,7 +26,6 @@
 position = Vector2( 72, 126 )
 script = ExtResource( 20 )
 level_index = 1
-next_level_path = "res://Levels/Overworld.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

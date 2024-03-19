@@ -639,7 +639,6 @@ curve = SubResource( 15 )
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2( 57.9413, 7.47007 )
 rotation = -0.647867
-offset = 69.4979
 rotate = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Path2D/PathFollow2D"]
@@ -683,9 +682,8 @@ position = Vector2( -0.00810863, 0.999967 )
 curve = SubResource( 45 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="TailAttackPathRight"]
-position = Vector2( 243.674, 200.984 )
+position = Vector2( 351.075, -131.158 )
 rotation = 2.50543
-offset = 511.049
 rotate = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="TailAttackPathRight/PathFollow2D"]
@@ -711,9 +709,8 @@ scale = Vector2( -1, 1 )
 curve = SubResource( 45 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="TailAttackPathLeft"]
-position = Vector2( 114.866, 59.3069 )
+position = Vector2( 351.075, -131.158 )
 rotation = 2.50543
-offset = 309.654
 rotate = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="TailAttackPathLeft/PathFollow2D"]
@@ -736,8 +733,7 @@ shape = SubResource( 54 )
 curve = SubResource( 56 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="BiteAttackLeft"]
-position = Vector2( -40.9049, 30.9226 )
-offset = 235.064
+position = Vector2( -202.477, 181.364 )
 rotate = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="BiteAttackLeft/PathFollow2D"]
@@ -759,8 +755,7 @@ scale = Vector2( -1, 1 )
 curve = SubResource( 56 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="BiteAttackRight"]
-position = Vector2( -40.9049, 30.9226 )
-offset = 235.064
+position = Vector2( -202.477, 181.364 )
 rotate = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="BiteAttackRight/PathFollow2D"]
@@ -780,7 +775,7 @@ polygon = PoolVector2Array( 68.4839, -22.4491, 47.3315, -18.3773, 36.1878, -13.3
 position = Vector2( 69.1654, -143.444 )
 frames = SubResource( 63 )
 animation = "LazerAttack"
-frame = 1
+frame = 2
 playing = true
 
 [node name="LaserBeam2D" parent="LazerAttackSprite" instance=ExtResource( 9 )]
