@@ -3,7 +3,7 @@ extends Node2D
 export (int) var level_index 
 export (Color) var sky_color = Color.deepskyblue
 export (String, FILE, "*.tscn") var previous_level_path
-export (String, FILE, "*.tscn") var next_level_path = "res://Levels/Overworld.tscn"
+export (String, FILE, "*.tscn") var next_level_path = "res://Levels/OverworldLevel.tscn"
 export (bool) var test_spawn = false
 
 #onready var player: = $Player
@@ -65,4 +65,5 @@ func _on_transition_completed():
 	if not stage_cleared: return
 	if next_level_path == null: return
 	AudioManager.current_level = 0
+	Events.levels_cleared[level_index] = true
 	get_tree().change_scene(next_level_path)

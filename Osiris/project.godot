@@ -30,6 +30,11 @@ _global_script_classes=[ {
 "path": "res://KeyCarry.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "OverworldPlayer",
+"language": "GDScript",
+"path": "res://OverwoldRPGPlayer.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player.gd"
@@ -64,6 +69,7 @@ _global_script_class_icons={
 "CarryItem": "",
 "Enemy": "",
 "Key": "",
+"OverworldPlayer": "",
 "Player": "",
 "PlayerMovementData": "",
 "Scarabu": "",

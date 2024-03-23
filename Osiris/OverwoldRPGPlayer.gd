@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name OverworldPlayer
+
 onready var sprite := $AnimatedSprite
 
 export (int) var SPEED = 100
@@ -10,7 +12,7 @@ const WALK_FRONT_ANIM = "MoveForward"
 const WALK_BACK_ANIM = "MoveBack"
 const WALK_SIDE_ANIM = "MoveSide"
 
-var input_vector = Vector2.ZERO
+var input_vector = Vector2(0, 0)
 
 enum { UP, DOWN, LEFT, RIGHT }
 var facing = DOWN

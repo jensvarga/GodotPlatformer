@@ -172,8 +172,9 @@ func update_move(delta):
 					sprite.animation = "Fall"
 	
 	var was_on_floor = grounded
-	var snap = Vector2.DOWN * 32 if !jump else Vector2.ZERO
-	velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP)
+	#var snap = Vector2.DOWN * 32 if !jump else Vector2.ZERO
+	#velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP)
+	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	var just_left_ground = not is_on_floor() and was_on_floor
 	if just_left_ground and velocity.y >= 0:

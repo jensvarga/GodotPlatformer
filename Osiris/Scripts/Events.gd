@@ -10,11 +10,18 @@ signal lazer_beam_activated
 var check_point_reached = false
 var current_level = 1
 var death_counter = 0
+var player_overworld_position = Vector2.ZERO
 
 var unlocked_level_2 = false
 var unlocked_level_3 = false
 
-var player_overworld_position
+var levels_cleared = {
+	0: false,
+	1: false,
+	2: false,
+	3: false,
+	4: false,
+}
 
 var gates = {
 	0: true,

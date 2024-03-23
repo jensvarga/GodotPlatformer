@@ -1,0 +1,244 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/UI/Fonts/LongPixel7-YgPo.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sprites/UI/GameLogo.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/main_menu_bg-pixelicious.png" type="Texture" id=4]
+
+[sub_resource type="Shader" id=2]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/god-rays
+
+Feel free to use, improve and change this shader according to your needs
+and consider sharing the modified result on godotshaders.com.
+*/
+
+shader_type canvas_item;
+
+uniform float angle = 0.3;
+uniform float position = 0.3;
+uniform float spread : hint_range(0.0, 1.0) = 0.5;
+uniform float cutoff : hint_range(-1.0, 1.0) = 0.24;
+uniform float falloff : hint_range(0.0, 1.0) = 0.6;
+uniform float edge_fade : hint_range(0.0, 1.0) = 0.2;
+
+uniform float speed = 1.0;
+uniform float ray1_density = 10.0;
+uniform float ray2_density = 50.0;
+uniform float ray2_intensity : hint_range(0.0, 1.0) = 0.5;
+
+uniform vec4 color : hint_color = vec4(1.0, 0.9, 0.6, 0.8);
+
+uniform bool hdr = false;
+uniform float seed = 9.0;
+
+// Random and noise functions from Book of Shader's chapter on Noise.
+float random(vec2 _uv) {
+    return fract(sin(dot(_uv.xy,
+                         vec2(12.9898, 78.233))) *
+        43758.5453123);
+}
+
+float noise (in vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+
+    // Four corners in 2D of a tile
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+
+    // Smooth Interpolation
+
+    // Cubic Hermine Curve. Same as SmoothStep()
+    vec2 u = f * f * (3.0-2.0 * f);
+
+    // Mix 4 coorners percentages
+    return mix(a, b, u.x) +
+            (c - a)* u.y * (1.0 - u.x) +
+            (d - b) * u.x * u.y;
+}
+
+mat2 rotate(float _angle){
+    return mat2(vec2(cos(_angle), -sin(_angle)),
+                vec2(sin(_angle), cos(_angle)));
+}
+
+vec4 screen(vec4 base, vec4 blend){
+	return 1.0 - (1.0 - base) * (1.0 - blend);
+}
+
+void fragment()
+{
+	
+	// Rotate, skew and move the UVs
+	vec2 transformed_uv = ( rotate(angle) * (UV - position) )  / ( (UV.y + spread) - (UV.y * spread) );
+	
+	// Animate the ray according the the new transformed UVs
+	vec2 ray1 = vec2(transformed_uv.x * ray1_density + sin(TIME * 0.1 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	vec2 ray2 = vec2(transformed_uv.x * ray2_density + sin(TIME * 0.2 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	
+	// Cut off the ray's edges
+	float cut = step(cutoff, transformed_uv.x) * step(cutoff, 1.0 - transformed_uv.x);
+	ray1 *= cut;
+	ray2 *= cut;
+	
+	// Apply the noise pattern (i.e. create the rays)
+	float rays;
+	
+	if (hdr){
+		// This is not really HDR, but check this to not clamp the two merged rays making 
+		// their values go over 1.0. Can make for some nice effect
+		rays = noise(ray1) + (noise(ray2) * ray2_intensity);
+	}
+	else{
+		 rays = clamp(noise(ray1) + (noise(ray2) * ray2_intensity), 0., 1.);
+	}
+	
+	// Fade out edges
+	rays *= smoothstep(0.0, falloff, (1.0 - UV.y)); // Bottom
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, transformed_uv.x); // Left
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, 1.0 - transformed_uv.x); // Right
+	
+	// Color to the rays
+	vec3 shine = vec3(rays) * color.rgb;
+
+	// Try different blending modes for a nicer effect. \"Screen\" is included in the code,
+	// but take a look at https://godotshaders.com/snippet/blending-modes/ for more.
+	// With \"Screen\" blend mode:
+	shine = screen(texture(SCREEN_TEXTURE, SCREEN_UV), vec4(color)).rgb;
+	
+	COLOR = vec4(shine, rays * color.a);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/angle = 0.3
+shader_param/position = 0.3
+shader_param/spread = 0.5
+shader_param/cutoff = 0.24
+shader_param/falloff = 0.6
+shader_param/edge_fade = 0.2
+shader_param/speed = 1.0
+shader_param/ray1_density = 10.0
+shader_param/ray2_density = 50.0
+shader_param/ray2_intensity = 0.5
+shader_param/color = Color( 1, 0.9, 0.6, 0.8 )
+shader_param/hdr = false
+shader_param/seed = 9.0
+
+[sub_resource type="DynamicFont" id=1]
+size = 14
+outline_size = 1
+outline_color = Color( 0.815686, 0.345098, 0, 1 )
+extra_spacing_top = 5
+extra_spacing_bottom = -3
+font_data = ExtResource( 2 )
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Sprite" type="Sprite" parent="AspectRatioContainer2"]
+position = Vector2( 242.453, 137.5 )
+scale = Vector2( 1.09766, 1.09766 )
+texture = ExtResource( 4 )
+
+[node name="GodRays" type="Sprite" parent="AspectRatioContainer2"]
+material = SubResource( 3 )
+position = Vector2( 242.453, 137.5 )
+scale = Vector2( 1.09766, 1.09766 )
+texture = ExtResource( 4 )
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+anchor_left = 0.2
+anchor_top = 0.15
+anchor_right = 0.2
+anchor_bottom = 0.15
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Logo" type="Sprite" parent="AspectRatioContainer"]
+texture = ExtResource( 3 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 245, 186 )
+amount = 100
+lifetime = 100.0
+randomness = 1.0
+lifetime_randomness = 1.0
+fixed_fps = 60
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector2( 0, -1 )
+spread = 180.0
+gravity = Vector2( 0, 2 )
+initial_velocity = 20.0
+initial_velocity_random = 1.0
+damping = 3.58
+damping_random = 1.0
+scale_amount = 2.0
+scale_amount_random = 1.0
+hue_variation = 0.14
+hue_variation_random = 0.13
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 33.0
+margin_top = -150.0
+margin_right = 127.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 94.0
+margin_bottom = 150.0
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_right = 94.0
+margin_bottom = 23.0
+focus_neighbour_top = NodePath("../Exit")
+focus_neighbour_bottom = NodePath("../Options")
+focus_next = NodePath("../Options")
+focus_previous = NodePath("../Exit")
+custom_colors/font_color_focus = Color( 1, 1, 0.811765, 1 )
+custom_colors/font_color = Color( 0.411765, 0.878431, 0.27451, 1 )
+custom_colors/font_color_pressed = Color( 0.815686, 0.345098, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+keep_pressed_outside = true
+text = "Play"
+
+[node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 27.0
+margin_right = 94.0
+margin_bottom = 50.0
+focus_neighbour_top = NodePath("../Play")
+focus_neighbour_bottom = NodePath("../Exit")
+focus_next = NodePath("../Exit")
+focus_previous = NodePath("../Play")
+custom_colors/font_color = Color( 0.411765, 0.878431, 0.27451, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Options"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 94.0
+margin_bottom = 77.0
+focus_neighbour_top = NodePath("../Options")
+focus_neighbour_bottom = NodePath("../Play")
+focus_next = NodePath("../Play")
+focus_previous = NodePath("../Options")
+custom_colors/font_color = Color( 0.411765, 0.878431, 0.27451, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Exit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]

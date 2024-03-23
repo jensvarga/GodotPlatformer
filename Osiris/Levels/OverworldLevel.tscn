@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://OverworldTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/OverworldLevel.gd" type="Script" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://Sprites/Overworld/bridge_back.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Overworld/bridge_front.png" type="Texture" id=8]
 [ext_resource path="res://AnubisOverworld.tscn" type="PackedScene" id=9]
+[ext_resource path="res://LevelCarpet.tscn" type="PackedScene" id=10]
+[ext_resource path="res://RA.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Hathor.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Shader" id=10]
 code = "shader_type canvas_item;
@@ -324,6 +327,13 @@ texture = ExtResource( 7 )
 z_index = 1
 texture = ExtResource( 8 )
 
+[node name="Carpets" type="Node2D" parent="."]
+
+[node name="LevelCarpet" parent="Carpets" instance=ExtResource( 10 )]
+position = Vector2( -30, 120 )
+level_index = 1
+connecting_level_path = "res://Levels/Level1.tscn"
+
 [node name="YSort" type="YSort" parent="."]
 
 [node name="OverwoldPlayer" parent="YSort" instance=ExtResource( 3 )]
@@ -336,6 +346,14 @@ smoothing_enabled = true
 
 [node name="AnubisOverworld" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( -32, -5 )
+
+[node name="RA" parent="YSort" instance=ExtResource( 11 )]
+position = Vector2( -66, 74 )
+
+[node name="Hathor" parent="YSort" instance=ExtResource( 12 )]
+position = Vector2( 88, 23 )
+NAME = "HATHOR"
+NPC_DIALOGUE = [ "Boobies boobies boobies", "So long" ]
 
 [node name="Gates" type="Node2D" parent="."]
 
