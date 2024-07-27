@@ -29,7 +29,7 @@ func _on_AnimatedSprite_animation_finished():
 		queue_free()
 
 func _on_HurtBox_body_entered(body):
-	if body is Player  && !dead:
+	if body is Player && !dead:
 		dead = true
 		sprite.animation = "Die"
 		particles.emitting = true

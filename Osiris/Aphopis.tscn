@@ -547,7 +547,6 @@ script = ExtResource( 3 )
 
 [node name="RightDrop1" type="Position2D" parent="."]
 position = Vector2( 141.727, -79.7727 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop1"]
 visible = false
@@ -555,7 +554,6 @@ frames = SubResource( 52 )
 
 [node name="RightDrop4" type="Position2D" parent="."]
 position = Vector2( 162.652, -79.6837 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop4"]
 visible = false
@@ -563,7 +561,6 @@ frames = SubResource( 52 )
 
 [node name="RightDrop2" type="Position2D" parent="."]
 position = Vector2( 117.727, -79.7727 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop2"]
 visible = false
@@ -571,7 +568,6 @@ frames = SubResource( 52 )
 
 [node name="RightDrop3" type="Position2D" parent="."]
 position = Vector2( 94.7272, -79.7727 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="RightDrop3"]
 visible = false
@@ -579,7 +575,6 @@ frames = SubResource( 52 )
 
 [node name="LeftDrop1" type="Position2D" parent="."]
 position = Vector2( 35.7272, -79.7727 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop1"]
 visible = false
@@ -587,7 +582,6 @@ frames = SubResource( 52 )
 
 [node name="LeftDrop2" type="Position2D" parent="."]
 position = Vector2( 11.7272, -79.7727 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop2"]
 visible = false
@@ -595,7 +589,6 @@ frames = SubResource( 52 )
 
 [node name="LeftDrop3" type="Position2D" parent="."]
 position = Vector2( -13.2728, -79.7727 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop3"]
 visible = false
@@ -603,7 +596,6 @@ frames = SubResource( 52 )
 
 [node name="LeftDrop4" type="Position2D" parent="."]
 position = Vector2( -32.3502, -80.265 )
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="LeftDrop4"]
 visible = false
@@ -700,7 +692,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TailAttackPathRight/PathFollow2D/AnimatedSprite/HitareaRight"]
 position = Vector2( 19.9835, 15.3842 )
 rotation = -0.305609
-scale = Vector2( 1, 1 )
 shape = SubResource( 53 )
 
 [node name="TailAttackPathLeft" type="Path2D" parent="."]
@@ -775,7 +766,7 @@ polygon = PoolVector2Array( 68.4839, -22.4491, 47.3315, -18.3773, 36.1878, -13.3
 position = Vector2( 69.1654, -143.444 )
 frames = SubResource( 63 )
 animation = "LazerAttack"
-frame = 2
+frame = 1
 playing = true
 
 [node name="LaserBeam2D" parent="LazerAttackSprite" instance=ExtResource( 9 )]

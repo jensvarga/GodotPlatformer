@@ -40,7 +40,8 @@ func _on_BossTrigger_body_entered(body):
 		
 func boss_entrance():
 	AudioManager.play_aphopis_entrance_sound()
-	music_timer.start()
+	#music_timer.start()
+	AudioManager.play_boss_music()
 	boss_timer.start()
 	if animator.has_animation("Entrance"):
 		animator.play("Entrance")

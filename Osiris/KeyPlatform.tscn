@@ -56,6 +56,7 @@ offset = 6.13609
 rotate = false
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="PathFollow2D"]
+collision_layer = 64
 
 [node name="Sprite" type="Sprite" parent="PathFollow2D/KinematicBody2D"]
 texture = ExtResource( 1 )

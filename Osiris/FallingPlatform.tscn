@@ -68,6 +68,7 @@ extents = Vector2( 14, 2.5 )
 
 [node name="FallingPlatform" type="KinematicBody2D"]
 z_index = 1
+collision_layer = 64
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]

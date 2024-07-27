@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Resources/R_LeftHand.tres" type="Resource" id=1]
+[ext_resource path="res://Collectable.tscn" type="PackedScene" id=2]
+
+[node name="LeftHand" instance=ExtResource( 2 )]
+collectable_resource = ExtResource( 1 )

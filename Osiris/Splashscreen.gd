@@ -11,6 +11,7 @@ export (String, FILE, "*.tscn") var next_scene_path
 var fade = false
 
 func _ready():
+	Events.emit_signal("toggle_fullscreen")
 	timer.wait_time = time
 	timer.start()
 	VisualServer.set_default_clear_color(bg_color)

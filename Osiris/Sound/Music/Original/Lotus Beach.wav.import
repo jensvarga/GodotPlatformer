@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Lotus Beach.wav-9852d8cf0ed139717cd91348a43b797d.sample"
+
+[deps]
+
+source_file="res://Sound/Music/Original/Lotus Beach.wav"
+dest_files=[ "res://.import/Lotus Beach.wav-9852d8cf0ed139717cd91348a43b797d.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=true
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

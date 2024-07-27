@@ -1,5 +1,9 @@
 extends Node
 
+var start_volmue
+var fade_out_speed = 5  # Adjust this to control the speed of the fade-out
+var fading_out = false
+
 const JUMP_SOUNDS = [
 	preload("res://Sound/FX/Jump/Jump1.wav"),
 	preload("res://Sound/FX/Jump/Jump2.wav"),
@@ -71,6 +75,19 @@ const FANTASY_VIOLENCE = preload("res://Sound/Music/Labbed/Labbed - Labhits 2014
 const FIGHT_THE_EVIL = preload("res://Sound/Music/Labbed/Labbed - Labhits 2008/Labbed - Labhits 2008 - 01 Fight the Evil!.wav")
 const VICTORI = preload("res://Sound/Music/Labbed/Labbed - Labhits 2008/Labbed - Labhits 2008 - 07 Viktori.wav")
 
+# Original Songs
+const SHADOW_OF_THE_SPHINX = preload("res://Sound/Music/Original/Shadow of the sphinx.wav")
+const FOLLOW_THE_OTTERS = preload("res://Sound/Music/Original/Follow the otters.wav")
+const LOTUS_BEACH = preload("res://Sound/Music/Original/Lotus Beach.wav")
+const CROCODILE_TEARS = preload("res://Sound/Music/Original/Crocodile Tears.wav")
+const KING_IN_YELLOW = preload("res://Sound/Music/Original/King in Yellow.wav")
+const LIGHTBRINGER = preload("res://Sound/Music/Original/Lightbringer.wav")
+const SOLAR_FLARE = preload("res://Sound/Music/Original/Solar Flare.wav")
+const SWING_FIELDS = preload("res://Sound/Music/Original/Swing Fields.wav")
+const UNDERGROUND_SUMMER = preload("res://Sound/Music/Original/Underground Summer.wav")
+const APOPHIS_ARISING = preload("res://Sound/Music/Original/Apophis Arising.wav")
+const SETIS_OATH = preload("res://Sound/Music/Original/Setis Oath.wav")
+
 func play_victori():
 	play_music(VICTORI)
 	
@@ -79,13 +96,17 @@ func play_africa():
 	
 func play_reaper():
 	play_music(REAPER)
+	
+func play_overworld_music():
+	play_music(UNDERGROUND_SUMMER)
 
 const LEVEL_MUSIC = {
-	1: FANTASY_VIOLENCE,
-	2: FIGHT_THE_EVIL,
-	3: SOURVIVOIRS_OF_THE_ASTREOID,
-	4: RAINDROPS_REFRACTIONS,
-	5: PORT_SALUT,
+	0: CROCODILE_TEARS,
+	1: KING_IN_YELLOW,
+	2: SOLAR_FLARE,
+	3: LIGHTBRINGER,
+	4: SWING_FIELDS,
+	5: LOTUS_BEACH,
 	99: null
 }
 
@@ -112,17 +133,25 @@ func stop_music():
 	music_player.stop()
 	music_playing = false
 
+func fade_music():
+	fading_out = true
+	music_playing = false
+
 onready var audio_players: = $AudioPlayers
 onready var music_player: = $MusicPlayer/AudioStreamPlayer
 
 var audio_stream_players : Array = []
 
 func _ready():
+	start_volmue = music_player.volume_db
 	audio_stream_players = audio_players.get_children()
 
 func play_music(track):
 	music_player.stream = track
 	music_player.play()
+	
+func play_seti_music():
+	play_music(SETIS_OATH)
 	
 func play_croak():
 	play_sound(CROAK)
@@ -177,10 +206,45 @@ const APHOPIS_DIE = preload("res://Sound/FX/MISC/aphopis_die.wav")
 const LASER_SOUND = preload("res://Sound/FX/MISC/laser_sound.wav")
 const APHOPIS_BITE = preload("res://Sound/FX/MISC/aphopis_bite.wav")
 
+# Seti sounds
+const SETI_ENTRANCE = preload("res://Sound/FX/Seti/seti_entrance.wav")
+const SETI_HURT = preload("res://Sound/FX/Seti/seti_hurt.wav")
+const SETI_DIE = preload("res://Sound/FX/Seti/seti_die.wav")
+const SETI_TELEGRAPH = preload("res://Sound/FX/Seti/seti_telegraph.wav")
+const SETI_TELE_JUMP = preload("res://Sound/FX/Seti/seti_tel_jump.wav")
+
+const SWOOSH = preload("res://Sound/FX/Seti/swoosh.wav")
+const TELEPORT = preload("res://Sound/FX/Seti/teleport.wav")
+const BOOM = preload("res://Sound/FX/Seti/boom.wav")
+
 onready var laser_player := $LaserPlayer
 
+func play_boom():
+	play_sound(BOOM)
+	
+func play_seti_tele_jump():
+	play_sound(SETI_TELE_JUMP)
+	
+func play_teleport():
+	play_sound(TELEPORT)
+	
+func play_swoosh():
+	play_sound(SWOOSH)
+	
+func play_set_entrance():
+	play_sound(SETI_ENTRANCE)
+	
+func play_seti_hurt():
+	play_sound(SETI_HURT)
+	
+func play_seti_telegraph():
+	play_sound(SETI_TELEGRAPH)
+	
+func play_seti_die():
+	play_sound(SETI_DIE)
+
 func play_boss_music():
-	play_music(MUSIC_TRACKS[3])
+	play_music(APOPHIS_ARISING)
 	
 func play_laser_sound():
 	laser_player.stream = LASER_SOUND
@@ -203,3 +267,11 @@ func play_aphopis_hurt_sound():
 	
 func play_aphopis_telegraph_sound():
 	play_sound(APHOPIS_TELEGRAPH)
+	
+func _process(delta):
+	if fading_out:
+		music_player.volume_db -= fade_out_speed * delta
+		if music_player.volume_db <= -80:  # Volume is effectively off at -80 dB
+			music_player.stop()
+			fading_out = false
+			music_player.volume_db = start_volmue

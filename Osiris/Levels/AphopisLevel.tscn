@@ -98,7 +98,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="MusicTimer" type="Timer" parent="BossTrigger" index="2"]
-wait_time = 5.5
+wait_time = 2.0
 one_shot = true
 
 [node name="Path2D" type="Path2D" parent="." index="8"]
@@ -109,8 +109,9 @@ z_index = -1
 curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D" index="0"]
-position = Vector2( -0.467545, -4.00393 )
+position = Vector2( -6.22864, -126.008 )
 rotation = -1.61798
+offset = 122.151
 rotate = false
 
 [node name="Aphopis" parent="Path2D/PathFollow2D" index="0" instance=ExtResource( 8 )]

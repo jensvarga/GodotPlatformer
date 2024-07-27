@@ -15,7 +15,6 @@ func _ready():
 	Events.connect("player_died", self, "_on_player_died")
 	
 func die():
-	AudioManager.play_random_hit_sound()
 	queue_free()
 
 func apply_gravity(delta):

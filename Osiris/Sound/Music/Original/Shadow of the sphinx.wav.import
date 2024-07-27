@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Shadow of the sphinx.wav-a6ad0582f8bd4f7fed8e3cd4cbf6c70f.sample"
+
+[deps]
+
+source_file="res://Sound/Music/Original/Shadow of the sphinx.wav"
+dest_files=[ "res://.import/Shadow of the sphinx.wav-a6ad0582f8bd4f7fed8e3cd4cbf6c70f.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=true
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -5,6 +5,7 @@ export (Color) var sky_color = Color.deepskyblue
 export (String, FILE, "*.tscn") var previous_level_path
 export (String, FILE, "*.tscn") var next_level_path = "res://Levels/OverworldLevel.tscn"
 export (bool) var test_spawn = false
+export (bool) var boss_level = false
 
 #onready var player: = $Player
 onready var camera: = $PlayerRoot/Anchor/Camera2D
@@ -19,10 +20,10 @@ var player
 var stage_cleared = false
 
 func _ready():
+	Events.current_level = level_index
 	Events.connect("player_died", self, "_on_player_died")
 	Events.connect("checkpoint_reached", self, "_on_checkpoint_reached")
 	Events.connect("stage_cleared", self, "_on_stage_cleared")
-	Events.current_level = level_index
 	Transition.connect("transition_started", self, "_on_transition_started")
 	Transition.connect("transition_completed", self, "_on_transition_completed")
 	VisualServer.set_default_clear_color(sky_color)

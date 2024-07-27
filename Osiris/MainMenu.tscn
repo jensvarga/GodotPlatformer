@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/UI/Fonts/LongPixel7-YgPo.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://MenuTheme.tres" type="Theme" id=2]
 [ext_resource path="res://Sprites/UI/GameLogo.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/UI/main_menu_bg-pixelicious.png" type="Texture" id=4]
 
@@ -130,14 +130,6 @@ shader_param/color = Color( 1, 0.9, 0.6, 0.8 )
 shader_param/hdr = false
 shader_param/seed = 9.0
 
-[sub_resource type="DynamicFont" id=1]
-size = 14
-outline_size = 1
-outline_color = Color( 0.815686, 0.345098, 0, 1 )
-extra_spacing_top = 5
-extra_spacing_bottom = -3
-font_data = ExtResource( 2 )
-
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -197,48 +189,149 @@ margin_left = 33.0
 margin_top = -150.0
 margin_right = 127.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Control" type="Control" parent="MarginContainer"]
 margin_right = 94.0
 margin_bottom = 150.0
+theme = ExtResource( 2 )
 
-[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_right = 94.0
-margin_bottom = 23.0
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/Control"]
+anchor_top = -0.189
+anchor_right = 2.46
+anchor_bottom = 1.0
+margin_left = -5.0
+margin_top = -4.65
+margin_right = 186.76
+margin_bottom = 3.0
+
+[node name="Vbox" type="VBoxContainer" parent="MarginContainer/Control/Hbox"]
+margin_right = 129.0
+margin_bottom = 186.0
+
+[node name="Continue" type="Button" parent="MarginContainer/Control/Hbox/Vbox"]
+margin_right = 129.0
+margin_bottom = 25.0
 focus_neighbour_top = NodePath("../Exit")
-focus_neighbour_bottom = NodePath("../Options")
+focus_neighbour_bottom = NodePath("../NewGame")
 focus_next = NodePath("../Options")
 focus_previous = NodePath("../Exit")
-custom_colors/font_color_focus = Color( 1, 1, 0.811765, 1 )
-custom_colors/font_color = Color( 0.411765, 0.878431, 0.27451, 1 )
-custom_colors/font_color_pressed = Color( 0.815686, 0.345098, 0, 1 )
-custom_fonts/font = SubResource( 1 )
+disabled = true
 keep_pressed_outside = true
-text = "Play"
+text = "Continue"
 
-[node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 27.0
-margin_right = 94.0
-margin_bottom = 50.0
-focus_neighbour_top = NodePath("../Play")
+[node name="NewGame" type="Button" parent="MarginContainer/Control/Hbox/Vbox"]
+margin_top = 29.0
+margin_right = 129.0
+margin_bottom = 54.0
+focus_neighbour_top = NodePath("../Continue")
+focus_neighbour_bottom = NodePath("../Options")
+focus_next = NodePath("../Options")
+focus_previous = NodePath("../Continue")
+keep_pressed_outside = true
+text = "New Game"
+
+[node name="Options" type="Button" parent="MarginContainer/Control/Hbox/Vbox"]
+margin_top = 58.0
+margin_right = 129.0
+margin_bottom = 83.0
+focus_neighbour_top = NodePath("../NewGame")
 focus_neighbour_bottom = NodePath("../Exit")
 focus_next = NodePath("../Exit")
-focus_previous = NodePath("../Play")
-custom_colors/font_color = Color( 0.411765, 0.878431, 0.27451, 1 )
-custom_fonts/font = SubResource( 1 )
+focus_previous = NodePath("../Continue")
 text = "Options"
 
-[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 54.0
-margin_right = 94.0
-margin_bottom = 77.0
+[node name="Exit" type="Button" parent="MarginContainer/Control/Hbox/Vbox"]
+margin_top = 87.0
+margin_right = 129.0
+margin_bottom = 112.0
 focus_neighbour_top = NodePath("../Options")
-focus_neighbour_bottom = NodePath("../Play")
-focus_next = NodePath("../Play")
+focus_neighbour_bottom = NodePath("../Continue")
+focus_next = NodePath("../Continue")
 focus_previous = NodePath("../Options")
-custom_colors/font_color = Color( 0.411765, 0.878431, 0.27451, 1 )
-custom_fonts/font = SubResource( 1 )
 text = "Exit"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_Play_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_Options_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/Hbox"]
+margin_left = 133.0
+margin_right = 350.0
+margin_bottom = 186.0
+custom_constants/separation = 0
+
+[node name="FullscreenHbox" type="HBoxContainer" parent="MarginContainer/Control/Hbox/VBoxContainer"]
+margin_right = 217.0
+margin_bottom = 32.0
+alignment = 2
+
+[node name="Fullscreen" type="Button" parent="MarginContainer/Control/Hbox/VBoxContainer/FullscreenHbox"]
+margin_left = 37.0
+margin_right = 181.0
+margin_bottom = 32.0
+focus_neighbour_top = NodePath("../../Back")
+focus_neighbour_bottom = NodePath("../../MusicHBox/Music")
+focus_next = NodePath("../../MusicHBox/Music")
+focus_previous = NodePath("../../Back")
+text = "Fullscreen"
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/Control/Hbox/VBoxContainer/FullscreenHbox"]
+margin_left = 185.0
+margin_right = 217.0
+margin_bottom = 32.0
+pressed = true
+
+[node name="MusicHBox" type="HBoxContainer" parent="MarginContainer/Control/Hbox/VBoxContainer"]
+margin_top = 32.0
+margin_right = 217.0
+margin_bottom = 64.0
+alignment = 2
+
+[node name="Music" type="Button" parent="MarginContainer/Control/Hbox/VBoxContainer/MusicHBox"]
+margin_left = 35.0
+margin_right = 181.0
+margin_bottom = 32.0
+focus_neighbour_top = NodePath("../../FullscreenHbox/Fullscreen")
+focus_neighbour_bottom = NodePath("../../FxHBox/Fx")
+focus_next = NodePath("../../FxHBox/Fx")
+focus_previous = NodePath("../../FullscreenHbox/Fullscreen")
+text = "Mute Music"
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/Control/Hbox/VBoxContainer/MusicHBox"]
+margin_left = 185.0
+margin_right = 217.0
+margin_bottom = 32.0
+
+[node name="FxHBox" type="HBoxContainer" parent="MarginContainer/Control/Hbox/VBoxContainer"]
+margin_top = 64.0
+margin_right = 217.0
+margin_bottom = 96.0
+alignment = 2
+
+[node name="Fx" type="Button" parent="MarginContainer/Control/Hbox/VBoxContainer/FxHBox"]
+margin_right = 181.0
+margin_bottom = 32.0
+focus_neighbour_top = NodePath("../../MusicHBox/Music")
+focus_neighbour_bottom = NodePath("../../Back")
+focus_next = NodePath("../../Back")
+focus_previous = NodePath("../../MusicHBox/Music")
+text = "Mute Effects"
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/Control/Hbox/VBoxContainer/FxHBox"]
+margin_left = 185.0
+margin_right = 217.0
+margin_bottom = 32.0
+
+[node name="Back" type="Button" parent="MarginContainer/Control/Hbox/VBoxContainer"]
+margin_top = 96.0
+margin_right = 217.0
+margin_bottom = 121.0
+focus_neighbour_top = NodePath("../FxHBox/Fx")
+focus_neighbour_bottom = NodePath("../FullscreenHbox/Fullscreen")
+focus_next = NodePath("../FullscreenHbox/Fullscreen")
+focus_previous = NodePath("../FxHBox/Fx")
+text = "Back"
+
+[connection signal="pressed" from="MarginContainer/Control/Hbox/Vbox/Continue" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/Vbox/NewGame" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/Vbox/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/Vbox/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/FullscreenHbox/Fullscreen" to="." method="_on_Fullscreen_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/MusicHBox/Music" to="." method="_on_Music_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/FxHBox/Fx" to="." method="_on_Fx_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/Back" to="." method="_on_Back_pressed"]

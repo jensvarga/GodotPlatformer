@@ -2,17 +2,25 @@ extends Node2D
 
 export (String) var NAME = "RA"
 export (String, FILE, "*.png") var PORTRAIT_PATH = "res://Sprites/UI/ra_portrait.png"
-export(Array, String) var NPC_DIALOGUE = [
-									"Greetings, traveler",
-									"Behold, that woven mat yonder, it possesses the power of flight. Step upon it, and it shall transport you to your inaugural trial",
-									"Farewell, I have revealed all that is known, until we meet again"
-										]
+export(Array, String) var NPC_DIALOGUE = ["Greetings, traveler",\
+"Behold, that woven mat yonder, it possesses the power of flight. Step upon it, and it shall transport you to your inaugural trial",\
+"Farewell, I have revealed all that is known, until we meet again"\
+]
+
+export(Array, String) var CONTINUE_DIALOGUE = [\
+"You have passed the triels",
+"Contuniue forth",\
+"Farewell"\
+]
+
+export(bool) var CONTINUE_DIALOGUE_UNLOCKED = false
 
 onready var name_label := $UI/AspectRatioContainer/Sprite/Portrait/NameLabel
 onready var portrait := $UI/AspectRatioContainer/Sprite/Portrait
 onready var text_label := $UI/AspectRatioContainer/Sprite/TextLabel
 onready var animator := $AnimationPlayer
 onready var sprite := $AnimatedSprite
+onready var turn_timer := $TurnTimer
 
 var is_showing_textbox = false
 var player_in_range = false
@@ -36,7 +44,7 @@ func interact():
 	start_dialouge()
 	
 func start_dialouge():
-	text_label.text = NPC_DIALOGUE[dialouge_index]
+	display_dialouge(dialouge_index)
 	
 func advance_dialouge():
 	dialouge_index += 1
@@ -44,7 +52,13 @@ func advance_dialouge():
 		hide_textbox()
 		return
 		
-	text_label.text = NPC_DIALOGUE[dialouge_index]
+	display_dialouge(dialouge_index)
+	
+func display_dialouge(index: int):
+	if CONTINUE_DIALOGUE_UNLOCKED:
+		text_label.text = CONTINUE_DIALOGUE[index]
+	else:
+		text_label.text = NPC_DIALOGUE[dialouge_index]
 	
 func show_textbox():
 	dialouge_index = 0
@@ -60,6 +74,7 @@ func face_player():
 	var direction = (player.global_position - global_position).normalized()
 	var angle = atan2(direction.y, direction.x)
 	var rotation_degrees = rad2deg(angle)
+	turn_timer.start()
 	
 	if abs(rotation_degrees) < 45:
 		sprite.animation = "Right"
@@ -80,3 +95,6 @@ func _on_InteractionZone_body_exited(body):
 	player_in_range = false
 	if is_showing_textbox:
 		hide_textbox()
+
+func _on_TurnTimer_timeout():
+	sprite.animation = "Down"

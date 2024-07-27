@@ -224,19 +224,19 @@ rotate = false
 [node name="OverworldPlayer" parent="Path2D/PathFollow2D" instance=ExtResource( 5 )]
 position = Vector2( -0.243713, -11.9975 )
 rotation = -0.0203105
-frame = 3
+frame = 1
 
 [node name="OverworldTree" parent="." instance=ExtResource( 1 )]
 position = Vector2( 74, -36 )
-frame = 3
+frame = 0
 
 [node name="OverworldTree2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 17, -22 )
-frame = 3
+frame = 0
 
 [node name="OverworldTree3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 67, 0 )
-frame = 3
+frame = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/1-2 = SubResource( 2 )
@@ -263,18 +263,21 @@ texture = ExtResource( 8 )
 visible = false
 position = Vector2( 197, 15 )
 frames = SubResource( 8 )
+frame = 1
 playing = true
 
 [node name="WaveSprite2" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 32, -228 )
 frames = SubResource( 8 )
+frame = 1
 playing = true
 
 [node name="WaveSprite3" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 2, -219 )
 frames = SubResource( 8 )
+frame = 1
 playing = true
 
 [node name="OvweworldDune" type="Sprite" parent="."]

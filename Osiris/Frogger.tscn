@@ -77,7 +77,7 @@ animations = [ {
 extents = Vector2( 10, 6.5 )
 
 [sub_resource type="RectangleShape2D" id=14]
-extents = Vector2( 20, 69 )
+extents = Vector2( 13.5, 69 )
 
 [sub_resource type="RectangleShape2D" id=18]
 extents = Vector2( 8, 7 )
@@ -102,7 +102,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2( -10, 75.5 )
+position = Vector2( 0.5, 75.5 )
 shape = SubResource( 14 )
 
 [node name="HurtBox" type="Area2D" parent="."]

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
-MOVE_SPEED = 150
+MOVE_SPEED = 175
 MAX_JUMP_HEIGHT = -250
 MIN_JUMP_HEIGHT = -60
 ACCELERATION = 900

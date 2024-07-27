@@ -1,0 +1,45 @@
+[gd_resource type="Theme" load_steps=10 format=2]
+
+[ext_resource path="res://Sprites/UI/Fonts/SuperLegendBoy-4w8Y.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Sprites/UI/checkbox_checked.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/checkbox_unchecked.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 19
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = 1
+extra_spacing_bottom = 2
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[resource]
+Button/colors/font_color = Color( 0.713726, 0.568627, 0.223529, 1 )
+Button/colors/font_color_disabled = Color( 0.713726, 0.568627, 0.223529, 0.501961 )
+Button/colors/font_color_focus = Color( 0.980392, 0.721569, 0.105882, 1 )
+Button/colors/font_color_hover = Color( 0.494118, 0.392157, 0.156863, 1 )
+Button/colors/font_color_pressed = Color( 0.964706, 0.807843, 0.435294, 1 )
+Button/fonts/font = SubResource( 4 )
+Button/styles/disabled = SubResource( 6 )
+Button/styles/focus = SubResource( 8 )
+Button/styles/hover = SubResource( 9 )
+Button/styles/normal = SubResource( 7 )
+Button/styles/pressed = SubResource( 10 )
+CheckBox/icons/checked = ExtResource( 2 )
+CheckBox/icons/unchecked = ExtResource( 3 )
+CheckButton/colors/font_color = Color( 0.713726, 0.568627, 0.223529, 1 )
+CheckButton/colors/font_color_focus = Color( 0.980392, 0.721569, 0.105882, 1 )
+CheckButton/colors/font_color_pressed = Color( 0.713726, 0.568627, 0.223529, 1 )
+CheckButton/constants/check_vadjust = -2
+CheckButton/constants/hseparation = 5
+CheckButton/icons/off = ExtResource( 3 )
+CheckButton/icons/on = ExtResource( 2 )

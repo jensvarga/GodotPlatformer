@@ -14,6 +14,11 @@ var buffered_jump = false
 var coyote_jump = false
 var gorund_speed_bonus = 5
 
+# Wall jumping
+var holding_wall = false
+var jump_from_right = false
+var jump_from_left = false
+
 onready var sprite: = $AnimatedSprite
 onready var ladder_check: = $LadderCheck
 onready var collision_shape: = $CollisionShape2D
@@ -25,6 +30,9 @@ onready var remote_transform: = $RemoteTransform2D
 onready var grab_position: = $GrabPosition
 onready var item_check_right: = $ItemCheck/Right
 onready var item_check_left: = $ItemCheck/Left
+onready var wall_check_left := $WallDetectorLeft
+onready var wall_check_right := $WallDetectorRight
+onready var climb_timber := $ClimbTimer
 
 var look_up = false
 
@@ -79,12 +87,39 @@ func enter_move():
 func enter_climb():
 	sprite.animation = "ClimbIdle"
 	state = CLIMB
-
+	
 func update_dead():
 	pass
+
+func holding_left_wall():
+	return wall_check_left.is_colliding() and Input.is_action_pressed("ui_left")
 	
+func holding_right_wall():
+	return wall_check_right.is_colliding() and Input.is_action_pressed("ui_right")
+	
+func update_wall_jumping(grounded: bool):
+	if grounded or carrying or crouch:
+		holding_wall = false
+		jump_from_left = false
+		jump_from_right = false
+		return
+		
+	if not jump_from_left and not jump_from_right:
+		holding_wall = holding_left_wall() or holding_right_wall()
+		return
+	
+	if jump_from_left:
+		holding_wall = holding_right_wall()
+		return
+		
+	if jump_from_right:
+		holding_wall = holding_left_wall()
+		return
+
 func update_move(delta):
 	var grounded = is_on_floor()
+	update_wall_jumping(grounded)
+	set_carry_item_height()
 	
 	if not carrying and is_on_ladder() and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")):
 		enter_climb()
@@ -112,7 +147,10 @@ func update_move(delta):
 	if input.x == 0 or crouch:
 		apply_friction(delta)
 		if crouch:
-			sprite.animation = "Crouch"
+			if carrying:
+				sprite.animation = "CrouchCarry"
+			else:
+				sprite.animation = "Crouch"
 			crouch_collider.set_deferred("disabled", false)
 			collision_shape.set_deferred("disabled", true)
 		else:
@@ -128,15 +166,28 @@ func update_move(delta):
 		if carrying:
 			sprite.animation = "RunCarry"
 		else:
-			sprite.animation = "Run"
+			if holding_wall:
+				sprite.animation = "WallHold"
+			else:
+				sprite.animation = "Run"
 		crouch_collider.set_deferred("disabled", true)
 		collision_shape.set_deferred("disabled", false)
 		
 	var extra = 0
 	var jump = false
-	if grounded or coyote_jump:
+	
+	if grounded or coyote_jump or holding_wall:
 		jump = Input.is_action_just_pressed("ui_jump") or buffered_jump
 		if jump:
+			if jump and holding_left_wall():
+				holding_wall = false
+				jump_from_left = true
+				jump_from_right = false
+			elif jump and holding_right_wall():
+				holding_wall = false
+				jump_from_left = false
+				jump_from_right = true
+				
 			AudioManager.play_random_jump_sound()
 			var horizontal_speed = abs(velocity.x)
 			
@@ -162,7 +213,7 @@ func update_move(delta):
 			buffered_jump = true
 			jump_buffer_timer.start()
 		
-		if velocity.y > 0:
+		if velocity.y > 0:	
 			apply_gravity(delta)
 			
 			if not crouch:
@@ -204,7 +255,12 @@ func is_on_ladder():
 	return ladder_check.is_colliding()
 	
 func apply_gravity(delta):
-	velocity.y += player_move_data.GRAVITY * delta
+	if holding_wall:
+		velocity.y = 0
+		velocity.y += (player_move_data.GRAVITY / 2) * delta
+	else:
+		velocity.y += player_move_data.GRAVITY * delta
+		
 	if crouch:
 		velocity.y = min(velocity.y, 400)
 	else:
@@ -236,7 +292,6 @@ func flip_sprite(input_x):
 	elif prevoius_flip and not sprite.flip_h:
 		item_check_left.set_deferred("disabled", true)
 		item_check_right.set_deferred("disabled", false)
-	
 	
 func get_input():
 	var input = Vector2.ZERO
@@ -282,6 +337,15 @@ func drop_item():
 	if item_holder.has_method("drop_item"):
 		item_holder.drop_item(position, throw_dir, velocity)
 	carrying = false
+	
+func set_carry_item_height():
+	if not carrying:
+		return
+		
+	if item_instsance != null:
+		item_instsance.position.y = grab_position.position.y + 6
+		if crouch:
+			item_instsance.position.y = grab_position.position.y + 13
 	
 func _on_JumpBufferTimer_timeout():
 	buffered_jump = false
