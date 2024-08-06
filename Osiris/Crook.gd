@@ -3,6 +3,7 @@ extends Enemy
 onready var sprite := $AnimatedSprite
 onready var hitbox_shape := $Area2D/CollisionPolygon2D
 onready var death_timer := $DeathTimer
+onready var freeze_timer := $FreezeTimer
 
 export (int) var MOVE_SPEED = 25
 
@@ -50,10 +51,15 @@ func _on_Area2D_body_entered(body):
 			AudioManager.play_random_hit_sound()
 			death_timer.start()
 		else:
-			body.die()
+			body.hurt()
 			face(body)
 			sprite.animation = "Attack"
 			freeze = true
+			freeze_timer.start()
 
 func _on_DeathTimer_timeout():
 	die()
+
+func _on_FreezeTimer_timeout():
+	freeze = false
+	sprite.animation = "Walk"

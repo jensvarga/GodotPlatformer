@@ -3,6 +3,7 @@ extends KinematicBody2D
 class_name Player
 
 export (Resource) var player_move_data
+var hurt_particles = preload("res://PlayerHurtParticles.tscn")
 
 var velocity = Vector2.ZERO
 var crouch = false
@@ -33,8 +34,11 @@ onready var item_check_left: = $ItemCheck/Left
 onready var wall_check_left := $WallDetectorLeft
 onready var wall_check_right := $WallDetectorRight
 onready var climb_timber := $ClimbTimer
+onready var animation_player := $AnimationPlayer
+onready var invincible_timer := $InvincibleTimer
 
 var look_up = false
+var invincible = false
 
 # Item handeling
 var item_instsance
@@ -47,8 +51,11 @@ func _ready():
 	start_grab_position = grab_position.position.x
 	enter_move()
 	crouch_collider.set_deferred("disabled", true)
+	animation_player.play("RESET")
 
 func _physics_process(delta):
+	if state != DEAD and Events.player_hit_points <= 0:
+		enter_dead()
 	# item check
 	if state != DEAD:
 		if not carrying and carry_item != null and Input.is_action_just_pressed("ui_grab"):
@@ -305,6 +312,18 @@ func clamp_jump_force():
 	
 func die():
 	if state != DEAD: enter_dead()
+
+func hurt():
+	if invincible:
+		return
+	invincible = true
+	animation_player.play("Hurt")
+	Events.emit_signal("player_take_damage")
+	invincible_timer.start()
+	AudioManager.play_random_hit_sound()
+	var particles = hurt_particles.instance()
+	particles.position = position
+	get_parent().add_child(particles)
 	
 func bounce(amount):
 	AudioManager.play_random_hit_sound()
@@ -370,3 +389,12 @@ func _on_ItemCheck_body_exited(body):
 		carry_item = null
 		if not carrying:
 			item_holder = null
+
+func _on_InvincibleTimer_timeout():
+	invincible = false
+
+func _on_RoomDetector_area_entered(area):
+	var collision_shape: CollisionShape2D = area.get_node("CollisionShape2D")
+	var size: Vector2 = collision_shape.shape.extents * 2
+	
+	Events.change_room(collision_shape.global_position, size)

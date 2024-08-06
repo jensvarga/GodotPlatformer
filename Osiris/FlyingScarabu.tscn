@@ -78,8 +78,8 @@ tracks/0/keys = {
 curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2( 0.863438, 15.1389 )
-offset = 8.90152
+position = Vector2( 0, -92 )
+offset = 116.375
 rotate = false
 
 [node name="FlyingSkarabu" type="KinematicBody2D" parent="PathFollow2D"]
@@ -88,6 +88,7 @@ script = ExtResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D/FlyingSkarabu"]
 frames = SubResource( 4 )
 animation = "Fly"
+frame = 1
 playing = true
 
 [node name="Hitbox" parent="PathFollow2D/FlyingSkarabu" instance=ExtResource( 2 )]
@@ -115,6 +116,10 @@ scale = Vector2( 1, 4.85 )
 [node name="RemoveTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="VisibilityEnabler2D2" type="VisibilityEnabler2D" parent="."]
+position = Vector2( 1.99999, 1 )
+scale = Vector2( 11.3, 14.1 )
 
 [connection signal="body_entered" from="PathFollow2D/FlyingSkarabu/HurtArea" to="PathFollow2D/FlyingSkarabu/HurtArea" method="_on_HurtArea_body_entered"]
 [connection signal="timeout" from="RemoveTimer" to="PathFollow2D/FlyingSkarabu" method="_on_RemoveTimer_timeout"]

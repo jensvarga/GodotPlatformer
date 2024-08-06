@@ -55,7 +55,7 @@ func _on_Hitbox_body_entered(body):
 	if body is Player:
 		freeze = true
 		sprite.animation = "Attack"
-		body.die()
+		body.hurt()
 
 
 func _on_RemoveTimer_timeout():

@@ -2,6 +2,7 @@ extends CanvasLayer
 
 onready var level := $".."
 onready var boss_life := $BossLife
+export (int) var max_boss_hp = 6 
 
 onready var ankh1 := $Ankh1
 onready var ankh2 := $Ankh2
@@ -19,11 +20,14 @@ func _ready():
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	
-	update_ankhs()
-	update_boss_ankhs()
-	
-	if not level.boss_level:
+	if level.boss_level:
+		Events.boss_hit_points = max_boss_hp
+		Events.player_hit_points = 3
+		update_boss_ankhs()
+	else:
 		boss_life.hide()
+	
+	update_ankhs()
 	
 func _on_player_take_damage():
 	update_ankhs()
@@ -63,7 +67,7 @@ func update_boss_ankhs():
 			boss_ankh5.animation = "Empty"
 			boss_ankh6.animation = "Empty"
 		1:
-			boss_ankh1.animation = "Full"
+			boss_ankh1.animation = "Half"
 			boss_ankh2.animation = "Empty"
 			boss_ankh3.animation = "Empty"
 			boss_ankh4.animation = "Empty"
@@ -71,33 +75,75 @@ func update_boss_ankhs():
 			boss_ankh6.animation = "Empty"
 		2:
 			boss_ankh1.animation = "Full"
-			boss_ankh2.animation = "Full"
+			boss_ankh2.animation = "Empty"
 			boss_ankh3.animation = "Empty"
 			boss_ankh4.animation = "Empty"
 			boss_ankh5.animation = "Empty"
 			boss_ankh6.animation = "Empty"
 		3:
 			boss_ankh1.animation = "Full"
-			boss_ankh2.animation = "Full"
-			boss_ankh3.animation = "Full"
+			boss_ankh2.animation = "Half"
+			boss_ankh3.animation = "Empty"
 			boss_ankh4.animation = "Empty"
 			boss_ankh5.animation = "Empty"
 			boss_ankh6.animation = "Empty"
 		4:
 			boss_ankh1.animation = "Full"
 			boss_ankh2.animation = "Full"
+			boss_ankh3.animation = "Empty"
+			boss_ankh4.animation = "Empty"
+			boss_ankh5.animation = "Empty"
+			boss_ankh6.animation = "Empty"
+		5:
+			boss_ankh1.animation = "Full"
+			boss_ankh2.animation = "Full"
+			boss_ankh3.animation = "Half"
+			boss_ankh4.animation = "Empty"
+			boss_ankh5.animation = "Empty"
+			boss_ankh6.animation = "Empty"
+		6:
+			boss_ankh1.animation = "Full"
+			boss_ankh2.animation = "Full"
+			boss_ankh3.animation = "Full"
+			boss_ankh4.animation = "Empty"
+			boss_ankh5.animation = "Empty"
+			boss_ankh6.animation = "Empty"
+		7:
+			boss_ankh1.animation = "Full"
+			boss_ankh2.animation = "Full"
+			boss_ankh3.animation = "Full"
+			boss_ankh4.animation = "Half"
+			boss_ankh5.animation = "Empty"
+			boss_ankh6.animation = "Empty"
+		8:
+			boss_ankh1.animation = "Full"
+			boss_ankh2.animation = "Full"
 			boss_ankh3.animation = "Full"
 			boss_ankh4.animation = "Full"
 			boss_ankh5.animation = "Empty"
 			boss_ankh6.animation = "Empty"
-		5:
+		9:
+			boss_ankh1.animation = "Full"
+			boss_ankh2.animation = "Full"
+			boss_ankh3.animation = "Full"
+			boss_ankh4.animation = "Full"
+			boss_ankh5.animation = "Half"
+			boss_ankh6.animation = "Empty"
+		10:
 			boss_ankh1.animation = "Full"
 			boss_ankh2.animation = "Full"
 			boss_ankh3.animation = "Full"
 			boss_ankh4.animation = "Full"
 			boss_ankh5.animation = "Full"
 			boss_ankh6.animation = "Empty"
-		6:
+		11:
+			boss_ankh1.animation = "Full"
+			boss_ankh2.animation = "Full"
+			boss_ankh3.animation = "Full"
+			boss_ankh4.animation = "Full"
+			boss_ankh5.animation = "Full"
+			boss_ankh6.animation = "Half"
+		12:
 			boss_ankh1.animation = "Full"
 			boss_ankh2.animation = "Full"
 			boss_ankh3.animation = "Full"

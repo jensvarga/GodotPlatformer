@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Sprites/ankh_particle.png" type="Texture" id=1]
+[ext_resource path="res://PlayerHurtParticles.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/cloud_particle.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.660156, 0.121424, 0.121424, 1, 1, 1, 1, 0 )
+
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.98783 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[node name="PlayerHurtParticles" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 4.14
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 35.09
+initial_velocity_random = 0.39
+angular_velocity = 192.0
+angular_velocity_random = 0.68
+color_ramp = SubResource( 1 )
+
+[node name="Clouds" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 2
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 2.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 15.0
+linear_accel = 4.2
+linear_accel_random = 0.07
+radial_accel = -14.74
+damping = 0.35
+color_ramp = SubResource( 2 )
+
+[node name="Ankh" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 1
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+texture = ExtResource( 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 30.0
+initial_velocity_random = 0.2
+angular_velocity = 170.0
+angular_velocity_random = 1.0
+color_ramp = SubResource( 3 )

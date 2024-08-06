@@ -12,7 +12,7 @@ func _on_Hittbox_body_entered(body):
 		CameraShaker.add_trauma(0.2)
 	
 	if body is Player:
-		body.die()
+		body.hurt()
 		
 	if body is Enemy:
 		body.die()

@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://BossHurtbox.gd"
 }, {
+"base": "Position2D",
+"class": "CameraAnchor",
+"language": "GDScript",
+"path": "res://Levels/Anchor.gd"
+}, {
 "base": "AnimatedSprite",
 "class": "CarryItem",
 "language": "GDScript",
@@ -28,6 +33,11 @@ _global_script_classes=[ {
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Enemy.gd"
+}, {
+"base": "Camera2D",
+"class": "FollowCamera",
+"language": "GDScript",
+"path": "res://TestCamera2D.gd"
 }, {
 "base": "CarryItem",
 "class": "Key",
@@ -49,6 +59,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Player.gd"
 }, {
+"base": "Camera2D",
+"class": "PlayerCamera",
+"language": "GDScript",
+"path": "res://PlayerCamera.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerHurtParticles",
+"language": "GDScript",
+"path": "res://PlayerHurtParticles.gd"
+}, {
 "base": "Resource",
 "class": "PlayerMovementData",
 "language": "GDScript",
@@ -58,6 +78,11 @@ _global_script_classes=[ {
 "class": "Scarabu",
 "language": "GDScript",
 "path": "res://Scarabu.gd"
+}, {
+"base": "Camera2D",
+"class": "SnapCamera2D",
+"language": "GDScript",
+"path": "res://Levels/SnapCamera2D.gd"
 }, {
 "base": "Node2D",
 "class": "Spawn",
@@ -76,15 +101,20 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Boss": "",
+"CameraAnchor": "",
 "CarryItem": "",
 "CollectableResource": "",
 "Enemy": "",
+"FollowCamera": "",
 "Key": "",
 "MainMenu": "",
 "OverworldPlayer": "",
 "Player": "",
+"PlayerCamera": "",
+"PlayerHurtParticles": "",
 "PlayerMovementData": "",
 "Scarabu": "",
+"SnapCamera2D": "",
 "Spawn": "",
 "ThrowableRock": "",
 "Turtle": ""
@@ -114,8 +144,8 @@ settings/fps/force_fps=60
 window/size/width=480
 window/size/height=270
 window/size/always_on_top=true
-window/size/test_width=1280
-window/size/test_height=720
+window/size/test_width=1440
+window/size/test_height=810
 window/stretch/mode="2d"
 
 [global]
@@ -123,6 +153,8 @@ window/stretch/mode="2d"
 "always on top"=false
 bordeless=false
 print=true
+collision=false
+layer=false
 
 [gui]
 
@@ -191,6 +223,7 @@ ui_grab={
 2d_physics/layer_5="Checkpoints"
 2d_physics/layer_6="Boss"
 2d_physics/layer_7="Platforms"
+2d_physics/layer_20="Room"
 
 [mono]
 

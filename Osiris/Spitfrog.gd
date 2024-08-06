@@ -35,7 +35,7 @@ func _on_tongueSprite_animation_finished():
 
 func _on_hurtArea_body_entered(body):
 	if body is Player:
-		body.die()
+		body.hurt()
 
 func _on_DamageTimer_timeout():
 	pass # Replace with function body.

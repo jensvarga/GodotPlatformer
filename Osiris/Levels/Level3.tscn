@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://TileMap.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://KeyPlatform.tscn" type="PackedScene" id=7]
 [ext_resource path="res://FallingPlatform.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Sprites/red_clouds.png" type="Texture" id=9]
+[ext_resource path="res://Ankh.tscn" type="PackedScene" id=10]
 [ext_resource path="res://SpikeCrawler.tscn" type="PackedScene" id=11]
 [ext_resource path="res://DesertTiles.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ShaiUludd.tscn" type="PackedScene" id=13]
@@ -18,6 +19,8 @@
 [ext_resource path="res://WaterBlock.tscn" type="PackedScene" id=17]
 [ext_resource path="res://PalmTree.tscn" type="PackedScene" id=18]
 [ext_resource path="res://PurpleLotus.tscn" type="PackedScene" id=19]
+[ext_resource path="res://LavaBlock.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Sprites/lava_tile.png" type="Texture" id=21]
 
 [sub_resource type="GDScript" id=17]
 script/source = "extends ParallaxBackground
@@ -84,6 +87,70 @@ _data = {
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 31.5, 45.5 )
 
+[sub_resource type="GDScript" id=19]
+script/source = "extends Area2D
+
+export (int) var LERP_TARGET
+
+onready var camera := $\"../PlayerRoot/Anchor/Camera2D\"
+var lerp_factor := 1.0
+var lerp_speed := 0.8
+var lerp_from = -400
+
+var entered = false
+
+func _process(delta):
+	if lerp_factor < 1.0:
+		lerp_factor += lerp_speed * delta
+		camera.limit_top = lerp(lerp_from, LERP_TARGET, lerp_factor)
+	else:
+		lerp_factor = 1.0
+		entered = false
+
+func _on_CameraTrigger_body_entered(body):
+	if body is Player:
+		if not entered:
+			entered = true
+			lerp_from = camera.limit_top
+			lerp_factor = 0.0
+
+func _on_CameraTrigger_body_exited(body):
+	if body is Player:
+		entered = false
+"
+
+[sub_resource type="GDScript" id=20]
+script/source = "extends Area2D
+
+export (int) var LERP_TARGET
+
+onready var camera := $\"../PlayerRoot/Anchor/Camera2D\"
+var lerp_factor := 1.0
+var lerp_speed := 0.8
+var lerp_from = -400
+
+var entered = false
+
+func _process(delta):
+	if lerp_factor < 1.0:
+		lerp_factor += lerp_speed * delta
+		camera.limit_top = lerp(lerp_from, LERP_TARGET, lerp_factor)
+	else:
+		lerp_factor = 1.0
+		entered = false
+
+func _on_CameraTrigger_body_entered(body):
+	if body is Player:
+		if not entered:
+			entered = true
+			lerp_from = camera.limit_top
+			lerp_factor = 0.0
+
+func _on_CameraTrigger_body_exited(body):
+	if body is Player:
+		entered = false
+"
+
 [sub_resource type="Curve2D" id=13]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 25.6389, 52.8429, 0, 0, 0, 0, 25.6389, -1.90735e-06, 0, 0, 0, 0, -25.6389, -1.90735e-06, 0, 0, 0, 0, -25.6389, 52.8429, 0, 0, 0, 0, 25.6389, 52.8429 )
@@ -104,11 +171,9 @@ position = Vector2( 2527, -112 )
 [node name="TestSpawn" parent="." index="3"]
 position = Vector2( 1146, -147 )
 
-[node name="Camera2D" parent="PlayerRoot/Anchor" index="0"]
-position = Vector2( 1, -17 )
-limit_left = -10000000
-limit_top = -400
-limit_bottom = 125
+[node name="Anchor" parent="PlayerRoot" index="0"]
+camera_limit_left = -250
+camera_limit_top = -400
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="5"]
 offset = Vector2( -1000, 0 )
@@ -208,229 +273,157 @@ position = Vector2( 61, -56 )
 [node name="SpikeBall2" parent="Spikes" index="1" instance=ExtResource( 4 )]
 position = Vector2( 133, 69 )
 
-[node name="SpikeBall6" parent="Spikes" index="2" instance=ExtResource( 4 )]
-position = Vector2( -17, 146 )
-
-[node name="SpikeBall7" parent="Spikes" index="3" instance=ExtResource( 4 )]
-position = Vector2( 7, 146 )
-
-[node name="SpikeBall8" parent="Spikes" index="4" instance=ExtResource( 4 )]
-position = Vector2( 31, 146 )
-
-[node name="SpikeBall9" parent="Spikes" index="5" instance=ExtResource( 4 )]
-position = Vector2( 56, 146 )
-
-[node name="SpikeBall10" parent="Spikes" index="6" instance=ExtResource( 4 )]
-position = Vector2( 80, 146 )
-
-[node name="SpikeBall11" parent="Spikes" index="7" instance=ExtResource( 4 )]
-position = Vector2( 104, 146 )
-
-[node name="SpikeBall12" parent="Spikes" index="8" instance=ExtResource( 4 )]
-position = Vector2( 128, 146 )
-
-[node name="SpikeBall13" parent="Spikes" index="9" instance=ExtResource( 4 )]
-position = Vector2( 152, 146 )
-
-[node name="SpikeBall14" parent="Spikes" index="10" instance=ExtResource( 4 )]
-position = Vector2( 176, 146 )
-
-[node name="SpikeBall15" parent="Spikes" index="11" instance=ExtResource( 4 )]
-position = Vector2( 200, 146 )
-
-[node name="SpikeBall16" parent="Spikes" index="12" instance=ExtResource( 4 )]
-position = Vector2( 224, 146 )
-
-[node name="SpikeBall17" parent="Spikes" index="13" instance=ExtResource( 4 )]
-position = Vector2( 248, 146 )
-
-[node name="SpikeBall18" parent="Spikes" index="14" instance=ExtResource( 4 )]
-position = Vector2( 273, 146 )
-
-[node name="SpikeBall19" parent="Spikes" index="15" instance=ExtResource( 4 )]
-position = Vector2( 297, 146 )
-
-[node name="SpikeBall20" parent="Spikes" index="16" instance=ExtResource( 4 )]
-position = Vector2( 321, 146 )
-
-[node name="SpikeBall21" parent="Spikes" index="17" instance=ExtResource( 4 )]
-position = Vector2( 345, 146 )
-
-[node name="SpikeBall22" parent="Spikes" index="18" instance=ExtResource( 4 )]
-position = Vector2( 369, 146 )
-
-[node name="SpikeBall23" parent="Spikes" index="19" instance=ExtResource( 4 )]
-position = Vector2( 393, 146 )
-
-[node name="SpikeBall24" parent="Spikes" index="20" instance=ExtResource( 4 )]
-position = Vector2( 417, 146 )
-
-[node name="SpikeBall25" parent="Spikes" index="21" instance=ExtResource( 4 )]
-position = Vector2( 441, 146 )
-
-[node name="SpikeBall26" parent="Spikes" index="22" instance=ExtResource( 4 )]
-position = Vector2( 465, 146 )
-
-[node name="SpikeBall27" parent="Spikes" index="23" instance=ExtResource( 4 )]
-position = Vector2( 489, 146 )
-
-[node name="SpikeBall28" parent="Spikes" index="24" instance=ExtResource( 4 )]
-position = Vector2( 513, 146 )
-
-[node name="SpikeBall30" parent="Spikes" index="25" instance=ExtResource( 4 )]
+[node name="SpikeBall30" parent="Spikes" index="2" instance=ExtResource( 4 )]
 position = Vector2( -23, -144 )
 
-[node name="SpikeBall31" parent="Spikes" index="26" instance=ExtResource( 4 )]
+[node name="SpikeBall31" parent="Spikes" index="3" instance=ExtResource( 4 )]
 position = Vector2( 1, -144 )
 
-[node name="SpikeBall32" parent="Spikes" index="27" instance=ExtResource( 4 )]
+[node name="SpikeBall32" parent="Spikes" index="4" instance=ExtResource( 4 )]
 position = Vector2( 25, -144 )
 
-[node name="SpikeBall33" parent="Spikes" index="28" instance=ExtResource( 4 )]
+[node name="SpikeBall33" parent="Spikes" index="5" instance=ExtResource( 4 )]
 position = Vector2( 50, -144 )
 
-[node name="SpikeBall34" parent="Spikes" index="29" instance=ExtResource( 4 )]
+[node name="SpikeBall34" parent="Spikes" index="6" instance=ExtResource( 4 )]
 position = Vector2( 74, -144 )
 
-[node name="SpikeBall35" parent="Spikes" index="30" instance=ExtResource( 4 )]
+[node name="SpikeBall35" parent="Spikes" index="7" instance=ExtResource( 4 )]
 position = Vector2( 98, -144 )
 
-[node name="SpikeBall36" parent="Spikes" index="31" instance=ExtResource( 4 )]
+[node name="SpikeBall36" parent="Spikes" index="8" instance=ExtResource( 4 )]
 position = Vector2( 122, -144 )
 
-[node name="SpikeBall37" parent="Spikes" index="32" instance=ExtResource( 4 )]
+[node name="SpikeBall37" parent="Spikes" index="9" instance=ExtResource( 4 )]
 position = Vector2( 146, -144 )
 
-[node name="SpikeBall38" parent="Spikes" index="33" instance=ExtResource( 4 )]
+[node name="SpikeBall38" parent="Spikes" index="10" instance=ExtResource( 4 )]
 position = Vector2( 170, -144 )
 
-[node name="SpikeBall39" parent="Spikes" index="34" instance=ExtResource( 4 )]
+[node name="SpikeBall39" parent="Spikes" index="11" instance=ExtResource( 4 )]
 position = Vector2( 194, -144 )
 
-[node name="SpikeBall40" parent="Spikes" index="35" instance=ExtResource( 4 )]
+[node name="SpikeBall40" parent="Spikes" index="12" instance=ExtResource( 4 )]
 position = Vector2( 218, -144 )
 
-[node name="SpikeBall41" parent="Spikes" index="36" instance=ExtResource( 4 )]
+[node name="SpikeBall41" parent="Spikes" index="13" instance=ExtResource( 4 )]
 position = Vector2( 242, -144 )
 
-[node name="SpikeBall42" parent="Spikes" index="37" instance=ExtResource( 4 )]
+[node name="SpikeBall42" parent="Spikes" index="14" instance=ExtResource( 4 )]
 position = Vector2( 267, -144 )
 
-[node name="SpikeBall43" parent="Spikes" index="38" instance=ExtResource( 4 )]
+[node name="SpikeBall43" parent="Spikes" index="15" instance=ExtResource( 4 )]
 position = Vector2( 291, -144 )
 
-[node name="SpikeBall44" parent="Spikes" index="39" instance=ExtResource( 4 )]
+[node name="SpikeBall44" parent="Spikes" index="16" instance=ExtResource( 4 )]
 position = Vector2( 315, -144 )
 
-[node name="SpikeBall45" parent="Spikes" index="40" instance=ExtResource( 4 )]
+[node name="SpikeBall45" parent="Spikes" index="17" instance=ExtResource( 4 )]
 position = Vector2( 339, -144 )
 
-[node name="SpikeBall46" parent="Spikes" index="41" instance=ExtResource( 4 )]
+[node name="SpikeBall46" parent="Spikes" index="18" instance=ExtResource( 4 )]
 position = Vector2( 363, -144 )
 
-[node name="SpikeBall47" parent="Spikes" index="42" instance=ExtResource( 4 )]
+[node name="SpikeBall47" parent="Spikes" index="19" instance=ExtResource( 4 )]
 position = Vector2( 387, -144 )
 
-[node name="SpikeBall48" parent="Spikes" index="43" instance=ExtResource( 4 )]
+[node name="SpikeBall48" parent="Spikes" index="20" instance=ExtResource( 4 )]
 position = Vector2( 411, -144 )
 
-[node name="SpikeBall49" parent="Spikes" index="44" instance=ExtResource( 4 )]
+[node name="SpikeBall49" parent="Spikes" index="21" instance=ExtResource( 4 )]
 position = Vector2( 435, -144 )
 
-[node name="SpikeBall50" parent="Spikes" index="45" instance=ExtResource( 4 )]
+[node name="SpikeBall50" parent="Spikes" index="22" instance=ExtResource( 4 )]
 position = Vector2( 459, -144 )
 
-[node name="SpikeBall51" parent="Spikes" index="46" instance=ExtResource( 4 )]
+[node name="SpikeBall51" parent="Spikes" index="23" instance=ExtResource( 4 )]
 position = Vector2( 483, -144 )
 
-[node name="SpikeBall52" parent="Spikes" index="47" instance=ExtResource( 4 )]
+[node name="SpikeBall52" parent="Spikes" index="24" instance=ExtResource( 4 )]
 position = Vector2( 507, -144 )
 
-[node name="SpikeBall53" parent="Spikes" index="48" instance=ExtResource( 4 )]
+[node name="SpikeBall53" parent="Spikes" index="25" instance=ExtResource( 4 )]
 position = Vector2( 528, -144 )
 
-[node name="SpikeBall54" parent="Spikes" index="49" instance=ExtResource( 4 )]
+[node name="SpikeBall54" parent="Spikes" index="26" instance=ExtResource( 4 )]
 position = Vector2( 553, -144 )
 
-[node name="SpikeBall55" parent="Spikes" index="50" instance=ExtResource( 4 )]
+[node name="SpikeBall55" parent="Spikes" index="27" instance=ExtResource( 4 )]
 position = Vector2( 577, -144 )
 
-[node name="SpikeBall56" parent="Spikes" index="51" instance=ExtResource( 4 )]
+[node name="SpikeBall56" parent="Spikes" index="28" instance=ExtResource( 4 )]
 position = Vector2( 601, -144 )
 
-[node name="SpikeBall29" parent="Spikes" index="52" instance=ExtResource( 4 )]
-position = Vector2( 537, 146 )
-
-[node name="SpikeBall5" parent="Spikes" index="53" instance=ExtResource( 4 )]
+[node name="SpikeBall5" parent="Spikes" index="29" instance=ExtResource( 4 )]
 position = Vector2( 367, 70 )
 
-[node name="SpikeBall4" parent="Spikes" index="54" instance=ExtResource( 4 )]
+[node name="SpikeBall4" parent="Spikes" index="30" instance=ExtResource( 4 )]
 position = Vector2( 133, 45 )
 
-[node name="SpikeBall3" parent="Spikes" index="55" instance=ExtResource( 4 )]
+[node name="SpikeBall3" parent="Spikes" index="31" instance=ExtResource( 4 )]
 position = Vector2( 245, 4 )
 
-[node name="SpikeBall57" parent="Spikes" index="56" instance=ExtResource( 4 )]
+[node name="SpikeBall57" parent="Spikes" index="32" instance=ExtResource( 4 )]
 position = Vector2( 2970, -159 )
 
-[node name="SpikeBall58" parent="Spikes" index="57" instance=ExtResource( 4 )]
+[node name="SpikeBall58" parent="Spikes" index="33" instance=ExtResource( 4 )]
 position = Vector2( 2994, -159 )
 
-[node name="SpikeBall60" parent="Spikes" index="58" instance=ExtResource( 4 )]
+[node name="SpikeBall60" parent="Spikes" index="34" instance=ExtResource( 4 )]
 position = Vector2( 3019, -1 )
 
-[node name="SpikeBall61" parent="Spikes" index="59" instance=ExtResource( 4 )]
+[node name="SpikeBall61" parent="Spikes" index="35" instance=ExtResource( 4 )]
 position = Vector2( 3043, -1 )
 
-[node name="SpikeBall63" parent="Spikes" index="60" instance=ExtResource( 4 )]
+[node name="SpikeBall63" parent="Spikes" index="36" instance=ExtResource( 4 )]
 position = Vector2( 3136, -59 )
 
-[node name="SpikeBall64" parent="Spikes" index="61" instance=ExtResource( 4 )]
+[node name="SpikeBall64" parent="Spikes" index="37" instance=ExtResource( 4 )]
 position = Vector2( 3160, -59 )
 
-[node name="SpikeBall65" parent="Spikes" index="62" instance=ExtResource( 4 )]
+[node name="SpikeBall65" parent="Spikes" index="38" instance=ExtResource( 4 )]
 position = Vector2( 3185, -59 )
 
-[node name="SpikeBall72" parent="Spikes" index="63" instance=ExtResource( 4 )]
+[node name="SpikeBall72" parent="Spikes" index="39" instance=ExtResource( 4 )]
 position = Vector2( 4815, 86 )
 
-[node name="SpikeBall73" parent="Spikes" index="64" instance=ExtResource( 4 )]
+[node name="SpikeBall73" parent="Spikes" index="40" instance=ExtResource( 4 )]
 position = Vector2( 4839, 86 )
 
-[node name="SpikeBall74" parent="Spikes" index="65" instance=ExtResource( 4 )]
+[node name="SpikeBall74" parent="Spikes" index="41" instance=ExtResource( 4 )]
 position = Vector2( 4864, 86 )
 
-[node name="SpikeBall75" parent="Spikes" index="66" instance=ExtResource( 4 )]
+[node name="SpikeBall75" parent="Spikes" index="42" instance=ExtResource( 4 )]
 position = Vector2( 4887, 86 )
 
-[node name="SpikeBall76" parent="Spikes" index="67" instance=ExtResource( 4 )]
+[node name="SpikeBall76" parent="Spikes" index="43" instance=ExtResource( 4 )]
 position = Vector2( 4911, 86 )
 
-[node name="SpikeBall77" parent="Spikes" index="68" instance=ExtResource( 4 )]
+[node name="SpikeBall77" parent="Spikes" index="44" instance=ExtResource( 4 )]
 position = Vector2( 4936, 86 )
 
-[node name="SpikeBall78" parent="Spikes" index="69" instance=ExtResource( 4 )]
+[node name="SpikeBall78" parent="Spikes" index="45" instance=ExtResource( 4 )]
 position = Vector2( 4960, 86 )
 
-[node name="SpikeBall79" parent="Spikes" index="70" instance=ExtResource( 4 )]
+[node name="SpikeBall79" parent="Spikes" index="46" instance=ExtResource( 4 )]
 position = Vector2( 4985, 86 )
 
-[node name="SpikeBall69" parent="Spikes" index="71" instance=ExtResource( 4 )]
+[node name="SpikeBall69" parent="Spikes" index="47" instance=ExtResource( 4 )]
 position = Vector2( 3185, -88 )
 
-[node name="SpikeBall70" parent="Spikes" index="72" instance=ExtResource( 4 )]
+[node name="SpikeBall70" parent="Spikes" index="48" instance=ExtResource( 4 )]
 position = Vector2( 3185, -118 )
 
-[node name="SpikeBall71" parent="Spikes" index="73" instance=ExtResource( 4 )]
+[node name="SpikeBall71" parent="Spikes" index="49" instance=ExtResource( 4 )]
 position = Vector2( 3185, -146 )
 
-[node name="SpikeBall66" parent="Spikes" index="74" instance=ExtResource( 4 )]
+[node name="SpikeBall66" parent="Spikes" index="50" instance=ExtResource( 4 )]
 position = Vector2( 2898, -99 )
 
-[node name="SpikeBall67" parent="Spikes" index="75" instance=ExtResource( 4 )]
+[node name="SpikeBall67" parent="Spikes" index="51" instance=ExtResource( 4 )]
 position = Vector2( 2922, -99 )
 
-[node name="SpikeBall68" parent="Spikes" index="76" instance=ExtResource( 4 )]
+[node name="SpikeBall68" parent="Spikes" index="52" instance=ExtResource( 4 )]
 position = Vector2( 2946, -99 )
 
 [node name="DeathRect" type="Area2D" parent="." index="13"]
@@ -536,104 +529,206 @@ LERP_TARGET = -400
 position = Vector2( -160, -55 )
 shape = SubResource( 10 )
 
-[node name="SpikeCrawler" parent="." index="35" instance=ExtResource( 11 )]
+[node name="CameraTrigger3" type="Area2D" parent="." index="35"]
+position = Vector2( 6, 20 )
+script = SubResource( 19 )
+LERP_TARGET = -150
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTrigger3" index="0"]
+position = Vector2( -4.5, -22.5 )
+shape = SubResource( 10 )
+
+[node name="CameraTrigger4" type="Area2D" parent="." index="36"]
+position = Vector2( -108, -5 )
+script = SubResource( 20 )
+LERP_TARGET = -400
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTrigger4" index="0"]
+position = Vector2( -4.5, -22.5 )
+shape = SubResource( 10 )
+
+[node name="SpikeCrawler" parent="." index="37" instance=ExtResource( 11 )]
 position = Vector2( 3312, 20 )
 
-[node name="SpikeCrawler2" parent="." index="36" instance=ExtResource( 11 )]
+[node name="SpikeCrawler2" parent="." index="38" instance=ExtResource( 11 )]
 position = Vector2( 3312, 20 )
 curve = SubResource( 13 )
 
-[node name="SpikeCrawler4" parent="." index="37" instance=ExtResource( 11 )]
+[node name="SpikeCrawler4" parent="." index="39" instance=ExtResource( 11 )]
 position = Vector2( 3439, -107 )
 
-[node name="SpikeCrawler5" parent="." index="38" instance=ExtResource( 11 )]
+[node name="SpikeCrawler5" parent="." index="40" instance=ExtResource( 11 )]
 position = Vector2( 3439, -107 )
 curve = SubResource( 13 )
 
-[node name="SpikeCrawler6" parent="." index="39" instance=ExtResource( 11 )]
+[node name="SpikeCrawler6" parent="." index="41" instance=ExtResource( 11 )]
 position = Vector2( 3663, -107 )
 scale = Vector2( -1.014, 1.04082 )
 
-[node name="SpikeCrawler7" parent="." index="40" instance=ExtResource( 11 )]
+[node name="SpikeCrawler7" parent="." index="42" instance=ExtResource( 11 )]
 position = Vector2( 3663, -107 )
 scale = Vector2( -1.014, 1.04082 )
 curve = SubResource( 13 )
 
-[node name="SpikeCrawler8" parent="." index="41" instance=ExtResource( 11 )]
+[node name="SpikeCrawler8" parent="." index="43" instance=ExtResource( 11 )]
 position = Vector2( 3856, -43 )
 
-[node name="SpikeCrawler9" parent="." index="42" instance=ExtResource( 11 )]
+[node name="SpikeCrawler9" parent="." index="44" instance=ExtResource( 11 )]
 position = Vector2( 3856, -43 )
 curve = SubResource( 13 )
 
-[node name="SpikeCrawler10" parent="." index="43" instance=ExtResource( 11 )]
+[node name="SpikeCrawler10" parent="." index="45" instance=ExtResource( 11 )]
 position = Vector2( 4015, -42 )
 scale = Vector2( -1.014, 1.04082 )
 
-[node name="SpikeCrawler11" parent="." index="44" instance=ExtResource( 11 )]
+[node name="SpikeCrawler11" parent="." index="46" instance=ExtResource( 11 )]
 position = Vector2( 4015, -42 )
 scale = Vector2( -1.014, 1.04082 )
 curve = SubResource( 13 )
 
-[node name="SpikeCrawler12" parent="." index="45" instance=ExtResource( 11 )]
+[node name="SpikeCrawler12" parent="." index="47" instance=ExtResource( 11 )]
 position = Vector2( 4368, -43 )
 
-[node name="SpikeCrawler13" parent="." index="46" instance=ExtResource( 11 )]
+[node name="SpikeCrawler13" parent="." index="48" instance=ExtResource( 11 )]
 position = Vector2( 4368, -43 )
 curve = SubResource( 13 )
 
-[node name="SpikeCrawler14" parent="." index="47" instance=ExtResource( 11 )]
+[node name="SpikeCrawler14" parent="." index="49" instance=ExtResource( 11 )]
 position = Vector2( 4559, -42 )
 scale = Vector2( -1.014, 1.04082 )
 
-[node name="SpikeCrawler15" parent="." index="48" instance=ExtResource( 11 )]
+[node name="SpikeCrawler15" parent="." index="50" instance=ExtResource( 11 )]
 position = Vector2( 4559, -42 )
 scale = Vector2( -1.014, 1.04082 )
 curve = SubResource( 13 )
 
-[node name="KeyPlatform2" parent="." index="49" instance=ExtResource( 7 )]
+[node name="KeyPlatform2" parent="." index="51" instance=ExtResource( 7 )]
 position = Vector2( 3661, 48 )
 curve = SubResource( 14 )
 
-[node name="KeyPlatform3" parent="." index="50" instance=ExtResource( 7 )]
+[node name="KeyPlatform3" parent="." index="52" instance=ExtResource( 7 )]
 position = Vector2( 4220, 48 )
 curve = SubResource( 14 )
 
-[node name="Key3" parent="." index="51" instance=ExtResource( 6 )]
+[node name="Key3" parent="." index="53" instance=ExtResource( 6 )]
 position = Vector2( 3674, -101 )
 
-[node name="WaterBlock" parent="." index="52" instance=ExtResource( 17 )]
+[node name="WaterBlock" parent="." index="54" instance=ExtResource( 17 )]
 position = Vector2( 5680, 16 )
 
-[node name="WaterBlock2" parent="." index="53" instance=ExtResource( 17 )]
+[node name="WaterBlock2" parent="." index="55" instance=ExtResource( 17 )]
 position = Vector2( 5712, 16 )
 
-[node name="WaterBlock3" parent="." index="54" instance=ExtResource( 17 )]
+[node name="WaterBlock3" parent="." index="56" instance=ExtResource( 17 )]
 position = Vector2( 5744, 16 )
 
-[node name="WaterBlock4" parent="." index="55" instance=ExtResource( 17 )]
+[node name="WaterBlock4" parent="." index="57" instance=ExtResource( 17 )]
 position = Vector2( 5840, 16 )
 
-[node name="WaterBlock5" parent="." index="56" instance=ExtResource( 17 )]
+[node name="WaterBlock5" parent="." index="58" instance=ExtResource( 17 )]
 position = Vector2( 5872, 16 )
 
-[node name="WaterBlock6" parent="." index="57" instance=ExtResource( 17 )]
+[node name="WaterBlock6" parent="." index="59" instance=ExtResource( 17 )]
 position = Vector2( 5904, 16 )
 
-[node name="PalmTree" parent="." index="58" instance=ExtResource( 18 )]
+[node name="PalmTree" parent="." index="60" instance=ExtResource( 18 )]
 position = Vector2( 5764, -42 )
 
-[node name="PalmTree2" parent="." index="59" instance=ExtResource( 18 )]
+[node name="PalmTree2" parent="." index="61" instance=ExtResource( 18 )]
 position = Vector2( 6090, -42 )
 
-[node name="PalmTree3" parent="." index="60" instance=ExtResource( 18 )]
+[node name="PalmTree3" parent="." index="62" instance=ExtResource( 18 )]
 position = Vector2( 6223, -42 )
 flip_h = true
 
-[node name="PurpleLotus" parent="." index="61" instance=ExtResource( 19 )]
+[node name="PurpleLotus" parent="." index="63" instance=ExtResource( 19 )]
 position = Vector2( 6155, -12 )
+
+[node name="Ankh" parent="." index="64" instance=ExtResource( 10 )]
+position = Vector2( 2, -306 )
+
+[node name="Ankh2" parent="." index="65" instance=ExtResource( 10 )]
+position = Vector2( 2736, -242 )
+
+[node name="Lava" type="Node2D" parent="." index="66"]
+position = Vector2( 48, 92 )
+
+[node name="LavaBlock" parent="Lava" index="0" instance=ExtResource( 20 )]
+frame = 2
+
+[node name="LavaBlock2" parent="Lava" index="1" instance=ExtResource( 20 )]
+position = Vector2( 32, 0 )
+
+[node name="LavaBlock3" parent="Lava" index="2" instance=ExtResource( 20 )]
+position = Vector2( 64, 0 )
+
+[node name="LavaBlock4" parent="Lava" index="3" instance=ExtResource( 20 )]
+position = Vector2( 96, 0 )
+frame = 2
+
+[node name="LavaBlock5" parent="Lava" index="4" instance=ExtResource( 20 )]
+position = Vector2( 128, 0 )
+
+[node name="LavaBlock6" parent="Lava" index="5" instance=ExtResource( 20 )]
+position = Vector2( 160, 0 )
+
+[node name="LavaBlock7" parent="Lava" index="6" instance=ExtResource( 20 )]
+position = Vector2( 192, 0 )
+
+[node name="LavaBlock8" parent="Lava" index="7" instance=ExtResource( 20 )]
+position = Vector2( 224, 0 )
+frame = 0
+
+[node name="LavaBlock9" parent="Lava" index="8" instance=ExtResource( 20 )]
+position = Vector2( 256, 0 )
+frame = 0
+
+[node name="LavaBlock10" parent="Lava" index="9" instance=ExtResource( 20 )]
+position = Vector2( 288, 0 )
+frame = 0
+
+[node name="LavaBlock11" parent="Lava" index="10" instance=ExtResource( 20 )]
+position = Vector2( 320, 0 )
+frame = 3
+
+[node name="LavaBlock12" parent="Lava" index="11" instance=ExtResource( 20 )]
+position = Vector2( 352, 0 )
+frame = 3
+
+[node name="LavaBlock13" parent="Lava" index="12" instance=ExtResource( 20 )]
+position = Vector2( 384, 0 )
+frame = 0
+
+[node name="LavaBlock14" parent="Lava" index="13" instance=ExtResource( 20 )]
+position = Vector2( 416, 0 )
+frame = 3
+
+[node name="LavaBlock15" parent="Lava" index="14" instance=ExtResource( 20 )]
+position = Vector2( 448, 0 )
+frame = 3
+
+[node name="LavaBlock16" parent="Lava" index="15" instance=ExtResource( 20 )]
+position = Vector2( 480, 0 )
+frame = 3
+
+[node name="LavaBlock17" parent="Lava" index="16" instance=ExtResource( 20 )]
+position = Vector2( 512, 0 )
+frame = 2
+
+[node name="LavaBlock18" parent="Lava" index="17" instance=ExtResource( 20 )]
+position = Vector2( 544, 0 )
+frame = 2
+
+[node name="LavaTile" type="Sprite" parent="." index="67"]
+position = Vector2( 320, 141.5 )
+scale = Vector2( 6, -2.09375 )
+texture = ExtResource( 21 )
 
 [connection signal="body_entered" from="DeathRect" to="DeathRect" method="_on_DeathRect_body_entered"]
 [connection signal="body_entered" from="CameraTrigger" to="CameraTrigger" method="_on_CameraTrigger_body_entered"]
 [connection signal="body_exited" from="CameraTrigger" to="CameraTrigger" method="_on_CameraTrigger_body_exited"]
 [connection signal="body_entered" from="CameraTrigger2" to="CameraTrigger2" method="_on_CameraTrigger_body_entered"]
+[connection signal="body_entered" from="CameraTrigger3" to="CameraTrigger3" method="_on_CameraTrigger_body_entered"]
+[connection signal="body_exited" from="CameraTrigger3" to="CameraTrigger3" method="_on_CameraTrigger_body_exited"]
+[connection signal="body_entered" from="CameraTrigger4" to="CameraTrigger4" method="_on_CameraTrigger_body_entered"]
+[connection signal="body_exited" from="CameraTrigger4" to="CameraTrigger4" method="_on_CameraTrigger_body_exited"]

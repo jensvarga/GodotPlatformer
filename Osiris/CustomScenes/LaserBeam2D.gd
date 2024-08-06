@@ -66,7 +66,7 @@ func cast_beam() -> void:
 		collision_particles.position = cast_point
 		var body = get_collider()
 		if body is Player:
-			body.die()
+			body.hurt()
 		if body is ThrowableRock:
 			body.destroy()
 		

@@ -389,7 +389,7 @@ func update_player_history():
 		
 func hit_body(body):
 	if body is Player:
-		body.die()
+		body.hurt()
 	if body is ThrowableRock:
 		body.destroy()
 	AudioManager.play_random_explosion_sound()

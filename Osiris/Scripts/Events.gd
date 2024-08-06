@@ -52,7 +52,6 @@ func _ready():
 
 func _on_player_take_damage():
 	if player_hit_points - 1 <= 0:
-		Events.emit_signal("player_died")
 		player_hit_points = 0
 	else:
 		player_hit_points = player_hit_points - 1
@@ -65,6 +64,7 @@ func _on_pick_up_ankh():
 		
 func _on_player_died():
 	death_counter += 1
+	player_hit_points = 1
 	
 func _on_toggle_fullscreen():
 	OS.window_fullscreen = !OS.window_fullscreen
@@ -81,3 +81,25 @@ func _on_damage_boss():
 		boss_hit_points = 0
 	else:
 		boss_hit_points = boss_hit_points - 1
+
+# Smooth camera transitions
+var player_camera: PlayerCamera
+var player: Player
+ 
+var room_pause: bool = false
+export var room_pause_time: float = 0.2
+  
+func change_room(room_position: Vector2, room_size: Vector2) -> void:
+	if player == null:
+		print("no player found in Events.change_room")
+		return
+	if player_camera == null:
+		print("no player_camera found Events.change_room")
+		return
+		
+	player_camera.current_room_center = room_position
+	player_camera.current_room_size = room_size
+ 
+	room_pause = true
+	yield(get_tree().create_timer(room_pause_time),"timeout")
+	room_pause = false

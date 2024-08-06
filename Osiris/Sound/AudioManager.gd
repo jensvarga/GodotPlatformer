@@ -105,8 +105,8 @@ const LEVEL_MUSIC = {
 	1: KING_IN_YELLOW,
 	2: SOLAR_FLARE,
 	3: LIGHTBRINGER,
-	4: SWING_FIELDS,
-	5: LOTUS_BEACH,
+	4: LOTUS_BEACH,
+	5: SWING_FIELDS,
 	99: null
 }
 
@@ -147,6 +147,8 @@ func _ready():
 	audio_stream_players = audio_players.get_children()
 
 func play_music(track):
+	fading_out = false
+	music_player.volume_db = start_volmue
 	music_player.stream = track
 	music_player.play()
 	
@@ -212,13 +214,39 @@ const SETI_HURT = preload("res://Sound/FX/Seti/seti_hurt.wav")
 const SETI_DIE = preload("res://Sound/FX/Seti/seti_die.wav")
 const SETI_TELEGRAPH = preload("res://Sound/FX/Seti/seti_telegraph.wav")
 const SETI_TELE_JUMP = preload("res://Sound/FX/Seti/seti_tel_jump.wav")
+const SETI_TORNADO = preload("res://Sound/FX/Seti/seti_tornado.wav")
 
 const SWOOSH = preload("res://Sound/FX/Seti/swoosh.wav")
 const TELEPORT = preload("res://Sound/FX/Seti/teleport.wav")
 const BOOM = preload("res://Sound/FX/Seti/boom.wav")
+const BATS = preload("res://Sound/FX/Seti/seti_bats.wav")
+const BAT_SWARM = preload("res://Sound/FX/Seti/bat_swarm.wav")
+const FANFARE = preload("res://Sound/Music/Original/Fanfare.wav")
+const FART1 = preload("res://Sound/FX/MISC/fart1.wav")
+const FART2 = preload("res://Sound/FX/MISC/fart2.wav")
+const FART3 = preload("res://Sound/FX/MISC/fart3.wav")
+const LEO_FIRE = preload("res://Sound/FX/MISC/leo_fire.wav")
 
 onready var laser_player := $LaserPlayer
 
+func play_leo_fire():
+	play_sound(LEO_FIRE)
+	
+func play_random_fart():
+	play_random_sound([ FART1, FART2, FART3 ])
+	
+func play_fanfare():
+	play_sound(FANFARE)
+
+func play_bat_swarm():
+	play_sound(BAT_SWARM)
+
+func play_bat_sound():
+	play_sound(BATS)
+	
+func play_seti_tronado():
+	play_sound(SETI_TORNADO)
+	
 func play_boom():
 	play_sound(BOOM)
 	
@@ -271,7 +299,8 @@ func play_aphopis_telegraph_sound():
 func _process(delta):
 	if fading_out:
 		music_player.volume_db -= fade_out_speed * delta
-		if music_player.volume_db <= -80:  # Volume is effectively off at -80 dB
+		if music_player.volume_db <= -6:  # Volume is effectively off at -80 dB
 			music_player.stop()
-			fading_out = false
 			music_player.volume_db = start_volmue
+			fading_out = false
+			

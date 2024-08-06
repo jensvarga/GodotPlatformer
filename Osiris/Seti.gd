@@ -1,12 +1,17 @@
 extends KinematicBody2D
 
+# Set boss hp in Level/CanvasLayer
+# Spawning and bats controlled from SetiStage/BossSarcophagus
+
 var player
-enum { ENTER, IDLE, WALK, TELEGRAPH_PUNCH, PUNCH, JUMP, FALL, TELEGRAPH_JUMP, TELEPORT_OUT, TELEPORT_IN, TORNADO, DEAD }
+enum { ENTER, IDLE, WALK, TELEGRAPH_PUNCH, PUNCH, JUMP, FALL, TELEGRAPH_JUMP, TELEPORT_OUT, TELEPORT_IN, TORNADO, DEAD, SPAWN_BATS }
 var state = ENTER
 
 onready var sprite := $AnimatedSprite
 onready var animation_player := $AnimationPlayer
 onready var burst_particles := $BurstPaticles
+onready var bat_particles := $BatParticles
+onready var bat_particles2 := $BatParticles2
 
 # Timers
 onready var enter_timer := $EnterTimer
@@ -16,6 +21,7 @@ onready var telegraph_timer := $TelegraphTimer
 onready var punch_timer := $PunchTimer
 onready var invincible_timer := $InvincibleTimer
 onready var teleport_timer := $TeleportTimer
+onready var bats_timer := $BatsTimer
 
 # Detection
 onready var player_detector := $PlayerDetector
@@ -34,6 +40,7 @@ var teleport_locations = [
 
 # Colliders
 onready var collision_shape := $CollisionShape2D
+onready var hit_shape := $HitBox/CollisionShape2D
 
 # Tornado colliders
 onready var tf_center := $HitBox/CollisionCenter
@@ -53,16 +60,18 @@ onready var tf_colliders := [
 	$HitBox/TF13
 ]
 
-var move_speed = 50
+var move_speed = 70
 var jump_height = 100
 var velocity = Vector2.ZERO
 var direction = Vector2(1, 0)
 var start_position = Vector2.ZERO
 var invincible = false
+var decrease_idle_time = false
 
 func _ready():
 	Events.connect("boss_died", self, "_on_boss_died")
 	tf_center.set_deferred("disabled", true)
+	hit_shape.set_deferred("disabled", true)
 	start_position = position
 	enter_enter()
 	if find_player_recursive(get_tree().root):
@@ -95,6 +104,8 @@ func _physics_process(delta):
 			update_tornado(delta)
 		DEAD:
 			pass
+		SPAWN_BATS:
+			pass
 
 # Enter states
 func enter_enter():
@@ -102,10 +113,21 @@ func enter_enter():
 	sprite.animation = "Enter"
 	enter_timer.start()
 	
+func enter_spawn_bats():
+	state= SPAWN_BATS
+	invincible = true
+	sprite.animation = "Bats"
+	bat_particles.emitting = true
+	bat_particles2.emitting = true
+	bats_timer.start()
+	AudioManager.play_bat_sound()
+	
 func enter_idle():
 	state = IDLE
 	sprite.animation = "Idle"
 	var random_time = rand_range(0.0, 2.0)
+	if decrease_idle_time:
+		random_time = 0.5
 	idle_timer.wait_time = random_time
 	idle_timer.start()
 	face_player()
@@ -131,6 +153,7 @@ func enter_punch():
 	punch_timer.start()
 	sprite.animation = "Punch"
 	AudioManager.play_swoosh()
+	hit_shape.set_deferred("disabled", false)
 	
 func enter_jump():
 	state = JUMP
@@ -139,6 +162,7 @@ func enter_jump():
 func enter_fall():
 	state = FALL
 	sprite.animation = "Fall"
+	hit_shape.set_deferred("disabled", false)
 	
 func enter_teleport_out():
 	state = TELEPORT_OUT
@@ -158,10 +182,10 @@ func enter_teleport_in():
 	collision_shape.set_deferred("disabled", false)
 	
 func enter_tornado():
+	AudioManager.play_seti_tronado()
 	state = TORNADO
 	self.position = t_center
 	sprite.animation = "TeleportIn"
-	invincible = true
 	collision_shape.set_deferred("disabled", false)
 
 func enter_dead():
@@ -204,6 +228,7 @@ func update_fall(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	if floor_detector.is_colliding():
+		hit_shape.set_deferred("disabled", true)
 		CameraShaker.add_trauma(0.5)
 		AudioManager.play_boom()
 		enter_idle()
@@ -226,9 +251,13 @@ func update_tornado(delta):
 		sprite.animation = "Tornado"
 	
 	if sprite.animation == "Tornado":
+		invincible = true
 		activate_tf_colliders(sprite.frame)
+		tf_center.set_deferred("disabled", false)
 		
 	if sprite.frame == 16:
+		tf_center.set_deferred("disabled", true)
+		invincible = false
 		enter_idle()
 
 # Helpers
@@ -259,10 +288,14 @@ func find_player_recursive(current_node):
 	
 func face_player():
 	var direction_to_player = (player.global_position - global_position).normalized()
-	if direction_to_player.x * direction.x > 0:
-		scale.x *= -1
-		collision_shape.scale.x *= -1
-		direction.x *= -1
+	var distance_to_player = player.global_position.x - global_position.x
+	
+	var margin = 5.0
+	if abs(distance_to_player) > margin:
+		if direction_to_player.x * direction.x > 0:
+			scale.x *= -1
+			collision_shape.scale.x *= -1
+			direction.x *= -1
 	
 func find_closest_teleport() -> Vector2:
 	var closest_position: Vector2 = teleport_locations[0]
@@ -282,6 +315,10 @@ func activate_tf_colliders(frame: int):
 			tf_colliders[i].set_deferred("disabled", false)
 		else:
 			tf_colliders[i].set_deferred("disabled", true)
+			
+func decrease_telegraph_times():
+	telegraph_timer.wait_time = telegraph_timer.wait_time / 2.0
+	decrease_idle_time = true
 	
 # Signals
 func _on_EnterTimer_timeout():
@@ -302,22 +339,28 @@ func _on_TelegraphTimer_timeout():
 		enter_jump()
 
 func _on_PunchTimer_timeout():
+	hit_shape.set_deferred("disabled", true)
 	enter_idle()
 
 func _on_HurtBox_body_entered(body):
-	if state == DEAD:
+	if state == DEAD or (body is Player and invincible):
 		return
-	if (body is Player and velocity.y != 0) or (body is Player and invincible):
+	if (body is Player and velocity.y != 0):
+		body.hurt()
 		body.bounce(400)
-	elif body is Player and body.velocity.y > 0 and not invincible:
+	elif (body is Player and body.velocity.y > 0) and not invincible:
+		Events.emit_signal("damage_boss")
+		invincible = true
+		animation_player.play("Hurt")
+		burst_particles.restart()
+		body.bounce(400)
+		invincible_timer.start()
 		if Events.boss_hit_points > 1:
 			AudioManager.play_seti_hurt()
-		Events.emit_signal("damage_boss")
-		animation_player.play("Hurt")
-		burst_particles.emitting = true
-		body.bounce(400)
-		invincible = true
-		invincible_timer.start()
+		if Events.boss_hit_points == 6:
+			enter_spawn_bats()
+		if Events.boss_hit_points == 3:
+			decrease_telegraph_times()
 
 func _on_InvincibleTimer_timeout():
 	invincible = false
@@ -326,7 +369,7 @@ func _on_boss_died():
 	AudioManager.play_seti_die()
 
 func _on_TeleportTimer_timeout():
-	if Events.boss_hit_points <= 4:
+	if Events.boss_hit_points <= 6:
 		randomize()
 		match int(rand_range(1, 2 + 1)):
 			1:
@@ -335,3 +378,13 @@ func _on_TeleportTimer_timeout():
 				enter_tornado()
 	else:
 		enter_teleport_in()
+
+func _on_HitBox_body_entered(body):
+	if body is Player:
+		body.hurt()
+
+func _on_BatsTimer_timeout():
+	bat_particles.emitting = false
+	bat_particles2.emitting = false
+	invincible = false
+	enter_idle()

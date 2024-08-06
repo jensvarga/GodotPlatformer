@@ -6,6 +6,6 @@ func _on_Area2D_body_entered(body):
 		body.sink()
 		queue_free()
 	if body is Player:
-		body.die()
+		body.hurt()
 	if body is Enemy:
 		body.die()

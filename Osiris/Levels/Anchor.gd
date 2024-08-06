@@ -1,7 +1,8 @@
 extends Position2D
+class_name CameraAnchor
 
 var player
-onready var camera: = $Camera2D
+onready var camera: = $"../../PlayerCamera"
 onready var noise = OpenSimplexNoise.new()
 var noise_y = 0
 
@@ -18,10 +19,10 @@ var trauma_power = 3  # Trauma exponent. Use [2, 3].
 
 
 func _ready():
-	camera.limit_left = camera_limit_left
-	camera.limit_top = camera_limit_top
-	camera.limit_right = camera_limit_right
-	camera.limit_bottom = camera_limit_bottom
+	#camera.limit_left = camera_limit_left
+	#camera.limit_top = camera_limit_top
+	#camera.limit_right = camera_limit_right
+	#camera.limit_bottom = camera_limit_bottom
 	randomize()
 	noise.seed = randi()
 	noise.period = 4

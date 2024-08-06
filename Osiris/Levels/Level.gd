@@ -8,12 +8,13 @@ export (bool) var test_spawn = false
 export (bool) var boss_level = false
 
 #onready var player: = $Player
-onready var camera: = $PlayerRoot/Anchor/Camera2D
+onready var camera: = $PlayerCamera
 onready var spawn_point: = $SpawnPoint
 onready var check_point: = $CheckPoint
 onready var test_point: = $TestSpawn
 onready var player_root: = $PlayerRoot
 onready var camera_anchor: = $PlayerRoot/Anchor
+onready var player_camera := $PlayerCamera
 
 const PlayerScene = preload("res://Player.tscn")
 var player
@@ -47,10 +48,6 @@ func _on_stage_cleared():
 	
 func spawn_player():
 	player = PlayerScene.instance()
-	player_root.add_child(player)
-	player.connect_camera(camera_anchor)
-	camera_anchor.connect_player(player)
-	
 	if test_spawn:
 		player.position = test_point.position
 		return
@@ -58,7 +55,13 @@ func spawn_player():
 		player.position = check_point.position
 	else:
 		player.position = spawn_point.position
-
+		
+	player_root.add_child(player)
+	player.connect_camera(camera_anchor)
+	camera_anchor.connect_player(player)
+	Events.player = player
+	Events.player_camera = player_camera
+	
 func _on_transition_started():
 	pass
 	
@@ -68,3 +71,4 @@ func _on_transition_completed():
 	AudioManager.current_level = 0
 	Events.levels_cleared[level_index] = true
 	get_tree().change_scene(next_level_path)
+

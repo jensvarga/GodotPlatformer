@@ -10,7 +10,7 @@ func destroy():
 		
 func _on_Area2D_body_entered(body):
 	if body is Player:
-		body.die()
+		body.hurt()
 	elif body is Boss:
 		body.hurt()
 		destroy()

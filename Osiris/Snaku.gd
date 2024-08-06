@@ -136,7 +136,7 @@ func _on_AttackTimer_timeout():
 func _on_Hitbox_body_entered(body):
 	if body is Player:
 		state = FROZEN
-		body.die()
+		body.hurt()
 
 func _on_Hurtbox_body_entered(body):
 	if body is Player:

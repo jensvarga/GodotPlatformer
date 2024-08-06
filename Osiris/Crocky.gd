@@ -58,7 +58,7 @@ func _on_Crocky_body_entered(body):
 			kill_player()
 
 func kill_player():
-	player.die()
+	player.hurt()
 	enter_frozen()
 	
 func _on_AttackDelay_timeout():

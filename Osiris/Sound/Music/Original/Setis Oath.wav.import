@@ -11,13 +11,13 @@ dest_files=[ "res://.import/Setis Oath.wav-a5044b577ce6ec770e0d58a0362fe407.samp
 
 [params]
 
-force/8_bit=true
-force/mono=true
+force/8_bit=false
+force/mono=false
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
-edit/normalize=true
-edit/loop_mode=2
+edit/normalize=false
+edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
 compress/mode=0

@@ -64,7 +64,7 @@ func _on_Area2D_body_entered(body):
 			pass
 		AIR:
 			if body is Player:
-				body.die()
+				body.hurt()
 
 # Helpers
 func apply_gravity(delta):
