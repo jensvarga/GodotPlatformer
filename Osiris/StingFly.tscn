@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Sprites/sting_fly.png" type="Texture" id=1]
 [ext_resource path="res://StingFly.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/fly_parts.png" type="Texture" id=3]
+[ext_resource path="res://StingFlyHurtboc.gd" type="Script" id=4]
 
 [sub_resource type="Curve2D" id=6]
 _data = {
@@ -34,6 +36,38 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 20, 15 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 14, 10 )
+
+[sub_resource type="Gradient" id=11]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
+region = Rect2( 15, 0, 20, 16 )
+
+[sub_resource type="Gradient" id=13]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 16, 15, 14 )
+
+[sub_resource type="Gradient" id=15]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 0, 15, 17 )
+
+[sub_resource type="Gradient" id=17]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="Gradient" id=18]
+offsets = PoolRealArray( 0, 0.38013, 0.634989 )
+colors = PoolColorArray( 0.484513, 0.703125, 0.165004, 1, 0.316906, 0.441406, 0.139048, 1, 1, 1, 1, 0 )
 
 [sub_resource type="Animation" id=7]
 resource_name = "FollowPath"
@@ -84,7 +118,7 @@ curve = SubResource( 6 )
 script = ExtResource( 2 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2( -0.0199538, -115.451 )
+position = Vector2( -2.20454e-05, -119.995 )
 rotation = 1.5708
 offset = 0.01
 rotate = false
@@ -96,13 +130,98 @@ animation = "Flying"
 frame = 3
 playing = true
 
-[node name="HurtBox" type="Area2D" parent="PathFollow2D"]
-collision_layer = 0
+[node name="StingFlyHurtboc" type="Area2D" parent="PathFollow2D"]
+collision_layer = 2
 collision_mask = 2
+script = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/StingFlyHurtboc"]
 position = Vector2( -1.54945, -0.0199542 )
 shape = SubResource( 9 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="PathFollow2D"]
+emitting = false
+amount = 2
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 10 )
+emission_shape = 1
+emission_sphere_radius = 12.38
+direction = Vector2( 0, 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 1.0
+angular_velocity = 10.0
+angular_velocity_random = 1.0
+angle = 27.8
+angle_random = 1.0
+color_ramp = SubResource( 11 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="PathFollow2D"]
+emitting = false
+amount = 1
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 12 )
+emission_shape = 1
+emission_sphere_radius = 12.38
+direction = Vector2( 0, 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 1.0
+angular_velocity = 10.0
+angular_velocity_random = 1.0
+angle = 27.8
+angle_random = 1.0
+color_ramp = SubResource( 13 )
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="PathFollow2D"]
+emitting = false
+amount = 6
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 14 )
+emission_shape = 1
+emission_sphere_radius = 12.38
+direction = Vector2( 0, 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 1.0
+angular_velocity = 400.0
+angular_velocity_random = 1.0
+angle_random = 1.0
+color_ramp = SubResource( 15 )
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="PathFollow2D"]
+emitting = false
+amount = 2
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 16 )
+emission_shape = 1
+emission_sphere_radius = 12.38
+direction = Vector2( 0, 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 1.0
+angular_velocity = 400.0
+angular_velocity_random = 1.0
+angle_random = 1.0
+color_ramp = SubResource( 17 )
+
+[node name="CPUParticles2D5" type="CPUParticles2D" parent="PathFollow2D"]
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 0.57
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 48.15
+color_ramp = SubResource( 18 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "FollowPath"
@@ -113,4 +232,9 @@ anims/RESET = SubResource( 8 )
 position = Vector2( 0.5, 1.52588e-05 )
 scale = Vector2( 12.95, 22.5 )
 
-[connection signal="body_entered" from="PathFollow2D/HurtBox" to="." method="_on_HurtBox_body_entered"]
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="PathFollow2D/StingFlyHurtboc" to="." method="_on_HurtBox_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

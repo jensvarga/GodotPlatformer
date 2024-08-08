@@ -1,5 +1,7 @@
 extends Enemy
 
+class_name Crook
+
 onready var sprite := $AnimatedSprite
 onready var hitbox_shape := $Area2D/CollisionPolygon2D
 onready var death_timer := $DeathTimer
@@ -40,16 +42,24 @@ func face(body):
 	else:
 		sprite.flip_h = true
 
+func enter_death():
+	dead = true
+	sprite.animation = "Die"
+	AudioManager.play_random_hit_sound()
+	death_timer.start()
+	$Area2D/CollisionShape2D.set_deferred("disabled", true)
+	$CollisionShape2D.set_deferred("disabled", true)
+	
+func on_shot():
+	enter_death()
+
 func _on_Area2D_body_entered(body):
 	if dead:
 		return
 	if body is Player:
 		if body.velocity.y > 0:
 			body.bounce(400)
-			dead = true
-			sprite.animation = "Die"
-			AudioManager.play_random_hit_sound()
-			death_timer.start()
+			enter_death()
 		else:
 			body.hurt()
 			face(body)

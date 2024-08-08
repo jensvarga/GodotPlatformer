@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://SpawnPoint.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Sprites/UI/evil_half_ankh.png" type="Texture" id=11]
 [ext_resource path="res://Sprites/UI/eye_of_horus.png" type="Texture" id=12]
 [ext_resource path="res://Sprites/UI/Fonts/SuperLegendBoy-4w8Y.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://Sprites/power_crook.png" type="Texture" id=14]
 [ext_resource path="res://PlayerCamera.tscn" type="PackedScene" id=15]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -125,6 +126,10 @@ animation = "Empty"
 position = Vector2( 45, 10 )
 frames = SubResource( 5 )
 animation = "Empty"
+
+[node name="PowerCrook" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 80, 11 )
+texture = ExtResource( 14 )
 
 [node name="eye_of_horus" type="Sprite" parent="CanvasLayer"]
 position = Vector2( 130, 10 )

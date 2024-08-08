@@ -15,10 +15,18 @@ onready var boss_ankh4 := $BossLife/BossAnkh4
 onready var boss_ankh5 := $BossLife/BossAnkh5
 onready var boss_ankh6 := $BossLife/BossAnkh6
 
+onready var power_crook := $PowerCrook
+
 func _ready():
 	Events.connect("player_take_damage", self, "_on_player_take_damage")
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
+	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
+	
+	if Events.has_power_crook:
+		power_crook.show()
+	else:
+		power_crook.hide()
 	
 	if level.boss_level:
 		Events.boss_hit_points = max_boss_hp
@@ -37,6 +45,9 @@ func _on_damage_boss():
 	
 func _on_pick_up_ankh():
 	update_ankhs()
+	
+func _on_pick_up_power_crook():
+	power_crook.show()
 
 func update_ankhs():
 	match Events.player_hit_points:

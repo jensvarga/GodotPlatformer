@@ -12,6 +12,8 @@ signal toggle_sound_effects
 signal pick_up_ankh
 signal damage_boss
 signal boss_died
+signal pick_up_power_crook
+signal pick_up_power_up
 
 # Global variables
 var check_point_reached = false
@@ -21,6 +23,7 @@ var player_overworld_position
 var collected_items = []
 var player_hit_points = 1
 var boss_hit_points = 6
+var has_power_crook = false
 
 var unlocked_level_2 = false
 var unlocked_level_3 = false
@@ -49,7 +52,12 @@ func _ready():
 	Events.connect("player_take_damage", self, "_on_player_take_damage")
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
+	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
 
+func _on_pick_up_power_crook():
+	has_power_crook = true
+	Events.emit_signal("pick_up_power_up")
+	
 func _on_player_take_damage():
 	if player_hit_points - 1 <= 0:
 		player_hit_points = 0
@@ -61,6 +69,7 @@ func _on_pick_up_ankh():
 		player_hit_points = 3
 	else:
 		player_hit_points = player_hit_points + 1
+	Events.emit_signal("pick_up_power_up")
 		
 func _on_player_died():
 	death_counter += 1

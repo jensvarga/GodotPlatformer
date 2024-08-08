@@ -1,3 +1,6 @@
+# Thanks to Nick Vatanshenas for this amazing solution 
+# explaiend in https://www.youtube.com/watch?v=lPJMj-ov7ys
+
 extends Camera2D
 
 class_name PlayerCamera

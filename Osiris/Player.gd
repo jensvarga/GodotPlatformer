@@ -4,6 +4,7 @@ class_name Player
 
 export (Resource) var player_move_data
 var hurt_particles = preload("res://PlayerHurtParticles.tscn")
+const FIREBALL = preload("res://PowerCrookFireball.tscn")
 
 var velocity = Vector2.ZERO
 var crouch = false
@@ -36,6 +37,12 @@ onready var wall_check_right := $WallDetectorRight
 onready var climb_timber := $ClimbTimer
 onready var animation_player := $AnimationPlayer
 onready var invincible_timer := $InvincibleTimer
+onready var right_fire_position := $RightFirePosition
+onready var left_fire_position := $LeftFirePosition
+onready var fire_delay_timer := $FireDelayTimer
+onready var lower_left_fire_position := $LowerLeftFirePosition
+onready var lower_right_fire_position := $LowerRightFirePosition
+
 
 var look_up = false
 var invincible = false
@@ -46,8 +53,11 @@ var carry_item = null
 var item_holder = null
 var carrying = false
 var start_grab_position = 1
+var fire_delay = false
+var firing = false
 
 func _ready():
+	Events.connect("pick_up_power_up", self, "_on_pick_up_power_up" )
 	start_grab_position = grab_position.position.x
 	enter_move()
 	crouch_collider.set_deferred("disabled", true)
@@ -60,6 +70,9 @@ func _physics_process(delta):
 	if state != DEAD:
 		if not carrying and carry_item != null and Input.is_action_just_pressed("ui_grab"):
 			grab_item()
+			
+	if not holding_wall and not carrying and Input.is_action_just_pressed("ui_fire"):
+		fire_fireball()
 		
 	match state:
 		MOVE:
@@ -68,6 +81,15 @@ func _physics_process(delta):
 			update_climb(delta)
 		DEAD:
 			update_dead()
+	
+	if state != DEAD and firing:
+		sprite.animation = "Fire"
+		if sprite.flip_h:
+			sprite.offset.x = -10
+		else:
+			sprite.offset.x = 10
+	else:
+		sprite.offset.x = 0
 			
 func _input(event):
 	if event.is_action_pressed("ui_up"):
@@ -76,7 +98,38 @@ func _input(event):
 		look_up = false
 	if carrying and event.is_action_released("ui_grab"):
 		drop_item()
+
+func fire_fireball():
+	if state == DEAD:
+		return
+	if not Events.has_power_crook:
+		return
+	if fire_delay:
+		return
 		
+	sprite.animation = "Fire"
+	fire_delay = true
+	fire_delay_timer.start()
+	
+	var fireball = FIREBALL.instance()
+	get_tree().root.get_child(0).add_child(fireball)
+	
+	if sprite.flip_h:
+		fireball.set_direction(-1)
+		if crouch:
+			fireball.position = lower_left_fire_position.global_position
+		else:
+			fireball.position = left_fire_position.global_position
+	else:
+		fireball.set_direction(1)
+		if crouch:
+			fireball.position = lower_right_fire_position.global_position
+		else:
+			fireball.position = right_fire_position.global_position
+	
+	firing = true
+	$FireAnimationTimer.start()
+	
 func enter_dead():
 	if carrying: drop_item()
 	AudioManager.play_random_die_sound()
@@ -88,7 +141,7 @@ func enter_move():
 	if carrying:
 		sprite.animation = "IdleCarry"
 	else:
-		sprite.animation = "Idle"
+		set_idle_animation()
 	state = MOVE
 	
 func enter_climb():
@@ -164,7 +217,7 @@ func update_move(delta):
 			if carrying:
 				sprite.animation = "IdleCarry"
 			else:
-				sprite.animation = "Idle"
+				set_idle_animation()
 			crouch_collider.set_deferred("disabled", true)
 			collision_shape.set_deferred("disabled", false)
 	else:
@@ -176,7 +229,7 @@ func update_move(delta):
 			if holding_wall:
 				sprite.animation = "WallHold"
 			else:
-				sprite.animation = "Run"
+				set_run_animation()
 		crouch_collider.set_deferred("disabled", true)
 		collision_shape.set_deferred("disabled", false)
 		
@@ -210,7 +263,7 @@ func update_move(delta):
 			if carrying:
 				sprite.animation = "JumpCarry"
 			else:
-				sprite.animation = "Jump"
+				set_jump_animation()
 
 		if Input.is_action_just_released("ui_jump") and velocity.y < player_move_data.MIN_JUMP_HEIGHT:
 			var height = player_move_data.MIN_JUMP_HEIGHT + extra
@@ -227,7 +280,7 @@ func update_move(delta):
 				if carrying:
 					sprite.animation = "FallCarry"
 				else:
-					sprite.animation = "Fall"
+					set_fall_animation()
 	
 	var was_on_floor = grounded
 	#var snap = Vector2.DOWN * 32 if !jump else Vector2.ZERO
@@ -332,6 +385,30 @@ func bounce(amount):
 func connect_camera(camera):
 	var camera_path = camera.get_path()
 	remote_transform.remote_path = camera_path
+
+func set_run_animation():
+	if Events.has_power_crook:
+		sprite.animation = "RunCrook"
+	else:
+		sprite.animation = "Run"
+
+func set_idle_animation():
+	if Events.has_power_crook:
+		sprite.animation = "IdleCrook"
+	else:
+		sprite.animation = "Idle"
+		
+func set_jump_animation():
+	if Events.has_power_crook:
+		sprite.animation = "JumpCrook"
+	else:
+		sprite.animation = "Jump"
+		
+func set_fall_animation():
+	if Events.has_power_crook:
+		sprite.animation = "FallCrook"
+	else:
+		sprite.animation = "Fall"
 		
 func grab_item():
 	if item_holder.has_method("picked_up"):
@@ -343,7 +420,7 @@ func grab_item():
 	carrying = true
 	
 func drop_item():
-	sprite.animation = "Idle"
+	set_idle_animation()
 	if item_instsance != null:
 		item_instsance.queue_free()
 		item_instsance = null
@@ -398,3 +475,12 @@ func _on_RoomDetector_area_entered(area):
 	var size: Vector2 = collision_shape.shape.extents * 2
 	
 	Events.change_room(collision_shape.global_position, size)
+
+func _on_FireDelayTimer_timeout():
+	fire_delay = false
+
+func _on_pick_up_power_up():
+	animation_player.play("PowerUp")
+
+func _on_FireAnimationTimer_timeout():
+	firing = false

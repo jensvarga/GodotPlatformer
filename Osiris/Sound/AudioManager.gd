@@ -226,9 +226,31 @@ const FART1 = preload("res://Sound/FX/MISC/fart1.wav")
 const FART2 = preload("res://Sound/FX/MISC/fart2.wav")
 const FART3 = preload("res://Sound/FX/MISC/fart3.wav")
 const LEO_FIRE = preload("res://Sound/FX/MISC/leo_fire.wav")
+const CLICK = preload("res://Sound/FX/MISC/klick.wav")
+const FLAME = preload("res://Sound/FX/MISC/flame.wav")
+const POWER_UP = preload("res://Sound/FX/MISC/power_up.wav")
+const SHOT1 = preload("res://Sound/FX/MISC/shot1.wav")
+const SHOT2 = preload("res://Sound/FX/MISC/shot2.wav")
+const SHOT3 = preload("res://Sound/FX/MISC/shot3.wav")
+const BREAK = preload("res://Sound/FX/MISC/break.wav")
 
 onready var laser_player := $LaserPlayer
 
+func play_break():
+	play_sound(BREAK)
+	
+func play_random_shot():
+	play_random_sound([ SHOT1, SHOT2, SHOT3 ])
+	
+func play_power_up():
+	play_sound(POWER_UP)
+
+func play_flame():
+	play_sound(FLAME)
+	
+func play_click():
+	play_sound(CLICK)
+	
 func play_leo_fire():
 	play_sound(LEO_FIRE)
 	

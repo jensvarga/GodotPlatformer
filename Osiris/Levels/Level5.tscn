@@ -467,9 +467,6 @@ position = Vector2( 5419, -10 )
 [node name="Anchor" parent="PlayerRoot" index="0"]
 camera_limit_top = -450
 
-[node name="Camera2D" parent="PlayerRoot/Anchor" index="0"]
-position = Vector2( 89, -10 )
-
 [node name="BeachTiles" type="TileMap" parent="." index="5"]
 position = Vector2( 1, 0 )
 tile_set = SubResource( 24 )
