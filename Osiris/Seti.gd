@@ -41,6 +41,7 @@ var teleport_locations = [
 # Colliders
 onready var collision_shape := $CollisionShape2D
 onready var hit_shape := $HitBox/CollisionShape2D
+onready var projectile_collider := $ProjectileForceField/CollisionShape2D
 
 # Tornado colliders
 onready var tf_center := $HitBox/CollisionCenter
@@ -60,7 +61,7 @@ onready var tf_colliders := [
 	$HitBox/TF13
 ]
 
-var move_speed = 70
+var move_speed = 100
 var jump_height = 100
 var velocity = Vector2.ZERO
 var direction = Vector2(1, 0)
@@ -172,6 +173,7 @@ func enter_teleport_out():
 	invincible = true
 	AudioManager.play_teleport()
 	collision_shape.set_deferred("disabled", true)
+	projectile_collider.set_deferred("disabled", true)
 
 func enter_teleport_in():
 	state = TELEPORT_IN
@@ -180,6 +182,7 @@ func enter_teleport_in():
 	burst_particles.emitting = true
 	AudioManager.play_teleport()
 	collision_shape.set_deferred("disabled", false)
+	projectile_collider.set_deferred("disabled", false)
 	
 func enter_tornado():
 	AudioManager.play_seti_tronado()
@@ -187,6 +190,7 @@ func enter_tornado():
 	self.position = t_center
 	sprite.animation = "TeleportIn"
 	collision_shape.set_deferred("disabled", false)
+	projectile_collider.set_deferred("disabled", false)
 
 func enter_dead():
 	state = DEAD
@@ -388,3 +392,10 @@ func _on_BatsTimer_timeout():
 	bat_particles2.emitting = false
 	invincible = false
 	enter_idle()
+
+func on_shot():
+	Events.emit_signal("damage_boss")
+	invincible = true
+	animation_player.play("Hurt")
+	burst_particles.restart()
+	invincible_timer.start()

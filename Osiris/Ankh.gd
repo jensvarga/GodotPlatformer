@@ -17,10 +17,15 @@ func _physics_process(delta):
 	
 func _on_Area_body_entered(body):
 	if Events.player_hit_points == 3:
-		return
-		
-	if body is Player and not collected:
-		collected = true
-		sprite.hide()
+		Events.emit_signal("gained_life")
+	elif body is Player and not collected:
 		Events.emit_signal("pick_up_ankh")
-		AudioManager.play_random_checkpoint_sound()
+		
+	collected = true
+	sprite.hide()
+	$Area/CollisionShape2D.set_deferred("disabled", true)
+	AudioManager.play_random_checkpoint_sound()
+	$DestroyTimer.start()
+
+func _on_DestroyTimer_timeout():
+	queue_free()

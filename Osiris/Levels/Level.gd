@@ -17,6 +17,7 @@ onready var camera_anchor: = $PlayerRoot/Anchor
 onready var player_camera := $PlayerCamera
 
 const PlayerScene = preload("res://Player.tscn")
+export (AudioStream) var level_music = null
 var player
 var stage_cleared = false
 
@@ -28,7 +29,7 @@ func _ready():
 	Transition.connect("transition_started", self, "_on_transition_started")
 	Transition.connect("transition_completed", self, "_on_transition_completed")
 	VisualServer.set_default_clear_color(sky_color)
-	AudioManager.start_music_for_level(level_index)
+	AudioManager.start_level_music(level_music)
 	spawn_player()
 	Transition.play_start_transition()
 	CameraShaker.connect_anchor(camera_anchor)

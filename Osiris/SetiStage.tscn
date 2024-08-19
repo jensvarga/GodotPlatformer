@@ -821,6 +821,7 @@ motion_mirroring = Vector2( 440, 0 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/Ocean/Node2D" index="0"]
 frames = SubResource( 46 )
+frame = 2
 playing = true
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Ocean/Node2D" index="1"]
@@ -832,6 +833,7 @@ position = Vector2( 880, 0 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/Ocean/Node2D2" index="0"]
 frames = SubResource( 46 )
+frame = 2
 playing = true
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Ocean/Node2D2" index="1"]

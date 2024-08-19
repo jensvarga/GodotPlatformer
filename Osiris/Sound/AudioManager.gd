@@ -115,6 +115,18 @@ const STONE_DOOR = preload("res://Sound/FX/MISC/stone_door.wav")
 var music_playing = false
 var current_level = 0
 
+var current_song = null
+
+func start_level_music(song):
+	if song == null and not Events.check_point_reached:
+		stop_music()
+		music_playing = false
+		current_song = null
+	elif not music_playing or current_song != song:
+		play_music(song)
+		music_playing = true
+		current_song = song
+
 func start_music_for_level(index):
 	if not LEVEL_MUSIC.has(index):
 		stop_music()

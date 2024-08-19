@@ -22,6 +22,7 @@ func _ready():
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
+	Events.connect("gained_life", self, "_on_gained_life")
 	
 	if Events.has_power_crook:
 		power_crook.show()
@@ -30,12 +31,15 @@ func _ready():
 	
 	if level.boss_level:
 		Events.boss_hit_points = max_boss_hp
-		Events.player_hit_points = 3
 		update_boss_ankhs()
 	else:
 		boss_life.hide()
 	
+	$LifeCounter.text = " x " + (Events.lives as String)
 	update_ankhs()
+	
+func _on_gained_life():
+	$LifeCounter.text = " x " + (Events.lives as String)
 	
 func _on_player_take_damage():
 	update_ankhs()

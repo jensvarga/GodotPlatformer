@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=93 format=2]
 
 [ext_resource path="res://Seti.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/seti.png" type="Texture" id=2]
@@ -336,7 +336,7 @@ animations = [ {
 "frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
 "loop": true,
 "name": "Walk",
-"speed": 5.0
+"speed": 7.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=10]
@@ -533,6 +533,9 @@ fps = 8.0
 frame_0/texture = ExtResource( 7 )
 frame_1/texture = ExtResource( 8 )
 frame_1/delay_sec = 0.0
+
+[sub_resource type="CircleShape2D" id=83]
+radius = 63.1981
 
 [node name="Seti" type="KinematicBody2D"]
 collision_layer = 2
@@ -783,6 +786,13 @@ anim_offset_random = 0.5
 
 [node name="BatsTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ProjectileForceField" type="Area2D" parent="."]
+collision_layer = 16384
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileForceField"]
+shape = SubResource( 83 )
 
 [connection signal="body_entered" from="HurtBox" to="." method="_on_HurtBox_body_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]

@@ -216,7 +216,7 @@ func update_move(delta):
 		else:
 			if carrying:
 				sprite.animation = "IdleCarry"
-			else:
+			elif not holding_wall:
 				set_idle_animation()
 			crouch_collider.set_deferred("disabled", true)
 			collision_shape.set_deferred("disabled", false)

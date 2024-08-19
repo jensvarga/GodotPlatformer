@@ -229,8 +229,8 @@ anims/FollowPath = SubResource( 7 )
 anims/RESET = SubResource( 8 )
 
 [node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
-position = Vector2( 0.5, 1.52588e-05 )
-scale = Vector2( 12.95, 22.5 )
+position = Vector2( 2, 32.5 )
+scale = Vector2( 4.5, 19.25 )
 
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 0.5

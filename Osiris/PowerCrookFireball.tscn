@@ -28,12 +28,11 @@ radius = 7.0
 
 [node name="PowerCrookFireball" type="Area2D"]
 collision_layer = 0
-collision_mask = 3
+collision_mask = 16387
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="TrailParticles" type="CPUParticles2D" parent="."]
