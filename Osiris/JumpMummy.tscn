@@ -105,7 +105,7 @@ damping = 31.11
 color_ramp = SubResource( 8 )
 
 [node name="DestroyTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.25
 one_shot = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

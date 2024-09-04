@@ -1,8 +1,143 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Sprites/pop_mummy.png" type="Texture" id=1]
-[ext_resource path="res://PopMummy.gd" type="Script" id=2]
-[ext_resource path="res://HitboxPopper.gd" type="Script" id=3]
+
+[sub_resource type="GDScript" id=68]
+script/source = "extends StaticBody2D
+
+export (Vector2) var throw_force = Vector2(-100, -100)
+
+const BONE = preload(\"res://BoneProjectile.tscn\")
+const ROCK = preload(\"res://PopMummyPart.tscn\")
+
+onready var sprite := $AnimatedSprite
+onready var timer := $Timer
+
+enum { HIDDEN, THROWING }
+
+var state
+var thrown = false
+var player_detected = false
+var hp: int
+	
+func _ready():
+	hp = 3
+	enter_hidden()
+
+func _physics_process(delta):
+	match state:
+		HIDDEN:
+			if player_detected:
+				enter_throwing()
+		THROWING:
+			update_throwing()
+
+func enter_throwing():
+	state = THROWING
+	sprite.animation = \"Throwing\"
+
+func enter_hidden():
+	state = HIDDEN
+	sprite.animation = \"Hidden\"
+	thrown = false
+	
+func update_throwing():
+	if sprite.frame == 3 and not thrown:
+		throw_bone()
+		return
+	if sprite.frame == 6:
+		enter_hidden()
+		
+func explode():
+	AudioManager.play_random_explosion_sound()
+	$AnimationPlayer.play(\"RESET\")
+	for i in range(4):
+		var bone = BONE.instance()
+		get_tree().root.get_child(0).add_child(bone)
+		bone.position = $Position2D.global_position
+		bone.apply_central_impulse(Vector2(rand_range(-100, 100), rand_range(-100, -50)))
+
+	for i in range(2):
+		var rock = ROCK.instance()
+		get_tree().root.get_child(0).add_child(rock)
+		rock.position = $Position2D.global_position
+		rock.apply_central_impulse(Vector2(rand_range(-150, 150), rand_range(-150, -50)))
+		
+	queue_free()
+	
+func on_shot():
+	if (hp - 1) <= 0:
+		explode()
+	else:
+		hp -= 1
+		AudioManager.play_random_hit_sound()
+		#start_hurt_flashing()
+		$AnimationPlayer.play(\"Hurt\")
+		
+func throw_bone():
+	thrown = true
+	var bone = BONE.instance()
+	get_tree().root.get_child(0).add_child(bone)
+	bone.position = $Position2D.global_position
+	bone.apply_central_impulse(throw_force)
+
+func _on_PlayerDetection_body_entered(body):
+	if body is Player and state == HIDDEN:
+		player_detected = true
+
+func _on_PlayerDetection_body_exited(body):
+	if body is Player:
+		player_detected = false
+
+# Fix for messed up uniqe AnimationPlayer
+# Solved with resource property resource_local_to_scene instead :)
+
+var toggle_bool = false
+var toggle_count = 0
+
+func start_hurt_flashing():
+	toggle_count = 0
+	timer.start()
+
+func _on_timeout():
+	sprite.material.set(\"shader_paramater/active\", toggle_bool);
+	toggle_bool = !toggle_bool
+	toggle_count += 1
+
+	if toggle_count >= 6:
+		timer.stop()
+"
+
+[sub_resource type="Shader" id=66]
+code = "shader_type canvas_item;
+
+uniform bool active = true;
+uniform float luminance_threshold = 0.4;
+uniform vec4 color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+void fragment() {
+	vec4 previous_color = texture(TEXTURE, UV);
+	vec4 red_color = vec4(1.0, 1.0, 1.0, previous_color.a);
+	vec4 new_color = previous_color;
+
+	if (active) {
+		float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+
+		if (luminance > luminance_threshold) {
+			new_color = color;
+		}
+	}
+
+	COLOR = new_color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=67]
+resource_local_to_scene = true
+shader = SubResource( 66 )
+shader_param/active = false
+shader_param/luminance_threshold = 0.4
+shader_param/color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 1 )
@@ -36,7 +171,7 @@ region = Rect2( 32, 0, 32, 43 )
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 32, 43 )
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="SpriteFrames" id=63]
 animations = [ {
 "frames": [ SubResource( 8 ) ],
 "loop": false,
@@ -55,17 +190,46 @@ extents = Vector2( 15, 9.5 )
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 75, 47 )
 
-[sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 7.5, 5 )
+[sub_resource type="Animation" id=64]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=65]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [node name="PopMummy" type="StaticBody2D"]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource( 2 )
+script = SubResource( 68 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 67 )
 position = Vector2( 0, -7 )
-frames = SubResource( 9 )
+frames = SubResource( 63 )
 animation = "Hidden"
 playing = true
 
@@ -84,15 +248,13 @@ collision_mask = 2
 position = Vector2( -84, 2 )
 shape = SubResource( 11 )
 
-[node name="HitboxPopper" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 3 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Hurt = SubResource( 64 )
+anims/RESET = SubResource( 65 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxPopper"]
-position = Vector2( -1, -11 )
-shape = SubResource( 12 )
-disabled = true
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_PlayerDetection_body_entered"]
 [connection signal="body_exited" from="PlayerDetection" to="." method="_on_PlayerDetection_body_exited"]

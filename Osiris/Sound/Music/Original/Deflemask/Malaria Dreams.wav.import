@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Malaria Dreams.wav-1f4b5d3f4ed08212cc674cef827a8fbe.sample"
+
+[deps]
+
+source_file="res://Sound/Music/Original/Deflemask/Malaria Dreams.wav"
+dest_files=[ "res://.import/Malaria Dreams.wav-1f4b5d3f4ed08212cc674cef827a8fbe.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

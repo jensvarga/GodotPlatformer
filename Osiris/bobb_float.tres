@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float amplitude : hint_range(0.0, 50.0) = 10.0;  // The height of the bobbing
+uniform float speed : hint_range(0.0, 10.0) = 0.5;       // The speed of the bobbing
+
+void fragment() {
+    float offsetY = amplitude * sin(TIME * speed);
+    COLOR = texture(TEXTURE, UV + vec2(0.0, offsetY) / 500.0);
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/amplitude = 10.0
+shader_param/speed = 1.0

@@ -269,11 +269,54 @@ func play_leo_fire():
 func play_random_fart():
 	play_random_sound([ FART1, FART2, FART3 ])
 	
+const COW_MOO = preload("res://Sound/FX/MISC/robot_cow_moo.wav")
+const COW_ATTACK = preload("res://Sound/FX/MISC/robot_cow_attack.wav")
+const COW_DIE = preload("res://Sound/FX/MISC/robot_cow_die.wav")
+const COW_THRUST = preload("res://Sound/FX/MISC/robot_cow_thrust.wav")
+
+func play_cow_moo():
+	play_sound(COW_MOO)
+
+func play_cow_thrust():
+	play_sound(COW_THRUST)
+	
+func play_cow_die():
+	play_sound(COW_DIE)
+
+func play_cow_attck():
+	play_sound(COW_ATTACK)
+	
 func play_fanfare():
 	play_sound(FANFARE)
 
 func play_bat_swarm():
 	play_sound(BAT_SWARM)
+
+const BENNUS_CRAVING = preload("res://Sound/Music/Original/Deflemask/Bennu´s Craving.wav")
+const BENNU_WAKE_UP = preload("res://Sound/FX/MISC/bennu_wake_up.wav")
+const BENNU_HURT = preload("res://Sound/FX/MISC/bennu_hurt.wav")
+const BENNU_ATTACK = preload("res://Sound/FX/MISC/bennu_attack.wav")
+const BENNU_ATTACK_2 = preload("res://Sound/FX/MISC/bennu_attack_2.wav")
+const ELECTRIC_CHARGE = preload("res://Sound/FX/MISC/electric_charge.wav")
+const BENNU_SHOOT = preload("res://Sound/FX/MISC/bennu_shoot.wav")
+
+func play_bennu_music():
+	play_music(BENNUS_CRAVING)
+
+func play_bennu_shoot():
+	play_sound(BENNU_SHOOT)
+
+func play_electric_charge():
+	play_sound(ELECTRIC_CHARGE)
+
+func play_bennu_attack():
+	play_random_sound([ BENNU_ATTACK, BENNU_ATTACK_2])
+
+func play_bennu_wake_up():
+	play_sound(BENNU_WAKE_UP)
+	
+func play_bennu_hurt():
+	play_sound(BENNU_HURT)
 
 func play_bat_sound():
 	play_sound(BATS)

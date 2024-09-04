@@ -466,12 +466,12 @@ shape = SubResource( 30 )
 [node name="LevelCarpet1" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( -30, 120 )
 level_index = 1
-connecting_level_path = "res://Levels/Level5.tscn"
+connecting_level_path = "res://Leontopolis.tscn"
 
 [node name="LevelCarpet2" parent="Carpets" instance=ExtResource( 10 )]
-position = Vector2( -138, 109 )
+position = Vector2( -9, 335 )
 level_index = 1
-connecting_level_path = "res://Levels/Level3.tscn"
+connecting_level_path = "res://LandOfManu.tscn"
 
 [node name="LevelCarpet3" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( 735, -525 )

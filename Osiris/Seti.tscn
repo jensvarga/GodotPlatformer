@@ -535,7 +535,7 @@ frame_1/texture = ExtResource( 8 )
 frame_1/delay_sec = 0.0
 
 [sub_resource type="CircleShape2D" id=83]
-radius = 63.1981
+radius = 39.0512
 
 [node name="Seti" type="KinematicBody2D"]
 collision_layer = 2
@@ -546,7 +546,7 @@ script = ExtResource( 1 )
 material = SubResource( 22 )
 frames = SubResource( 9 )
 animation = "Bats"
-frame = 1
+frame = 3
 playing = true
 script = ExtResource( 3 )
 

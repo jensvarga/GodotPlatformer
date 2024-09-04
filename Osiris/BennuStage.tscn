@@ -1,0 +1,143 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/mountain_tiles.png" type="Texture" id=2]
+[ext_resource path="res://ScrollingParallaxBackground.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/red_clouds.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Backgrounds/bennu_fg_bg.png" type="Texture" id=5]
+[ext_resource path="res://bobb_float.tres" type="Material" id=6]
+[ext_resource path="res://Sprites/Backgrounds/bennu_bg_bg.png" type="Texture" id=7]
+[ext_resource path="res://Bennu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://StageEvents.gd" type="Script" id=9]
+[ext_resource path="res://RightHand.tscn" type="PackedScene" id=10]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=3]
+0/name = "mountain_tiles.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 384, 96 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 1 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 5, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 7, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 240, 135 )
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform float amplitude : hint_range(0.0, 50.0) = 10.0;  // The height of the bobbing
+uniform float speed : hint_range(0.0, 10.0) = 0.5;       // The speed of the bobbing
+
+void fragment() {
+    float offsetY = amplitude * sin(TIME * speed);
+    COLOR = texture(TEXTURE, UV + vec2(0.0, offsetY) / 500.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/amplitude = 5.0
+shader_param/speed = 0.5
+
+[node name="BennuStage" instance=ExtResource( 1 )]
+sky_color = Color( 1, 0.592157, 0.211765, 1 )
+boss_level = true
+
+[node name="CanvasLayer" parent="." index="0"]
+max_boss_hp = 12
+
+[node name="SpawnPoint" parent="." index="1"]
+position = Vector2( -176, 101 )
+
+[node name="TileMap" type="TileMap" parent="." index="6"]
+tile_set = SubResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -262152, 536870912, 5, -262151, 536870912, 5, -262150, 536870912, 5, -262149, 536870912, 5, -262148, 536870912, 5, -262147, 536870912, 5, -262146, 536870912, 5, -262145, 536870912, 5, -327680, 536870912, 5, -327679, 536870912, 5, -327678, 536870912, 5, -327677, 536870912, 5, -327676, 536870912, 5, -327675, 536870912, 5, -327674, 536870912, 5, -327673, 536870912, 5, -196616, 536870912, 5, -262137, 536870912, 5, -131080, 536870912, 5, -196601, 536870912, 5, -65544, 536870912, 5, -131065, 536870912, 5, -8, 536870912, 5, -65529, 536870912, 5, 65528, 536870912, 5, 7, 536870912, 5, 131064, 536870912, 5, 65543, 536870912, 5, 196600, 0, 65543, 131079, 536870912, 5, 262136, 1073741824, 65543, 196615, 536870912, 5, 327672, 536870912, 5, 327673, 536870912, 5, 327674, 536870912, 5, 327675, 536870912, 5, 327676, 536870912, 5, 327677, 536870912, 5, 327678, 536870912, 5, 327679, 536870912, 5, 262144, 536870912, 5, 262145, 536870912, 5, 262146, 536870912, 5, 262147, 536870912, 5, 262148, 536870912, 5, 262149, 536870912, 5, 262150, 536870912, 5, 262151, 536870912, 5 )
+
+[node name="Room" type="Area2D" parent="." index="7"]
+collision_layer = 524288
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room" index="0"]
+shape = SubResource( 4 )
+
+[node name="ParallaxBackground3" type="ParallaxBackground" parent="." index="8"]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground3" index="0"]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground3/ParallaxLayer2" index="0"]
+material = ExtResource( 6 )
+position = Vector2( -42, 76 )
+texture = ExtResource( 7 )
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." index="9"]
+script = ExtResource( 3 )
+scroll_speed = 5
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground2" index="0"]
+motion_mirroring = Vector2( 1376, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground2/ParallaxLayer3" index="0"]
+position = Vector2( 3, -49 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 4 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="10"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer" index="0"]
+material = SubResource( 6 )
+position = Vector2( -23, 106 )
+texture = ExtResource( 5 )
+
+[node name="Bennu" parent="." index="11" instance=ExtResource( 8 )]
+position = Vector2( 130, 96 )
+
+[node name="StageEvents" type="Node2D" parent="." index="12"]
+script = ExtResource( 9 )
+
+[node name="Tween" type="Tween" parent="StageEvents" index="0"]
+
+[node name="RightHand" parent="StageEvents" index="1" instance=ExtResource( 10 )]
+position = Vector2( -1, -179 )
+
+[node name="Timer" type="Timer" parent="StageEvents" index="2"]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="StageEvents/Timer" to="StageEvents" method="_on_Timer_timeout"]

@@ -1,0 +1,77 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=22]
+code = "shader_type canvas_item;
+
+uniform bool active_bob = true;
+uniform float amplitude : hint_range(0.0, 50.0) = 10.0;  // The height of the bobbing
+uniform float speed : hint_range(0.0, 10.0) = 1.0;       // The speed of the bobbing
+
+uniform bool active_flash = true;
+uniform float luminance_threshold = 0.4;
+uniform vec4 flash_color : hint_color = vec4(1.0, 0.0, 0.0, 1.0);  // Default to red flash
+
+uniform bool active_dissolve = false;
+uniform float sensitivity : hint_range(0.0, 1.0) = 0.5;
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 438.5453);
+}
+
+void fragment() {
+	// Bobbing effect
+	float offsetY = 0.0;
+	if (active_bob) {
+		offsetY = amplitude * sin(TIME * speed);
+	}
+
+	// Apply the bobbing to the UV coordinates
+	vec2 new_uv = UV + vec2(0.0, offsetY) / 500.0;
+	vec4 previous_color = texture(TEXTURE, new_uv);
+
+	// Check for transparency
+	if (previous_color.a < 0.01) {
+		discard; // Skip rendering completely for transparent pixels
+	}
+
+	// Flashing effect
+	vec4 final_color = previous_color;
+	if (active_flash) {
+		float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+
+		if (luminance > luminance_threshold) {
+			final_color.rgb = flash_color.rgb;
+		}
+	}
+
+	// Dissolve effect
+	if (active_dissolve) {
+		// Get size of texture in pixels
+		float size_x = float(textureSize(TEXTURE, 0).x);
+		float size_y = float(textureSize(TEXTURE, 0).y);
+
+		// Create a new \"UV\" which remaps every UV value to a snapped pixel value
+		vec2 UVr = vec2(floor(new_uv.x * size_x) / size_x, floor(new_uv.y * size_y) / size_y);
+		
+		// Determine whether pixel should be visible or not
+		float visible = step(sensitivity, random(UVr));
+		
+		// Modify the alpha channel based on the dissolve effect
+		final_color.a = min(visible, final_color.a);
+	}
+
+	// Output the final color
+	COLOR = final_color;
+}
+"
+
+[resource]
+shader = SubResource( 22 )
+shader_param/active_bob = false
+shader_param/amplitude = 20.0
+shader_param/speed = 3.0
+shader_param/active_flash = false
+shader_param/luminance_threshold = 0.4
+shader_param/flash_color = Color( 1, 0, 0, 1 )
+shader_param/active_dissolve = true
+shader_param/sensitivity = 0.0

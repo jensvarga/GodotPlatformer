@@ -8,7 +8,7 @@ export (bool) var test_spawn = false
 export (bool) var boss_level = false
 
 #onready var player: = $Player
-onready var camera: = $PlayerCamera
+onready var camera: = $PlayerCameraSwoop
 onready var spawn_point: = $SpawnPoint
 onready var check_point: = $CheckPoint
 onready var test_point: = $TestSpawn
@@ -50,9 +50,8 @@ func _on_stage_cleared():
 func spawn_player():
 	player = PlayerScene.instance()
 	if test_spawn:
-		player.position = test_point.position
-		return
-	if Events.check_point_reached:
+		player.position = test_point.position	
+	elif Events.check_point_reached:
 		player.position = check_point.position
 	else:
 		player.position = spawn_point.position
@@ -72,4 +71,3 @@ func _on_transition_completed():
 	AudioManager.current_level = 0
 	Events.levels_cleared[level_index] = true
 	get_tree().change_scene(next_level_path)
-

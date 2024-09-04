@@ -3,6 +3,7 @@ extends StaticBody2D
 export (Vector2) var throw_force = Vector2(-100, -100)
 
 const BONE = preload("res://BoneProjectile.tscn")
+const ROCK = preload("res://PopMummyPart.tscn")
 
 onready var sprite := $AnimatedSprite
 
@@ -11,8 +12,10 @@ enum { HIDDEN, THROWING }
 var state
 var thrown = false
 var player_detected = false
+var hp: int
 	
 func _ready():
+	hp = 3
 	enter_hidden()
 
 func _physics_process(delta):
@@ -30,18 +33,40 @@ func enter_throwing():
 func enter_hidden():
 	state = HIDDEN
 	sprite.animation = "Hidden"
-	$HitboxPopper/CollisionShape2D.set_deferred("disabled", true)
 	thrown = false
 	
 func update_throwing():
-	if sprite.frame == 1:
-		$HitboxPopper/CollisionShape2D.set_deferred("disabled", false)
 	if sprite.frame == 3 and not thrown:
 		throw_bone()
 		return
 	if sprite.frame == 6:
 		enter_hidden()
+		
+func explode():
+	AudioManager.play_random_explosion_sound()
+	$AnimationPlayer.play("RESET")
+	for i in range(4):
+		var bone = BONE.instance()
+		get_tree().root.get_child(0).add_child(bone)
+		bone.position = $Position2D.global_position
+		bone.apply_central_impulse(Vector2(rand_range(-100, 100), rand_range(-100, -50)))
+
+	for i in range(2):
+		var rock = ROCK.instance()
+		get_tree().root.get_child(0).add_child(rock)
+		rock.position = $Position2D.global_position
+		rock.apply_central_impulse(Vector2(rand_range(-150, 150), rand_range(-150, -50)))
+		
+	queue_free()
 	
+func on_shot():
+	if (hp - 1) <= 0:
+		explode()
+	else:
+		hp -= 1
+		AudioManager.play_random_hit_sound()
+		$AnimationPlayer.play("Hurt")
+		
 func throw_bone():
 	thrown = true
 	var bone = BONE.instance()

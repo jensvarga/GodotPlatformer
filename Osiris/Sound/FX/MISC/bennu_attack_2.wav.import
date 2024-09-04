@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bennu_attack_2.wav-ab2a37a2a08158720a6a0e1eee8eb9c4.sample"
+
+[deps]
+
+source_file="res://Sound/FX/MISC/bennu_attack_2.wav"
+dest_files=[ "res://.import/bennu_attack_2.wav-ab2a37a2a08158720a6a0e1eee8eb9c4.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=true
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

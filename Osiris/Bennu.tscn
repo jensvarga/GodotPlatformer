@@ -1,0 +1,310 @@
+[gd_scene load_steps=38 format=2]
+
+[ext_resource path="res://Sprites/Bennu.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/bennu_wings.png" type="Texture" id=2]
+[ext_resource path="res://Bennu.gd" type="Script" id=3]
+[ext_resource path="res://BennuBob.tres" type="Material" id=4]
+[ext_resource path="res://Sprites/Bennu_swoop.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/bennu_die.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 262, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 393, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 524, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 655, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 524, 0, 131, 105 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ null, null, SubResource( 8 ) ],
+"loop": false,
+"name": "Enter",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 7.0
+}, {
+"frames": [ null ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 6 )
+region = Rect2( 131, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 6 )
+region = Rect2( 262, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 6 )
+region = Rect2( 393, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 131, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 262, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 1 )
+region = Rect2( 786, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 1 )
+region = Rect2( 917, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 1 )
+region = Rect2( 1048, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 1 )
+region = Rect2( 393, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 1 )
+region = Rect2( 524, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 1 )
+region = Rect2( 655, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 1 )
+region = Rect2( 1179, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 1 )
+region = Rect2( 1310, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 5 )
+region = Rect2( 131, 0, 131, 105 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 131, 105 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ) ],
+"loop": false,
+"name": "Die",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": false,
+"name": "Enter",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "Hex",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 19 ), SubResource( 20 ) ],
+"loop": false,
+"name": "Shoot",
+"speed": 3.0
+}, {
+"frames": [ SubResource( 22 ), SubResource( 23 ) ],
+"loop": true,
+"name": "Swoop",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 6.5, 17 )
+
+[sub_resource type="Animation" id=32]
+resource_name = "Disolve"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("BodySprite:material:shader_param/sensitivity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("BodySprite:material:shader_param/active_flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=25]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("BodySprite:material:shader_param/active_flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("BodySprite:material:shader_param/sensitivity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=26]
+radius = 14.7126
+height = 27.1881
+
+[sub_resource type="Gradient" id=27]
+offsets = PoolRealArray( 0, 0.131749, 0.861771, 0.991361 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[node name="Bennu" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 3 )
+
+[node name="WingsSprite" type="AnimatedSprite" parent="."]
+material = ExtResource( 4 )
+frames = SubResource( 4 )
+animation = "Idle"
+frame = 1
+playing = true
+
+[node name="BodySprite" type="AnimatedSprite" parent="."]
+material = ExtResource( 4 )
+frames = SubResource( 2 )
+animation = "Die"
+frame = 3
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 12 )
+shape = SubResource( 21 )
+
+[node name="EnterTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Tween" type="Tween" parent="."]
+playback_process_mode = 0
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Disolve = SubResource( 32 )
+anims/Hurt = SubResource( 24 )
+anims/RESET = SubResource( 25 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -5, 10 )
+rotation = -0.774113
+shape = SubResource( 26 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 0, 14 )
+emitting = false
+amount = 80
+lifetime = 0.5
+explosiveness = 0.85
+emission_shape = 1
+emission_sphere_radius = 4.32
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 14.81
+initial_velocity_random = 0.3
+radial_accel = -77.77
+radial_accel_random = 0.38
+tangential_accel = -55.55
+tangential_accel_random = 0.81
+color = Color( 0.105882, 0.611765, 1, 1 )
+color_ramp = SubResource( 27 )
+hue_variation = 0.04
+hue_variation_random = 1.0
+
+[node name="TelegraphShootTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FirePosition" type="Position2D" parent="."]
+position = Vector2( 0, 15 )
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 3.5
+one_shot = true
+
+[connection signal="timeout" from="EnterTimer" to="." method="_on_EnterTimer_timeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_IdleTimer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="TelegraphShootTimer" to="." method="_on_TelegraphShootTimer_timeout"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_KillTimer_timeout"]

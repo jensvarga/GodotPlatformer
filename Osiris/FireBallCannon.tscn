@@ -14,10 +14,6 @@ texture = ExtResource( 2 )
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 2.0
 
-[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
-process_parent = true
-physics_process_parent = true
-
 [node name="FireBall" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -13 )
 

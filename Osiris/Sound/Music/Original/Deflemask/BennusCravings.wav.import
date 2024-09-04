@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BennusCravings.wav-375bf28dd632b71251bc7245d7a3c3fe.sample"
+
+[deps]
+
+source_file="res://Sound/Music/Original/Deflemask/BennusCravings.wav"
+dest_files=[ "res://.import/BennusCravings.wav-375bf28dd632b71251bc7245d7a3c3fe.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=true
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

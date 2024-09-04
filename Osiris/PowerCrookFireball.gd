@@ -1,6 +1,7 @@
 extends Area2D
 
 const HIT_PARTICLES = preload("res://ProjectileHitParticles.tscn")
+const FORCE_FIELD = preload("res://ForceField.tscn")
 const speed = 400
 var velocity = Vector2.ZERO
 var direction: int
@@ -48,27 +49,19 @@ func _on_PowerCrookFireball_body_entered(body):
 
 func _on_PowerCrookFireball_area_entered(area):
 	if area.collision_layer & (1 << 14) and area is Area2D:
-		print("forcefield bounce")
 
 		var collision_shape_node = area.find_node("CollisionShape2D", true, false)
-		if collision_shape_node:
-			print("CollisionShape2D found")
-
-		# Check if it's a CircleShape2D
 		if collision_shape_node.shape is CircleShape2D:
-			print("CircleShape2D found")
-			
-			# Calculate the collision normal
+	
 			var collision_normal = (position - area.global_position).normalized()
-			print("Collision normal: ", collision_normal)
-			
-			# Bounce the velocity
 			velocity = velocity.bounce(collision_normal)
-			print("Velocity after bounce: ", velocity)
-			
-			# Update direction and scale
 			direction = sign(velocity.x)
 			scale.x = direction
+			
+			var force_field := FORCE_FIELD.instance()
+			area.add_child(force_field)
+			force_field.position = area.position
+			
 			return
 			
 		else:
@@ -78,5 +71,4 @@ func _on_PowerCrookFireball_area_entered(area):
 		area.on_shot() 
 		explode()
 	else:
-		print("explod")
 		explode()

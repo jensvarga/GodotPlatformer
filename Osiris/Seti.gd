@@ -194,6 +194,7 @@ func enter_tornado():
 
 func enter_dead():
 	state = DEAD
+	projectile_collider.set_deferred("disabled", true)
 	sprite.animation = "Die"
 	collision_shape.set_deferred("disabled", true)
 	AudioManager.fade_music()

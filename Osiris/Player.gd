@@ -5,12 +5,15 @@ class_name Player
 export (Resource) var player_move_data
 var hurt_particles = preload("res://PlayerHurtParticles.tscn")
 const FIREBALL = preload("res://PowerCrookFireball.tscn")
+const IMPACT_DUST_A = preload("res://impact_dust_a.tscn")
+const MAGIC_EFFECT = preload("res://MagicEffect.tscn")
+const IMPACT_DUST = preload("res://impact_dust_b.tscn")
 
 var velocity = Vector2.ZERO
 var crouch = false
 enum { MOVE, CLIMB, DEAD }
 var state = MOVE
-var climb_speed = 50
+var climb_speed = 75
 var max_extra_height = -10
 var buffered_jump = false
 var coyote_jump = false
@@ -71,7 +74,7 @@ func _physics_process(delta):
 		if not carrying and carry_item != null and Input.is_action_just_pressed("ui_grab"):
 			grab_item()
 			
-	if not holding_wall and not carrying and Input.is_action_just_pressed("ui_fire"):
+	if not holding_wall and not carrying and Input.is_action_just_pressed("ui_fire") and state != CLIMB:
 		fire_fireball()
 		
 	match state:
@@ -114,18 +117,26 @@ func fire_fireball():
 	var fireball = FIREBALL.instance()
 	get_tree().root.get_child(0).add_child(fireball)
 	
+	var magic_effect := MAGIC_EFFECT.instance()
+	#add_child(magic_effect)
+	get_tree().root.get_child(0).add_child(magic_effect)
+	
+	var direction = -1 if sprite.flip_h else 1
+	fireball.set_direction(direction)
+
+	var fire_position: Node2D
+
 	if sprite.flip_h:
-		fireball.set_direction(-1)
-		if crouch:
-			fireball.position = lower_left_fire_position.global_position
-		else:
-			fireball.position = left_fire_position.global_position
+		fire_position = lower_left_fire_position if crouch else left_fire_position
 	else:
-		fireball.set_direction(1)
-		if crouch:
-			fireball.position = lower_right_fire_position.global_position
-		else:
-			fireball.position = right_fire_position.global_position
+		fire_position = lower_right_fire_position if crouch else right_fire_position
+
+	fireball.position = fire_position.global_position
+	magic_effect.position = fire_position.global_position
+	
+	var random_effect = ["Effect1", "Effect2", "Effect3"][int(rand_range(0, 3))]
+	
+	magic_effect.set_animation(random_effect, direction)
 	
 	firing = true
 	$FireAnimationTimer.start()
@@ -239,14 +250,20 @@ func update_move(delta):
 	if grounded or coyote_jump or holding_wall:
 		jump = Input.is_action_just_pressed("ui_jump") or buffered_jump
 		if jump:
-			if jump and holding_left_wall():
-				holding_wall = false
-				jump_from_left = true
-				jump_from_right = false
-			elif jump and holding_right_wall():
-				holding_wall = false
-				jump_from_left = false
-				jump_from_right = true
+			if holding_left_wall() or holding_right_wall():
+				var impact_dust = IMPACT_DUST_A.instance()
+				get_parent().add_child(impact_dust)
+				impact_dust.position = global_position
+				if holding_left_wall():
+					holding_wall = false
+					jump_from_left = true
+					jump_from_right = false
+				elif holding_right_wall():
+					impact_dust.scale.x *= -1
+					holding_wall = false
+					jump_from_left = false
+					jump_from_right = true
+					
 				
 			AudioManager.play_random_jump_sound()
 			var horizontal_speed = abs(velocity.x)
@@ -379,6 +396,10 @@ func hurt():
 	get_parent().add_child(particles)
 	
 func bounce(amount):
+	yield(get_tree(), "physics_frame")
+	var impact_dust = IMPACT_DUST.instance()
+	get_parent().add_child(impact_dust)
+	impact_dust.position = Vector2(global_position.x, global_position.y + 5)
 	AudioManager.play_random_hit_sound()
 	velocity.y += -amount
 	

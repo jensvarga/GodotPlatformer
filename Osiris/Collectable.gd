@@ -12,5 +12,6 @@ func _ready():
 func _on_PickupArea_body_entered(body):
 	if body is Player and !collected and collectable_resource.has_method("collect_action"):
 		collected = true
+		Events.has_left_hand = true
 		sprite.hide()
 		collectable_resource.collect_action()

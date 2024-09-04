@@ -26,6 +26,8 @@ func _on_Area2D_body_entered(body):
 		return
 	if body is Player:
 		body.hurt()
+	if body.has_method("on_shot"):
+		body.on_shot()
 		
 	explode()
 

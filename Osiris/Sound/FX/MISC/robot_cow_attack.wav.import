@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/robot_cow_attack.wav-64a79a1c93cf2e87cb56aeca828a9470.sample"
+
+[deps]
+
+source_file="res://Sound/FX/MISC/robot_cow_attack.wav"
+dest_files=[ "res://.import/robot_cow_attack.wav-64a79a1c93cf2e87cb56aeca828a9470.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=true
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -15,6 +15,7 @@ signal boss_died
 signal pick_up_power_crook
 signal pick_up_power_up
 signal gained_life
+signal killed_miniboss
 
 # Global variables
 var check_point_reached = false
@@ -24,8 +25,11 @@ var player_overworld_position
 var collected_items = []
 var player_hit_points = 1
 var boss_hit_points = 6
-var has_power_crook = false
+var has_power_crook = true
 var lives = 3
+
+var has_left_hand = false
+var has_right_hand = false
 
 var unlocked_level_2 = false
 var unlocked_level_3 = false

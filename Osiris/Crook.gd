@@ -39,8 +39,10 @@ func flip_sprite():
 func face(body):
 	if body.global_position.x < global_position.x:
 		sprite.flip_h = false
+		direction.x = -1
 	else:
 		sprite.flip_h = true
+		direction.x = 1
 
 func enter_death():
 	dead = true
@@ -58,6 +60,7 @@ func _on_Area2D_body_entered(body):
 		return
 	if body is Player:
 		if body.velocity.y > 0:
+			$Area2D/CollisionShape2D.set_deferred("disabled", true)
 			body.bounce(400)
 			enter_death()
 		else:

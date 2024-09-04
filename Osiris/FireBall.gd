@@ -8,6 +8,7 @@ onready var collider: = $Area2D/CollisionShape2D
 
 var velocity = Vector2.ZERO
 var stopped = true
+var first = true
 
 func _ready():
 	sprite.rotation = DIRECTION.angle()
@@ -20,11 +21,14 @@ func _physics_process(delta):
 	
 func activate(direction):
 	sprite.visible = true
-	AudioManager.play_random_explosion_sound()
 	DIRECTION = direction
 	sprite.rotation = DIRECTION.angle()
 	enable_colliders()
 	stopped = false
+	if first:
+		first = false
+		return
+	AudioManager.play_random_explosion_sound()
 	
 func deactivate():
 	disable_colliders()
@@ -38,7 +42,6 @@ func enable_colliders():
 
 func _on_Area2D_body_entered(body):
 	if body is Player:
-		stopped = true
 		body.hurt()
 	else:
 		stopped = true

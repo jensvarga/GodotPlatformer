@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/boss_sarcophagus.png" type="Texture" id=2]
@@ -26,7 +26,10 @@
 [ext_resource path="res://PowerCrook.tscn" type="PackedScene" id=24]
 [ext_resource path="res://DeathArea.gd" type="Script" id=25]
 [ext_resource path="res://BreakableBlock.tscn" type="PackedScene" id=26]
-[ext_resource path="res://Sound/Music/Original/Deflemask/Leonopolis.wav" type="AudioStream" id=27]
+[ext_resource path="res://Sound/Music/Original/Deflemask/SandOfThePyramid.wav" type="AudioStream" id=27]
+[ext_resource path="res://Sprites/particle_bubble.png" type="Texture" id=28]
+[ext_resource path="res://Room5.gd" type="Script" id=29]
+[ext_resource path="res://Room3.gd" type="Script" id=30]
 
 [sub_resource type="AtlasTexture" id=60]
 flags = 2
@@ -577,6 +580,10 @@ extents = Vector2( 194, 36.5 )
 [sub_resource type="RectangleShape2D" id=102]
 extents = Vector2( 400.75, 17 )
 
+[sub_resource type="Gradient" id=109]
+offsets = PoolRealArray( 0, 0.140389, 0.87041, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.541176, 1, 1, 1, 0.529412, 1, 1, 1, 0 )
+
 [node name="Leontopolis" instance=ExtResource( 1 )]
 sky_color = Color( 0.678647, 0.944113, 1, 1 )
 next_level_path = "res://SetiStage.tscn"
@@ -711,95 +718,91 @@ texture = ExtResource( 12 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="0"]
 position = Vector2( 70, 414 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="1"]
 position = Vector2( 510, 414 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="AnimatedSprite3" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="2"]
 position = Vector2( 950, 413.5 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite4" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="3"]
 position = Vector2( 1390, 413.5 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite5" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="4"]
 position = Vector2( 1830, 414 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite6" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="5"]
 position = Vector2( 2270, 414 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite7" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="6"]
 position = Vector2( 2710, 413.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite8" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="7"]
 position = Vector2( 3150, 413.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite9" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="8"]
 position = Vector2( 3589, 413 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite10" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="9"]
 position = Vector2( 4029, 413 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite11" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="10"]
 position = Vector2( 4469, 412.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite12" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="11"]
 position = Vector2( 4909, 412.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite13" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="12"]
 position = Vector2( 5349, 413 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite14" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="13"]
 position = Vector2( 5789, 413 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite15" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="14"]
 position = Vector2( 6229, 412.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite16" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="15"]
 position = Vector2( 6669, 412.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="Middle" type="Node2D" parent="ParallaxBackground/Ocean" index="3"]
@@ -1004,7 +1007,8 @@ shape = SubResource( 54 )
 [node name="Room3" type="Area2D" parent="." index="15"]
 position = Vector2( 1200, 403 )
 collision_layer = 524288
-collision_mask = 0
+collision_mask = 2
+script = ExtResource( 30 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room3" index="0"]
 shape = SubResource( 54 )
@@ -1021,7 +1025,8 @@ shape = SubResource( 59 )
 [node name="Room5" type="Area2D" parent="." index="17"]
 position = Vector2( 1200, 673 )
 collision_layer = 524288
-collision_mask = 0
+collision_mask = 2
+script = ExtResource( 29 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room5" index="0"]
 shape = SubResource( 54 )
@@ -1113,7 +1118,7 @@ position = Vector2( -75.5889, 35.4453 )
 rotation = 3.03244
 z_index = -1
 frames = SubResource( 74 )
-frame = 8
+frame = 2
 playing = true
 
 [node name="Brazier" parent="." index="32" instance=ExtResource( 20 )]
@@ -1258,7 +1263,32 @@ position = Vector2( 2417, -11 )
 [node name="Ankh3" parent="." index="73" instance=ExtResource( 15 )]
 position = Vector2( 3058, 177 )
 
+[node name="PowerCrook2" parent="." index="74" instance=ExtResource( 24 )]
+position = Vector2( 2288, 49 )
+
+[node name="Bubbles" type="CPUParticles2D" parent="." index="75"]
+position = Vector2( 3303, 1864 )
+z_index = -1
+amount = 1000
+lifetime = 10.0
+preprocess = 10.0
+texture = ExtResource( 28 )
+emission_shape = 2
+emission_rect_extents = Vector2( 2000, 1000 )
+spread = 180.0
+gravity = Vector2( 0, -20 )
+initial_velocity = 69.25
+initial_velocity_random = 1.0
+damping = 18.89
+scale_amount = 2.0
+scale_amount_random = 1.0
+color_ramp = SubResource( 109 )
+hue_variation = -0.07
+hue_variation_random = 0.62
+
 [connection signal="body_entered" from="BossTrigger" to="BossTrigger" method="_on_BossTrigger_body_entered"]
 [connection signal="timeout" from="BossTrigger/ExitTimer" to="BossTrigger" method="_on_ExitTimer_timeout"]
+[connection signal="body_entered" from="Room3" to="Room3" method="_on_Room3_body_entered"]
+[connection signal="body_entered" from="Room5" to="Room5" method="_on_Room5_body_entered"]
 [connection signal="body_entered" from="Room10" to="Room10" method="_on_Room10_body_entered"]
 [connection signal="body_entered" from="DeathArea" to="DeathArea" method="_on_DeathArea_body_entered"]
