@@ -381,3 +381,25 @@ func _process(delta):
 			music_player.volume_db = start_volmue
 			fading_out = false
 			
+
+const TERROR_BIRD_ALERT = preload("res://Sound/FX/MISC/terror_bird_alert.wav")
+const TERROR_BIRD_HURT = preload("res://Sound/FX/MISC/terror_bird_hurt.wav")
+const TERROR_BIRD_DIE = preload("res://Sound/FX/MISC/terror_bird_die.wav")
+
+func play_terror_bird_alert():
+	play_sound(TERROR_BIRD_ALERT)
+
+func play_terror_bird_hurt():
+	play_sound(TERROR_BIRD_HURT)
+	
+func play_terror_bird_die():
+	play_sound(TERROR_BIRD_DIE)
+
+const RUMBLE = preload("res://Sound/FX/MISC/8-bit-rumbling.wav")
+const HOR_EM_SCREAM = preload("res://Sound/FX/MISC/Hor_Em_Akhet_scream.wav")
+
+func play_rumble():
+	play_sound(RUMBLE)
+
+func play_hor_em_scream():
+	play_sound(HOR_EM_SCREAM)

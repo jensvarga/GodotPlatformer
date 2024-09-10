@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://TestCamera2D.gd"
 }, {
+"base": "Node2D",
+"class": "HorEmAkhet",
+"language": "GDScript",
+"path": "res://Hor-em-Akhet.gd"
+}, {
 "base": "CarryItem",
 "class": "Key",
 "language": "GDScript",
@@ -94,6 +99,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://SpawnPoint.gd"
 }, {
+"base": "Area2D",
+"class": "SphinxBody",
+"language": "GDScript",
+"path": "res://SphinxBody.gd"
+}, {
+"base": "StaticBody2D",
+"class": "SpinningWheel",
+"language": "GDScript",
+"path": "res://SpinningWheel.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "TerrorBird",
+"language": "GDScript",
+"path": "res://TerrorBird.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "ThrowableRock",
 "language": "GDScript",
@@ -112,6 +132,7 @@ _global_script_class_icons={
 "Crook": "",
 "Enemy": "",
 "FollowCamera": "",
+"HorEmAkhet": "",
 "Key": "",
 "MainMenu": "",
 "OverworldPlayer": "",
@@ -122,6 +143,9 @@ _global_script_class_icons={
 "Scarabu": "",
 "SnapCamera2D": "",
 "Spawn": "",
+"SphinxBody": "",
+"SpinningWheel": "",
+"TerrorBird": "",
 "ThrowableRock": "",
 "Turtle": ""
 }

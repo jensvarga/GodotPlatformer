@@ -23,7 +23,7 @@ var current_level = 1
 var death_counter = 0
 var player_overworld_position
 var collected_items = []
-var player_hit_points = 1
+var player_hit_points = 3
 var boss_hit_points = 6
 var has_power_crook = true
 var lives = 3
@@ -82,6 +82,7 @@ func _on_pick_up_ankh():
 	Events.emit_signal("pick_up_power_up")
 		
 func _on_player_died():
+	player = null
 	death_counter += 1
 	lives -= 1
 	player_hit_points = 3
@@ -104,7 +105,7 @@ func _on_damage_boss():
 
 # Smooth camera transitions
 var player_camera: PlayerCamera
-var player: Player
+var player: Player = null
  
 var room_pause: bool = false
 export var room_pause_time: float = 0.2

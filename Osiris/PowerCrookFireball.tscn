@@ -27,12 +27,13 @@ colors = PoolColorArray( 0.14902, 0.313726, 0.0980392, 1, 0.851773, 0.925781, 0.
 radius = 7.0
 
 [node name="PowerCrookFireball" type="Area2D"]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 16387
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [node name="TrailParticles" type="CPUParticles2D" parent="."]

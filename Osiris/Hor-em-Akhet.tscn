@@ -1,0 +1,279 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://Hor-em-Akhet.gd" type="Script" id=1]
+[ext_resource path="res://Sphinx_Eye.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/Hor-em-Akhet_body.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Hor-em-Akhet_head.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Hor-em-Akhet_paw.png" type="Texture" id=5]
+[ext_resource path="res://SphinxBody.gd" type="Script" id=6]
+[ext_resource path="res://Sphinx_hurt.tres" type="Material" id=7]
+
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array( -0.510717, -1.94073, 0.510717, 1.94073, 1, -15, -14.0958, -3.57502, 14.0958, 3.57502, 18, -18, 5.61789, -15.1172, -5.61789, 15.1172, 34, 8, 0, 0, 0, 0, -14, 17, -7.55861, 18.488, 7.55861, -18.488, -26, 0, 0, 0, 0, 0, 1, -15 )
+}
+
+[sub_resource type="Curve2D" id=6]
+_data = {
+"points": PoolVector2Array( -7.41045, 6.62912, 7.41045, -6.62912, 126.573, 155.075, 18.4499, 10.9973, -18.4499, -10.9973, 101.78, 125.103, -18.5253, -11.336, 18.5253, 11.336, 72.9429, 125.735, 0, 0, 0, 0, 126.573, 155.075 )
+}
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 4 )
+region = Rect2( 175, 0, 175, 164 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 525, 0, 175, 164 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 700, 0, 175, 164 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 4 )
+region = Rect2( 875, 0, 175, 164 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 4 )
+region = Rect2( 875, 0, 175, 164 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 4 )
+region = Rect2( 700, 0, 175, 164 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 4 )
+region = Rect2( 525, 0, 175, 164 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 17 ), SubResource( 16 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 3.0
+}, {
+"frames": [ SubResource( 1 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="StreamTexture" id=10]
+load_path = "res://.import/sphinx_eye.png-721e9f0528aca6eb1e4d054ca1b81952.stex"
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends Sprite
+
+var player: Player = null
+
+func _ready():
+	Events.connect(\"player_died\", self, \"_on_player_died\")
+
+func _physics_process(delta):
+	if player == null:
+		player = Events.player
+	else:
+		var direction = player.global_position - global_position	
+		var angle = atan2(direction.y, direction.x)
+		rotation = angle
+
+func _on_player_died():
+	player = null
+"
+
+[sub_resource type="Curve2D" id=7]
+_data = {
+"points": PoolVector2Array( -7.41045, 6.62912, 7.41045, -6.62912, 126.573, 155.075, 18.4499, 10.9973, -18.4499, -10.9973, 101.78, 125.103, -18.5253, -11.336, 18.5253, 11.336, 72.9429, 125.735, 0, 0, 0, 0, 126.573, 155.075 )
+}
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 186, 158 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "MoveBody"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Path2D/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Path2D/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "MovePaws"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Path2D/PathFollow2D/RightPawPath/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.5, 1.0, 0.5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Path2D/PathFollow2D/LeftPawPath/PathFollow2D:unit_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.5, 0.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Path2D/PathFollow2D/RightPawPath/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Path2D/PathFollow2D/LeftPawPath/PathFollow2D:unit_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[node name="Hor-em-Akhet" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2( -14, 3 )
+curve = SubResource( 3 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2( 1, -15 )
+rotation = -0.566083
+rotate = false
+
+[node name="RightPawPath" type="Path2D" parent="Path2D/PathFollow2D"]
+curve = SubResource( 6 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D/PathFollow2D/RightPawPath"]
+position = Vector2( 71.3721, 117.117 )
+offset = 74.6451
+rotate = false
+
+[node name="RightPaw" type="Sprite" parent="Path2D/PathFollow2D/RightPawPath/PathFollow2D"]
+material = ExtResource( 7 )
+position = Vector2( -0.386711, -4.98503 )
+rotation = 0.566083
+z_index = -2
+texture = ExtResource( 5 )
+
+[node name="Body" type="Sprite" parent="Path2D/PathFollow2D"]
+material = ExtResource( 7 )
+position = Vector2( 4.53615, 17.1004 )
+rotation = 0.566083
+z_index = -1
+texture = ExtResource( 3 )
+
+[node name="Head" type="AnimatedSprite" parent="Path2D/PathFollow2D"]
+material = ExtResource( 7 )
+position = Vector2( 177.008, -11.9256 )
+rotation = 0.566083
+z_index = -1
+frames = SubResource( 2 )
+playing = true
+
+[node name="Sprite2" parent="Path2D/PathFollow2D/Head" instance=ExtResource( 2 )]
+material = ExtResource( 7 )
+position = Vector2( 46, -27 )
+z_index = -2
+texture = SubResource( 10 )
+script = SubResource( 11 )
+
+[node name="FirePosition" type="Position2D" parent="Path2D/PathFollow2D/Head"]
+position = Vector2( 53, 6.00001 )
+
+[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D"]
+script = ExtResource( 6 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/Area2D"]
+position = Vector2( 4.53615, 17.1004 )
+rotation = 0.566083
+polygon = PoolVector2Array( 176, -60, 214, -12, 231, 6, 237, 33, 235, 68, 172, 88, -229, 81, -229, 3, -142, -45, 39, -58, 106, -177, 157, -184, 185, -166, 198, -124, 176, -76, 176, -76 )
+
+[node name="LeftPawPath" type="Path2D" parent="Path2D/PathFollow2D"]
+curve = SubResource( 7 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D/PathFollow2D/LeftPawPath"]
+position = Vector2( 126.573, 155.075 )
+rotate = false
+
+[node name="LeftPaw" type="Sprite" parent="Path2D/PathFollow2D/LeftPawPath/PathFollow2D"]
+material = ExtResource( 7 )
+position = Vector2( -0.228699, 2.22437 )
+rotation = 0.566083
+texture = ExtResource( 5 )
+
+[node name="DeathArea" type="Area2D" parent="Path2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/DeathArea"]
+position = Vector2( -98, -8 )
+shape = SubResource( 18 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "MoveBody"
+anims/MoveBody = SubResource( 4 )
+anims/RESET = SubResource( 5 )
+
+[node name="PawAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../AnimationPlayer")
+anims/MovePaws = SubResource( 8 )
+anims/RESET = SubResource( 9 )
+
+[node name="TraumaTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ScreamTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Path2D/PathFollow2D/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Path2D/DeathArea" to="." method="_on_DeathArea_body_entered"]
+[connection signal="timeout" from="TraumaTimer" to="." method="_on_TraumaTimer_timeout"]
+[connection signal="timeout" from="ScreamTimer" to="." method="_on_ScreamTimer_timeout"]

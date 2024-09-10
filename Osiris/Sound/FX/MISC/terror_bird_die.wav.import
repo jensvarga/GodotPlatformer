@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/terror_bird_die.wav-3027662abe5487fb7bd4af77ba54aa3d.sample"
+
+[deps]
+
+source_file="res://Sound/FX/MISC/terror_bird_die.wav"
+dest_files=[ "res://.import/terror_bird_die.wav-3027662abe5487fb7bd4af77ba54aa3d.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=true
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

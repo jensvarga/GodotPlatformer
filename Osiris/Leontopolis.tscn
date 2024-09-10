@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/boss_sarcophagus.png" type="Texture" id=2]
@@ -21,8 +21,7 @@
 [ext_resource path="res://Sprites/glyphRocks.png" type="Texture" id=19]
 [ext_resource path="res://Brazier.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Crook.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Sprites/AnimatedTextures/solid_beach_water.png" type="Texture" id=22]
-[ext_resource path="res://Sprites/AnimatedTextures/beach_water.tres" type="Texture" id=23]
+[ext_resource path="res://WaterTiles.tres" type="TileSet" id=22]
 [ext_resource path="res://PowerCrook.tscn" type="PackedScene" id=24]
 [ext_resource path="res://DeathArea.gd" type="Script" id=25]
 [ext_resource path="res://BreakableBlock.tscn" type="PackedScene" id=26]
@@ -368,50 +367,6 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 "shape": SubResource( 108 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
-1/z_index = 0
-
-[sub_resource type="TileSet" id=98]
-0/name = "beach_water.tres 0"
-0/texture = ExtResource( 23 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 32, 32 )
-0/tile_mode = 2
-0/autotile/icon_coordinate = Vector2( 0, 0 )
-0/autotile/tile_size = Vector2( 32, 32 )
-0/autotile/spacing = 0
-0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
-0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
-1/name = "solid_beach_water.png 1"
-1/texture = ExtResource( 22 )
-1/tex_offset = Vector2( 0, 0 )
-1/modulate = Color( 1, 1, 1, 1 )
-1/region = Rect2( 0, 0, 32, 32 )
-1/tile_mode = 2
-1/autotile/icon_coordinate = Vector2( 0, 0 )
-1/autotile/tile_size = Vector2( 32, 32 )
-1/autotile/spacing = 0
-1/autotile/occluder_map = [  ]
-1/autotile/navpoly_map = [  ]
-1/autotile/priority_map = [  ]
-1/autotile/z_index_map = [  ]
-1/occluder_offset = Vector2( 0, 0 )
-1/navigation_offset = Vector2( 0, 0 )
-1/shape_offset = Vector2( 0, 0 )
-1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape_one_way = false
-1/shape_one_way_margin = 0.0
-1/shapes = [  ]
 1/z_index = 0
 
 [sub_resource type="GDScript" id=99]
@@ -946,7 +901,7 @@ tile_data = PoolIntArray( -196578, 0, 9, -196577, 0, 9, -196576, 0, 9, -196575, 
 
 [node name="WaterTiles" type="TileMap" parent="." index="9"]
 z_index = 4
-tile_set = SubResource( 98 )
+tile_set = ExtResource( 22 )
 cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 458798, 0, 0, 458799, 0, 0, 458800, 0, 0, 458801, 0, 0, 458802, 0, 0, 458803, 0, 0, 458804, 0, 0, 458805, 0, 0, 458806, 0, 0, 458807, 0, 0, 458808, 0, 0, 458809, 0, 0, 458810, 0, 0, 458811, 0, 0, 458812, 0, 0, 458813, 0, 0, 458814, 0, 0, 458815, 0, 0, 458816, 0, 0, 458817, 0, 0, 458818, 0, 0, 458819, 0, 0, 458820, 0, 0, 458821, 0, 0, 458822, 0, 0, 458823, 0, 0, 458824, 0, 0, 458825, 0, 0, 458826, 0, 0, 458827, 0, 0, 458828, 0, 0, 458829, 0, 0, 458830, 0, 0, 458831, 0, 0, 458832, 0, 0, 458833, 0, 0, 458834, 0, 0, 458835, 0, 0, 458836, 0, 0, 458837, 0, 0, 458838, 0, 0, 458839, 0, 0, 524334, 1, 0, 524335, 1, 0, 524336, 1, 0, 524337, 1, 0, 524338, 1, 0, 524339, 1, 0, 524340, 1, 0, 524341, 1, 0, 524342, 1, 0, 524343, 1, 0, 524344, 1, 0, 524345, 1, 0, 524346, 1, 0, 524347, 1, 0, 524348, 1, 0, 524349, 1, 0, 524350, 1, 0, 524351, 1, 0, 524352, 1, 0, 524353, 1, 0, 524354, 1, 0, 524355, 1, 0, 524356, 1, 0, 524357, 1, 0, 524358, 1, 0, 524359, 1, 0, 524360, 1, 0, 524361, 1, 0, 524362, 1, 0, 524363, 1, 0, 524364, 1, 0, 524365, 1, 0, 524366, 1, 0, 524367, 1, 0, 524368, 1, 0, 524369, 1, 0, 524370, 1, 0, 524371, 1, 0, 524372, 1, 0, 524373, 1, 0, 524374, 1, 0, 524375, 1, 0, 1572912, 0, 0, 1572913, 0, 0, 1572914, 0, 0, 1572915, 0, 0, 1572916, 0, 0, 1572917, 0, 0, 1572918, 0, 0, 1572919, 0, 0, 1572920, 0, 0, 1572921, 0, 0, 1572922, 0, 0, 1638448, 1, 0, 1638449, 1, 0, 1638450, 1, 0, 1638451, 1, 0, 1638452, 1, 0, 1638453, 1, 0, 1638454, 1, 0, 1638455, 1, 0, 1638456, 1, 0, 1638457, 1, 0, 1638458, 1, 0, 2687054, 0, 0, 2687055, 0, 0, 2687056, 0, 0, 2687057, 0, 0, 2687058, 0, 0, 2687059, 0, 0, 2687060, 0, 0, 2687061, 0, 0, 2687062, 0, 0, 2687063, 0, 0, 2687064, 0, 0, 2687065, 0, 0, 2687066, 0, 0, 2687067, 0, 0, 2687068, 0, 0, 2687069, 0, 0, 2687070, 0, 0, 2687071, 0, 0, 2687072, 0, 0, 2687073, 0, 0, 2687074, 0, 0, 2687075, 0, 0, 2687076, 0, 0, 2687077, 0, 0, 2687078, 0, 0 )
@@ -1118,7 +1073,7 @@ position = Vector2( -75.5889, 35.4453 )
 rotation = 3.03244
 z_index = -1
 frames = SubResource( 74 )
-frame = 2
+frame = 4
 playing = true
 
 [node name="Brazier" parent="." index="32" instance=ExtResource( 20 )]

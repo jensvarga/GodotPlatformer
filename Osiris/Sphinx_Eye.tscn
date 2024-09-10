@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/sphinx_eye.png" type="Texture" id=1]
+[ext_resource path="res://sphinxEye.gd" type="Script" id=2]
+
+[node name="Sprite2" type="Sprite"]
+position = Vector2( 41, -40 )
+rotation = -6.28319
+texture = ExtResource( 1 )
+script = ExtResource( 2 )

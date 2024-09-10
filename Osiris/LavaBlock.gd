@@ -5,3 +5,5 @@ func _on_Area2D_body_entered(body):
 		body.die()
 	if body is Enemy:
 		body.die()
+	if body is TerrorBird:
+		body.die()

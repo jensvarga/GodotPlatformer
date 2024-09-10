@@ -1,0 +1,37 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=59]
+code = "shader_type canvas_item;
+
+uniform bool active = true;
+uniform float luminance_threshold = 0.4;
+uniform vec4 color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+// Minimum alpha value to consider a pixel as \"visible\" (not fully transparent)
+uniform float alpha_threshold = 0.01;
+
+void fragment() {
+	vec4 previous_color = texture(TEXTURE, UV);
+	vec4 new_color = previous_color;
+
+	// Only modify the color if the pixel is not fully transparent and the shader is active
+	if (active && previous_color.a > alpha_threshold) {
+		float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+
+		// Apply the color if the luminance is above the threshold
+		if (luminance > luminance_threshold) {
+			new_color.rgb = color.rgb;
+		}
+	}
+
+	COLOR = new_color;
+}
+"
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 59 )
+shader_param/active = false
+shader_param/luminance_threshold = 0.45
+shader_param/color = Color( 1, 0, 0, 1 )
+shader_param/alpha_threshold = 0.01

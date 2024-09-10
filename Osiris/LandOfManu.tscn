@@ -1612,56 +1612,67 @@ position = Vector2( 1564, 372 )
 
 [node name="LavaBlock" parent="." index="41" instance=ExtResource( 16 )]
 position = Vector2( 1904, 368 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock2" parent="." index="42" instance=ExtResource( 16 )]
 position = Vector2( 1936, 368 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock3" parent="." index="43" instance=ExtResource( 16 )]
 position = Vector2( 1968, 368 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock4" parent="." index="44" instance=ExtResource( 16 )]
 position = Vector2( 2000, 368 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock5" parent="." index="45" instance=ExtResource( 16 )]
 position = Vector2( 2032, 368 )
+frame = 3
 
 [node name="LavaBlock6" parent="." index="46" instance=ExtResource( 16 )]
 position = Vector2( 2064, 368 )
+frame = 3
 
 [node name="LavaBlock7" parent="." index="47" instance=ExtResource( 16 )]
 position = Vector2( 2096, 368 )
+frame = 3
 
 [node name="LavaBlock8" parent="." index="48" instance=ExtResource( 16 )]
 position = Vector2( 2128, 368 )
+frame = 3
 
 [node name="LavaBlock9" parent="." index="49" instance=ExtResource( 16 )]
 position = Vector2( 2160, 368 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock10" parent="." index="50" instance=ExtResource( 16 )]
 position = Vector2( 2192, 368 )
+frame = 3
 
 [node name="LavaBlock11" parent="." index="51" instance=ExtResource( 16 )]
 position = Vector2( 2224, 368 )
+frame = 3
 
 [node name="LavaBlock12" parent="." index="52" instance=ExtResource( 16 )]
 position = Vector2( 2256, 368 )
+frame = 3
 
 [node name="LavaBlock13" parent="." index="53" instance=ExtResource( 16 )]
 position = Vector2( 2288, 368 )
+frame = 3
 
 [node name="LavaBlock14" parent="." index="54" instance=ExtResource( 16 )]
 position = Vector2( 2320, 368 )
+frame = 3
 
 [node name="LavaBlock15" parent="." index="55" instance=ExtResource( 16 )]
 position = Vector2( 2352, 368 )
+frame = 3
 
 [node name="LavaBlock16" parent="." index="56" instance=ExtResource( 16 )]
 position = Vector2( 2384, 368 )
+frame = 3
 
 [node name="Ankh" parent="." index="57" instance=ExtResource( 17 )]
 position = Vector2( 1857, 226 )
@@ -1674,17 +1685,19 @@ position = Vector2( 3024, 368 )
 
 [node name="LavaBlock17" parent="." index="60" instance=ExtResource( 16 )]
 position = Vector2( 368, 80 )
+frame = 3
 
 [node name="LavaBlock18" parent="." index="61" instance=ExtResource( 16 )]
 position = Vector2( 400, 80 )
+frame = 3
 
 [node name="LavaBlock19" parent="." index="62" instance=ExtResource( 16 )]
 position = Vector2( 432, 80 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock20" parent="." index="63" instance=ExtResource( 16 )]
 position = Vector2( 784, 79 )
-frame = 2
+frame = 1
 
 [node name="FireBallCannon" parent="." index="64" instance=ExtResource( 20 )]
 position = Vector2( 783, 94 )
@@ -1714,185 +1727,208 @@ script = SubResource( 128 )
 
 [node name="LavaBlock21" parent="." index="70" instance=ExtResource( 16 )]
 position = Vector2( 4176, 48 )
+frame = 3
 
 [node name="LavaBlock22" parent="." index="71" instance=ExtResource( 16 )]
 position = Vector2( 4208, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock23" parent="." index="72" instance=ExtResource( 16 )]
 position = Vector2( 4240, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock24" parent="." index="73" instance=ExtResource( 16 )]
 position = Vector2( 4272, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock25" parent="." index="74" instance=ExtResource( 16 )]
 position = Vector2( 4304, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock26" parent="." index="75" instance=ExtResource( 16 )]
 position = Vector2( 4336, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock27" parent="." index="76" instance=ExtResource( 16 )]
 position = Vector2( 4368, 48 )
+frame = 3
 
 [node name="LavaBlock28" parent="." index="77" instance=ExtResource( 16 )]
 position = Vector2( 4400, 48 )
+frame = 3
 
 [node name="LavaBlock29" parent="." index="78" instance=ExtResource( 16 )]
 position = Vector2( 4432, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock30" parent="." index="79" instance=ExtResource( 16 )]
 position = Vector2( 4464, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock31" parent="." index="80" instance=ExtResource( 16 )]
 position = Vector2( 4496, 48 )
+frame = 3
 
 [node name="LavaBlock32" parent="." index="81" instance=ExtResource( 16 )]
 position = Vector2( 4528, 48 )
+frame = 3
 
 [node name="LavaBlock33" parent="." index="82" instance=ExtResource( 16 )]
 position = Vector2( 4560, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock34" parent="." index="83" instance=ExtResource( 16 )]
 position = Vector2( 4592, 48 )
+frame = 3
 
 [node name="LavaBlock35" parent="." index="84" instance=ExtResource( 16 )]
 position = Vector2( 4624, 48 )
+frame = 3
 
 [node name="LavaBlock36" parent="." index="85" instance=ExtResource( 16 )]
 position = Vector2( 4656, 48 )
+frame = 3
 
 [node name="LavaBlock37" parent="." index="86" instance=ExtResource( 16 )]
 position = Vector2( 4688, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock38" parent="." index="87" instance=ExtResource( 16 )]
 position = Vector2( 4720, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock39" parent="." index="88" instance=ExtResource( 16 )]
 position = Vector2( 4752, 48 )
+frame = 3
 
 [node name="LavaBlock40" parent="." index="89" instance=ExtResource( 16 )]
 position = Vector2( 4784, 48 )
+frame = 3
 
 [node name="LavaBlock41" parent="." index="90" instance=ExtResource( 16 )]
 position = Vector2( 4816, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock42" parent="." index="91" instance=ExtResource( 16 )]
 position = Vector2( 4848, 48 )
+frame = 3
 
 [node name="LavaBlock43" parent="." index="92" instance=ExtResource( 16 )]
 position = Vector2( 4880, 48 )
+frame = 3
 
 [node name="LavaBlock44" parent="." index="93" instance=ExtResource( 16 )]
 position = Vector2( 4912, 48 )
+frame = 3
 
 [node name="FakeLava" type="AnimatedSprite" parent="." index="94"]
 position = Vector2( 4944, 48 )
 frames = SubResource( 134 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="FakeLava2" type="AnimatedSprite" parent="." index="95"]
 position = Vector2( 4944, 112 )
 scale = Vector2( 1, -1 )
 frames = SubResource( 134 )
+frame = 1
 playing = true
 
 [node name="LavaBlock46" parent="." index="96" instance=ExtResource( 16 )]
 position = Vector2( 4976, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock47" parent="." index="97" instance=ExtResource( 16 )]
 position = Vector2( 5008, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock48" parent="." index="98" instance=ExtResource( 16 )]
 position = Vector2( 5040, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock49" parent="." index="99" instance=ExtResource( 16 )]
 position = Vector2( 5072, 48 )
+frame = 3
 
 [node name="LavaBlock50" parent="." index="100" instance=ExtResource( 16 )]
 position = Vector2( 5104, 48 )
+frame = 3
 
 [node name="LavaBlock51" parent="." index="101" instance=ExtResource( 16 )]
 position = Vector2( 5200, 48 )
+frame = 3
 
 [node name="LavaBlock52" parent="." index="102" instance=ExtResource( 16 )]
 position = Vector2( 5232, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock53" parent="." index="103" instance=ExtResource( 16 )]
 position = Vector2( 5264, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock54" parent="." index="104" instance=ExtResource( 16 )]
 position = Vector2( 5296, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock55" parent="." index="105" instance=ExtResource( 16 )]
 position = Vector2( 5328, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock56" parent="." index="106" instance=ExtResource( 16 )]
 position = Vector2( 5360, 48 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock57" parent="." index="107" instance=ExtResource( 16 )]
 position = Vector2( 5392, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock58" parent="." index="108" instance=ExtResource( 16 )]
 position = Vector2( 5456, 48 )
+frame = 3
 
 [node name="LavaBlock59" parent="." index="109" instance=ExtResource( 16 )]
 position = Vector2( 5488, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock60" parent="." index="110" instance=ExtResource( 16 )]
 position = Vector2( 5520, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock61" parent="." index="111" instance=ExtResource( 16 )]
 position = Vector2( 5552, 48 )
+frame = 3
 
 [node name="LavaBlock62" parent="." index="112" instance=ExtResource( 16 )]
 position = Vector2( 5616, 48 )
+frame = 3
 
 [node name="LavaBlock63" parent="." index="113" instance=ExtResource( 16 )]
 position = Vector2( 5648, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock64" parent="." index="114" instance=ExtResource( 16 )]
 position = Vector2( 5680, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock65" parent="." index="115" instance=ExtResource( 16 )]
 position = Vector2( 5712, 48 )
+frame = 3
 
 [node name="LavaBlock66" parent="." index="116" instance=ExtResource( 16 )]
 position = Vector2( 5744, 48 )
+frame = 3
 
 [node name="LavaBlock67" parent="." index="117" instance=ExtResource( 16 )]
 position = Vector2( 5776, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock68" parent="." index="118" instance=ExtResource( 16 )]
 position = Vector2( 5808, 48 )
-frame = 2
+frame = 1
 
 [node name="LavaBlock69" parent="." index="119" instance=ExtResource( 16 )]
 position = Vector2( 5840, 47 )
+frame = 3
 
 [node name="BalloonBomber" parent="." index="120" instance=ExtResource( 8 )]
 position = Vector2( 4670, -137 )
