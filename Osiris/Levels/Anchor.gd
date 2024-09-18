@@ -33,6 +33,7 @@ func add_trauma(amount):
 	
 func _process(delta):
 	if player == null: return
+	if not player.is_inside_tree(): return
 	var target = player.global_position
 	var target_pos_x = int(lerp(global_position.x, target.x, 0.3 * 60 * delta))
 	var target_pos_y = int(lerp(global_position.y, target.y, 0.3 * 60 * delta))

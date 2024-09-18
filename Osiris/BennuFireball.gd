@@ -23,7 +23,7 @@ func _physics_process(delta):
 func spawn_particles():
 	var particles = PARTICLES.instance()
 	particles.position = global_position
-	get_parent().add_child(particles)
+	get_parent().call_deferred("add_child", particles)
 	queue_free()
 
 

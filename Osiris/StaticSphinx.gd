@@ -26,17 +26,17 @@ func _physics_process(delta):
 		var angle_offset = deg2rad(5)
 
 		var fireball_center := FIREBALL.instance()
-		get_parent().add_child(fireball_center)
+		get_parent().call_deferred("add_child", fireball_center)
 		fireball_center.position = fire_pos.global_position
 		fireball_center.set_direction(base_direction)
 
 		var fireball_above := FIREBALL.instance()
-		get_parent().add_child(fireball_above)
+		get_parent().call_deferred("add_child", fireball_above)
 		fireball_above.position = fire_pos.global_position
 		fireball_above.set_direction(rotate_vector(base_direction, -angle_offset))
 
 		var fireball_below := FIREBALL.instance()
-		get_parent().add_child(fireball_below)
+		get_parent().call_deferred("add_child", fireball_below)
 		fireball_below.position = fire_pos.global_position
 		fireball_below.set_direction(rotate_vector(base_direction, angle_offset))
 		

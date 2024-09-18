@@ -3,7 +3,6 @@ extends Enemy
 class_name Crook
 
 onready var sprite := $AnimatedSprite
-onready var hitbox_shape := $Area2D/CollisionPolygon2D
 onready var death_timer := $DeathTimer
 onready var freeze_timer := $FreezeTimer
 

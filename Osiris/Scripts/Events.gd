@@ -25,11 +25,12 @@ var player_overworld_position
 var collected_items = []
 var player_hit_points = 3
 var boss_hit_points = 6
-var has_power_crook = true
+var has_power_crook = false
 var lives = 3
 
 var has_left_hand = false
 var has_right_hand = false
+var has_pen15 = false
 
 var unlocked_level_2 = false
 var unlocked_level_3 = false

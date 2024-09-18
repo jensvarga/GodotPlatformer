@@ -153,7 +153,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Osiris"
-run/main_scene="res://Levels/Splashscreen.tscn"
+run/main_scene="res://PlaytesterDisclaimer.tscn"
 run/disable_stderr=true
 run/delta_smoothing=false
 config/icon="res://icon.png"

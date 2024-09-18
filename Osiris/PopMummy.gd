@@ -47,13 +47,13 @@ func explode():
 	$AnimationPlayer.play("RESET")
 	for i in range(4):
 		var bone = BONE.instance()
-		get_tree().root.get_child(0).add_child(bone)
+		get_tree().root.get_child(4).call_deferred("add_child", bone)
 		bone.position = $Position2D.global_position
 		bone.apply_central_impulse(Vector2(rand_range(-100, 100), rand_range(-100, -50)))
 
 	for i in range(2):
 		var rock = ROCK.instance()
-		get_tree().root.get_child(0).add_child(rock)
+		get_tree().root.get_child(4).call_deferred("add_child", rock)
 		rock.position = $Position2D.global_position
 		rock.apply_central_impulse(Vector2(rand_range(-150, 150), rand_range(-150, -50)))
 		
@@ -70,7 +70,7 @@ func on_shot():
 func throw_bone():
 	thrown = true
 	var bone = BONE.instance()
-	get_tree().root.get_child(0).add_child(bone)
+	get_tree().root.get_child(4).call_deferred("add_child", bone)
 	bone.position = $Position2D.global_position
 	bone.apply_central_impulse(throw_force)
 

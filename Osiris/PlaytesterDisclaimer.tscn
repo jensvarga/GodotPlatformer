@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/UI/Fonts/Swansea-q3pd.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://PlaytesterDisclaimer.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+outline_size = 1
+outline_color = Color( 0.129412, 0.129412, 0.129412, 1 )
+extra_spacing_top = 2
+extra_spacing_bottom = 2
+font_data = ExtResource( 1 )
+
+[node name="PlaytesterDisclaimer" type="Node2D"]
+script = ExtResource( 2 )
+next_scene_path = "res://Levels/Splashscreen.tscn"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.176471, 0.176471, 0.176471, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 40.0
+margin_right = -43.0
+margin_bottom = -40.0
+custom_fonts/normal_font = SubResource( 1 )
+text = "This version of the game is a pre-release, play tester version provided for the purpose of testing and feedback. It is an incomplete build and may contain bugs, errors, or unfinished features. This version is intended solely for the use of authorized play testers, and distribution, sharing, or duplication of any part of the game is strictly prohibited.
+
+By accessing this version, you agree to maintain confidentiality and not to share, upload, or distribute the game, its content, or any related materials in any form without prior written consent from the developer. Unauthorized distribution may (but won't) result in legal action.
+
+Thank you for your cooperation and support in helping me improve the final release."
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 268.0
+margin_top = 219.0
+margin_right = 443.0
+margin_bottom = 259.0
+bbcode_enabled = true
+bbcode_text = "[shake]Press Enter to Accept[/shake]"
+text = "Press Enter to Accept"

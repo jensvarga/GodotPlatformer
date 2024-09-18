@@ -25,7 +25,7 @@ func explode():
 	CameraShaker.add_trauma(0.6)
 	AudioManager.play_boom()
 	var particles = PARTICLES.instance()
-	get_parent().add_child(particles)
+	get_parent().call_deferred("add_child", particles)
 	particles.position = global_position
 	queue_free()
 

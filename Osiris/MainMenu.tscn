@@ -1,9 +1,14 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://MenuTheme.tres" type="Theme" id=2]
 [ext_resource path="res://Sprites/UI/GameLogo.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/UI/main_menu_bg-pixelicious.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/CinematicCharacters/Cliff_Scene5.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/CinematicCharacters/Horus_adult.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/CinematicCharacters/Scene6_clouds.png" type="Texture" id=7]
+[ext_resource path="res://ScrollingParallaxLayer.gd" type="Script" id=8]
+[ext_resource path="res://Sprites/UI/arrows.png" type="Texture" id=9]
 
 [sub_resource type="Shader" id=2]
 code = "/*
@@ -130,25 +135,116 @@ shader_param/color = Color( 1, 0.9, 0.6, 0.8 )
 shader_param/hdr = false
 shader_param/seed = 9.0
 
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 200, 200 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 6 )
+region = Rect2( 200, 0, 200, 200 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+sky_color = Color( 0.121569, 0.121569, 0.121569, 1 )
 
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="AspectRatioContainer2"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="AspectRatioContainer2/ParallaxBackground"]
+motion_mirroring = Vector2( 632, 0 )
+script = ExtResource( 8 )
+scroll_speed = 20.0
+
+[node name="Sprite" type="Sprite" parent="AspectRatioContainer2/ParallaxBackground/ParallaxLayer"]
+position = Vector2( 140, 46 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 632, 87 )
+
+[node name="Sprite2" type="Sprite" parent="AspectRatioContainer2/ParallaxBackground/ParallaxLayer"]
+position = Vector2( 772, 46 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 632, 87 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="AspectRatioContainer2/ParallaxBackground"]
+motion_mirroring = Vector2( 632, 0 )
+script = ExtResource( 8 )
+scroll_speed = 50.0
+
+[node name="Sprite" type="Sprite" parent="AspectRatioContainer2/ParallaxBackground/ParallaxLayer2"]
+position = Vector2( 90, 123 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 632, 87 )
+
+[node name="Sprite2" type="Sprite" parent="AspectRatioContainer2/ParallaxBackground/ParallaxLayer2"]
+position = Vector2( 722, 123 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 632, 87 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="AspectRatioContainer2/ParallaxBackground"]
+motion_mirroring = Vector2( 632, 0 )
+script = ExtResource( 8 )
+scroll_speed = 70.0
+
+[node name="Sprite" type="Sprite" parent="AspectRatioContainer2/ParallaxBackground/ParallaxLayer3"]
+position = Vector2( 51, 202 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 632, 87 )
+
+[node name="Sprite2" type="Sprite" parent="AspectRatioContainer2/ParallaxBackground/ParallaxLayer3"]
+position = Vector2( 683, 202 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 632, 87 )
+
 [node name="Sprite" type="Sprite" parent="AspectRatioContainer2"]
+visible = false
 position = Vector2( 242.453, 137.5 )
 scale = Vector2( 1.09766, 1.09766 )
 texture = ExtResource( 4 )
 
 [node name="GodRays" type="Sprite" parent="AspectRatioContainer2"]
+visible = false
 material = SubResource( 3 )
 position = Vector2( 242.453, 137.5 )
 scale = Vector2( 1.09766, 1.09766 )
 texture = ExtResource( 4 )
+
+[node name="Characters" type="Node2D" parent="AspectRatioContainer2"]
+modulate = Color( 0.121569, 0.121569, 0.121569, 1 )
+
+[node name="Cliff" type="Sprite" parent="AspectRatioContainer2/Characters"]
+position = Vector2( 211, 331 )
+scale = Vector2( 2.34686, 2.34686 )
+texture = ExtResource( 5 )
+
+[node name="Horus" type="AnimatedSprite" parent="AspectRatioContainer2/Characters"]
+position = Vector2( 257, 143 )
+scale = Vector2( 1.09123, 1.09123 )
+frames = SubResource( 6 )
+frame = 1
+playing = true
+
+[node name="ControlsImage" type="Sprite" parent="."]
+position = Vector2( 315, 133 )
+texture = ExtResource( 9 )
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
 anchor_left = 0.2
@@ -179,8 +275,9 @@ damping = 3.58
 damping_random = 1.0
 scale_amount = 2.0
 scale_amount_random = 1.0
-hue_variation = 0.14
-hue_variation_random = 0.13
+color = Color( 1, 0.247059, 0.247059, 1 )
+hue_variation = -0.01
+hue_variation_random = 1.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_top = 1.0
@@ -307,8 +404,8 @@ alignment = 2
 margin_right = 181.0
 margin_bottom = 32.0
 focus_neighbour_top = NodePath("../../MusicHBox/Music")
-focus_neighbour_bottom = NodePath("../../Back")
-focus_next = NodePath("../../Back")
+focus_neighbour_bottom = NodePath("../../ControlsButton")
+focus_next = NodePath("../../ControlsButton")
 focus_previous = NodePath("../../MusicHBox/Music")
 text = "Mute Effects"
 
@@ -317,10 +414,20 @@ margin_left = 185.0
 margin_right = 217.0
 margin_bottom = 32.0
 
-[node name="Back" type="Button" parent="MarginContainer/Control/Hbox/VBoxContainer"]
+[node name="ControlsButton" type="Button" parent="MarginContainer/Control/Hbox/VBoxContainer"]
 margin_top = 96.0
 margin_right = 217.0
 margin_bottom = 121.0
+focus_neighbour_top = NodePath("../FxHBox/Fx")
+focus_neighbour_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../FxHBox/Fx")
+text = "Controls"
+
+[node name="Back" type="Button" parent="MarginContainer/Control/Hbox/VBoxContainer"]
+margin_top = 121.0
+margin_right = 217.0
+margin_bottom = 146.0
 focus_neighbour_top = NodePath("../FxHBox/Fx")
 focus_neighbour_bottom = NodePath("../FullscreenHbox/Fullscreen")
 focus_next = NodePath("../FullscreenHbox/Fullscreen")
@@ -334,4 +441,5 @@ text = "Back"
 [connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/FullscreenHbox/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/MusicHBox/Music" to="." method="_on_Music_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/FxHBox/Fx" to="." method="_on_Fx_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/ControlsButton" to="." method="_on_ControlsButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/Back" to="." method="_on_Back_pressed"]

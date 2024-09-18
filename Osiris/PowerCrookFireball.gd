@@ -5,6 +5,7 @@ const FORCE_FIELD = preload("res://ForceField.tscn")
 const speed = 400
 var velocity = Vector2.ZERO
 var direction: int
+var root: Node
 
 onready var trail_particles := $TrailParticles
 
@@ -14,6 +15,7 @@ func set_direction(_direction: int):
 
 func _ready():
 	AudioManager.play_random_shot()
+	root = get_tree().root.get_child(4)
 	
 func explode():
 	leave_trail_particles()
@@ -25,14 +27,24 @@ func _physics_process(delta):
 	translate(velocity)
 	
 func leave_trail_particles():
-	remove_child(trail_particles)
-	get_tree().root.get_child(0).add_child(trail_particles)
-	trail_particles.emitting = false
+	#remove_child(trail_particles)
+	#get_tree().root.get_child(4).add_child(trail_particles)
+	#trail_particles.emitting = false
+	call_deferred("_move_trail_particles")
+
+func _move_trail_particles():
+	var parent = trail_particles.get_parent()
+	
+	if parent == self:
+		call_deferred("remove_child", trail_particles)
+	
+	if parent != root:
+		root.call_deferred("add_child", trail_particles)
+	trail_particles.position = Vector2(-10000, -10000)
 	
 func spawn_hit_particles():
 	var particles = HIT_PARTICLES.instance()
-	get_tree().root.get_child(0).add_child(particles)
-
+	root.call_deferred("add_child", particles)
 	particles.position = $Position2D.global_position
 	particles.set_facing(direction)
 
@@ -59,7 +71,7 @@ func _on_PowerCrookFireball_area_entered(area):
 			scale.x = direction
 			
 			var force_field := FORCE_FIELD.instance()
-			area.add_child(force_field)
+			area.call_deferred("add_child", force_field)
 			force_field.position = area.position
 			
 			return

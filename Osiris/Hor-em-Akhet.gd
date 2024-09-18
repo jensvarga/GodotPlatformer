@@ -3,6 +3,7 @@ extends Node2D
 class_name HorEmAkhet
 
 const FIREBALL = preload("res://SphinxFireball.tscn")
+const DEAD_BODY = preload("res://HorEmAkhetDead.tscn")
 
 var hp = 3
 
@@ -18,6 +19,7 @@ onready var fire_pos := $Path2D/PathFollow2D/Head/FirePosition
 onready var scream_timer := $ScreamTimer
 onready var toggle_timer = Timer.new()
 onready var sprite := $Path2D/PathFollow2D/Body
+onready var dead_body_position := $Path2D/PathFollow2D/DeadBodyPos
 
 var shader_material: Material = null
 
@@ -33,9 +35,9 @@ func _ready():
 	connect("hurt", self, "_on_hurt")
 	toggle_timer.wait_time = 0.1
 	toggle_timer.connect("timeout", self, "_on_toggle_timer_timeout")
-	add_child(toggle_timer)
+	call_deferred("add_child", toggle_timer)
 	head_sprite.animation = "default"
-	root_node = get_tree().root.get_child(0)
+	root_node = get_root_node_by_level_name("AaruForest")
 	shader_material = sprite.material
 
 func _physics_process(delta):
@@ -48,17 +50,17 @@ func _physics_process(delta):
 		var angle_offset = deg2rad(5)
 
 		var fireball_center := FIREBALL.instance()
-		root_node.add_child(fireball_center)
+		root_node.call_deferred("add_child", fireball_center)
 		fireball_center.position = fire_pos.global_position
 		fireball_center.set_direction(base_direction)
 
 		var fireball_above := FIREBALL.instance()
-		root_node.add_child(fireball_above)
+		root_node.call_deferred("add_child", fireball_above)
 		fireball_above.position = fire_pos.global_position
 		fireball_above.set_direction(rotate_vector(base_direction, -angle_offset))
 
 		var fireball_below := FIREBALL.instance()
-		root_node.add_child(fireball_below)
+		root_node.call_deferred("add_child", fireball_below)
 		fireball_below.position = fire_pos.global_position
 		fireball_below.set_direction(rotate_vector(base_direction, angle_offset))
 		
@@ -76,6 +78,7 @@ func _on_Area2D_body_entered(body):
 func _on_on():
 	if not first:
 		head_sprite.animation = "Attack"
+		
 	first = false
 	animation_player.play("MoveBody")
 	paw_animation_player.play("MovePaws")
@@ -114,9 +117,15 @@ func toggle_shader_param():
 	toggle_timer.start()
 
 func die():
+	AudioManager.fade_music()
+	AudioManager.play_hor_em_scream()
 	Events.emit_signal("boss_died")
 	scream_timer.stop()
 	emit_signal("off")
+	var dead_body := DEAD_BODY.instance()
+	root_node.call_deferred("add_child", dead_body)
+	dead_body.position = dead_body_position.global_position
+	queue_free()
 
 func _on_hurt():
 	if (hp - 1) <= 0:
@@ -126,3 +135,11 @@ func _on_hurt():
 		AudioManager.play_hor_em_scream()
 		hp -= 1
 		
+func get_root_node_by_level_name(level_name: String) -> Node:
+	var root = get_tree().root
+	
+	for i in range(root.get_child_count()):
+		var child = root.get_child(i)
+		if child.name == level_name:
+			return child
+	return null

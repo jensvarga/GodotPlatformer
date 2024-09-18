@@ -115,11 +115,11 @@ func fire_fireball():
 	fire_delay_timer.start()
 	
 	var fireball = FIREBALL.instance()
-	get_tree().root.get_child(0).add_child(fireball)
+	get_tree().root.get_child(4).call_deferred("add_child", fireball)
 	
 	var magic_effect := MAGIC_EFFECT.instance()
 	#add_child(magic_effect)
-	get_tree().root.get_child(0).add_child(magic_effect)
+	get_tree().root.get_child(4).call_deferred("add_child", magic_effect)
 	
 	var direction = -1 if sprite.flip_h else 1
 	fireball.set_direction(direction)
@@ -136,7 +136,8 @@ func fire_fireball():
 	
 	var random_effect = ["Effect1", "Effect2", "Effect3"][int(rand_range(0, 3))]
 	
-	magic_effect.set_animation(random_effect, direction)
+	magic_effect.call_deferred("set_animation", random_effect, direction)
+	#magic_effect.set_animation(random_effect, direction)
 	
 	firing = true
 	$FireAnimationTimer.start()
@@ -252,7 +253,7 @@ func update_move(delta):
 		if jump:
 			if holding_left_wall() or holding_right_wall():
 				var impact_dust = IMPACT_DUST_A.instance()
-				get_parent().add_child(impact_dust)
+				get_parent().call_deferred("add_child", impact_dust)
 				impact_dust.position = global_position
 				if holding_left_wall():
 					holding_wall = false
@@ -393,19 +394,20 @@ func hurt():
 	AudioManager.play_random_hit_sound()
 	var particles = hurt_particles.instance()
 	particles.position = position
-	get_parent().add_child(particles)
+	get_parent().call_deferred("add_child", particles)
 	
 func bounce(amount):
 	yield(get_tree(), "physics_frame")
 	var impact_dust = IMPACT_DUST.instance()
-	get_parent().add_child(impact_dust)
+	get_parent().call_deferred("add_child", impact_dust)
 	impact_dust.position = Vector2(global_position.x, global_position.y + 5)
 	AudioManager.play_random_hit_sound()
 	velocity.y += -amount
 	
 func connect_camera(camera):
-	var camera_path = camera.get_path()
-	remote_transform.remote_path = camera_path
+	#var camera_path = camera.get_path()
+	#remote_transform.remote_path = camera_path
+	pass
 
 func set_run_animation():
 	if Events.has_power_crook:
@@ -437,7 +439,7 @@ func grab_item():
 	sprite.animation = "IdleCarry"
 	if carry_item == null: return
 	item_instsance = carry_item.instance()
-	grab_position.add_child(item_instsance)
+	grab_position.call_deferred("add_child", item_instsance)
 	carrying = true
 	
 func drop_item():

@@ -201,7 +201,7 @@ func update_swoop():
 				projectile.position = fire_position.global_position
 				var angular_velocity = rand_range(-1, 1)
 				projectile.set_direction(direction, angle, angular_velocity)
-				get_parent().add_child(projectile)
+				get_parent().call_deferred("add_child", projectile)
 		reset_swoop()
 		enter_idle()
 		return
@@ -235,7 +235,7 @@ func update_shoot():
 			var angular_velocity = rand_range(-1, 1)
 			projectile.set_direction(direction, angle, angular_velocity)
 		
-			get_parent().add_child(projectile)
+			get_parent().call_deferred("add_child", projectile)
 	else:
 		shots_to_fire -= 1
 		if shots_to_fire > 0:

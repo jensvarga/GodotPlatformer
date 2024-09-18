@@ -1,6 +1,5 @@
 extends Node2D
 
-onready var title_lable := $CanvasLayer/RichTextLabel
 onready var animator := $AnimationPlayer
 onready var timer := $Timer
 
@@ -11,11 +10,12 @@ export (String, FILE, "*.tscn") var next_scene_path
 var fade = false
 
 func _ready():
-	Events.emit_signal("toggle_fullscreen")
 	timer.wait_time = time
 	timer.start()
 	VisualServer.set_default_clear_color(bg_color)
 	Transition.skip_animation()
+	AudioManager.play_power_up()
+	AudioManager.play_random_thunder()
 	
 func _input(event):
 	if (event.is_action_released("ui_accept") || event.is_action_released("ui_cancel")) && not fade:

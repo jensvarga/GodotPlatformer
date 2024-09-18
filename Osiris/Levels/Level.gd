@@ -8,7 +8,6 @@ export (bool) var test_spawn = false
 export (bool) var boss_level = false
 
 #onready var player: = $Player
-onready var camera: = $PlayerCameraSwoop
 onready var spawn_point: = $SpawnPoint
 onready var check_point: = $CheckPoint
 onready var test_point: = $TestSpawn
@@ -56,7 +55,7 @@ func spawn_player():
 	else:
 		player.position = spawn_point.position
 		
-	player_root.add_child(player)
+	player_root.call_deferred("add_child", player)
 	player.connect_camera(camera_anchor)
 	camera_anchor.connect_player(player)
 	Events.player = player

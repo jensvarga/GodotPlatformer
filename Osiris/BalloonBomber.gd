@@ -60,7 +60,7 @@ func jump():
 	enter_acending()
 	mummy_sprite.animation = "Hide"
 	var jumper = JUMP_MUMMY.instance()
-	get_tree().root.get_child(0).add_child(jumper)
+	get_tree().root.get_child(4).call_deferred("add_child", jumper)
 	jumper.position = $Position2D.global_position
 	var jump_force = Vector2(-20 * faceing, -100)
 	jumper.apply_central_impulse(jump_force)

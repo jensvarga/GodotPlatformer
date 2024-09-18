@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://OverworldTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/OverworldLevel.gd" type="Script" id=2]
@@ -23,6 +23,11 @@
 [ext_resource path="res://OverworldStatue.tscn" type="PackedScene" id=21]
 [ext_resource path="res://OverworldPillar.tscn" type="PackedScene" id=22]
 [ext_resource path="res://OverworldWall.tscn" type="PackedScene" id=23]
+[ext_resource path="res://OWTree1.tscn" type="PackedScene" id=24]
+[ext_resource path="res://OWTree2.tscn" type="PackedScene" id=25]
+[ext_resource path="res://OWTree3.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Sprites/shadow.png" type="Texture" id=27]
+[ext_resource path="res://OWTree.tres" type="Material" id=28]
 
 [sub_resource type="Shader" id=10]
 code = "shader_type canvas_item;
@@ -464,8 +469,7 @@ shape = SubResource( 30 )
 [node name="Carpets" type="Node2D" parent="."]
 
 [node name="LevelCarpet1" parent="Carpets" instance=ExtResource( 10 )]
-position = Vector2( -30, 120 )
-level_index = 1
+position = Vector2( -32, 83 )
 connecting_level_path = "res://Leontopolis.tscn"
 
 [node name="LevelCarpet2" parent="Carpets" instance=ExtResource( 10 )]
@@ -477,6 +481,65 @@ connecting_level_path = "res://LandOfManu.tscn"
 position = Vector2( 735, -525 )
 level_index = 2
 connecting_level_path = "res://Levels/Level4.tscn"
+
+[node name="LevelCarpet" parent="Carpets" instance=ExtResource( 10 )]
+position = Vector2( 577, 345 )
+level_index = 2
+connecting_level_path = "res://AaruForest.tscn"
+
+[node name="Shadows" type="Node2D" parent="."]
+
+[node name="Shadow" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 520, 262 )
+texture = ExtResource( 27 )
+
+[node name="Shadow2" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 591, 284 )
+texture = ExtResource( 27 )
+
+[node name="Shadow3" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 632, 332 )
+scale = Vector2( 1.09375, 1.09375 )
+texture = ExtResource( 27 )
+
+[node name="Shadow4" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 500, 356 )
+texture = ExtResource( 27 )
+
+[node name="Shadow5" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 547, 314 )
+texture = ExtResource( 27 )
+
+[node name="Shadow6" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 533, 448 )
+scale = Vector2( 1.15625, 1.07812 )
+texture = ExtResource( 27 )
+
+[node name="Shadow7" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 613, 418 )
+texture = ExtResource( 27 )
+
+[node name="Shadow8" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 649, 384 )
+texture = ExtResource( 27 )
+
+[node name="Shadow9" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 659, 445 )
+texture = ExtResource( 27 )
+
+[node name="Shadow10" type="Sprite" parent="Shadows"]
+material = ExtResource( 28 )
+position = Vector2( 571, 455 )
+texture = ExtResource( 27 )
 
 [node name="Subworld" type="Node2D" parent="."]
 visible = false
@@ -512,7 +575,7 @@ position = Vector2( 250, 200 )
 position = Vector2( -32, -5 )
 
 [node name="RA" parent="YSort" instance=ExtResource( 11 )]
-position = Vector2( -66, 74 )
+position = Vector2( -78, 13 )
 NPC_DIALOGUE = [ "Hail, Horus, son of Osiris and Isis, heir to the throne of Egypt", "Behold, that woven mat yonder, it possesses the power of flight. Step upon it, and it shall transport you to your inaugural trial", "Go forth now, and may your journey be guided by the wisdom you have gained" ]
 
 [node name="Hathor" parent="YSort" instance=ExtResource( 12 )]
@@ -526,21 +589,71 @@ PORTRAIT_PATH = "res://Sprites/UI/isis_portrait.png"
 NPC_DIALOGUE = [ "Horus, my beloved son, the hour has arrived", "In your heart beats the strength to avenge your father's honor and reclaim the rightful throne that is your divine inheritance", "May the blessings of the gods be upon you, my son, as you embark on this noble quest. May you find success and triumph in your endeavors" ]
 
 [node name="Thoth" parent="YSort" instance=ExtResource( 15 )]
-position = Vector2( -239, -343 )
+position = Vector2( 624, -107 )
 NAME = "THOTH"
-NPC_DIALOGUE = [ "Behold, Horus, the realm of Seth lies before you. Proceed forth with vigilance and wisdom, for the path ahead is fraught with peril", "The journey you have embarked upon is but the beginning, Horus. There are trials yet to be faced and wisdom yet to be gained", "Go forth, and confront the adversary who seeks to thwart the divine order. May the wisdom of the ages guide your steps, and may victory be yours" ]
+NPC_DIALOGUE = [ "Horus, I regret to inform you, but your journey cannot proceed beyond this point.", "For this is but a Demo of the full experience.", "To continue your quest and reveal the mysteries beyond, you must obtain the complete version of the game." ]
 
 [node name="OverworldGate" parent="YSort" instance=ExtResource( 16 )]
 position = Vector2( -30, 171 )
 key_item_name = "LeftHand"
 
 [node name="OverworldStatue" parent="YSort" instance=ExtResource( 21 )]
+position = Vector2( -203, -493 )
 
 [node name="OverworldPillar" parent="YSort" instance=ExtResource( 22 )]
-position = Vector2( 55, 12 )
+position = Vector2( 58, 5 )
+
+[node name="OverworldPillar2" parent="YSort" instance=ExtResource( 22 )]
+position = Vector2( -114, 4 )
+
+[node name="OverworldPillar3" parent="YSort" instance=ExtResource( 22 )]
+position = Vector2( 58, 73 )
+
+[node name="OverworldPillar4" parent="YSort" instance=ExtResource( 22 )]
+position = Vector2( -114, 72 )
+
+[node name="OverworldPillar5" parent="YSort" instance=ExtResource( 22 )]
+position = Vector2( 56, 155 )
+
+[node name="OverworldPillar6" parent="YSort" instance=ExtResource( 22 )]
+position = Vector2( -116, 154 )
 
 [node name="OverworldWall" parent="YSort" instance=ExtResource( 23 )]
-position = Vector2( 92, 54 )
+position = Vector2( -111, -439 )
+
+[node name="OWTree1" parent="YSort" instance=ExtResource( 24 )]
+position = Vector2( 546, 286 )
+scale = Vector2( -1, 1 )
+
+[node name="OWTree2" parent="YSort" instance=ExtResource( 24 )]
+position = Vector2( 648, 357 )
+
+[node name="OWTree3" parent="YSort" instance=ExtResource( 24 )]
+position = Vector2( 570, 438 )
+scale = Vector2( -1, 1 )
+
+[node name="OWTree4" parent="YSort" instance=ExtResource( 25 )]
+position = Vector2( 611, 389 )
+
+[node name="OWTree5" parent="YSort" instance=ExtResource( 25 )]
+position = Vector2( 595, 256 )
+scale = Vector2( -1, 1 )
+
+[node name="OWTree6" parent="YSort" instance=ExtResource( 25 )]
+position = Vector2( 499, 325 )
+
+[node name="OWTree9" parent="YSort" instance=ExtResource( 25 )]
+position = Vector2( 656, 418 )
+
+[node name="OWTree7" parent="YSort" instance=ExtResource( 25 )]
+position = Vector2( 519, 233 )
+
+[node name="OWTree8" parent="YSort" instance=ExtResource( 26 )]
+position = Vector2( 636, 259 )
+scale = Vector2( -1, 1 )
+
+[node name="OWTree10" parent="YSort" instance=ExtResource( 26 )]
+position = Vector2( 535, 379 )
 
 [node name="Gates" type="Node2D" parent="."]
 

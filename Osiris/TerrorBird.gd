@@ -30,7 +30,9 @@ var player: Player = null
 var is_jumping = false
 
 func _ready():
-	Events.connect("player_died", self, "_on_player_died")
+	var error = Events.connect("player_died", self, "_on_player_died")
+	if error != null:
+		print(error)
 	enter_idle()
 	
 func _physics_process(delta):
@@ -57,7 +59,7 @@ func enter_idle():
 	state = IDLE
 	sprite.animation = "Idle"
 	idle_timer.wait_time = rand_range(2, 7)
-	idle_timer.start()
+	idle_timer.call_deferred("start")
 
 func enter_alert():
 	velocity.x = 0
@@ -82,8 +84,8 @@ func update_chase(delta):
 	if player == null:
 		enter_idle()
 		
-	var direction = (player.global_position - global_position).normalized()
-	velocity.x = direction.x * MOVE_SPEED
+	var dir = (player.global_position - global_position).normalized()
+	velocity.x = dir.x * MOVE_SPEED
 	
 	if is_jumping or not is_on_floor():
 		apply_gravity(delta)
@@ -137,7 +139,7 @@ func face_player():
 func die():
 	AudioManager.play_terror_bird_die()
 	var bird_splat = BIRD_SPLAT.instance()
-	get_parent().add_child(bird_splat)
+	get_parent().call_deferred("add_child", bird_splat)
 	bird_splat.position = global_position
 	queue_free()
 

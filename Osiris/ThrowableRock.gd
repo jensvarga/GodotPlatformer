@@ -80,7 +80,7 @@ func picked_up():
 func drop_item(new_position, throw_dir, added_velocity):
 	throw_item = load(THROW_OBJECT_PATH)
 	var throw_instance = throw_item.instance()
-	add_child(throw_instance)
+	call_deferred("add_child", throw_instance)
 	
 	if throw_instance.has_method("instanciate"):
 		throw_instance.instanciate(new_position, throw_dir, added_velocity)

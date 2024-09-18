@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Sprites/CinematicCharacters/Seth/Seth_left_arm.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/CinematicCharacters/Seth/Seth_right_leg.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/CinematicCharacters/Seth/Seth_head.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/CinematicCharacters/Seth/Seth_torso.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/CinematicCharacters/Seth/Seth_right_arm.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/CinematicCharacters/Seth/Seth_left_leg.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "Froun",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Seth" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( -24, -48 )
+rotation = -0.0880305
+texture = ExtResource( 1 )
+offset = Vector2( -20, -19 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+position = Vector2( 24.7058, -51.1922 )
+rotation = 0.481498
+texture = ExtResource( 5 )
+offset = Vector2( 10.9279, -20.2816 )
+
+[node name="Sprite4" type="Sprite" parent="."]
+position = Vector2( -13, 5 )
+rotation = -0.0781707
+texture = ExtResource( 2 )
+offset = Vector2( -28, 30 )
+
+[node name="Sprite5" type="Sprite" parent="."]
+position = Vector2( 11.8168, 1.85106 )
+rotation = 0.296793
+texture = ExtResource( 6 )
+offset = Vector2( 22.6412, 30.1058 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -3, -54 )
+rotation = -0.140008
+frames = SubResource( 3 )
+animation = "Froun"
+offset = Vector2( 10.3765, -15.0087 )

@@ -17,7 +17,7 @@ func _ready():
 
 func spawn_wheel():
 	var wheel := WHEEL.instance()
-	get_parent().add_child(wheel)
+	get_parent().call_deferred("add_child", wheel)
 	wheel.position = spawn_point.global_position
 
 func _on_Area2D_body_entered(body):
@@ -50,4 +50,13 @@ func _on_Area2D3_body_entered(body):
 	$Area2D3/CollisionShape2D.set_deferred("disabled", true)
 
 func _on_boss_died():
+	button1_sprite.animation = "Off"
+	button2_sprite.animation = "Off"
+	area1.set_deferred("disabled", true)
+	area2.set_deferred("disabled", true)
+	$ContinueTimer.start()
+	
+
+func _on_ContinueTimer_timeout():
+	AudioManager.play_fanfare()
 	$StaticBody2D.queue_free()

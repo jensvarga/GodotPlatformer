@@ -212,6 +212,10 @@ rotation = 0.566083
 z_index = -1
 texture = ExtResource( 3 )
 
+[node name="DeadBodyPos" type="Position2D" parent="Path2D/PathFollow2D"]
+position = Vector2( 84.2091, -5.72996 )
+rotation = 0.566083
+
 [node name="Head" type="AnimatedSprite" parent="Path2D/PathFollow2D"]
 material = ExtResource( 7 )
 position = Vector2( 177.008, -11.9256 )
@@ -234,7 +238,7 @@ position = Vector2( 53, 6.00001 )
 script = ExtResource( 6 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/Area2D"]
-position = Vector2( 4.53615, 17.1004 )
+position = Vector2( 10.3652, 17.25 )
 rotation = 0.566083
 polygon = PoolVector2Array( 176, -60, 214, -12, 231, 6, 237, 33, 235, 68, 172, 88, -229, 81, -229, 3, -142, -45, 39, -58, 106, -177, 157, -184, 185, -166, 198, -124, 176, -76, 176, -76 )
 

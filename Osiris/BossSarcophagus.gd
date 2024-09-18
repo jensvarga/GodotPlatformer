@@ -67,7 +67,7 @@ func _on_ExplodeTimer_timeout():
 	AudioManager.play_seti_music()
 	var seti_instance = Seti.instance()
 	seti_instance.position = position
-	get_parent().add_child(seti_instance)
+	get_parent().call_deferred("add_child", seti_instance)
 	
 	sprite.hide()
 	

@@ -72,7 +72,7 @@ func die():
 	AudioManager.play_random_fart()
 	AudioManager.play_cow_die()
 	var parts = PARTICLES.instance()
-	get_tree().root.get_child(0).add_child(parts)
+	get_tree().root.get_child(4).call_deferred("add_child", parts)
 	parts.position = global_position
 	queue_free()
 

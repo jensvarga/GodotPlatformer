@@ -6,7 +6,7 @@ onready var line := $Line2D
 
 func _ready():
 	remove_child(line)
-	get_tree().root.get_child(0).add_child(line)
+	get_tree().root.get_child(4).call_deferred("add_child", line)
 
 var frame_count = 0
 func _physics_process(delta):
@@ -21,6 +21,3 @@ func _on_Area2D_body_entered(body):
 	if body is Player:
 		body.hurt()
 
-func _notification(what):
-	if what == NOTIFICATION_PREDELETE:
-		line.queue_free()

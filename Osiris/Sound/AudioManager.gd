@@ -87,6 +87,7 @@ const SWING_FIELDS = preload("res://Sound/Music/Original/Swing Fields.wav")
 const UNDERGROUND_SUMMER = preload("res://Sound/Music/Original/Underground Summer.wav")
 const APOPHIS_ARISING = preload("res://Sound/Music/Original/Apophis Arising.wav")
 const SETIS_OATH = preload("res://Sound/Music/Original/Setis Oath.wav")
+const DESERT_OCTOPUS = preload("res://Sound/Music/Original/Deflemask/DesertOctuopus.wav")
 
 func play_victori():
 	play_music(VICTORI)
@@ -98,7 +99,7 @@ func play_reaper():
 	play_music(REAPER)
 	
 func play_overworld_music():
-	play_music(UNDERGROUND_SUMMER)
+	play_music(DESERT_OCTOPUS)
 
 const LEVEL_MUSIC = {
 	0: CROCODILE_TEARS,
@@ -403,3 +404,25 @@ func play_rumble():
 
 func play_hor_em_scream():
 	play_sound(HOR_EM_SCREAM)
+	
+const SIC_SEMPER_TYRANNIS := preload("res://Sound/Music/Original/Deflemask/SicSemperTyrannis.wav")
+const THUNDER_1 := preload("res://Sound/FX/MISC/thunder_clap_1.wav")
+const THUNDER_2 := preload("res://Sound/FX/MISC/thunder_clap_2.wav")
+const THUNDER_3 := preload("res://Sound/FX/MISC/thunder_clap_3.wav")
+const Thunder_4 := preload("res://Sound/FX/MISC/thunder_clap_4.wav")
+const ORGASMS := preload("res://Sound/Music/Original/Deflemask/MultipleOrgasmIntoTheFlames.wav")
+
+func play_sec_semper():
+	play_music(SIC_SEMPER_TYRANNIS)
+
+func play_orgasms():
+	play_music(ORGASMS)
+	
+func play_random_thunder():
+	play_random_sound([ THUNDER_1, THUNDER_2, THUNDER_3, Thunder_4 ])
+	
+func play_main_theme():
+	if music_player.is_playing() and music_player.stream == ORGASMS:
+		pass
+	else:
+		play_music(ORGASMS)

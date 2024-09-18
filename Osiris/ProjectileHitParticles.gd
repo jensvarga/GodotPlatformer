@@ -6,7 +6,6 @@ func _ready():
 func set_facing(direction: int):
 	scale.x = direction
 	restart()
-	$DespawnTimer.start()
 
 func _on_DespawnTimer_timeout():
 	queue_free()
