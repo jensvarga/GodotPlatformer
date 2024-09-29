@@ -1,0 +1,473 @@
+[gd_scene load_steps=39 format=2]
+
+[ext_resource path="res://Sprites/Ra_sprite.png" type="Texture" id=1]
+[ext_resource path="res://EvilRa.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/sun_ball.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/sun_ball_frame2.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/sun_ball_frame1.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/sun_ball_frame3.png" type="Texture" id=6]
+[ext_resource path="res://BennuBob.tres" type="Material" id=7]
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=68]
+animations = [ {
+"frames": [ SubResource( 65 ), SubResource( 66 ), SubResource( 67 ) ],
+"loop": true,
+"name": "Burn",
+"speed": 15.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 240, 10 )
+
+[sub_resource type="AnimatedTexture" id=18]
+frames = 3
+frame_0/texture = ExtResource( 5 )
+frame_1/texture = ExtResource( 4 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 6 )
+frame_2/delay_sec = 0.0
+
+[sub_resource type="Curve" id=19]
+_data = [ Vector2( 0, 0.201745 ), 0.0, 0.0, 0, 0, Vector2( 0.782194, 0.61616 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.56661 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=22]
+offsets = PoolRealArray( 0, 0.623064, 0.919105, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="AnimatedTexture" id=20]
+frames = 3
+frame_0/texture = ExtResource( 5 )
+frame_1/texture = ExtResource( 4 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 6 )
+frame_2/delay_sec = 0.0
+
+[sub_resource type="Curve" id=21]
+_data = [ Vector2( 0, 0.201745 ), 0.0, 0.0, 0, 0, Vector2( 0.782194, 0.61616 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.56661 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 1 )
+region = Rect2( 420, 0, 105, 100 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 1 )
+region = Rect2( 525, 0, 105, 100 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 315, 0, 105, 100 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 420, 0, 105, 100 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 105, 100 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 105, 0, 105, 100 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 210, 0, 105, 100 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 63 ), SubResource( 64 ) ],
+"loop": false,
+"name": "Fire",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "FireSpin",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 11, 34 )
+
+[sub_resource type="Curve2D" id=8]
+_data = {
+"points": PoolVector2Array( 19.9034, 4.44651, -19.9034, -4.44651, -5, -52, -17.786, -13.1278, 17.786, 13.1278, -40, 29, -8.2578, 17.1508, 8.2578, -17.1508, 39, 28, 25.4086, -5.29346, -25.4086, 5.29346, -5, -52 )
+}
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="CircleShape2D" id=16]
+radius = 15.0333
+
+[sub_resource type="Curve2D" id=13]
+_data = {
+"points": PoolVector2Array( 19.9034, 4.44651, -19.9034, -4.44651, -5, -52, -17.786, -13.1278, 17.786, 13.1278, -40, 29, -8.2578, 17.1508, 8.2578, -17.1508, 39, 28, 25.4086, -5.29346, -25.4086, 5.29346, -5, -52 )
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "AnimateBalls"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../SunPath2D2/PathFollow2D:unit_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../SunPath2D3/PathFollow2D:unit_offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../SunPath2D2/PathFollow2D:unit_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../SunPath2D3/PathFollow2D:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../SunPath2D3/PathFollow2D:unit_offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=69]
+resource_name = "Burn"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/flash_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 1, 0.811765, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:material:shader_param/active_flash")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=61]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active_flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:material:shader_param/flash_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=62]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/flash_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:material:shader_param/active_flash")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[node name="EvilRa" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="FireSpinnerArea" type="Area2D" parent="."]
+rotation = -0.00766332
+scale = Vector2( 1, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="FireSpinnerArea"]
+scale = Vector2( 1.5, 1.5 )
+frames = SubResource( 68 )
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FireSpinnerArea"]
+shape = SubResource( 17 )
+disabled = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="FireSpinnerArea"]
+position = Vector2( 13.9996, 0.107285 )
+emitting = false
+amount = 70
+lifetime = 2.0
+texture = SubResource( 18 )
+spread = 4.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 0.5
+scale_amount_curve = SubResource( 19 )
+color_ramp = SubResource( 22 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="FireSpinnerArea"]
+position = Vector2( -23.9993, -0.183918 )
+emitting = false
+amount = 70
+lifetime = 2.0
+texture = SubResource( 20 )
+direction = Vector2( -1, 0 )
+spread = 4.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 0.5
+scale_amount_curve = SubResource( 21 )
+color_ramp = SubResource( 22 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = ExtResource( 7 )
+frames = SubResource( 4 )
+animation = "Fire"
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 1 )
+shape = SubResource( 5 )
+
+[node name="SunPath2D" type="Path2D" parent="."]
+curve = SubResource( 8 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="SunPath2D"]
+position = Vector2( -5, -52 )
+rotation = 3.10602
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D/PathFollow2D"]
+rotation = 3.1765
+frames = SubResource( 12 )
+frame = 2
+playing = true
+
+[node name="Area2D" type="Area2D" parent="SunPath2D/PathFollow2D"]
+collision_layer = 16384
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SunPath2D/PathFollow2D/Area2D"]
+shape = SubResource( 16 )
+
+[node name="SunPath2D2" type="Path2D" parent="."]
+rotation = -1.55945
+curve = SubResource( 13 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="SunPath2D2"]
+position = Vector2( -5, -52 )
+rotation = 3.10602
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D2/PathFollow2D"]
+rotation = 4.27606
+frames = SubResource( 12 )
+frame = 1
+playing = true
+
+[node name="Area2D" type="Area2D" parent="SunPath2D2/PathFollow2D"]
+collision_layer = 16384
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SunPath2D2/PathFollow2D/Area2D"]
+shape = SubResource( 16 )
+
+[node name="SunPath2D3" type="Path2D" parent="."]
+rotation = 2.72599
+curve = SubResource( 13 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="SunPath2D3"]
+position = Vector2( -5, -52 )
+rotation = 3.10602
+rotate = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D3/PathFollow2D"]
+rotation = 0.436332
+frames = SubResource( 12 )
+frame = 1
+playing = true
+
+[node name="Area2D" type="Area2D" parent="SunPath2D3/PathFollow2D"]
+collision_layer = 16384
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SunPath2D3/PathFollow2D/Area2D"]
+shape = SubResource( 16 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../SunPath2D")
+autoplay = "AnimateBalls"
+anims/AnimateBalls = SubResource( 14 )
+anims/RESET = SubResource( 15 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FireSpinTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HurtAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Burn = SubResource( 69 )
+anims/Hurt = SubResource( 61 )
+anims/RESET = SubResource( 62 )
+
+[node name="RespawnSunTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="FireSpinnerArea" to="." method="_on_FireSpinnerArea_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="body_entered" from="SunPath2D/PathFollow2D/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="SunPath2D2/PathFollow2D/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="SunPath2D3/PathFollow2D/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_IdleTimer_timeout"]
+[connection signal="timeout" from="FireSpinTimer" to="." method="_on_FireSpinTimer_timeout"]
+[connection signal="timeout" from="RespawnSunTimer" to="." method="_on_RespawnSunTimer_timeout"]

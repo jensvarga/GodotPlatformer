@@ -2,7 +2,7 @@
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://MenuTheme.tres" type="Theme" id=2]
-[ext_resource path="res://Sprites/UI/GameLogo.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/OQ_Logo.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/UI/main_menu_bg-pixelicious.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/CinematicCharacters/Cliff_Scene5.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/CinematicCharacters/Horus_adult.png" type="Texture" id=6]
@@ -243,6 +243,7 @@ frame = 1
 playing = true
 
 [node name="ControlsImage" type="Sprite" parent="."]
+visible = false
 position = Vector2( 315, 133 )
 texture = ExtResource( 9 )
 
@@ -255,6 +256,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Logo" type="Sprite" parent="AspectRatioContainer"]
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 3 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]

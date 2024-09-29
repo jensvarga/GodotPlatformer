@@ -88,6 +88,7 @@ const UNDERGROUND_SUMMER = preload("res://Sound/Music/Original/Underground Summe
 const APOPHIS_ARISING = preload("res://Sound/Music/Original/Apophis Arising.wav")
 const SETIS_OATH = preload("res://Sound/Music/Original/Setis Oath.wav")
 const DESERT_OCTOPUS = preload("res://Sound/Music/Original/Deflemask/DesertOctuopus.wav")
+const DREAM_OFF = preload("res://Sound/Music/Original/Deflemask/DreamOff.wav")
 
 func play_victori():
 	play_music(VICTORI)
@@ -99,7 +100,7 @@ func play_reaper():
 	play_music(REAPER)
 	
 func play_overworld_music():
-	play_music(DESERT_OCTOPUS)
+	play_music(DREAM_OFF)
 
 const LEVEL_MUSIC = {
 	0: CROCODILE_TEARS,
@@ -426,3 +427,20 @@ func play_main_theme():
 		pass
 	else:
 		play_music(ORGASMS)
+
+const RA_CHANT1 := preload("res://Sound/FX/MISC/Ra_chant1.wav")
+const RA_CHANT2 := preload("res://Sound/FX/MISC/Ra_chant2.wav")
+const RA_CHANT3 := preload("res://Sound/FX/MISC/Ra_chant3.wav")
+const RA_HURT := preload("res://Sound/FX/MISC/ra_hurt.wav")
+
+func play_ra_chant1():
+	play_sound(RA_CHANT1)
+	
+func play_ra_chant2():
+	play_sound(RA_CHANT2)
+	
+func play_ra_chant3():
+	play_sound(RA_CHANT3)
+
+func play_ra_hurt():
+	play_sound(RA_HURT)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://NPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://RaEvents.gd" type="Script" id=2]
+
+[node name="RA2" instance=ExtResource( 1 )]
+NPC_DIALOGUE = [ "Horus, my child, though it grieves me, I cannot allow you to proceed", "I know well that the throne of Osiris is your rightful inheritance, but Seth's power is greater than you know", "Without his strength, I cannot fulfill my sacred duty of guiding the sun to its rest in the western sky", "Until I am bested in battle, I cannot grant you passage. Prove yourself worthy, and only then may the path ahead be yours" ]
+
+[node name="RaEvents" type="Node2D" parent="." index="6"]
+script = ExtResource( 2 )

@@ -16,6 +16,8 @@ signal pick_up_power_crook
 signal pick_up_power_up
 signal gained_life
 signal killed_miniboss
+signal ra_jumped
+signal player_spawned
 
 # Global variables
 var check_point_reached = false
@@ -34,6 +36,7 @@ var has_pen15 = false
 
 var unlocked_level_2 = false
 var unlocked_level_3 = false
+var ra_has_jumped = false
 
 var levels_cleared = {
 	0: false,
@@ -61,6 +64,7 @@ func _ready():
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
 	Events.connect("gained_life", self, "on_gained_life")
+	Events.connect("ra_jumped", self, "_on_ra_jumped")
 
 func on_gained_life():
 	lives += 1
@@ -125,3 +129,6 @@ func change_room(room_position: Vector2, room_size: Vector2) -> void:
 	room_pause = true
 	yield(get_tree().create_timer(room_pause_time),"timeout")
 	room_pause = false
+
+func _on_ra_jumped():
+	ra_has_jumped = true

@@ -6,6 +6,7 @@ const speed = 400
 var velocity = Vector2.ZERO
 var direction: int
 var root: Node
+var can_hurt_self: bool = false
 
 onready var trail_particles := $TrailParticles
 
@@ -53,6 +54,10 @@ func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
 func _on_PowerCrookFireball_body_entered(body):
+	if body.has_method("hurt") and can_hurt_self:
+		body.hurt()
+		explode()
+		return
 	if body.has_method("on_shot"):
 		body.on_shot() 
 		explode()
@@ -84,3 +89,6 @@ func _on_PowerCrookFireball_area_entered(area):
 		explode()
 	else:
 		explode()
+
+func _on_HurtSelfTimer_timeout():
+	can_hurt_self = true

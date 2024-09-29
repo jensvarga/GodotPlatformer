@@ -29,9 +29,9 @@ func _ready():
 	Transition.connect("transition_completed", self, "_on_transition_completed")
 	VisualServer.set_default_clear_color(sky_color)
 	AudioManager.start_level_music(level_music)
-	spawn_player()
 	Transition.play_start_transition()
 	CameraShaker.connect_anchor(camera_anchor)
+	call_deferred("spawn_player")
 		
 func _on_player_died():
 	spawn_player()
@@ -60,6 +60,7 @@ func spawn_player():
 	camera_anchor.connect_player(player)
 	Events.player = player
 	Events.player_camera = player_camera
+	Events.emit_signal("player_spawned")
 	
 func _on_transition_started():
 	pass

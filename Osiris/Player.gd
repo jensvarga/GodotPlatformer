@@ -11,7 +11,7 @@ const IMPACT_DUST = preload("res://impact_dust_b.tscn")
 
 var velocity = Vector2.ZERO
 var crouch = false
-enum { MOVE, CLIMB, DEAD }
+enum { MOVE, CLIMB, FLYING, DEAD }
 var state = MOVE
 var climb_speed = 75
 var max_extra_height = -10
@@ -84,6 +84,8 @@ func _physics_process(delta):
 			update_climb(delta)
 		DEAD:
 			update_dead()
+		FLYING:
+			update_flying(delta)
 	
 	if state != DEAD and firing:
 		sprite.animation = "Fire"
@@ -95,9 +97,9 @@ func _physics_process(delta):
 		sprite.offset.x = 0
 			
 func _input(event):
-	if event.is_action_pressed("ui_up"):
+	if event.is_action_pressed("ui_up") and state != FLYING:
 		look_up = true
-	if event.is_action_released("ui_up"):
+	if event.is_action_released("ui_up") and state != FLYING:
 		look_up = false
 	if carrying and event.is_action_released("ui_grab"):
 		drop_item()
@@ -124,6 +126,9 @@ func fire_fireball():
 	var direction = -1 if sprite.flip_h else 1
 	fireball.set_direction(direction)
 
+	if state == FLYING:
+		recoil(-direction * 300)
+		
 	var fire_position: Node2D
 
 	if sprite.flip_h:
@@ -163,6 +168,35 @@ func enter_climb():
 func update_dead():
 	pass
 
+func enter_flying():
+	state = FLYING
+	sprite.animation = "Flying"
+	Events.has_power_crook = true
+	
+func update_flying(delta):
+	if sprite.animation == "Fire" and sprite.frame == 1:
+		sprite.animation = "Flying"
+		
+	var input = Vector2.ZERO
+	input.x = Input.get_axis("ui_left", "ui_right")
+	input.y = Input.get_axis("ui_up", "ui_down")
+	
+	if input == Vector2.ZERO:
+		apply_fly_friction(delta)
+	else:
+		flip_sprite(input.x)
+		apply_fly_acceleration(input, delta)
+	
+	move_and_slide(velocity, Vector2.UP)
+
+func apply_fly_friction(delta):
+	velocity.x = move_toward(velocity.x, 0, player_move_data.FRICTION / 4 * delta)
+	velocity.y = move_toward(velocity.y, 0, player_move_data.FRICTION / 4 * delta)
+	
+func apply_fly_acceleration(input, delta):
+	velocity.y = move_toward(velocity.y, player_move_data.MOVE_SPEED * input.y, player_move_data.ACCELERATION * delta)
+	velocity.x = move_toward(velocity.x, player_move_data.MOVE_SPEED * input.x, player_move_data.ACCELERATION * delta)
+	
 func holding_left_wall():
 	return wall_check_left.is_colliding() and Input.is_action_pressed("ui_left")
 	
@@ -349,7 +383,7 @@ func apply_friction(delta):
 
 func apply_acceleration(amount, is_grounded, delta):
 	if is_grounded:
-		velocity.x = move_toward(velocity.x, (player_move_data.MOVE_SPEED + gorund_speed_bonus) * amount, player_move_data.ACCELERATION)
+		velocity.x = move_toward(velocity.x, (player_move_data.MOVE_SPEED + gorund_speed_bonus) * amount, player_move_data.ACCELERATION * delta)
 	else:
 		velocity.x = move_toward(velocity.x, player_move_data.MOVE_SPEED * amount, player_move_data.ACCELERATION * delta)
 	
@@ -395,6 +429,10 @@ func hurt():
 	var particles = hurt_particles.instance()
 	particles.position = position
 	get_parent().call_deferred("add_child", particles)
+
+func recoil(amount):
+	yield(get_tree(), "physics_frame")
+	velocity.x += amount
 	
 func bounce(amount):
 	yield(get_tree(), "physics_frame")

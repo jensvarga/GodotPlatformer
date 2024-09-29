@@ -1,6 +1,7 @@
 extends Node2D
 
 export (String) var NAME = "RA"
+export (bool) var HIDDEN = false
 export (String, FILE, "*.png") var PORTRAIT_PATH = "res://Sprites/UI/ra_portrait.png"
 export(Array, String) var NPC_DIALOGUE = ["Greetings, traveler",\
 "Behold, that woven mat yonder, it possesses the power of flight. Step upon it, and it shall transport you to your inaugural trial",\

@@ -1,0 +1,146 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/beach_tiles_voss.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Backgrounds/fallboss_bg.png" type="Texture" id=3]
+[ext_resource path="res://EvilRa.tscn" type="PackedScene" id=4]
+[ext_resource path="res://VerticalScrollParallaxBackground.gd" type="Script" id=5]
+[ext_resource path="res://Sprites/Backgrounds/underground_bbg_2.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Backgrounds/underground_bbg.png" type="Texture" id=7]
+[ext_resource path="res://RaLevelEvents.gd" type="Script" id=8]
+[ext_resource path="res://Sound/Music/Original/Deflemask/Celestial Cumshot.wav" type="AudioStream" id=9]
+[ext_resource path="res://Sprites/fall_floor.png" type="Texture" id=10]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=10]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=5]
+0/name = "beach_tiles_voss.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 384, 96 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 1 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 3 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 4 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 10 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 251, 16 )
+
+[node name="FallOfRa" instance=ExtResource( 1 )]
+sky_color = Color( 0.164706, 0, 0, 1 )
+boss_level = true
+level_music = ExtResource( 9 )
+
+[node name="SpawnPoint" parent="." index="1"]
+position = Vector2( 0, -60 )
+
+[node name="TileMap" type="TileMap" parent="." index="6"]
+tile_set = SubResource( 5 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -262152, 536870912, 131074, -262151, 536870912, 131074, -262150, 536870912, 131074, -262149, 536870912, 131074, -262148, 536870912, 131074, -262147, 536870912, 131074, -262146, 536870912, 131074, -262145, 536870912, 131074, -327680, 536870912, 131074, -327679, 536870912, 131074, -327678, 536870912, 131074, -327677, 536870912, 131074, -327676, 536870912, 131074, -327675, 536870912, 131074, -327674, 536870912, 131074, -327673, 536870912, 131074, -196616, 536870912, 131074, -262137, 536870912, 131074, -131080, 536870912, 131074, -196601, 536870912, 131074, -65544, 536870912, 131074, -131065, 536870912, 131074, -8, 536870912, 131074, -65529, 536870912, 131074, 65528, 536870912, 131074, 7, 536870912, 131074, 8, 536870912, 131074, 131064, 536870912, 131074, 65543, 536870912, 131074, 65544, 536870912, 131074, 196600, 536870912, 131074, 131079, 536870912, 131074, 131080, 536870912, 131074, 262136, 536870912, 131074, 196615, 536870912, 131074, 327672, 536870912, 131074, 327673, 536870912, 131074, 327674, 536870912, 131074, 327675, 536870912, 131074, 327676, 536870912, 131074, 327677, 536870912, 131074, 327678, 536870912, 131074, 327679, 536870912, 131074, 262144, 536870912, 131074, 262145, 536870912, 131074, 262146, 536870912, 131074, 262147, 536870912, 131074, 262148, 536870912, 131074, 262149, 536870912, 131074, 262150, 536870912, 131074, 262151, 536870912, 131074 )
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." index="7"]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground2" index="0"]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground2/ParallaxLayer2" index="0"]
+texture = ExtResource( 7 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" index="1"]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground2/ParallaxLayer" index="0"]
+position = Vector2( 10, 8 )
+texture = ExtResource( 6 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="8"]
+script = ExtResource( 5 )
+scroll_speed = -200
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
+motion_mirroring = Vector2( 0, 688 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer" index="0"]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 480, 688 )
+
+[node name="LevelEvents" type="Node2D" parent="." index="9"]
+script = ExtResource( 8 )
+
+[node name="StartTimer" type="Timer" parent="LevelEvents" index="0"]
+wait_time = 4.0
+one_shot = true
+
+[node name="EvilRa" parent="." index="10" instance=ExtResource( 4 )]
+position = Vector2( 145, 517 )
+
+[node name="Bottom" type="StaticBody2D" parent="." index="11"]
+position = Vector2( 0, 159 )
+
+[node name="Sprite" type="Sprite" parent="Bottom" index="0"]
+position = Vector2( 1, 0 )
+z_index = -1
+texture = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom" index="1"]
+position = Vector2( 2, 0 )
+shape = SubResource( 11 )
+
+[connection signal="timeout" from="LevelEvents/StartTimer" to="LevelEvents" method="_on_StartTimer_timeout"]

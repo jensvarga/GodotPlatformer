@@ -31,7 +31,7 @@ func _ready():
 	
 	if level.boss_level:
 		Events.boss_hit_points = max_boss_hp
-		update_boss_ankhs()
+		call_deferred("update_boss_ankhs")
 	else:
 		boss_life.hide()
 	

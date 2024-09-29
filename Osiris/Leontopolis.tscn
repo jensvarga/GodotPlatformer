@@ -1077,7 +1077,7 @@ position = Vector2( -75.5889, 35.4453 )
 rotation = 3.03244
 z_index = -1
 frames = SubResource( 74 )
-frame = 2
+frame = 4
 playing = true
 
 [node name="Brazier" parent="." index="32" instance=ExtResource( 20 )]

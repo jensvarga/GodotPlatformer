@@ -44,6 +44,12 @@ shape = SubResource( 5 )
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 rect = Rect2( -30, -15, 50, 30 )
 
+[node name="HurtSelfTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
 [connection signal="area_entered" from="." to="." method="_on_PowerCrookFireball_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_PowerCrookFireball_body_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="HurtSelfTimer" to="." method="_on_HurtSelfTimer_timeout"]

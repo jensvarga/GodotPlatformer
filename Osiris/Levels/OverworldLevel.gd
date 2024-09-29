@@ -13,13 +13,14 @@ onready var subworld_blocks := $Subworld/Blocks
 onready var darkness := $SubworldTiles
 
 onready var isis := $YSort/Isis
+onready var ra2 := $YSort/RA2
 
 var anubis_offset = -20
 var is_displaying_subworld = false
 var subworld_npcs
 
 func _ready():
-	subworld_npcs = [isis]
+	subworld_npcs = [isis, ra2]
 	subworld_tiles.hide()
 	main_world_tiles.show()
 	water_tiles.show()
@@ -59,10 +60,11 @@ func toggle_subworld():
 	
 func show_subworld_npcs(should_show: bool):
 	for npc in subworld_npcs:
-		npc.visible = should_show
-		npc.set_process_input(should_show)
-		npc.set_process(should_show)
-		npc.set_physics_process(should_show)
+		if not npc.HIDDEN:
+			npc.visible = should_show
+			npc.set_process_input(should_show)
+			npc.set_process(should_show)
+			npc.set_physics_process(should_show)
 
 func _on_SubworldArea_body_entered(body):
 	if body is OverworldPlayer:
@@ -71,3 +73,9 @@ func _on_SubworldArea_body_entered(body):
 func _on_SubworldArea_body_exited(body):
 	if body is OverworldPlayer:
 		toggle_subworld()
+
+func _on_transition_started():
+	pass
+
+func _on_transition_completed():
+	pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://Sprites/PLayer/run_with_crook.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Sprites/PLayer/jump_with_crook.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/PLayer/horus_fire.png" type="Texture" id=9]
 [ext_resource path="res://HurtMaterial.tres" type="Material" id=10]
+[ext_resource path="res://Sprites/PLayer/flying_horus.png" type="Texture" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 13 )
@@ -76,6 +77,22 @@ region = Rect2( 0, 0, 46, 32 )
 [sub_resource type="AtlasTexture" id=78]
 atlas = ExtResource( 9 )
 region = Rect2( 46, 0, 46, 32 )
+
+[sub_resource type="AtlasTexture" id=79]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 48, 49 )
+
+[sub_resource type="AtlasTexture" id=80]
+atlas = ExtResource( 11 )
+region = Rect2( 48, 0, 48, 49 )
+
+[sub_resource type="AtlasTexture" id=81]
+atlas = ExtResource( 11 )
+region = Rect2( 96, 0, 48, 49 )
+
+[sub_resource type="AtlasTexture" id=82]
+atlas = ExtResource( 11 )
+region = Rect2( 144, 0, 48, 49 )
 
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 5 )
@@ -269,6 +286,11 @@ animations = [ {
 "name": "Fire",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ) ],
+"loop": true,
+"name": "Flying",
+"speed": 10.0
+}, {
 "frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
 "loop": true,
 "name": "Idle",
@@ -420,7 +442,7 @@ shape = SubResource( 18 )
 material = ExtResource( 10 )
 position = Vector2( 0, 1 )
 frames = SubResource( 3 )
-animation = "Fire"
+animation = "Flying"
 frame = 1
 playing = true
 
