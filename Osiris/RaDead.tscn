@@ -1,0 +1,142 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Sprites/Ra_dead.png" type="Texture" id=1]
+[ext_resource path="res://RaDead.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=59]
+code = "shader_type canvas_item;
+
+uniform bool active = true;
+uniform float luminance_threshold = 0.4;
+uniform vec4 color : hint_color = vec4(1.0, 1.0, 1.0, 1.0); // Tint color
+
+uniform float alpha_threshold = 0.01;  // Minimum alpha value to consider
+
+void fragment() {
+    vec4 previous_color = texture(TEXTURE, UV);
+    vec4 new_color = previous_color;
+
+    // Only modify the color if the pixel is not fully transparent and the shader is active
+    if (active && previous_color.a > alpha_threshold) {
+        float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+
+        // Apply the color if the luminance is above the threshold
+        if (luminance > luminance_threshold) {
+            new_color.rgb = color.rgb;
+            new_color.a = previous_color.a * color.a; // Apply the alpha from the color uniform
+        }
+    }
+
+    COLOR = new_color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=60]
+resource_local_to_scene = true
+shader = SubResource( 59 )
+shader_param/active = false
+shader_param/luminance_threshold = 0.45
+shader_param/color = Color( 1, 0, 0, 1 )
+shader_param/alpha_threshold = 0.01
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 105, 100 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 105, 0, 105, 100 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 12.5, 12.5 )
+
+[sub_resource type="Animation" id=61]
+resource_name = "Default"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:material:shader_param/color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 0.564706, 0.537255, 1, 1 ), Color( 0.952941, 1, 0.537255, 1 ) ]
+}
+
+[sub_resource type="Animation" id=62]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:material:shader_param/color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ) ]
+}
+
+[node name="RaDead" type="Area2D"]
+collision_layer = 2
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 60 )
+frames = SubResource( 3 )
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -2.5, 2.5 )
+shape = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Default"
+anims/Default = SubResource( 61 )
+anims/RESET = SubResource( 62 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_RaDead_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

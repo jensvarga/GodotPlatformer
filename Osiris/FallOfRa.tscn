@@ -89,7 +89,7 @@ boss_level = true
 level_music = ExtResource( 9 )
 
 [node name="SpawnPoint" parent="." index="1"]
-position = Vector2( 0, -60 )
+position = Vector2( -137, -83 )
 
 [node name="TileMap" type="TileMap" parent="." index="6"]
 tile_set = SubResource( 5 )
@@ -130,6 +130,7 @@ one_shot = true
 
 [node name="EvilRa" parent="." index="10" instance=ExtResource( 4 )]
 position = Vector2( 145, 517 )
+stone_position_nodes = [ NodePath("../StonePositions/Position2D"), NodePath("../StonePositions/Position2D2"), NodePath("../StonePositions/Position2D3"), NodePath("../StonePositions/Position2D4"), NodePath("../StonePositions/Position2D5"), NodePath("../StonePositions/Position2D6"), NodePath("../StonePositions/Position2D7"), NodePath("../StonePositions/Position2D8"), NodePath("../StonePositions/Position2D9"), NodePath("../StonePositions/Position2D10"), NodePath("../StonePositions/Position2D11") ]
 
 [node name="Bottom" type="StaticBody2D" parent="." index="11"]
 position = Vector2( 0, 159 )
@@ -142,5 +143,41 @@ texture = ExtResource( 10 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom" index="1"]
 position = Vector2( 2, 0 )
 shape = SubResource( 11 )
+
+[node name="StonePositions" type="Node2D" parent="." index="12"]
+position = Vector2( 5, -1 )
+
+[node name="Position2D" type="Position2D" parent="StonePositions" index="0"]
+position = Vector2( -209, 154 )
+
+[node name="Position2D2" type="Position2D" parent="StonePositions" index="1"]
+position = Vector2( -169, 154 )
+
+[node name="Position2D3" type="Position2D" parent="StonePositions" index="2"]
+position = Vector2( -129, 154 )
+
+[node name="Position2D4" type="Position2D" parent="StonePositions" index="3"]
+position = Vector2( -89, 154 )
+
+[node name="Position2D5" type="Position2D" parent="StonePositions" index="4"]
+position = Vector2( -49, 154 )
+
+[node name="Position2D6" type="Position2D" parent="StonePositions" index="5"]
+position = Vector2( -9, 154 )
+
+[node name="Position2D7" type="Position2D" parent="StonePositions" index="6"]
+position = Vector2( 31, 154 )
+
+[node name="Position2D8" type="Position2D" parent="StonePositions" index="7"]
+position = Vector2( 71, 154 )
+
+[node name="Position2D9" type="Position2D" parent="StonePositions" index="8"]
+position = Vector2( 111, 154 )
+
+[node name="Position2D10" type="Position2D" parent="StonePositions" index="9"]
+position = Vector2( 151, 154 )
+
+[node name="Position2D11" type="Position2D" parent="StonePositions" index="10"]
+position = Vector2( 191, 154 )
 
 [connection signal="timeout" from="LevelEvents/StartTimer" to="LevelEvents" method="_on_StartTimer_timeout"]

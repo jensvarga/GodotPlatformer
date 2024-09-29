@@ -1,6 +1,11 @@
 extends KinematicBody2D
 
+export(Array, NodePath) var stone_position_nodes: Array
+var stone_positions: Array = []
+
 const SUNBALL = preload("res://SunBall.tscn")
+const STONE = preload("res://GlowingRock.tscn")
+const DEAD_RA = preload("res://RaDead.tscn")
 const SPEED = 75
 var _speed: int = 0
 
@@ -39,6 +44,11 @@ var invincable = true
 func _ready():
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("boss_died", self, "_on_boss_died")
+	stone_positions.clear()
+	for node_path in stone_position_nodes:
+		var position_node = get_node(node_path) as Position2D
+		if position_node:
+			stone_positions.append(position_node.global_position)
 	_speed = SPEED
 	max_idle_time = 6
 	enter_enter()
@@ -139,6 +149,7 @@ func update_fire(delta):
 func update_chase(delta):
 	var distance := global_transform.origin.distance_to(target_point)
 	if distance < 10:
+		summon_stones()
 		enter_idle()
 
 func update_enter():
@@ -231,6 +242,28 @@ func face_direction():
 		sprite.scale.x = -1
 	else:
 		sprite.scale.x = 1
+
+func summon_stones():
+	var min_stones = 2
+	var max_stones = stone_positions.size() - 5
+	if Events.boss_hit_points < 5:
+		min_stones = 5
+		max_stones = stone_positions.size() - 2
+		
+	var nr_stones = int(rand_range(min_stones, max_stones))
+	var available_positions = stone_positions.duplicate()
+
+	for i in range(nr_stones):
+		if available_positions.size() == 0:
+			return
+	
+		var random_index = randi() % available_positions.size()
+		var random_position = available_positions[random_index]
+		available_positions.remove(random_index)
+	
+		var stone = STONE.instance()
+		stone.global_position = random_position
+		get_parent().call_deferred("add_child", stone)
 		
 # Signals -----------------------------------
 func _on_damage_boss():
@@ -301,4 +334,7 @@ func _on_RespawnSunTimer_timeout():
 func _on_boss_died():
 	AudioManager.play_ra_hurt()
 	AudioManager.play_ra_chant1()
+	var body = DEAD_RA.instance()
+	get_parent().call_deferred("add_child", body)
+	body.position = global_position
 	queue_free()

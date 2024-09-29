@@ -5,26 +5,26 @@ code = "shader_type canvas_item;
 
 uniform bool active = true;
 uniform float luminance_threshold = 0.4;
-uniform vec4 color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec4 color : hint_color = vec4(1.0, 1.0, 1.0, 1.0); // Tint color
 
-// Minimum alpha value to consider a pixel as \"visible\" (not fully transparent)
-uniform float alpha_threshold = 0.01;
+uniform float alpha_threshold = 0.01;  // Minimum alpha value to consider
 
 void fragment() {
-	vec4 previous_color = texture(TEXTURE, UV);
-	vec4 new_color = previous_color;
+    vec4 previous_color = texture(TEXTURE, UV);
+    vec4 new_color = previous_color;
 
-	// Only modify the color if the pixel is not fully transparent and the shader is active
-	if (active && previous_color.a > alpha_threshold) {
-		float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+    // Only modify the color if the pixel is not fully transparent and the shader is active
+    if (active && previous_color.a > alpha_threshold) {
+        float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
 
-		// Apply the color if the luminance is above the threshold
-		if (luminance > luminance_threshold) {
-			new_color.rgb = color.rgb;
-		}
-	}
+        // Apply the color if the luminance is above the threshold
+        if (luminance > luminance_threshold) {
+            new_color.rgb = color.rgb;
+            new_color.a = previous_color.a * color.a; // Apply the alpha from the color uniform
+        }
+    }
 
-	COLOR = new_color;
+    COLOR = new_color;
 }
 "
 
