@@ -203,3 +203,9 @@ camera_limit_bottom = 0
 
 [node name="PlayerCamera" parent="." instance=ExtResource( 15 )]
 current = true
+
+[node name="AutosaveTimer" type="Timer" parent="."]
+wait_time = 300.0
+autostart = true
+
+[connection signal="timeout" from="AutosaveTimer" to="." method="_on_AutosaveTimer_timeout"]

@@ -1,5 +1,8 @@
 extends Node
 
+const SAVE_FILE_PATH := "user://save/"
+const SAVE_FILE_NAME := "SaveGame.tres"
+
 # Events
 signal player_died
 signal player_take_damage
@@ -23,19 +26,24 @@ signal player_spawned
 var check_point_reached = false
 var current_level = 1
 var death_counter = 0
-var player_overworld_position
 var collected_items = []
 var player_hit_points = 3
 var boss_hit_points = 6
 var has_power_crook = false
 var lives = 3
 
+# Bodyparts
 var has_left_hand = false
 var has_right_hand = false
 var has_pen15 = false
+var has_head = false
 
+
+# Overworld values
+var player_overworld_position
 var unlocked_level_2 = false
 var unlocked_level_3 = false
+var ra_in_cave = false
 var ra_has_jumped = false
 
 var levels_cleared = {
@@ -132,3 +140,48 @@ func change_room(room_position: Vector2, room_size: Vector2) -> void:
 
 func _on_ra_jumped():
 	ra_has_jumped = true
+
+func verify_save_directory(path: String):
+	var dir = Directory.new()
+	
+	if not dir.dir_exists(path):
+		var err = dir.make_dir_recursive(path)
+		if err != OK:
+			print("Failed to create directory: ", path)
+		else:
+			print("Directory created successfully: ", path)
+	else:
+		print("Directory already exists: ", path)
+
+func save_game_data():
+	verify_save_directory(SAVE_FILE_PATH)
+	var save_game = SaveGame.new()
+
+	save_game.death_counter = Events.death_counter
+	save_game.collected_items = Events.collected_items
+	save_game.player_hit_points = Events.player_hit_points
+
+	save_game.has_power_crook = Events.has_power_crook
+	save_game.lives = Events.lives
+
+	save_game.has_left_hand = Events.has_left_hand
+	save_game.has_right_hand = Events.has_right_hand
+	save_game.has_pen15 = Events.has_pen15
+	save_game.has_head = Events.has_head
+
+	save_game.player_overworld_position = Events.player_overworld_position
+	save_game.unlocked_level_2 = Events.unlocked_level_2
+	save_game.unlocked_level_3 = Events.unlocked_level_3
+	save_game.ra_in_cave = Events.ra_in_cave
+	save_game.ra_has_jumped = Events.ra_has_jumped
+
+	save_game.levels_cleared = Events.levels_cleared
+
+	var file = File.new()
+
+	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
+	var err = ResourceSaver.save(full_path, save_game)
+	if err == OK:
+		print("Game saved successfully!")
+	else:
+		print("Failed to save the game, error code: ", err)

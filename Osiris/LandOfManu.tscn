@@ -809,15 +809,19 @@ func explode():
 	AudioManager.play_random_explosion_sound()
 	for i in range(4):
 		var bone = BONE.instance()
-		get_tree().root.get_child(0).add_child(bone)
+		get_tree().root.get_child(0).call_deferred(\"add_child\", bone)
 		bone.position = $Position2D.global_position
-		bone.apply_central_impulse(Vector2(rand_range(-100, 100), rand_range(-100, -50)))
+		var x_value = rand_range(-100, 100)
+		var y_value = rand_range(-100, -50)
+		bone.call_deferred(\"apply_central_impulse\", x_value, y_value)
 
 	for i in range(2):
 		var rock = ROCK.instance()
-		get_tree().root.get_child(0).add_child(rock)
+		get_tree().root.get_child(0).call_deferred(\"add_child\", rock)
 		rock.position = $Position2D.global_position
-		rock.apply_central_impulse(Vector2(rand_range(-150, 150), rand_range(-150, -50)))
+		var x_value = rand_range(-150, 150)
+		var y_value = rand_range(-150, -50)
+		rock.call_deferred(\"apply_central_impulse\", x_value, y_value)
 		
 	queue_free()
 	
@@ -832,9 +836,9 @@ func on_shot():
 func throw_bone():
 	thrown = true
 	var bone = BONE.instance()
-	get_tree().root.get_child(0).add_child(bone)
+	get_tree().root.get_child(0).call_deferred(\"add_child\", bone)
 	bone.position = $Position2D.global_position
-	bone.apply_central_impulse(throw_force)
+	bone.call_deferred(\"apply_central_impulse\", throw_force)
 
 func _on_PlayerDetection_body_entered(body):
 	if body is Player and state == HIDDEN:
@@ -977,13 +981,13 @@ func update_throwing():
 		
 func explode():
 	AudioManager.play_random_explosion_sound()
-	for i in range(4):
+	for _i in range(4):
 		var bone = BONE.instance()
 		get_tree().root.get_child(0).add_child(bone)
 		bone.position = $Position2D.global_position
 		bone.apply_central_impulse(Vector2(rand_range(-100, 100), rand_range(-100, -50)))
 
-	for i in range(2):
+	for _i in range(2):
 		var rock = ROCK.instance()
 		get_tree().root.get_child(0).add_child(rock)
 		rock.position = $Position2D.global_position

@@ -4,6 +4,12 @@ class_name MainMenu
 export (String, FILE, "*.tscn") var connecting_level_path = "res://Levels/OverworldLevel.tscn"
 export (Color) var sky_color = Color.deepskyblue
 
+# Save Data
+const SAVE_FILE_PATH := "user://save/"
+const SAVE_FILE_NAME := "SaveGame.tres"
+
+var save_game = SaveGame.new()
+
 onready var logo := $AspectRatioContainer/Logo
 onready var new_button := $MarginContainer/Control/Hbox/Vbox/NewGame
 onready var continue_button := $MarginContainer/Control/Hbox/Vbox/Continue
@@ -19,18 +25,27 @@ $MarginContainer/Control/Hbox/Vbox/Options,\
 $MarginContainer/Control/Hbox/Vbox/Exit\
 ]
 onready var controls_image := $ControlsImage
+onready var action_input_control := $ActionMapControl
+onready var menu := $MarginContainer
+onready var actions_list := $ActionMapControl/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList
+onready var options_button := $MarginContainer/Control/Hbox/Vbox/Options
 
 var phi = (1 + sqrt(5)) / 2  
 var growth_rate = phi / (phi * 60 * 60)
-var save_file_exists = false
 var controls_open = false
 
 func _ready():
+	verify_save_directory(SAVE_FILE_PATH)
 	AudioManager.play_main_theme()
 	VisualServer.set_default_clear_color(sky_color)
 	
+	print("save exitist: ", save_game_exists())
+	if save_game_exists():
+		continue_button.disabled = false
+	else:
+		continue_button.disabled = true
 	
-	if save_file_exists:
+	if save_game_exists():
 		continue_button.grab_focus()
 	else:
 		new_button.grab_focus()
@@ -51,10 +66,32 @@ var time_elapsed = 0.0
 func _process(delta):
 	time_elapsed += delta
 	logo.scale += Vector2(growth_rate, growth_rate) * delta
-	if not controls_image.visible && controls_open:
-		controls_image.show()
-	elif controls_image.visible && not controls_open:
-		controls_image.hide()
+	if not action_input_control.visible && controls_open:
+		action_input_control.show()
+		var actions = actions_list.get_children()
+		actions[0].grab_focus()
+		menu.hide()
+	elif action_input_control.visible && not controls_open:
+		action_input_control.hide()
+		options_button.grab_focus()
+		menu.show()
+
+func verify_save_directory(path: String):
+	var dir = Directory.new()
+	
+	if not dir.dir_exists(path):
+		var err = dir.make_dir_recursive(path)
+		if err != OK:
+			print("Failed to create directory: ", path)
+		else:
+			print("Directory created successfully: ", path)
+	else:
+		print("Directory already exists: ", path)
+	
+func save_game_exists() -> bool:
+	var file = File.new()
+	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
+	return file.file_exists(full_path)
 	
 func _input(event):
 	if event.is_action_released("ui_cancel") && controls_open:
@@ -70,13 +107,10 @@ func activate_options_menu():
 func deactivate_options_menu():
 	new_button.grab_focus()
 	options_menu.hide()
-	continue_button.set_disabled(not save_file_exists)
+	continue_button.set_disabled(not save_game_exists())
 	for button in main_buttons:
 		button.set_disabled(false)
 		
-	
-func _on_Play_pressed():
-	get_tree().change_scene(connecting_level_path)
 
 func _on_Options_pressed():
 	activate_options_menu()
@@ -98,7 +132,39 @@ func _on_Fx_pressed():
 func _on_Fullscreen_pressed():
 	fullscreen_checkbox.pressed = not fullscreen_checkbox.pressed
 	Events.emit_signal("toggle_fullscreen")
+	fullscreen_button.call_deferred("grab_focus")
 
 func _on_ControlsButton_pressed():
 	controls_open = true
 	deactivate_options_menu()
+
+func _on_Continue_pressed():
+	if not save_game_exists(): return
+	
+	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
+	save_game = ResourceLoader.load(full_path).duplicate(true)
+	load_event_data(save_game)
+	get_tree().change_scene(connecting_level_path)
+
+func load_event_data(data: Resource):
+	if data != null:
+		Events.death_counter = int(data.death_counter)
+		Events.collected_items = Array(data.collected_items)
+		Events.player_hit_points = int(data.player_hit_points)
+		Events.has_power_crook = bool(data.has_power_crook)
+		Events.lives = int(data.lives)
+		Events.has_left_hand = bool(data.has_left_hand)
+		Events.has_right_hand = bool(data.has_right_hand)
+		Events.has_pen15 = bool(data.has_pen15)
+		Events.has_head = bool(data.has_head)
+		Events.player_overworld_position = Vector2(data.player_overworld_position)
+		Events.unlocked_level_2 = bool(data.unlocked_level_2)
+		Events.unlocked_level_3 = bool(data.unlocked_level_3)
+		Events.ra_in_cave = bool(data.ra_in_cave)
+		Events.ra_has_jumped = bool(data.ra_has_jumped)
+		Events.levels_cleared = Dictionary(data.levels_cleared)
+
+func _on_NewGame_pressed():
+	var new_game_data = SaveGame.new()
+	load_event_data(new_game_data)
+	get_tree().change_scene(connecting_level_path)

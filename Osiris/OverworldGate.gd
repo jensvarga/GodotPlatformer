@@ -1,6 +1,5 @@
 extends Node2D
 
-export(String) var key_item_name
 export (bool) var test_open = false
 
 onready var gate_collider := $AnimatedSprite/StaticBody2D/GateCollider
@@ -10,7 +9,7 @@ func _ready():
 	if test_open:
 		open()
 		return
-	if key_item_name in Events.collected_items:
+	if Events.has_left_hand:
 		open()
 		
 func open():

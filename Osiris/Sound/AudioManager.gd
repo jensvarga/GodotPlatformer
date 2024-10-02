@@ -428,6 +428,7 @@ func play_main_theme():
 	else:
 		play_music(ORGASMS)
 
+const FALL_OF_RA = preload("res://Sound/Music/Original/Deflemask/FallOfRa.wav")
 const RA_CHANT1 := preload("res://Sound/FX/MISC/Ra_chant1.wav")
 const RA_CHANT2 := preload("res://Sound/FX/MISC/Ra_chant2.wav")
 const RA_CHANT3 := preload("res://Sound/FX/MISC/Ra_chant3.wav")
@@ -444,3 +445,6 @@ func play_ra_chant3():
 
 func play_ra_hurt():
 	play_sound(RA_HURT)
+
+func play_ra_music():
+	play_music(FALL_OF_RA)

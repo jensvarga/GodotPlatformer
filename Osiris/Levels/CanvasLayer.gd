@@ -23,6 +23,7 @@ func _ready():
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
 	Events.connect("gained_life", self, "_on_gained_life")
+	Events.connect("player_spawned", self, "_on_player_spawned")
 	
 	if Events.has_power_crook:
 		power_crook.show()
@@ -36,22 +37,25 @@ func _ready():
 		boss_life.hide()
 	
 	$LifeCounter.text = " x " + (Events.lives as String)
-	update_ankhs()
+	call_deferred("update_ankhs")
 	
 func _on_gained_life():
 	$LifeCounter.text = " x " + (Events.lives as String)
 	
 func _on_player_take_damage():
-	update_ankhs()
+	call_deferred("update_ankhs")
 	
 func _on_damage_boss():
-	update_boss_ankhs()
+	call_deferred("update_boss_ankhs")
 	
 func _on_pick_up_ankh():
-	update_ankhs()
+	call_deferred("update_ankhs")
 	
 func _on_pick_up_power_crook():
 	power_crook.show()
+
+func _on_player_spawned():
+	call_deferred("update_ankhs")
 
 func update_ankhs():
 	match Events.player_hit_points:

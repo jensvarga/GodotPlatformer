@@ -3,6 +3,9 @@ extends Node2D
 onready var bottom := $"../Bottom"
 onready var scrolling_bg := $"../ParallaxBackground"
 onready var start_timer := $StartTimer
+onready var price_timer := $PrizeTimer
+onready var tween := $Tween
+onready var head := $"../Head"
 
 var scroll_bottom = false
 var stopped = false
@@ -34,3 +37,9 @@ func _on_boss_died():
 func _on_StartTimer_timeout():
 	scroll_bottom = true
 	Events.player.enter_move()
+	price_timer.start()
+
+func _on_PrizeTimer_timeout():
+	AudioManager.play_fanfare()
+	tween.interpolate_property(head, "position", head.position, Vector2(head.position.x, 30), 5, Tween.TRANS_SINE, Tween.EASE_OUT)
+	tween.start()

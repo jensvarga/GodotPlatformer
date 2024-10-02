@@ -14,13 +14,21 @@ onready var darkness := $SubworldTiles
 
 onready var isis := $YSort/Isis
 onready var ra2 := $YSort/RA2
+onready var ra := $YSort/RA	
 
 var anubis_offset = -20
 var is_displaying_subworld = false
 var subworld_npcs
 
 func _ready():
-	subworld_npcs = [isis, ra2]
+	if Events.ra_in_cave:
+		print("in cve: ", Events.ra_in_cave)
+		subworld_npcs = [isis, ra2]
+	else:
+		subworld_npcs = [isis]
+	if Events.ra_in_cave or Events.ra_has_jumped:
+		ra.queue_free()
+		
 	subworld_tiles.hide()
 	main_world_tiles.show()
 	water_tiles.show()

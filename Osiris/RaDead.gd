@@ -7,7 +7,7 @@ const PARTICLES = preload("res://RaDeathParticles.tscn")
 
 func _physics_process(delta):
 	if dropping:
-		velocity.y = 200 * delta
+		velocity.y = 300 * delta
 		translate(velocity)
 
 func _on_RaDead_body_entered(body):

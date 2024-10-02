@@ -8,7 +8,7 @@
 [ext_resource path="res://Sprites/Backgrounds/underground_bbg_2.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Backgrounds/underground_bbg.png" type="Texture" id=7]
 [ext_resource path="res://RaLevelEvents.gd" type="Script" id=8]
-[ext_resource path="res://Sound/Music/Original/Deflemask/Celestial Cumshot.wav" type="AudioStream" id=9]
+[ext_resource path="res://Head.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Sprites/fall_floor.png" type="Texture" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
@@ -86,7 +86,6 @@ extents = Vector2( 251, 16 )
 [node name="FallOfRa" instance=ExtResource( 1 )]
 sky_color = Color( 0.164706, 0, 0, 1 )
 boss_level = true
-level_music = ExtResource( 9 )
 
 [node name="SpawnPoint" parent="." index="1"]
 position = Vector2( -137, -83 )
@@ -128,12 +127,19 @@ script = ExtResource( 8 )
 wait_time = 4.0
 one_shot = true
 
+[node name="PrizeTimer" type="Timer" parent="LevelEvents" index="1"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Tween" type="Tween" parent="LevelEvents" index="2"]
+
 [node name="EvilRa" parent="." index="10" instance=ExtResource( 4 )]
 position = Vector2( 145, 517 )
 stone_position_nodes = [ NodePath("../StonePositions/Position2D"), NodePath("../StonePositions/Position2D2"), NodePath("../StonePositions/Position2D3"), NodePath("../StonePositions/Position2D4"), NodePath("../StonePositions/Position2D5"), NodePath("../StonePositions/Position2D6"), NodePath("../StonePositions/Position2D7"), NodePath("../StonePositions/Position2D8"), NodePath("../StonePositions/Position2D9"), NodePath("../StonePositions/Position2D10"), NodePath("../StonePositions/Position2D11") ]
 
 [node name="Bottom" type="StaticBody2D" parent="." index="11"]
 position = Vector2( 0, 159 )
+collision_layer = 65
 
 [node name="Sprite" type="Sprite" parent="Bottom" index="0"]
 position = Vector2( 1, 0 )
@@ -180,4 +186,8 @@ position = Vector2( 151, 154 )
 [node name="Position2D11" type="Position2D" parent="StonePositions" index="10"]
 position = Vector2( 191, 154 )
 
+[node name="Head" parent="." index="13" instance=ExtResource( 9 )]
+position = Vector2( -1, -184 )
+
 [connection signal="timeout" from="LevelEvents/StartTimer" to="LevelEvents" method="_on_StartTimer_timeout"]
+[connection signal="timeout" from="LevelEvents/PrizeTimer" to="LevelEvents" method="_on_PrizeTimer_timeout"]

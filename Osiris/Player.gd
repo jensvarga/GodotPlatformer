@@ -178,8 +178,8 @@ func update_flying(delta):
 		sprite.animation = "Flying"
 		
 	var input = Vector2.ZERO
-	input.x = Input.get_axis("ui_left", "ui_right")
-	input.y = Input.get_axis("ui_up", "ui_down")
+	input.x = Input.get_axis("move_left", "move_right")
+	input.y = Input.get_axis("look_up", "look_down")
 	
 	if input == Vector2.ZERO:
 		apply_fly_friction(delta)
@@ -198,10 +198,10 @@ func apply_fly_acceleration(input, delta):
 	velocity.x = move_toward(velocity.x, player_move_data.MOVE_SPEED * input.x, player_move_data.ACCELERATION * delta)
 	
 func holding_left_wall():
-	return wall_check_left.is_colliding() and Input.is_action_pressed("ui_left")
+	return wall_check_left.is_colliding() and Input.is_action_pressed("move_left")
 	
 func holding_right_wall():
-	return wall_check_right.is_colliding() and Input.is_action_pressed("ui_right")
+	return wall_check_right.is_colliding() and Input.is_action_pressed("move_right")
 	
 func update_wall_jumping(grounded: bool):
 	if grounded or carrying or crouch:
@@ -244,10 +244,10 @@ func update_move(delta):
 		crouch = false
 	
 	var input = Vector2.ZERO
-	input.x = Input.get_axis("ui_left", "ui_right")
-	input.y = Input.get_axis("ui_up", "ui_down")
+	input.x = Input.get_axis("move_left", "move_right")
+	input.y = Input.get_axis("look_up", "look_down")
 	
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("look_down"):
 		crouch = true
 	
 	if input.x == 0 or crouch:
@@ -407,8 +407,8 @@ func flip_sprite(input_x):
 	
 func get_input():
 	var input = Vector2.ZERO
-	input.x = Input.get_axis("ui_left", "ui_right")
-	input.y = Input.get_axis("ui_up", "ui_down")
+	input.x = Input.get_axis("move_left", "move_right")
+	input.y = Input.get_axis("look_up", "look_down")
 	
 	velocity = input.normalized() * climb_speed
 
@@ -441,6 +441,11 @@ func bounce(amount):
 	impact_dust.position = Vector2(global_position.x, global_position.y + 5)
 	AudioManager.play_random_hit_sound()
 	velocity.y += -amount
+
+func knockback(force: Vector2):
+	yield(get_tree(), "physics_frame")
+	AudioManager.play_random_hit_sound()
+	velocity += force
 	
 func connect_camera(camera):
 	#var camera_path = camera.get_path()

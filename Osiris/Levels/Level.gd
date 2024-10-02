@@ -31,6 +31,7 @@ func _ready():
 	AudioManager.start_level_music(level_music)
 	Transition.play_start_transition()
 	CameraShaker.connect_anchor(camera_anchor)
+	Events.set_deferred("player_hit_points", 3)
 	call_deferred("spawn_player")
 		
 func _on_player_died():
@@ -71,3 +72,7 @@ func _on_transition_completed():
 	AudioManager.current_level = 0
 	Events.levels_cleared[level_index] = true
 	get_tree().change_scene(next_level_path)
+
+func _on_AutosaveTimer_timeout():
+	Events.save_game_data()
+	print("Game autosaved")

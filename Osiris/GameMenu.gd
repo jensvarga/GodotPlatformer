@@ -6,6 +6,9 @@ onready var return_button := $Control/Vbox/Return
 var main_menu_path = "res://MainMenu.tscn"
 var overworld_path = "res://Levels/OverworldLevel.tscn"
 
+const SAVE_FILE_PATH := "user://save/"
+const SAVE_FILE_NAME := "SaveGame.tres"
+
 var menu_active = false
 
 func _ready():
@@ -18,7 +21,7 @@ func _input(event):
 			activate_game_menu()
 		else:
 			return_to_game()
-	
+			
 func activate_game_menu():
 	return_button.grab_focus()
 	menu_control.show()
@@ -47,9 +50,11 @@ func _on_Restart_pressed():
 func _on_Exit_pressed():
 	get_tree().paused = false
 	exit_level()
+	Events.save_game_data()
 	get_tree().change_scene(overworld_path)
 
 func _on_MainMenu_pressed():
 	get_tree().paused = false
 	exit_level()
+	Events.save_game_data()
 	get_tree().change_scene(main_menu_path)

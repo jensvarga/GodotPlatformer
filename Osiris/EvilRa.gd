@@ -70,7 +70,7 @@ func _physics_process(delta):
 func enter_enter():
 	update_suns()
 	state = ENTER
-	sprite.animation = "Idle"
+	sprite.animation = "FireSpin"
 	hurt_animation_player.play("Burn")
 	target_point = start_point
 	travel_to(target_point)
@@ -155,6 +155,7 @@ func update_chase(delta):
 func update_enter():
 	var distance := global_transform.origin.distance_to(target_point)
 	if distance < 10:
+		AudioManager.play_ra_music()
 		hurt_animation_player.play("RESET")
 		nr_of_suns = 1
 		respawn_sun_timer.start()
@@ -312,6 +313,8 @@ func _on_FireSpinTimer_timeout():
 func _on_FireSpinnerArea_body_entered(body):
 	if body is Player:
 		player = body
+		var dir = (body.global_position - global_position).normalized()
+		body.knockback(dir * 200)
 		body.hurt()
 
 func _on_AnimatedSprite_animation_finished():
@@ -321,6 +324,8 @@ func _on_AnimatedSprite_animation_finished():
 func _on_Area2D_body_entered(body):
 	if body is Player:
 		player = body
+		var dir = (body.global_position - global_position).normalized()
+		body.knockback(dir * 200)
 		body.hurt()
 
 func _on_RespawnSunTimer_timeout():
@@ -338,3 +343,6 @@ func _on_boss_died():
 	get_parent().call_deferred("add_child", body)
 	body.position = global_position
 	queue_free()
+
+func _on_EnterChantTimer_timeout():
+	AudioManager.play_ra_chant1()

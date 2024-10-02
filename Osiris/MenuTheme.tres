@@ -43,3 +43,4 @@ CheckButton/constants/check_vadjust = -2
 CheckButton/constants/hseparation = 5
 CheckButton/icons/off = ExtResource( 3 )
 CheckButton/icons/on = ExtResource( 2 )
+Label/colors/font_color = Color( 0.713726, 0.568627, 0.223529, 1 )

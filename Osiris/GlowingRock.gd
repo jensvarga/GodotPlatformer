@@ -17,6 +17,8 @@ func _physics_process(delta):
 
 func _on_GlowingRock_body_entered(body):
 	if body is Player:
+		var dir = (body.global_position - global_position).normalized()
+		body.knockback(dir * 200)
 		body.hurt()
 
 func _on_TelegraphTimer_timeout():

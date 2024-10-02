@@ -80,6 +80,7 @@ func _ready():
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("boss_died", self, "_on_boss_died")
 	body_sprite.material.set("shader_param/sensitivity", 0)
+	animation_player.play("RESET")
 
 func _physics_process(delta):
 	match state:
@@ -229,11 +230,11 @@ func update_shoot():
 		for i in range(num_projectiles):
 			var projectile = PROJECTILE.instance()
 			var angle = i * angle_increment
-			var direction = Vector2(cos(angle), sin(angle))
+			var _direction = Vector2(cos(angle), sin(angle))
 			
 			projectile.position = fire_position.global_position
 			var angular_velocity = rand_range(-1, 1)
-			projectile.set_direction(direction, angle, angular_velocity)
+			projectile.set_direction(_direction, angle, angular_velocity)
 		
 			get_parent().call_deferred("add_child", projectile)
 	else:
@@ -267,7 +268,9 @@ func face_direction():
 		body_sprite.scale.x = 1
 		wings_sprite.scale.x = 1
 		
-func hurt():
+func on_hurt():
+	if invincible:
+		return
 	Events.emit_signal("damage_boss")
 	animation_player.play("Hurt")
 	AudioManager.play_random_hit_sound()
@@ -275,7 +278,7 @@ func hurt():
 
 func on_shot():
 	if not invincible:
-		hurt()
+		on_hurt()
 
 func _on_damage_boss():
 	if Events.boss_hit_points < 6:

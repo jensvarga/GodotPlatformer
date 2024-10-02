@@ -115,7 +115,8 @@ tracks/1/keys = {
 }
 
 [node name="RaDead" type="Area2D"]
-collision_layer = 2
+collision_layer = 0
+collision_mask = 64
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]

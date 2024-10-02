@@ -590,6 +590,7 @@ position = Vector2( 571, 455 )
 texture = ExtResource( 27 )
 
 [node name="Subworld" type="Node2D" parent="."]
+visible = false
 
 [node name="SubworldTiles" type="TileMap" parent="Subworld"]
 tile_set = SubResource( 22 )
@@ -654,8 +655,6 @@ NPC_DIALOGUE = [ "Horus, I regret to inform you, but your journey cannot proceed
 
 [node name="OverworldGate" parent="YSort" instance=ExtResource( 16 )]
 position = Vector2( -30, 171 )
-key_item_name = "LeftHand"
-test_open = true
 
 [node name="OverworldStatue" parent="YSort" instance=ExtResource( 21 )]
 position = Vector2( -203, -493 )

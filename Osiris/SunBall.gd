@@ -25,4 +25,6 @@ func _on_VisibilityNotifier2D_screen_exited():
 func _on_SunBall_body_entered(body):
 	if body is Player:
 		body.hurt()
+		var dir = (body.global_position - global_position).normalized()
+		body.knockback(dir * 200)
 		destroy()

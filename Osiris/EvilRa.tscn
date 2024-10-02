@@ -389,6 +389,7 @@ rotate = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D/PathFollow2D"]
 rotation = 3.1765
 frames = SubResource( 12 )
+frame = 2
 playing = true
 
 [node name="Area2D" type="Area2D" parent="SunPath2D/PathFollow2D"]
@@ -410,7 +411,7 @@ rotate = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D2/PathFollow2D"]
 rotation = 4.27606
 frames = SubResource( 12 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="SunPath2D2/PathFollow2D"]
@@ -432,7 +433,7 @@ rotate = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D3/PathFollow2D"]
 rotation = 0.436332
 frames = SubResource( 12 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="SunPath2D3/PathFollow2D"]
@@ -472,6 +473,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 70 )
 
+[node name="EnterChantTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
 [connection signal="body_entered" from="FireSpinnerArea" to="." method="_on_FireSpinnerArea_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="body_entered" from="SunPath2D/PathFollow2D/Area2D" to="." method="_on_Area2D_body_entered"]
@@ -482,3 +488,4 @@ shape = SubResource( 70 )
 [connection signal="timeout" from="FireSpinTimer" to="." method="_on_FireSpinTimer_timeout"]
 [connection signal="timeout" from="RespawnSunTimer" to="." method="_on_RespawnSunTimer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="EnterChantTimer" to="." method="_on_EnterChantTimer_timeout"]
