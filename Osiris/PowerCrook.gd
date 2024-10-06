@@ -4,7 +4,10 @@ onready var sprite := $Sprite
 var collected = false
 
 func _ready():
-	pass # Replace with function body.
+	if Events.has_power_crook:
+		collected = true
+		sprite.hide()
+		$Area2D/CollisionShape2D.set_deferred("disabled", true)
 
 func _on_Area2D_body_entered(body):
 	if body is Player and not collected:

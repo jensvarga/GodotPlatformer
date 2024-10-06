@@ -8,6 +8,7 @@ export var player_hit_points := 3
 
 # Powerups
 export var has_power_crook = false
+export var has_talaria = false
 export var lives = 3
 
 # Bodyparts

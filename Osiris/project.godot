@@ -65,6 +65,16 @@ _global_script_classes=[ {
 "path": "res://MainMenu.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "MamaScorp",
+"language": "GDScript",
+"path": "res://MamaScorp.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "MamaScorpu",
+"language": "GDScript",
+"path": "res://MamaScorpu.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "OverworldPlayer",
 "language": "GDScript",
 "path": "res://OverwoldRPGPlayer.gd"
@@ -151,6 +161,8 @@ _global_script_class_icons={
 "HorEmAkhet": "",
 "Key": "",
 "MainMenu": "",
+"MamaScorp": "",
+"MamaScorpu": "",
 "OverworldPlayer": "",
 "PitOfDoom": "",
 "Player": "",

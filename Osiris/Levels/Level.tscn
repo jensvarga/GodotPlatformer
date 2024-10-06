@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://SpawnPoint.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Sprites/UI/Fonts/SuperLegendBoy-4w8Y.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://Sprites/power_crook.png" type="Texture" id=14]
 [ext_resource path="res://PlayerCamera.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Sprites/Talaria.png" type="Texture" id=16]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 7 )
@@ -130,6 +131,10 @@ animation = "Empty"
 [node name="PowerCrook" type="Sprite" parent="CanvasLayer"]
 position = Vector2( 80, 11 )
 texture = ExtResource( 14 )
+
+[node name="Talaria" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 100, 11 )
+texture = ExtResource( 16 )
 
 [node name="eye_of_horus" type="Sprite" parent="CanvasLayer"]
 position = Vector2( 130, 10 )

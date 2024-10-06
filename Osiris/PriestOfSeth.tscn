@@ -1,0 +1,151 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Sprites/priest_of_seth.png" type="Texture" id=1]
+[ext_resource path="res://PriestOfSeth.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=59]
+code = "shader_type canvas_item;
+
+uniform bool active = true;
+uniform float luminance_threshold = 0.4;
+uniform vec4 color : hint_color = vec4(1.0, 1.0, 1.0, 1.0); // Tint color
+
+uniform float alpha_threshold = 0.01;  // Minimum alpha value to consider
+
+void fragment() {
+    vec4 previous_color = texture(TEXTURE, UV);
+    vec4 new_color = previous_color;
+
+    // Only modify the color if the pixel is not fully transparent and the shader is active
+    if (active && previous_color.a > alpha_threshold) {
+        float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+
+        // Apply the color if the luminance is above the threshold
+        if (luminance > luminance_threshold) {
+            new_color.rgb = color.rgb;
+            new_color.a = previous_color.a * color.a; // Apply the alpha from the color uniform
+        }
+    }
+
+    COLOR = new_color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=60]
+resource_local_to_scene = true
+shader = SubResource( 59 )
+shader_param/active = false
+shader_param/luminance_threshold = 0.9
+shader_param/color = Color( 1, 0, 0, 1 )
+shader_param/alpha_threshold = 0.01
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 44, 44 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 44, 0, 44, 44 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 88, 0, 44, 44 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 44, 0, 44, 44 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 132, 0, 44, 44 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ) ],
+"loop": false,
+"name": "Shoot",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 7, 16.75 )
+
+[sub_resource type="Animation" id=61]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=62]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="RectangleShape2D" id=63]
+extents = Vector2( 76, 18 )
+
+[node name="PriestOfSeth" type="StaticBody2D"]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 60 )
+frames = SubResource( 6 )
+animation = "Shoot"
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 3, 4.25 )
+shape = SubResource( 7 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( -14, -4 )
+
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Hurt = SubResource( 61 )
+anims/RESET = SubResource( 62 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+process_parent = true
+physics_process_parent = true
+
+[node name="TurnArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TurnArea"]
+position = Vector2( 88, 1 )
+shape = SubResource( 63 )
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_IdleTimer_timeout"]
+[connection signal="body_entered" from="TurnArea" to="." method="_on_TurnArea_body_entered"]

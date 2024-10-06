@@ -528,7 +528,7 @@ connecting_level_path = "res://LandOfManu.tscn"
 [node name="LevelCarpet3" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( 735, -525 )
 level_index = 2
-connecting_level_path = "res://Levels/Level4.tscn"
+connecting_level_path = "res://Hierakonpolis.tscn"
 
 [node name="LevelCarpet" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( 577, 345 )

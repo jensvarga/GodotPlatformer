@@ -2,12 +2,17 @@ extends Area2D
 
 const SPEED = 200
 
+onready var sprite := $Sprite
+
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
 
 func set_direction(_direction: Vector2):
 	direction = _direction.normalized()
 	rotation = direction.angle()
+
+func set_hue(shift: float):
+	sprite.material.set_shader_param("Shift_Hue", shift)
 
 func _physics_process(delta):
 	velocity = SPEED * direction

@@ -7,6 +7,7 @@
 extents = Vector2( 9, 8 )
 
 [node name="SpikeBall" type="Area2D"]
+collision_layer = 64
 collision_mask = 2
 script = ExtResource( 2 )
 
@@ -19,6 +20,8 @@ position = Vector2( 0, 2 )
 polygon = PoolVector2Array( 12, -11, 4, -10, 1, -16, -4, -10, -12, -12, -10, -4, -16, -1, -10, 3, -12, 11, -5, 8, -1, 15, 2, 8, 10, 11, 7, 2, 7, 2, 16, 0, 8, -4 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( 0, 1 )

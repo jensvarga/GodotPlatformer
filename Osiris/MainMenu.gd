@@ -152,6 +152,7 @@ func load_event_data(data: Resource):
 		Events.collected_items = Array(data.collected_items)
 		Events.player_hit_points = int(data.player_hit_points)
 		Events.has_power_crook = bool(data.has_power_crook)
+		Events.has_talaria = bool(data.has_talaria)
 		Events.lives = int(data.lives)
 		Events.has_left_hand = bool(data.has_left_hand)
 		Events.has_right_hand = bool(data.has_right_hand)

@@ -59,12 +59,19 @@ var start_grab_position = 1
 var fire_delay = false
 var firing = false
 
+# Double jump
+var double_jumped_unlocked = false
+var jumps_left = 2
+
 func _ready():
-	Events.connect("pick_up_power_up", self, "_on_pick_up_power_up" )
+	Events.connect("pick_up_power_up", self, "_on_pick_up_power_up")
+	Events.connect("pick_up_talaria", self, "_on_pick_up_talaria")
 	start_grab_position = grab_position.position.x
 	enter_move()
 	crouch_collider.set_deferred("disabled", true)
 	animation_player.play("RESET")
+	double_jumped_unlocked = Events.has_talaria
+	
 
 func _physics_process(delta):
 	if state != DEAD and Events.player_hit_points <= 0:
@@ -310,13 +317,11 @@ func update_move(delta):
 			velocity.y = height
 
 			buffered_jump = false
+			jumps_left -= 1
 	else:
 		if not crouch:
-			if carrying:
-				sprite.animation = "JumpCarry"
-			else:
 				set_jump_animation()
-
+	
 		if Input.is_action_just_released("ui_jump") and velocity.y < player_move_data.MIN_JUMP_HEIGHT:
 			var height = player_move_data.MIN_JUMP_HEIGHT + extra
 			velocity.y = height
@@ -342,6 +347,7 @@ func update_move(delta):
 	var just_left_ground = not is_on_floor() and was_on_floor
 	if just_left_ground and velocity.y >= 0:
 		coyote_jump = true
+		jumps_left = 2
 		coyote_timer.start()
 
 func update_climb(delta):
@@ -465,7 +471,9 @@ func set_idle_animation():
 		sprite.animation = "Idle"
 		
 func set_jump_animation():
-	if Events.has_power_crook:
+	if carrying:
+		sprite.animation = "JumpCarry"
+	elif Events.has_power_crook:
 		sprite.animation = "JumpCrook"
 	else:
 		sprite.animation = "Jump"
@@ -508,6 +516,9 @@ func set_carry_item_height():
 		item_instsance.position.y = grab_position.position.y + 6
 		if crouch:
 			item_instsance.position.y = grab_position.position.y + 13
+
+func _on_pick_up_talaria():
+	double_jumped_unlocked = true
 	
 func _on_JumpBufferTimer_timeout():
 	buffered_jump = false

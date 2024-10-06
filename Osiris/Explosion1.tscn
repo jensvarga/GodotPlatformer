@@ -46,7 +46,6 @@ animations = [ {
 [node name="Explosion1" type="AnimatedSprite"]
 position = Vector2( 0, -11 )
 frames = SubResource( 9 )
-frame = 7
 playing = true
 script = ExtResource( 2 )
 

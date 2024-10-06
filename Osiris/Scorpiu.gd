@@ -1,6 +1,6 @@
 extends Enemy
 
-export (int) var MOVE_SPEED = 25
+export (int) var MOVE_SPEED = 70
 export (int) var DEATH_BOUNCE = -200
 
 onready var ledgeCheckRight: = $LedgeCheckRight
@@ -11,9 +11,12 @@ onready var sprite: = $AnimatedSprite
 onready var hurt_area_collision: = $HurtArea/CollisionShape2D
 onready var hitbox_collision = $Hitbox/CollisionShape2D
 onready var remove_timer := $RemoveTimer
+onready var attack_timer := $AttackTimer
+onready var turn_timer := $TurnTimer
 
 var rng = RandomNumberGenerator.new()
 var freeze = false
+var did_just_turn = false
 
 func _physics_process(delta):
 	if freeze: return
@@ -30,11 +33,19 @@ func _physics_process(delta):
 	var found_ledge_left = not ledgeCheckLeft.is_colliding()
 	var found_ledge = found_ledge_right or found_ledge_left
 	
-	if found_wall or found_ledge:
+	if found_wall or found_ledge and is_on_floor() and not did_just_turn:
+		did_just_turn = true
 		direction *= -1
 		flip_sprite()
+		turn_timer.start()
 		
-	velocity = direction * MOVE_SPEED
+	velocity.x = direction.x * MOVE_SPEED
+	
+	# Fix backwards sprite after attacking
+	if direction.x > 0 and not sprite.flip_h:
+		flip_sprite()
+	elif direction.x < 0 and sprite.flip_h:
+		flip_sprite()
 
 	sprite.animation = "Walk"
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -43,6 +54,7 @@ func attack(body):
 	face(body)
 	sprite.animation = "Attack"
 	freeze = true
+	attack_timer.start()
 	
 func flip_sprite():
 	sprite.flip_h = not sprite.flip_h
@@ -63,6 +75,9 @@ func face(body):
 	if (direction > 0 and not sprite.flip_h) or (direction < 0 and sprite.flip_h):
 		flip_sprite()
 
+func on_shot():
+	die()
+	
 func die():
 	if dead: return
 	AudioManager.play_random_hit_sound()
@@ -84,6 +99,11 @@ func _on_Area2D_body_entered(body):
 		if body.state == body.KICKED:
 			die()
 
-
 func _on_RemoveTimer_timeout():
 	queue_free()
+
+func _on_AttackTimer_timeout():
+	freeze = false
+
+func _on_TurnTimer_timeout():
+	did_just_turn = false

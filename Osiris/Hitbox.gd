@@ -19,3 +19,6 @@ func _on_Hitbox_body_entered(body):
 		(kinematic_body.state == kinematic_body.KICKED or 
 		kinematic_body.state == kinematic_body.DEAD)):
 		body.die()
+
+func on_shot():
+	$"..".on_shot()

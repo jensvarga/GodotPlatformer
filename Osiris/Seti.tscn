@@ -546,7 +546,7 @@ script = ExtResource( 1 )
 material = SubResource( 22 )
 frames = SubResource( 9 )
 animation = "Bats"
-frame = 1
+frame = 2
 playing = true
 script = ExtResource( 3 )
 

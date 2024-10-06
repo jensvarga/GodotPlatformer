@@ -42,6 +42,7 @@ var teleport_locations = [
 onready var collision_shape := $CollisionShape2D
 onready var hit_shape := $HitBox/CollisionShape2D
 onready var projectile_collider := $ProjectileForceField/CollisionShape2D
+onready var head_shape := $HurtBox/CollisionShape2D
 
 # Tornado colliders
 onready var tf_center := $HitBox/CollisionCenter
@@ -197,6 +198,7 @@ func enter_dead():
 	projectile_collider.set_deferred("disabled", true)
 	sprite.animation = "Die"
 	collision_shape.set_deferred("disabled", true)
+	head_shape.set_deferred("disabled", true)
 	AudioManager.fade_music()
 
 # Update states

@@ -16,12 +16,14 @@ onready var boss_ankh5 := $BossLife/BossAnkh5
 onready var boss_ankh6 := $BossLife/BossAnkh6
 
 onready var power_crook := $PowerCrook
+onready var talaria := $Talaria
 
 func _ready():
 	Events.connect("player_take_damage", self, "_on_player_take_damage")
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
+	Events.connect("pick_up_talaria", self, "on_pick_up_talaria")
 	Events.connect("gained_life", self, "_on_gained_life")
 	Events.connect("player_spawned", self, "_on_player_spawned")
 	
@@ -29,6 +31,11 @@ func _ready():
 		power_crook.show()
 	else:
 		power_crook.hide()
+	
+	if Events.has_talaria:
+		talaria.show()
+	else:
+		talaria.hide()
 	
 	if level.boss_level:
 		Events.boss_hit_points = max_boss_hp
@@ -53,6 +60,9 @@ func _on_pick_up_ankh():
 	
 func _on_pick_up_power_crook():
 	power_crook.show()
+
+func on_pick_up_talaria():
+	talaria.show()
 
 func _on_player_spawned():
 	call_deferred("update_ankhs")

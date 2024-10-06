@@ -84,6 +84,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 extents = Vector2( 251, 16 )
 
 [node name="FallOfRa" instance=ExtResource( 1 )]
+level_index = 4
 sky_color = Color( 0.164706, 0, 0, 1 )
 boss_level = true
 

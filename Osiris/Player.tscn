@@ -443,7 +443,7 @@ material = ExtResource( 10 )
 position = Vector2( 0, 1 )
 frames = SubResource( 3 )
 animation = "Flying"
-frame = 2
+frame = 3
 playing = true
 
 [node name="LadderCheck" type="RayCast2D" parent="."]

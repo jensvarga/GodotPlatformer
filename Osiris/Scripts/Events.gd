@@ -21,6 +21,7 @@ signal gained_life
 signal killed_miniboss
 signal ra_jumped
 signal player_spawned
+signal pick_up_talaria
 
 # Global variables
 var check_point_reached = false
@@ -31,6 +32,7 @@ var player_hit_points = 3
 var boss_hit_points = 6
 var has_power_crook = false
 var lives = 3
+var has_talaria = false
 
 # Bodyparts
 var has_left_hand = false
@@ -73,6 +75,7 @@ func _ready():
 	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
 	Events.connect("gained_life", self, "on_gained_life")
 	Events.connect("ra_jumped", self, "_on_ra_jumped")
+	Events.connect("pick_up_talaria", self, "_on_pick_up_talaria")
 
 func on_gained_life():
 	lives += 1
@@ -80,6 +83,9 @@ func on_gained_life():
 func _on_pick_up_power_crook():
 	has_power_crook = true
 	Events.emit_signal("pick_up_power_up")
+
+func _on_pick_up_talaria():
+	has_talaria = true
 	
 func _on_player_take_damage():
 	if player_hit_points - 1 <= 0:
@@ -162,6 +168,7 @@ func save_game_data():
 	save_game.player_hit_points = Events.player_hit_points
 
 	save_game.has_power_crook = Events.has_power_crook
+	save_game.has_talaria = Events.has_talaria
 	save_game.lives = Events.lives
 
 	save_game.has_left_hand = Events.has_left_hand
@@ -170,7 +177,7 @@ func save_game_data():
 	save_game.has_head = Events.has_head
 
 	save_game.player_overworld_position = Events.player_overworld_position
-	save_game.unlocked_level_2 = Events.unlocked_level_2
+	save_game.unlocked_level_2 = Events.uanlocked_level_2
 	save_game.unlocked_level_3 = Events.unlocked_level_3
 	save_game.ra_in_cave = Events.ra_in_cave
 	save_game.ra_has_jumped = Events.ra_has_jumped
