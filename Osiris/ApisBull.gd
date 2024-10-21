@@ -3,7 +3,7 @@ extends KinematicBody2D
 const SPEED = 300
 const PARTICLES = preload("res://BullParicles.tscn")
 
-enum { IDLE, THRUST, ATTACK }
+enum { PAUSE, IDLE, THRUST, ATTACK }
 var state = IDLE
 var velocity = Vector2.ZERO
 export (int) var direction = -1
@@ -20,12 +20,20 @@ func _ready():
 	
 func _physics_process(delta):
 	match state:
+		PAUSE:
+			pass
 		IDLE:
 			update_idle()
 		THRUST:
 			update_thrust()
 		ATTACK:
 			update_attack()
+
+func enter_pause():
+	state = PAUSE
+	thrust_timer.stop()
+	idle_timer.stop()
+	attack_timer.stop()
 	
 func enter_idle():
 	state = IDLE
@@ -99,3 +107,6 @@ func _on_Hitbox_body_entered(body):
 
 func _on_VisibilityEnabler2D_screen_entered():
 	enter_idle()
+
+func _on_VisibilityEnabler2D_screen_exited():
+	enter_pause()

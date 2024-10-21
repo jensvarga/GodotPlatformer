@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=97 format=2]
 
 [ext_resource path="res://Sprites/PLayer/run_with_crook.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -11,6 +11,11 @@
 [ext_resource path="res://Sprites/PLayer/horus_fire.png" type="Texture" id=9]
 [ext_resource path="res://HurtMaterial.tres" type="Material" id=10]
 [ext_resource path="res://Sprites/PLayer/flying_horus.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/PLayer/idle_with_talaria.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/PLayer/run_with_talaria.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/PLayer/jump_with_talaria.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/PLayer/horus_fire_talaria.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/PLayer/flying_horus_talaria.png" type="Texture" id=16]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 13 )
@@ -70,12 +75,24 @@ region = Rect2( 96, 64, 32, 32 )
 atlas = ExtResource( 8 )
 region = Rect2( 0, 0, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=93]
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 32, 32 )
+
 [sub_resource type="AtlasTexture" id=77]
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 46, 32 )
 
 [sub_resource type="AtlasTexture" id=78]
 atlas = ExtResource( 9 )
+region = Rect2( 46, 0, 46, 32 )
+
+[sub_resource type="AtlasTexture" id=95]
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 46, 32 )
+
+[sub_resource type="AtlasTexture" id=96]
+atlas = ExtResource( 15 )
 region = Rect2( 46, 0, 46, 32 )
 
 [sub_resource type="AtlasTexture" id=79]
@@ -92,6 +109,22 @@ region = Rect2( 96, 0, 48, 49 )
 
 [sub_resource type="AtlasTexture" id=82]
 atlas = ExtResource( 11 )
+region = Rect2( 144, 0, 48, 49 )
+
+[sub_resource type="AtlasTexture" id=97]
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 48, 49 )
+
+[sub_resource type="AtlasTexture" id=98]
+atlas = ExtResource( 16 )
+region = Rect2( 48, 0, 48, 49 )
+
+[sub_resource type="AtlasTexture" id=99]
+atlas = ExtResource( 16 )
+region = Rect2( 96, 0, 48, 49 )
+
+[sub_resource type="AtlasTexture" id=100]
+atlas = ExtResource( 16 )
 region = Rect2( 144, 0, 48, 49 )
 
 [sub_resource type="AtlasTexture" id=23]
@@ -142,6 +175,22 @@ region = Rect2( 64, 0, 32, 32 )
 atlas = ExtResource( 7 )
 region = Rect2( 96, 0, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=83]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=84]
+atlas = ExtResource( 12 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=85]
+atlas = ExtResource( 12 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=86]
+atlas = ExtResource( 12 )
+region = Rect2( 96, 0, 32, 32 )
+
 [sub_resource type="AtlasTexture" id=58]
 atlas = ExtResource( 5 )
 region = Rect2( 32, 64, 32, 32 )
@@ -152,6 +201,10 @@ region = Rect2( 64, 64, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=75]
 atlas = ExtResource( 8 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=94]
+atlas = ExtResource( 14 )
 region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=47]
@@ -230,6 +283,30 @@ region = Rect2( 128, 0, 32, 32 )
 atlas = ExtResource( 1 )
 region = Rect2( 160, 0, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=87]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=88]
+atlas = ExtResource( 13 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=89]
+atlas = ExtResource( 13 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=90]
+atlas = ExtResource( 13 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=91]
+atlas = ExtResource( 13 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=92]
+atlas = ExtResource( 13 )
+region = Rect2( 160, 0, 32, 32 )
+
 [sub_resource type="AtlasTexture" id=56]
 atlas = ExtResource( 5 )
 region = Rect2( 32, 160, 32, 32 )
@@ -281,14 +358,29 @@ animations = [ {
 "name": "FallCrook",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 93 ) ],
+"loop": false,
+"name": "FallTalaria",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 77 ), SubResource( 78 ) ],
 "loop": false,
 "name": "Fire",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 95 ), SubResource( 96 ) ],
+"loop": false,
+"name": "FireTalaria",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ) ],
 "loop": true,
 "name": "Flying",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 97 ), SubResource( 98 ), SubResource( 99 ), SubResource( 100 ) ],
+"loop": true,
+"name": "FlyingTalaria",
 "speed": 10.0
 }, {
 "frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
@@ -306,6 +398,11 @@ animations = [ {
 "name": "IdleCrook",
 "speed": 3.0
 }, {
+"frames": [ SubResource( 83 ), SubResource( 84 ), SubResource( 85 ), SubResource( 86 ) ],
+"loop": true,
+"name": "IdleTalaria",
+"speed": 3.0
+}, {
 "frames": [ SubResource( 58 ) ],
 "loop": false,
 "name": "Jump",
@@ -319,6 +416,11 @@ animations = [ {
 "frames": [ SubResource( 75 ) ],
 "loop": false,
 "name": "JumpCrook",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 94 ) ],
+"loop": false,
+"name": "JumpTalaria",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 47 ) ],
@@ -339,6 +441,11 @@ animations = [ {
 "frames": [ SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ) ],
 "loop": true,
 "name": "RunCrook",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 87 ), SubResource( 88 ), SubResource( 89 ), SubResource( 90 ), SubResource( 91 ), SubResource( 92 ) ],
+"loop": true,
+"name": "RunTalaria",
 "speed": 10.0
 }, {
 "frames": [ SubResource( 56 ) ],
@@ -442,8 +549,8 @@ shape = SubResource( 18 )
 material = ExtResource( 10 )
 position = Vector2( 0, 1 )
 frames = SubResource( 3 )
-animation = "Flying"
-frame = 3
+animation = "FlyingTalaria"
+frame = 2
 playing = true
 
 [node name="LadderCheck" type="RayCast2D" parent="."]

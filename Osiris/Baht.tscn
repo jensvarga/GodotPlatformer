@@ -1,0 +1,410 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://Baht.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Baht.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Overworld/temp_block.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape2D" id=24]
+radius = 13.0
+height = 44.0
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 8, 36 )
+
+[sub_resource type="Shader" id=22]
+code = "shader_type canvas_item;
+
+uniform bool active_bob = true;
+uniform float amplitude : hint_range(0.0, 50.0) = 10.0;  // The height of the bobbing
+uniform float speed : hint_range(0.0, 10.0) = 1.0;       // The speed of the bobbing
+
+uniform bool active_flash = true;
+uniform float luminance_threshold = 0.4;
+uniform vec4 flash_color : hint_color = vec4(1.0, 0.0, 0.0, 1.0);  // Default to red flash
+
+uniform bool active_dissolve = false;
+uniform float sensitivity : hint_range(0.0, 1.0) = 0.5;
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 438.5453);
+}
+
+void fragment() {
+	// Bobbing effect
+	float offsetY = 0.0;
+	if (active_bob) {
+		offsetY = amplitude * sin(TIME * speed);
+	}
+
+	// Apply the bobbing to the UV coordinates
+	vec2 new_uv = UV + vec2(0.0, offsetY) / 500.0;
+	vec4 previous_color = texture(TEXTURE, new_uv);
+
+	// Check for transparency
+	if (previous_color.a < 0.01) {
+		discard; // Skip rendering completely for transparent pixels
+	}
+
+	// Flashing effect
+	vec4 final_color = previous_color;
+	if (active_flash) {
+		float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+
+		if (luminance > luminance_threshold) {
+			final_color.rgb = flash_color.rgb;
+		}
+	}
+
+	// Dissolve effect
+	if (active_dissolve) {
+		// Get size of texture in pixels
+		float size_x = float(textureSize(TEXTURE, 0).x);
+		float size_y = float(textureSize(TEXTURE, 0).y);
+
+		// Create a new \"UV\" which remaps every UV value to a snapped pixel value
+		vec2 UVr = vec2(floor(new_uv.x * size_x) / size_x, floor(new_uv.y * size_y) / size_y);
+		
+		// Determine whether pixel should be visible or not
+		float visible = step(sensitivity, random(UVr));
+		
+		// Modify the alpha channel based on the dissolve effect
+		final_color.a = min(visible, final_color.a);
+	}
+
+	// Output the final color
+	COLOR = final_color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=23]
+shader = SubResource( 22 )
+shader_param/active_bob = true
+shader_param/amplitude = 10.0
+shader_param/speed = 2.0
+shader_param/active_flash = false
+shader_param/luminance_threshold = 0.4
+shader_param/flash_color = Color( 1, 0, 0, 1 )
+shader_param/active_dissolve = true
+shader_param/sensitivity = 0.0
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 768, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 864, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 384, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 480, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 576, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 672, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 1152, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 192, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 288, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 2 )
+region = Rect2( 1920, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 2 )
+region = Rect2( 2016, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 960, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 1056, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 2 )
+region = Rect2( 1248, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 2 )
+region = Rect2( 1344, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 2 )
+region = Rect2( 1440, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 2 )
+region = Rect2( 1536, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 2 )
+region = Rect2( 1632, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 2 )
+region = Rect2( 1728, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 2 )
+region = Rect2( 1824, 0, 96, 96 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 11 ), SubResource( 12 ) ],
+"loop": true,
+"name": "Fall",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "Hoover",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ) ],
+"loop": false,
+"name": "Hypno",
+"speed": 1.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 3.0
+}, {
+"frames": [ SubResource( 34 ), SubResource( 35 ) ],
+"loop": true,
+"name": "Reset",
+"speed": 6.0
+}, {
+"frames": [ SubResource( 14 ), SubResource( 15 ) ],
+"loop": true,
+"name": "Telegraph",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 27 ) ],
+"loop": false,
+"name": "VunerableHypno",
+"speed": 1.0
+}, {
+"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ) ],
+"loop": true,
+"name": "VunerableIdle",
+"speed": 3.0
+}, {
+"frames": [ SubResource( 28 ), SubResource( 29 ) ],
+"loop": true,
+"name": "VunerableTelegraph",
+"speed": 10.0
+} ]
+
+[sub_resource type="Shader" id=36]
+code = "shader_type canvas_item;
+
+uniform float pixel_size = 10.0;  // Size of the pixelation
+
+void fragment() {
+    // Get screen UV coordinates
+    vec2 screen_uv = SCREEN_UV;
+
+    // Adjust UVs to create a pixelation effect
+    vec2 pixelated_uv = floor(screen_uv * pixel_size) / pixel_size;
+
+    // Sample the screen texture (what's behind the object) using the pixelated UVs
+    vec4 screen_color = texture(SCREEN_TEXTURE, pixelated_uv);
+
+    // Output the pixelated screen color
+    COLOR = screen_color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=37]
+shader = SubResource( 36 )
+shader_param/pixel_size = 200.0
+
+[sub_resource type="Animation" id=25]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active_flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=26]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active_flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[node name="Baht" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 2, 15 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2, 10 )
+shape = SubResource( 10 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 23 )
+frames = SubResource( 9 )
+animation = "Idle"
+playing = true
+
+[node name="CensorBar" type="Sprite" parent="AnimatedSprite"]
+visible = false
+material = SubResource( 37 )
+position = Vector2( 1.5, 17 )
+scale = Vector2( 1.03125, 0.625 )
+texture = ExtResource( 3 )
+
+[node name="CensorBar2" type="Sprite" parent="AnimatedSprite"]
+visible = false
+material = SubResource( 37 )
+position = Vector2( 1, -6.75 )
+scale = Vector2( 1, 0.578125 )
+texture = ExtResource( 3 )
+
+[node name="HooverTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="TelegraphTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BlobSpawnPosition" type="Position2D" parent="."]
+position = Vector2( 0, 46 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Hurt = SubResource( 25 )
+anims/RESET = SubResource( 26 )
+
+[node name="HurtTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="SuckPatricles" type="Node2D" parent="."]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( 83, 2 )
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( -60, 0 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( -89, 4 )
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( 60, 0 )
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( 3, 83 )
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( 0, -60 )
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( 0, -81 )
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( 0, 60 )
+
+[node name="CPUParticles2D5" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( -56, -54 )
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( 60, 60 )
+
+[node name="CPUParticles2D6" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( 65, -56 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( 60, 60 )
+
+[node name="CPUParticles2D7" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( -63, 68 )
+scale = Vector2( 1, -1 )
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( 60, 60 )
+
+[node name="CPUParticles2D8" type="CPUParticles2D" parent="SuckPatricles"]
+position = Vector2( 72, 80 )
+rotation = 3.14159
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 31.56
+gravity = Vector2( 60, 60 )
+
+[node name="FirePosition" type="Position2D" parent="."]
+position = Vector2( 2, 8 )
+
+[node name="FireTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="HooverTimer" to="." method="_on_HooverTimer_timeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_IdleTimer_timeout"]
+[connection signal="timeout" from="TelegraphTimer" to="." method="_on_TelegraphTimer_timeout"]
+[connection signal="timeout" from="HurtTimer" to="." method="_on_HurtTimer_timeout"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]

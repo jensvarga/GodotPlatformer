@@ -329,7 +329,6 @@ script = ExtResource( 2 )
 
 [node name="FireSpinnerArea" type="Area2D" parent="."]
 rotation = -0.00766332
-scale = Vector2( 1, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="FireSpinnerArea"]
 scale = Vector2( 1.5, 1.5 )
@@ -389,7 +388,6 @@ rotate = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D/PathFollow2D"]
 rotation = 3.1765
 frames = SubResource( 12 )
-frame = 2
 playing = true
 
 [node name="Area2D" type="Area2D" parent="SunPath2D/PathFollow2D"]
@@ -411,7 +409,7 @@ rotate = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D2/PathFollow2D"]
 rotation = 4.27606
 frames = SubResource( 12 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Area2D" type="Area2D" parent="SunPath2D2/PathFollow2D"]
@@ -433,7 +431,7 @@ rotate = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SunPath2D3/PathFollow2D"]
 rotation = 0.436332
 frames = SubResource( 12 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Area2D" type="Area2D" parent="SunPath2D3/PathFollow2D"]

@@ -20,6 +20,8 @@ func _ready():
 	room8_shape.set_deferred("disabled", true)
 	block1.set_deferred("disabled", true)
 	animation_player.play("RESET")
+	if not Events.has_power_crook:
+		Events.has_power_crook = true
 
 func _physics_process(delta):
 	if scrolling_screen:

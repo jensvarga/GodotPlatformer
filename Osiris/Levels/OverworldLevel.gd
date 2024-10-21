@@ -14,7 +14,7 @@ onready var darkness := $SubworldTiles
 
 onready var isis := $YSort/Isis
 onready var ra2 := $YSort/RA2
-onready var ra := $YSort/RA	
+onready var ra := $YSort/RA
 
 var anubis_offset = -20
 var is_displaying_subworld = false

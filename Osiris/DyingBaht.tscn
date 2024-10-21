@@ -1,0 +1,224 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Sprites/Baht_die.png" type="Texture" id=1]
+[ext_resource path="res://DyingBaht.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=22]
+code = "shader_type canvas_item;
+
+uniform bool active_bob = true;
+uniform float amplitude : hint_range(0.0, 50.0) = 10.0;  // The height of the bobbing
+uniform float speed : hint_range(0.0, 10.0) = 1.0;       // The speed of the bobbing
+
+uniform bool active_flash = true;
+uniform float luminance_threshold = 0.4;
+uniform vec4 flash_color : hint_color = vec4(1.0, 0.0, 0.0, 1.0);  // Default to red flash
+
+uniform bool active_dissolve = false;
+uniform float sensitivity : hint_range(0.0, 1.0) = 0.5;
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 438.5453);
+}
+
+void fragment() {
+	// Bobbing effect
+	float offsetY = 0.0;
+	if (active_bob) {
+		offsetY = amplitude * sin(TIME * speed);
+	}
+
+	// Apply the bobbing to the UV coordinates
+	vec2 new_uv = UV + vec2(0.0, offsetY) / 500.0;
+	vec4 previous_color = texture(TEXTURE, new_uv);
+
+	// Check for transparency
+	if (previous_color.a < 0.01) {
+		discard; // Skip rendering completely for transparent pixels
+	}
+
+	// Flashing effect
+	vec4 final_color = previous_color;
+	if (active_flash) {
+		float luminance = 0.299 * previous_color.r + 0.587 * previous_color.g + 0.114 * previous_color.b;
+
+		if (luminance > luminance_threshold) {
+			final_color.rgb = flash_color.rgb;
+		}
+	}
+
+	// Dissolve effect
+	if (active_dissolve) {
+		// Get size of texture in pixels
+		float size_x = float(textureSize(TEXTURE, 0).x);
+		float size_y = float(textureSize(TEXTURE, 0).y);
+
+		// Create a new \"UV\" which remaps every UV value to a snapped pixel value
+		vec2 UVr = vec2(floor(new_uv.x * size_x) / size_x, floor(new_uv.y * size_y) / size_y);
+		
+		// Determine whether pixel should be visible or not
+		float visible = step(sensitivity, random(UVr));
+		
+		// Modify the alpha channel based on the dissolve effect
+		final_color.a = min(visible, final_color.a);
+	}
+
+	// Output the final color
+	COLOR = final_color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=23]
+shader = SubResource( 22 )
+shader_param/active_bob = true
+shader_param/amplitude = 10.0
+shader_param/speed = 2.0
+shader_param/active_flash = false
+shader_param/luminance_threshold = 0.4
+shader_param/flash_color = Color( 1, 0, 0, 1 )
+shader_param/active_dissolve = true
+shader_param/sensitivity = 0.0
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 192, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 288, 0, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 384, 0, 96, 96 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=24]
+resource_name = "Dissolve"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/active_flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/flash_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.7, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 0.87451, 0.827451, 0.12549, 1 ), Color( 0.431373, 0.87451, 0.12549, 1 ), Color( 0.12549, 0.858824, 0.87451, 1 ), Color( 0.12549, 0.137255, 0.87451, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:material:shader_param/active_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:material:shader_param/sensitivity")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.0 ]
+}
+
+[sub_resource type="Animation" id=25]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/active_flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/flash_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:material:shader_param/active_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:material:shader_param/sensitivity")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[node name="DyingBaht" type="AnimatedSprite"]
+material = SubResource( 23 )
+frames = SubResource( 6 )
+frame = 4
+playing = true
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Dissolve = SubResource( 24 )
+anims/RESET = SubResource( 25 )
+
+[connection signal="animation_finished" from="." to="." method="_on_DyingBaht_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

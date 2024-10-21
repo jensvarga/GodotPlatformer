@@ -3,6 +3,7 @@ extends Node
 var start_volmue
 var fade_out_speed = 5  # Adjust this to control the speed of the fade-out
 var fading_out = false
+var fading_in = false
 
 const JUMP_SOUNDS = [
 	preload("res://Sound/FX/Jump/Jump1.wav"),
@@ -149,7 +150,15 @@ func stop_music():
 
 func fade_music():
 	fading_out = true
+	fading_in = false
 	music_playing = false
+
+func fade_in_music(song):
+	play_music(song)
+	music_player.volume_db = -10
+	fading_in = true
+	fading_out = false
+	music_playing = true
 
 onready var audio_players: = $AudioPlayers
 onready var music_player: = $MusicPlayer/AudioStreamPlayer
@@ -378,11 +387,15 @@ func play_aphopis_telegraph_sound():
 func _process(delta):
 	if fading_out:
 		music_player.volume_db -= fade_out_speed * delta
-		if music_player.volume_db <= -6:  # Volume is effectively off at -80 dB
+		if music_player.volume_db <= -80:  # Volume is effectively off at -80 dB
 			music_player.stop()
 			music_player.volume_db = start_volmue
 			fading_out = false
-			
+	if fading_in:
+		music_player.volume_db += fade_out_speed * delta
+		if music_player.volume_db >= start_volmue:
+			music_player.volume_db = start_volmue
+			fading_in = false
 
 const TERROR_BIRD_ALERT = preload("res://Sound/FX/MISC/terror_bird_alert.wav")
 const TERROR_BIRD_HURT = preload("res://Sound/FX/MISC/terror_bird_hurt.wav")
@@ -448,3 +461,42 @@ func play_ra_hurt():
 
 func play_ra_music():
 	play_music(FALL_OF_RA)
+	
+const LAVA_DRIP := preload("res://Sound/FX/MISC/lava_drip.wav")
+const LAVA_DROP := preload("res://Sound/FX/MISC/lava_drop.wav")
+
+func play_lava_drip():
+	play_sound(LAVA_DRIP)
+
+func play_lava_drop():
+	play_sound(LAVA_DROP)
+
+const FORCED_PLEASURE := preload("res://Sound/Music/Original/Deflemask/ForcedPleasure.wav")
+
+func play_forced_pleasure():
+	play_music(FORCED_PLEASURE)
+
+const DING := preload("res://Sound/FX/MISC/ding_1.wav")
+
+const BAHT_MOAN_1 := preload("res://Sound/FX/MISC/Baht_moan_1.wav")
+const BAHT_MOAN_2 := preload("res://Sound/FX/MISC/Baht_moan_2.wav")
+const BAHT_MOAN_3 := preload("res://Sound/FX/MISC/Baht_moan_3.wav")
+const BAHT_MOAN_4 := preload("res://Sound/FX/MISC/Baht_moan_4.wav")
+
+const BAHT_SUCK := preload("res://Sound/FX/MISC/Baht_suck.wav")
+const BAHT_FIRE := preload("res://Sound/FX/MISC/Baht_moan_fire.wav")
+
+func play_ding():
+	play_sound(DING)
+
+func play_random_baht_moan():
+	play_random_sound([BAHT_MOAN_1, BAHT_MOAN_2, BAHT_MOAN_3, BAHT_MOAN_4])
+
+func play_baht_die():
+	play_sound(BAHT_MOAN_4)
+
+func play_baht_suck():
+	play_sound(BAHT_SUCK)
+	
+func play_baht_fire():
+	play_sound(BAHT_FIRE)

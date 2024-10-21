@@ -19,20 +19,14 @@ func _ready():
 	root = get_tree().root.get_child(4)
 	
 func explode():
-	leave_trail_particles()
+	_move_trail_particles()
 	spawn_hit_particles()
-	queue_free()
+	call_deferred("queue_free")
 
 func _physics_process(delta):
 	velocity.x = speed * delta * direction
 	translate(velocity)
 	
-func leave_trail_particles():
-	#remove_child(trail_particles)
-	#get_tree().root.get_child(4).add_child(trail_particles)
-	#trail_particles.emitting = false
-	call_deferred("_move_trail_particles")
-
 func _move_trail_particles():
 	var parent = trail_particles.get_parent()
 	
@@ -50,8 +44,8 @@ func spawn_hit_particles():
 	particles.set_facing(direction)
 
 func _on_VisibilityNotifier2D_screen_exited():
-	leave_trail_particles()
-	queue_free()
+	_move_trail_particles()
+	call_deferred("queue_free")
 
 func _on_PowerCrookFireball_body_entered(body):
 	if body.has_method("hurt") and can_hurt_self:

@@ -57,6 +57,7 @@ func throw_egg():
 
 func die():
 	AudioManager.play_boom()
+	CameraShaker.add_trauma(0.5)
 	var explo = EXPLO.instance()
 	get_parent().call_deferred("add_child", explo)
 	explo.position = global_position

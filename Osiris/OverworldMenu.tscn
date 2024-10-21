@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://MenuTheme.tres" type="Theme" id=1]
 [ext_resource path="res://GameMenu.gd" type="Script" id=2]
+[ext_resource path="res://BodyPartsControl.tscn" type="PackedScene" id=3]
 
 [node name="OverworldMenu" type="Node2D"]
 pause_mode = 2
@@ -9,7 +10,6 @@ script = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
 pause_mode = 2
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
@@ -30,10 +30,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -95.5
-margin_top = -93.0
-margin_right = 95.5
-margin_bottom = 93.0
+margin_left = -189.0
+margin_top = -70.0
+margin_right = 2.0
+margin_bottom = 116.0
 
 [node name="Return" type="Button" parent="Control/Vbox"]
 margin_right = 191.0
@@ -51,6 +51,12 @@ focus_neighbour_bottom = NodePath("../Return")
 focus_next = NodePath("../Return")
 text = "Main Menu"
 icon_align = 1
+
+[node name="BodyPartsControl" parent="Control" instance=ExtResource( 3 )]
+margin_left = -98.5
+margin_top = -28.0
+margin_right = -58.5
+margin_bottom = 12.0
 
 [connection signal="pressed" from="Control/Vbox/Return" to="." method="_on_Return_pressed"]
 [connection signal="pressed" from="Control/Vbox/MainMenu" to="." method="_on_MainMenu_pressed"]

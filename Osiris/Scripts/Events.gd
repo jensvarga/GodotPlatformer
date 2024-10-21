@@ -33,13 +33,17 @@ var boss_hit_points = 6
 var has_power_crook = false
 var lives = 3
 var has_talaria = false
+var family_friendly_mode = false
+var dark_overworld_water = false
 
 # Bodyparts
 var has_left_hand = false
 var has_right_hand = false
 var has_pen15 = false
 var has_head = false
-
+var has_left_foot = false
+var has_right_foot = false
+var has_torso = false
 
 # Overworld values
 var player_overworld_position
@@ -175,10 +179,11 @@ func save_game_data():
 	save_game.has_right_hand = Events.has_right_hand
 	save_game.has_pen15 = Events.has_pen15
 	save_game.has_head = Events.has_head
+	save_game.has_left_foot = Events.has_left_foot
+	save_game.has_right_foot = Events.has_right_foot
+	save_game.has_torso = Events.has_torso
 
 	save_game.player_overworld_position = Events.player_overworld_position
-	save_game.unlocked_level_2 = Events.uanlocked_level_2
-	save_game.unlocked_level_3 = Events.unlocked_level_3
 	save_game.ra_in_cave = Events.ra_in_cave
 	save_game.ra_has_jumped = Events.ra_has_jumped
 

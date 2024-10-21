@@ -33,7 +33,6 @@ extents = Vector2( 16, 12 )
 [node name="LavaBlock" type="AnimatedSprite"]
 frames = SubResource( 5 )
 animation = "Lava"
-frame = 3
 playing = true
 script = ExtResource( 2 )
 

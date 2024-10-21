@@ -45,6 +45,7 @@ onready var left_fire_position := $LeftFirePosition
 onready var fire_delay_timer := $FireDelayTimer
 onready var lower_left_fire_position := $LowerLeftFirePosition
 onready var lower_right_fire_position := $LowerRightFirePosition
+onready var fire_animation_timer := $FireAnimationTimer
 
 
 var look_up = false
@@ -61,7 +62,7 @@ var firing = false
 
 # Double jump
 var double_jumped_unlocked = false
-var jumps_left = 2
+var jumps_left = 1
 
 func _ready():
 	Events.connect("pick_up_power_up", self, "_on_pick_up_power_up")
@@ -95,7 +96,7 @@ func _physics_process(delta):
 			update_flying(delta)
 	
 	if state != DEAD and firing:
-		sprite.animation = "Fire"
+		sprite.animation = get_fire_animation()
 		if sprite.flip_h:
 			sprite.offset.x = -10
 		else:
@@ -119,7 +120,7 @@ func fire_fireball():
 	if fire_delay:
 		return
 		
-	sprite.animation = "Fire"
+	sprite.animation = get_fire_animation()
 	fire_delay = true
 	fire_delay_timer.start()
 	
@@ -147,12 +148,10 @@ func fire_fireball():
 	magic_effect.position = fire_position.global_position
 	
 	var random_effect = ["Effect1", "Effect2", "Effect3"][int(rand_range(0, 3))]
-	
 	magic_effect.call_deferred("set_animation", random_effect, direction)
-	#magic_effect.set_animation(random_effect, direction)
 	
 	firing = true
-	$FireAnimationTimer.start()
+	fire_animation_timer.start()
 	
 func enter_dead():
 	if carrying: drop_item()
@@ -177,12 +176,12 @@ func update_dead():
 
 func enter_flying():
 	state = FLYING
-	sprite.animation = "Flying"
+	sprite.animation = get_flying_animation()
 	Events.has_power_crook = true
 	
 func update_flying(delta):
-	if sprite.animation == "Fire" and sprite.frame == 1:
-		sprite.animation = "Flying"
+	if sprite.animation == get_fire_animation() and sprite.frame == 1:
+		sprite.animation = get_flying_animation()
 		
 	var input = Vector2.ZERO
 	input.x = Input.get_axis("move_left", "move_right")
@@ -257,39 +256,46 @@ func update_move(delta):
 	if Input.is_action_pressed("look_down"):
 		crouch = true
 	
+	
+	# Apply friction and handle crouching or idle states
 	if input.x == 0 or crouch:
 		apply_friction(delta)
+		
 		if crouch:
-			if carrying:
-				sprite.animation = "CrouchCarry"
-			else:
-				sprite.animation = "Crouch"
+			sprite.animation = "CrouchCarry" if carrying else "Crouch"
 			crouch_collider.set_deferred("disabled", false)
 			collision_shape.set_deferred("disabled", true)
+		elif not grounded and jumps_left > 0 and not holding_wall:
+			set_jump_animation()
 		else:
 			if carrying:
 				sprite.animation = "IdleCarry"
-			elif not holding_wall:
-				set_idle_animation()
+			else: set_idle_animation()
 			crouch_collider.set_deferred("disabled", true)
 			collision_shape.set_deferred("disabled", false)
+			
+	# Handle movement and animations when not crouching or idle
 	else:
 		flip_sprite(input.x)
 		apply_acceleration(input.x, grounded, delta)
-		if carrying:
+		
+		if not grounded and jumps_left > 0 and not holding_wall:
+			set_jump_animation()
+		elif carrying:
 			sprite.animation = "RunCarry"
+		elif holding_wall:
+			sprite.animation = "WallHold"
 		else:
-			if holding_wall:
-				sprite.animation = "WallHold"
-			else:
-				set_run_animation()
+			 set_run_animation()
+		
 		crouch_collider.set_deferred("disabled", true)
 		collision_shape.set_deferred("disabled", false)
+
 		
 	var extra = 0
 	var jump = false
 	
-	if grounded or coyote_jump or holding_wall:
+	if grounded or coyote_jump or holding_wall or (double_jumped_unlocked and jumps_left > 0):
 		jump = Input.is_action_just_pressed("ui_jump") or buffered_jump
 		if jump:
 			if holding_left_wall() or holding_right_wall():
@@ -306,6 +312,16 @@ func update_move(delta):
 					jump_from_left = false
 					jump_from_right = true
 					
+			if grounded or coyote_jump or holding_wall:
+				jumps_left = 1
+			else:
+				jumps_left -= 1
+			
+			# Impact dust for double jump
+			if not grounded:
+				var impact_dust = IMPACT_DUST.instance()
+				get_parent().call_deferred("add_child", impact_dust)
+				impact_dust.position = Vector2(global_position.x, global_position.y + 5)
 				
 			AudioManager.play_random_jump_sound()
 			var horizontal_speed = abs(velocity.x)
@@ -317,7 +333,6 @@ func update_move(delta):
 			velocity.y = height
 
 			buffered_jump = false
-			jumps_left -= 1
 	else:
 		if not crouch:
 				set_jump_animation()
@@ -330,24 +345,17 @@ func update_move(delta):
 			buffered_jump = true
 			jump_buffer_timer.start()
 		
-		if velocity.y > 0:	
+		if velocity.y > 0:
 			apply_gravity(delta)
-			
 			if not crouch:
-				if carrying:
-					sprite.animation = "FallCarry"
-				else:
-					set_fall_animation()
+				set_fall_animation()
 	
 	var was_on_floor = grounded
-	#var snap = Vector2.DOWN * 32 if !jump else Vector2.ZERO
-	#velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP)
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	var just_left_ground = not is_on_floor() and was_on_floor
 	if just_left_ground and velocity.y >= 0:
 		coyote_jump = true
-		jumps_left = 2
 		coyote_timer.start()
 
 func update_climb(delta):
@@ -459,19 +467,25 @@ func connect_camera(camera):
 	pass
 
 func set_run_animation():
-	if Events.has_power_crook:
+	if Events.has_talaria:
+		sprite.animation = "RunTalaria"
+	elif Events.has_power_crook:
 		sprite.animation = "RunCrook"
 	else:
 		sprite.animation = "Run"
 
 func set_idle_animation():
-	if Events.has_power_crook:
+	if Events.has_talaria:
+		sprite.animation = "IdleTalaria"
+	elif Events.has_power_crook:
 		sprite.animation = "IdleCrook"
 	else:
 		sprite.animation = "Idle"
 		
 func set_jump_animation():
-	if carrying:
+	if Events.has_talaria:
+		sprite.animation = "JumpTalaria"
+	elif carrying:
 		sprite.animation = "JumpCarry"
 	elif Events.has_power_crook:
 		sprite.animation = "JumpCrook"
@@ -479,10 +493,24 @@ func set_jump_animation():
 		sprite.animation = "Jump"
 		
 func set_fall_animation():
-	if Events.has_power_crook:
+	if Events.has_talaria:
+		sprite.animation = "FallTalaria"
+	elif Events.has_power_crook:
 		sprite.animation = "FallCrook"
 	else:
 		sprite.animation = "Fall"
+
+func get_flying_animation() -> String:
+	if Events.has_talaria:
+		return "Flying"
+	else:
+		return "FlyingTalaria"
+
+func get_fire_animation() -> String:
+	if Events.has_talaria:
+		return "FireTalaria"
+	else:
+		return "Fire"
 		
 func grab_item():
 	if item_holder.has_method("picked_up"):

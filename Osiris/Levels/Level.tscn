@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://SpawnPoint.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Sprites/power_crook.png" type="Texture" id=14]
 [ext_resource path="res://PlayerCamera.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Sprites/Talaria.png" type="Texture" id=16]
+[ext_resource path="res://PowerUpInfoScreen.tscn" type="PackedScene" id=17]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 7 )
@@ -191,6 +192,10 @@ animation = "Empty"
 position = Vector2( 381, 10 )
 frames = SubResource( 8 )
 animation = "Empty"
+
+[node name="PowerUpInfoScreen" parent="CanvasLayer" instance=ExtResource( 17 )]
+pause_mode = 2
+visible = false
 
 [node name="SpawnPoint" parent="." instance=ExtResource( 2 )]
 position = Vector2( 3, -17 )

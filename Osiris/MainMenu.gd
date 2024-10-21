@@ -7,8 +7,10 @@ export (Color) var sky_color = Color.deepskyblue
 # Save Data
 const SAVE_FILE_PATH := "user://save/"
 const SAVE_FILE_NAME := "SaveGame.tres"
+const SETTINGS_FILE_NAME := "Settings.tres"
 
 var save_game = SaveGame.new()
+var save_settings = SaveSettings.new()
 
 onready var logo := $AspectRatioContainer/Logo
 onready var new_button := $MarginContainer/Control/Hbox/Vbox/NewGame
@@ -29,6 +31,7 @@ onready var action_input_control := $ActionMapControl
 onready var menu := $MarginContainer
 onready var actions_list := $ActionMapControl/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList
 onready var options_button := $MarginContainer/Control/Hbox/Vbox/Options
+onready var ffm_checkbox := $MarginContainer/Control/Hbox/VBoxContainer/FFMBox/CheckBox
 
 var phi = (1 + sqrt(5)) / 2  
 var growth_rate = phi / (phi * 60 * 60)
@@ -36,6 +39,7 @@ var controls_open = false
 
 func _ready():
 	verify_save_directory(SAVE_FILE_PATH)
+	load_saved_settings()
 	AudioManager.play_main_theme()
 	VisualServer.set_default_clear_color(sky_color)
 	
@@ -57,6 +61,7 @@ func _ready():
 	options_menu.hide()
 	VisualServer.set_default_clear_color(Color.black)
 	Transition.skip_animation()
+	ffm_checkbox.pressed = Events.family_friendly_mode
 
 var initial_scale = Vector2(1, 1)
 var target_scale = Vector2(1, 1)
@@ -91,6 +96,11 @@ func verify_save_directory(path: String):
 func save_game_exists() -> bool:
 	var file = File.new()
 	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
+	return file.file_exists(full_path)
+
+func save_settings_exists() -> bool:
+	var file = File.new()
+	var full_path = SAVE_FILE_PATH + SETTINGS_FILE_NAME
 	return file.file_exists(full_path)
 	
 func _input(event):
@@ -158,14 +168,46 @@ func load_event_data(data: Resource):
 		Events.has_right_hand = bool(data.has_right_hand)
 		Events.has_pen15 = bool(data.has_pen15)
 		Events.has_head = bool(data.has_head)
+		Events.has_left_foot = bool(data.has_left_foot)
+		Events.has_right_foot = bool(data.has_right_foot)
+		Events.has_torso = bool(data.has_torso)
 		Events.player_overworld_position = Vector2(data.player_overworld_position)
-		Events.unlocked_level_2 = bool(data.unlocked_level_2)
-		Events.unlocked_level_3 = bool(data.unlocked_level_3)
 		Events.ra_in_cave = bool(data.ra_in_cave)
 		Events.ra_has_jumped = bool(data.ra_has_jumped)
 		Events.levels_cleared = Dictionary(data.levels_cleared)
 
+func load_saved_settings():
+	if not save_settings_exists(): return
+	var full_path = SAVE_FILE_PATH + SETTINGS_FILE_NAME
+	save_settings = ResourceLoader.load(full_path).duplicate(true)
+	if save_settings != null:
+		Events.family_friendly_mode = bool(save_settings.family_friendly_mode)
+	
 func _on_NewGame_pressed():
 	var new_game_data = SaveGame.new()
 	load_event_data(new_game_data)
 	get_tree().change_scene(connecting_level_path)
+
+func _on_FFM_pressed():
+	toggle_ffm()
+
+func toggle_ffm():
+	if Events.family_friendly_mode:
+		Events.family_friendly_mode = false
+	else:
+		Events.family_friendly_mode = true
+	
+	ffm_checkbox.pressed = Events.family_friendly_mode
+	save_settings()
+
+func save_settings():
+	verify_save_directory(SAVE_FILE_PATH)
+	var save_settings = SaveSettings.new()
+	save_settings.family_friendly_mode = Events.family_friendly_mode
+
+	var full_path = SAVE_FILE_PATH + SETTINGS_FILE_NAME
+	var err = ResourceSaver.save(full_path, save_settings)
+	if err == OK:
+		print("Settings saved successfully!")
+	else:
+		print("Failed to save the settings, error code: ", err)

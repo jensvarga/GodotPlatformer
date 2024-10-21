@@ -10,6 +10,21 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
+"class": "Baht",
+"language": "GDScript",
+"path": "res://Baht.gd"
+}, {
+"base": "AnimatedSprite",
+"class": "BahtBall",
+"language": "GDScript",
+"path": "res://BahtBall.gd"
+}, {
+"base": "Area2D",
+"class": "BahtBlob",
+"language": "GDScript",
+"path": "res://BahtBlob.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Boss",
 "language": "GDScript",
 "path": "res://BossHurtbox.gd"
@@ -23,6 +38,11 @@ _global_script_classes=[ {
 "class": "CarryItem",
 "language": "GDScript",
 "path": "res://GreenShell.gd"
+}, {
+"base": "Sprite",
+"class": "CensorBar",
+"language": "GDScript",
+"path": "res://CensorBar.gd"
 }, {
 "base": "Resource",
 "class": "CollectableResource",
@@ -109,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Resources/SaveGame.gd"
 }, {
+"base": "Resource",
+"class": "SaveSettings",
+"language": "GDScript",
+"path": "res://Resources/SaveSettings.gd"
+}, {
 "base": "Enemy",
 "class": "Scarabu",
 "language": "GDScript",
@@ -134,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://SpinningWheel.gd"
 }, {
+"base": "StaticBody2D",
+"class": "Stalagtite",
+"language": "GDScript",
+"path": "res://Stalagtite.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "TerrorBird",
 "language": "GDScript",
@@ -150,9 +180,13 @@ _global_script_classes=[ {
 "path": "res://TurtleKinematicBody2D.gd"
 } ]
 _global_script_class_icons={
+"Baht": "",
+"BahtBall": "",
+"BahtBlob": "",
 "Boss": "",
 "CameraAnchor": "",
 "CarryItem": "",
+"CensorBar": "",
 "CollectableResource": "",
 "Crook": "",
 "CustomInputMap": "",
@@ -170,11 +204,13 @@ _global_script_class_icons={
 "PlayerHurtParticles": "",
 "PlayerMovementData": "",
 "SaveGame": "",
+"SaveSettings": "",
 "Scarabu": "",
 "SnapCamera2D": "",
 "Spawn": "",
 "SphinxBody": "",
 "SpinningWheel": "",
+"Stalagtite": "",
 "TerrorBird": "",
 "ThrowableRock": "",
 "Turtle": ""

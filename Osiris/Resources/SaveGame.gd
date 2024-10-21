@@ -16,11 +16,12 @@ export var has_left_hand = false
 export var has_right_hand = false
 export var has_pen15 = false
 export var has_head = false
+export var has_left_foot = false
+export var has_right_foot = false
+export var has_torso = false
 
 # Overworld values
 export var player_overworld_position: Vector2 = Vector2(-103, -293)
-export var unlocked_level_2 = false
-export var unlocked_level_3 = false
 export var ra_in_cave = false
 export var ra_has_jumped = false
 

@@ -7,7 +7,7 @@ onready var sprite_front := $Front
 onready var sprite_back := $Back
 
 func _ready():
-	if key_item_name in Events.collected_items:
+	if Events.has_torso:
 		open()
 		
 func open():
