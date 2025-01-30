@@ -411,10 +411,14 @@ func play_terror_bird_die():
 	play_sound(TERROR_BIRD_DIE)
 
 const RUMBLE = preload("res://Sound/FX/MISC/8-bit-rumbling.wav")
+const LOW_RUMBLE = preload("res://Sound/FX/MISC/low_rumbling.wav")
 const HOR_EM_SCREAM = preload("res://Sound/FX/MISC/Hor_Em_Akhet_scream.wav")
 
 func play_rumble():
 	play_sound(RUMBLE)
+	
+func play_low_rumble():
+	play_sound(LOW_RUMBLE)
 
 func play_hor_em_scream():
 	play_sound(HOR_EM_SCREAM)
@@ -500,3 +504,8 @@ func play_baht_suck():
 	
 func play_baht_fire():
 	play_sound(BAHT_FIRE)
+
+const PARO_MUSIC = preload("res://Sound/Music/Original/Deflemask/DirtySecretsOfEasterIsland.wav")
+
+func play_paro_music():
+	play_music(PARO_MUSIC)

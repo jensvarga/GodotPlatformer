@@ -16,7 +16,7 @@ func _physics_process(delta):
 	position = new_position
 	
 func _on_Area_body_entered(body):
-	if Events.player_hit_points == 3:
+	if Events.player_hit_points == Events.max_player_hit_points:
 		Events.emit_signal("gained_life")
 	elif body is Player and not collected:
 		Events.emit_signal("pick_up_ankh")

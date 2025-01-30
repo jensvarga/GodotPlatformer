@@ -8,7 +8,6 @@ onready var middle_hypno_texture := $"../ParallaxBackground/Sprite2"
 onready var nearest_hypno_texture := $"../Sprite3"
 onready var road_node := $"../HypTextures/Roads"
 onready var win_timer := $WinTimer
-onready var torso := $Torso
 onready var pen15 := $Pen15
 
 onready var tween := $Tween

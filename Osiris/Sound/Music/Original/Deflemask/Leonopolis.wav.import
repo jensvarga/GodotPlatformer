@@ -12,7 +12,7 @@ dest_files=[ "res://.import/Leonopolis.wav-751819ad0a79564127b9ff7ca960b427.samp
 [params]
 
 force/8_bit=true
-force/mono=true
+force/mono=false
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false

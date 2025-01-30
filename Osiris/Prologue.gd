@@ -8,6 +8,8 @@ onready var animation_player := $AnimationPlayer
 
 const display_time = 5
 
+var is_active = true
+
 onready var texts = [
 	"In the ancient lands of Egypt, where the sands whisper of gods and kings, there reigned Osiris",
 	"The noble ruler of the divine Naiad",
@@ -36,7 +38,7 @@ func start_displaying_text():
 	_show_next_text(0)
 
 func _show_next_text(index):
-	if index >= texts.size():
+	if index >= texts.size() or not is_active:
 		return
 
 	text_label.text = texts[index]
@@ -44,30 +46,38 @@ func _show_next_text(index):
 	tween.start()
 
 	yield(get_tree().create_timer(display_time), "timeout")
+	if not is_active:
+		return
 
 	tween.interpolate_property(text_label, "modulate:a", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 
 	yield(tween, "tween_completed")
+	if not is_active:
+		return
 	_show_next_text(index + 1)
+
+func _exit_tree():
+	is_active = false
 	
 func _input(event):
 	if event.is_action_released("ui_cancel"):
 		get_tree().change_scene(next_scene_path)
 
 func _on_Scene1_animation_finished(anim_name):
-	if anim_name == "Scene1":
-		animation_player.play("Scene2")
-	elif anim_name == "Scene2":
-		animation_player.play("Scene3")
-	elif anim_name == "Scene3":
-		animation_player.play("Scene4")
-	elif anim_name == "Scene4":
-		animation_player.play("Scene5")
-	elif anim_name == "Scene5":
-		animation_player.play("Scene6")
-	elif anim_name == "Scene6":
-		get_tree().change_scene(next_scene_path)
+	match anim_name:
+		"Scene1":
+			animation_player.play("Scene2")
+		"Scene2":
+			animation_player.play("Scene3")
+		"Scene3":
+			animation_player.play("Scene4")
+		"Scene4":
+			animation_player.play("Scene5")
+		"Scene5":
+			animation_player.play("Scene6")
+		"Scene6":
+			get_tree().change_scene(next_scene_path)
 
 func play_thunder_clap():
 	AudioManager.play_random_thunder()

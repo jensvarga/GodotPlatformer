@@ -47,7 +47,6 @@ onready var lower_left_fire_position := $LowerLeftFirePosition
 onready var lower_right_fire_position := $LowerRightFirePosition
 onready var fire_animation_timer := $FireAnimationTimer
 
-
 var look_up = false
 var invincible = false
 
@@ -73,7 +72,6 @@ func _ready():
 	animation_player.play("RESET")
 	double_jumped_unlocked = Events.has_talaria
 	
-
 func _physics_process(delta):
 	if state != DEAD and Events.player_hit_points <= 0:
 		enter_dead()
@@ -154,11 +152,13 @@ func fire_fireball():
 	fire_animation_timer.start()
 	
 func enter_dead():
+	Transition.pixelate()
 	if carrying: drop_item()
 	AudioManager.play_random_die_sound()
 	state = DEAD
 	death_timer.start()
 	sprite.animation = "Dead"
+	sprite.z_index = 100
 	
 func enter_move():
 	if carrying:
@@ -255,7 +255,6 @@ func update_move(delta):
 	
 	if Input.is_action_pressed("look_down"):
 		crouch = true
-	
 	
 	# Apply friction and handle crouching or idle states
 	if input.x == 0 or crouch:

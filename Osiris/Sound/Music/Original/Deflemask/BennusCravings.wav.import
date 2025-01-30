@@ -12,7 +12,7 @@ dest_files=[ "res://.import/BennusCravings.wav-375bf28dd632b71251bc7245d7a3c3fe.
 [params]
 
 force/8_bit=true
-force/mono=true
+force/mono=false
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false

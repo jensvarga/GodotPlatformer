@@ -12,7 +12,7 @@ dest_files=[ "res://.import/LandOfManu.wav-d816b24a7c9c7b2c5e3847c64d57c1f5.samp
 [params]
 
 force/8_bit=true
-force/mono=true
+force/mono=false
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false

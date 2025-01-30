@@ -29,12 +29,13 @@ var current_level = 1
 var death_counter = 0
 var collected_items = []
 var player_hit_points = 3
+var max_player_hit_points = 3
 var boss_hit_points = 6
 var has_power_crook = false
 var lives = 3
 var has_talaria = false
 var family_friendly_mode = false
-var dark_overworld_water = false
+
 
 # Bodyparts
 var has_left_hand = false
@@ -51,6 +52,8 @@ var unlocked_level_2 = false
 var unlocked_level_3 = false
 var ra_in_cave = false
 var ra_has_jumped = false
+var dark_overworld_water = false
+var library_burned = false
 
 var levels_cleared = {
 	0: false,
@@ -58,7 +61,11 @@ var levels_cleared = {
 	2: false,
 	3: false,
 	4: false,
-	5: false
+	5: false,
+	6: false,
+	7: false,
+	8: false,
+	9: false
 }
 
 var gates = {
@@ -98,8 +105,8 @@ func _on_player_take_damage():
 		player_hit_points = player_hit_points - 1
 
 func _on_pick_up_ankh():
-	if player_hit_points + 1 >= 3:
-		player_hit_points = 3
+	if player_hit_points + 1 >= max_player_hit_points:
+		player_hit_points = max_player_hit_points
 	else:
 		player_hit_points = player_hit_points + 1
 	Events.emit_signal("pick_up_power_up")
@@ -107,8 +114,11 @@ func _on_pick_up_ankh():
 func _on_player_died():
 	player = null
 	death_counter += 1
-	lives -= 1
-	player_hit_points = 3
+	if (lives - 1) <= 0:
+		lives = 0
+	else:
+		lives -= 1
+	player_hit_points = max_player_hit_points
 	
 func _on_toggle_fullscreen():
 	OS.window_fullscreen = !OS.window_fullscreen
@@ -170,6 +180,7 @@ func save_game_data():
 	save_game.death_counter = Events.death_counter
 	save_game.collected_items = Events.collected_items
 	save_game.player_hit_points = Events.player_hit_points
+	save_game.max_player_hit_points = Events.max_player_hit_points
 
 	save_game.has_power_crook = Events.has_power_crook
 	save_game.has_talaria = Events.has_talaria
@@ -186,6 +197,8 @@ func save_game_data():
 	save_game.player_overworld_position = Events.player_overworld_position
 	save_game.ra_in_cave = Events.ra_in_cave
 	save_game.ra_has_jumped = Events.ra_has_jumped
+	save_game.dark_overworld_water = Events.dark_overworld_water
+	save_game.library_burned = Events.library_burned
 
 	save_game.levels_cleared = Events.levels_cleared
 

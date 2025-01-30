@@ -1,0 +1,148 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Sprites/lava_tide.png" type="Texture" id=1]
+[ext_resource path="res://LavaTide.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/lava_tide_foreground.png" type="Texture" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, -116, 0, 0, 0, 0, 0, 156 )
+}
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 157.5, 319.5 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 640, 320 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 640, 0, 640, 320 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 1 )
+region = Rect2( 1280, 0, 640, 320 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Shader" id=12]
+code = "shader_type canvas_item;
+
+uniform float wave_speed : hint_range(0.0, 10.0) = 2.0; // Speed of the wave
+uniform float wave_amplitude : hint_range(0.0, 50.0) = 10.0; // Amplitude of the wave
+uniform float wave_frequency : hint_range(0.0, 10.0) = 5.0; // Frequency of the wave
+
+void fragment() {
+    vec2 uv = UV;
+    
+    // Apply sine wave to the UV y-coordinate
+    uv.y += sin(uv.x * wave_frequency + TIME * wave_speed) * wave_amplitude / 100.0;
+    
+    // Sample the texture with the modified UVs
+    COLOR = texture(TEXTURE, uv);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=13]
+shader = SubResource( 12 )
+shader_param/wave_speed = 2.0
+shader_param/wave_amplitude = 10.0
+shader_param/wave_frequency = 5.0
+
+[sub_resource type="Animation" id=10]
+resource_name = "Oscillate"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.5, 2.5, 4.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.95, 0.0, 0.95 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "raise_lava"
+} ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[node name="LavaTide" type="Path2D"]
+curve = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( 0, -116 )
+rotation = 1.5708
+rotate = false
+
+[node name="Area2D" type="Area2D" parent="PathFollow2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Area2D"]
+position = Vector2( 3.5, 0.5 )
+shape = SubResource( 9 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D"]
+visible = false
+rotation = 4.71239
+frames = SubResource( 5 )
+frame = 1
+playing = true
+
+[node name="Sprite" type="Sprite" parent="PathFollow2D"]
+visible = false
+modulate = Color( 1, 1, 1, 0.552941 )
+material = SubResource( 13 )
+position = Vector2( 31.3255, 2.57467 )
+rotation = 4.71239
+scale = Vector2( 0.997989, 1.08124 )
+z_index = 1
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Oscillate"
+anims/Oscillate = SubResource( 10 )
+anims/RESET = SubResource( 11 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -2.00003, -51.5 )
+scale = Vector2( 35.8, 39.05 )
+
+[connection signal="body_entered" from="PathFollow2D/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

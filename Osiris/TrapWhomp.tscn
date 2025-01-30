@@ -1,0 +1,278 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Sprites/trap_whomp.png" type="Texture" id=1]
+[ext_resource path="res://TrapWhomp.gd" type="Script" id=2]
+
+[sub_resource type="Curve2D" id=42]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 2280, -74, 0, 0, 0, 0, 2280, 85, 0, 0, 0, 0, 2629, 87 )
+}
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 64, 96 )
+
+[sub_resource type="AtlasTexture" id=54]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 64, 96 )
+
+[sub_resource type="SpriteFrames" id=45]
+animations = [ {
+"frames": [ SubResource( 53 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 54 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=46]
+extents = Vector2( 25.5, 43 )
+
+[sub_resource type="RectangleShape2D" id=47]
+extents = Vector2( 25.5, 3.49999 )
+
+[sub_resource type="RectangleShape2D" id=48]
+extents = Vector2( 2, 45.5 )
+
+[sub_resource type="Animation" id=49]
+resource_name = "Attack"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1.5, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.3052, 0.3052, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PathFollow2D/KinematicBody2D/AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "Attack", "default" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PathFollow2D/KinematicBody2D/Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "Shake"
+}, {
+"args": [  ],
+"method": "Trap"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("PathFollow2D/KinematicBody2D/Area2D/CollisionShape2D2:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=51]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PathFollow2D/KinematicBody2D/AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "Attack" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PathFollow2D/KinematicBody2D/Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PathFollow2D/KinematicBody2D/Area2D/CollisionShape2D2:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=50]
+resource_name = "Trap"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.3052, 0.99 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PathFollow2D/KinematicBody2D/AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "Attack", "default" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PathFollow2D/KinematicBody2D/Area2D/CollisionShape2D2:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Shake"
+} ]
+}
+
+[sub_resource type="RectangleShape2D" id=52]
+extents = Vector2( 199.5, 64.5 )
+
+[node name="TrapWhomp" type="Path2D"]
+curve = SubResource( 42 )
+script = ExtResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( 2280, -74 )
+rotation = 1.5708
+rotate = false
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="PathFollow2D"]
+rotation = 4.71239
+collision_mask = 0
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="PathFollow2D/KinematicBody2D"]
+frames = SubResource( 45 )
+animation = "Attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/KinematicBody2D"]
+position = Vector2( -1.5, -1.99999 )
+shape = SubResource( 46 )
+
+[node name="Area2D" type="Area2D" parent="PathFollow2D/KinematicBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/KinematicBody2D/Area2D"]
+position = Vector2( -1.5, 44.5 )
+shape = SubResource( 47 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PathFollow2D/KinematicBody2D/Area2D"]
+position = Vector2( 26, 1.5 )
+shape = SubResource( 48 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Attack = SubResource( 49 )
+anims/RESET = SubResource( 51 )
+anims/Trap = SubResource( 50 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 2327, 8 )
+
+[node name="Trap" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trap"]
+position = Vector2( 2473.5, 54.5 )
+shape = SubResource( 52 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 2282, 135 )
+
+[connection signal="body_entered" from="PathFollow2D/KinematicBody2D/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="body_entered" from="Trap" to="." method="_on_Trap_body_entered"]
+[connection signal="body_exited" from="Trap" to="." method="_on_Trap_body_exited"]

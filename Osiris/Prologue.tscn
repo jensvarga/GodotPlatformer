@@ -1372,7 +1372,6 @@ texture = ExtResource( 19 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="CanvasLayer/Scene6/mainScene"]
 position = Vector2( 257, 42 )
 frames = SubResource( 16 )
-frame = 1
 playing = true
 
 [node name="ColorRect4" type="ColorRect" parent="CanvasLayer/Scene6"]

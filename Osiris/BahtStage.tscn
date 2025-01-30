@@ -167,6 +167,7 @@ shader_param/pixel_size = 5.0
 shader_param/noise_texture = ExtResource( 8 )
 
 [node name="BahtStage" instance=ExtResource( 1 )]
+level_index = 5
 sky_color = Color( 0.74902, 0.74902, 0.74902, 1 )
 boss_level = true
 

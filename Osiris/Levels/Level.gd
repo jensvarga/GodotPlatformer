@@ -31,7 +31,7 @@ func _ready():
 	AudioManager.start_level_music(level_music)
 	Transition.play_start_transition()
 	CameraShaker.connect_anchor(camera_anchor)
-	Events.set_deferred("player_hit_points", 3)
+	Events.set_deferred("player_hit_points", Events.max_player_hit_points)
 	call_deferred("spawn_player")
 		
 func _on_player_died():

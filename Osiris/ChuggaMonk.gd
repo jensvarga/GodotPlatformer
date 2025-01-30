@@ -47,7 +47,7 @@ func throw_poop():
 	var poop_instance = poop.instance()
 	get_parent().call_deferred("add_child", poop_instance)
 	poop_instance.position = position
-	poop_instance.apply_central_impulse(Vector2(-50 * scale.x, -50))
+	poop_instance.call_deferred("apply_central_impulse", Vector2(-50 * scale.x, -50))
 	AudioManager.play_random_fart()
 
 func die():

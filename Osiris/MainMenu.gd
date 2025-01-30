@@ -161,6 +161,7 @@ func load_event_data(data: Resource):
 		Events.death_counter = int(data.death_counter)
 		Events.collected_items = Array(data.collected_items)
 		Events.player_hit_points = int(data.player_hit_points)
+		Events.max_player_hit_points = int(data.max_player_hit_points)
 		Events.has_power_crook = bool(data.has_power_crook)
 		Events.has_talaria = bool(data.has_talaria)
 		Events.lives = int(data.lives)
@@ -174,7 +175,9 @@ func load_event_data(data: Resource):
 		Events.player_overworld_position = Vector2(data.player_overworld_position)
 		Events.ra_in_cave = bool(data.ra_in_cave)
 		Events.ra_has_jumped = bool(data.ra_has_jumped)
+		Events.dark_overworld_water = bool(data.dark_overworld_water)
 		Events.levels_cleared = Dictionary(data.levels_cleared)
+		Events.library_burned = bool(data.library_burned)
 
 func load_saved_settings():
 	if not save_settings_exists(): return
