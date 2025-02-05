@@ -661,7 +661,6 @@ position = Vector2( 1377, 283 )
 
 [node name="LavaBlock" parent="." index="30" instance=ExtResource( 13 )]
 position = Vector2( 1200, 400 )
-frame = 1
 
 [node name="LavaTile" type="Sprite" parent="." index="31"]
 position = Vector2( 1347.5, 401 )
@@ -671,19 +670,15 @@ texture = ExtResource( 14 )
 
 [node name="LavaBlock2" parent="." index="32" instance=ExtResource( 13 )]
 position = Vector2( 1296, 400 )
-frame = 1
 
 [node name="LavaBlock3" parent="." index="33" instance=ExtResource( 13 )]
 position = Vector2( 1328, 400 )
-frame = 1
 
 [node name="LavaBlock4" parent="." index="34" instance=ExtResource( 13 )]
 position = Vector2( 1424, 400 )
-frame = 1
 
 [node name="LavaBlock5" parent="." index="35" instance=ExtResource( 13 )]
 position = Vector2( 1456, 400 )
-frame = 1
 
 [node name="Leaver5" parent="." index="36" instance=ExtResource( 10 )]
 position = Vector2( 1376, 337 )

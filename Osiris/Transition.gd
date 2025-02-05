@@ -3,6 +3,7 @@ extends CanvasLayer
 onready var animation_player: = $AnimationPlayer
 onready var rect := $ColorRect
 onready var pixel_rect := $ColorRect2
+onready var name_label := $Label
 
 signal transition_started
 signal transition_completed
@@ -29,6 +30,11 @@ func play_start_transition():
 func play_exit_transition():
 	rect.show()
 	animation_player.play("ExitLevel")
+
+func flash_name(name):
+	name_label.text = name
+	animation_player.play("FlashName")
+	rect.hide()
 	
 func _on_AnimationPlayer_animation_started(anim_name):
 	emit_signal("transition_started")

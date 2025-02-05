@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 const EXPLOSION1 = preload("res://Explosion1.tscn")
+const NOSE := preload("res://Hor-EmNose.tscn")
 
 onready var positions = [
 	$Position2D, 
@@ -12,6 +13,8 @@ onready var positions = [
 	$Position2D7,
 	$Position2D8
 ]
+
+onready var nose_pos := $NosePosition
 	
 var explosion_timer = Timer.new()
 var explosion_duration = 2.0
@@ -22,6 +25,9 @@ func _ready():
 	explosion_timer.set_wait_time(explosion_interval)
 	explosion_timer.connect("timeout", self, "_on_explosion_timer_timeout")
 	add_child(explosion_timer)
+	var nose := NOSE.instance()
+	nose.position = nose_pos.global_position
+	get_parent().call_deferred("add_child", nose)
 	start_explosions()
 
 func start_explosions():

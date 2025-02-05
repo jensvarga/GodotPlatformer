@@ -170,6 +170,7 @@ shader_param/noise_texture = ExtResource( 8 )
 level_index = 5
 sky_color = Color( 0.74902, 0.74902, 0.74902, 1 )
 boss_level = true
+boss_name = "Bat"
 
 [node name="SpawnPoint" parent="." index="1"]
 position = Vector2( 132, 106 )

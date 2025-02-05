@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/LibraryArsonist.wav-ed5e6d575be2c5b91d325eadd067291f.sample"
+
+[deps]
+
+source_file="res://Sound/Music/Original/Deflemask/LibraryArsonist.wav"
+dest_files=[ "res://.import/LibraryArsonist.wav-ed5e6d575be2c5b91d325eadd067291f.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

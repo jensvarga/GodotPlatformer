@@ -6,6 +6,7 @@ export (String, FILE, "*.tscn") var previous_level_path
 export (String, FILE, "*.tscn") var next_level_path = "res://Levels/OverworldLevel.tscn"
 export (bool) var test_spawn = false
 export (bool) var boss_level = false
+export (String) var boss_name = ""
 
 #onready var player: = $Player
 onready var spawn_point: = $SpawnPoint
@@ -33,6 +34,9 @@ func _ready():
 	CameraShaker.connect_anchor(camera_anchor)
 	Events.set_deferred("player_hit_points", Events.max_player_hit_points)
 	call_deferred("spawn_player")
+	
+	if boss_level:
+		Transition.flash_name(boss_name)
 		
 func _on_player_died():
 	spawn_player()

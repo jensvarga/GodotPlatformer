@@ -177,6 +177,7 @@ tracks/0/keys = {
 [node name="ParoStage" instance=ExtResource( 1 )]
 sky_color = Color( 0.129412, 0.133333, 0.305882, 1 )
 boss_level = true
+boss_name = "Paro"
 
 [node name="SpawnPoint" parent="." index="1"]
 position = Vector2( -178, 76 )

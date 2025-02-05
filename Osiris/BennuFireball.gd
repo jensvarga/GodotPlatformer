@@ -26,7 +26,6 @@ func spawn_particles():
 	get_parent().call_deferred("add_child", particles)
 	queue_free()
 
-
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 

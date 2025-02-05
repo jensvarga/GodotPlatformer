@@ -22,6 +22,7 @@ signal killed_miniboss
 signal ra_jumped
 signal player_spawned
 signal pick_up_talaria
+signal update_overworld_level_label
 
 # Global variables
 var check_point_reached = false
@@ -35,7 +36,6 @@ var has_power_crook = false
 var lives = 3
 var has_talaria = false
 var family_friendly_mode = false
-
 
 # Bodyparts
 var has_left_hand = false
@@ -54,6 +54,7 @@ var ra_in_cave = false
 var ra_has_jumped = false
 var dark_overworld_water = false
 var library_burned = false
+var overworld_level_label = "" 
 
 var levels_cleared = {
 	0: false,

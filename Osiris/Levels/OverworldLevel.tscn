@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://OverworldTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/OverworldLevel.gd" type="Script" id=2]
@@ -43,6 +43,15 @@
 [ext_resource path="res://Sprites/Overworld/statue_OW_2.png" type="Texture" id=41]
 [ext_resource path="res://Sprites/Overworld/lib_of_ax.png" type="Texture" id=42]
 [ext_resource path="res://Levels/LibOfAlex.gd" type="Script" id=43]
+[ext_resource path="res://Levels/LevelNameLabel.gd" type="Script" id=44]
+[ext_resource path="res://Sprites/UI/Fonts/SuperLegendBoy-4w8Y.ttf" type="DynamicFontData" id=45]
+[ext_resource path="res://Sprites/black_ball.png" type="Texture" id=46]
+
+[sub_resource type="DynamicFont" id=50]
+size = 18
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 45 )
 
 [sub_resource type="Shader" id=10]
 code = "shader_type canvas_item;
@@ -392,6 +401,10 @@ extents = Vector2( 20.5, 9.5 )
 [sub_resource type="RectangleShape2D" id=49]
 extents = Vector2( 13.5, 7.5 )
 
+[sub_resource type="Gradient" id=51]
+offsets = PoolRealArray( 0.125969, 0.218992, 0.922481, 0.968992 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
 [sub_resource type="RectangleShape2D" id=33]
 extents = Vector2( 16, 4.5 )
 
@@ -435,6 +448,21 @@ tracks/0/keys = {
 [node name="OverworldLevel" type="Node2D"]
 script = ExtResource( 2 )
 bg_color = Color( 0.215686, 0.647059, 1, 1 )
+
+[node name="LevelNameLabel" type="CanvasLayer" parent="."]
+script = ExtResource( 44 )
+
+[node name="Label" type="Label" parent="LevelNameLabel"]
+anchor_left = 0.051
+anchor_top = 0.046
+anchor_right = 0.749
+anchor_bottom = 0.149
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0.917969, 0.701972, 0.188252, 1 )
+custom_fonts/font = SubResource( 50 )
+text = "Leonopolis"
+uppercase = true
 
 [node name="StartPoint" type="Position2D" parent="."]
 position = Vector2( -73, -314 )
@@ -641,32 +669,38 @@ shape = SubResource( 30 )
 [node name="LevelCarpet1" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( -32, 83 )
 connecting_level_path = "res://Leontopolis.tscn"
+level_name = "Leonopolis"
 
 [node name="LevelCarpet2" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( -9, 335 )
 level_index = 1
 connecting_level_path = "res://LandOfManu.tscn"
+level_name = "land of manu"
 
 [node name="LevelCarpet3" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( 735, -525 )
 level_index = 5
 connecting_level_path = "res://Hierakonpolis.tscn"
+level_name = "Hierakonpolis"
 
 [node name="LevelCarpet" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( 577, 345 )
 level_index = 2
 connecting_level_path = "res://AaruForest.tscn"
+level_name = "Aaru Forest"
 
 [node name="LevelCarpet4" parent="Carpets" instance=ExtResource( 10 )]
 position = Vector2( 1378, -160 )
 level_index = 6
 connecting_level_path = "res://KomOmbo.tscn"
+level_name = "Kom-Ombo"
 
 [node name="LevelCarpet5" parent="Carpets" instance=ExtResource( 10 )]
 visible = false
 position = Vector2( -317, 645 )
 level_index = 7
-connecting_level_path = "res://KomOmbo.tscn"
+connecting_level_path = "res://LibraryOfAlexandria.tscn"
+level_name = "Library of Alexandria"
 
 [node name="Shadows" type="Node2D" parent="."]
 
@@ -1152,6 +1186,19 @@ script = ExtResource( 43 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="YSort/Library"]
 polygon = PoolVector2Array( 15, 110, 24, 111, 41, 127, 94, 100, 118, 55, 109, 23, 111, -24, 98, -28, 89, -50, 79, -56, 81, -73, 54, -115, -51, -115, -78, -74, -76, -52, -101, -25, -109, -17, -105, 9, -102, 28, -112, 42, -112, 66, -96, 91, -67, 112, -33, 123, -8, 110, -8, 91, 15, 90 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="YSort/Library"]
+position = Vector2( 30, 22 )
+emitting = false
+amount = 16
+lifetime = 5.0
+texture = ExtResource( 46 )
+emission_shape = 1
+emission_sphere_radius = 63.49
+gravity = Vector2( -5, -14 )
+scale_amount = 0.5
+scale_amount_random = 1.0
+color_ramp = SubResource( 51 )
 
 [node name="Gates" type="Node2D" parent="."]
 

@@ -168,7 +168,7 @@ var audio_stream_players : Array = []
 func _ready():
 	start_volmue = music_player.volume_db
 	audio_stream_players = audio_players.get_children()
-
+	
 func play_music(track):
 	fading_out = false
 	music_player.volume_db = start_volmue

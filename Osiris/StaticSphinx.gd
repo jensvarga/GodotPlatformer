@@ -48,6 +48,7 @@ func rotate_vector(vec, angle):
 				   vec.x * sin(angle) + vec.y * cos(angle))
 
 func start_sequence():
+	Transition.flash_name("Hor-Em Akhet")
 	AudioManager.play_hor_em_scream()
 	CameraShaker.add_trauma(0.6)
 	$AwakenTimer.start()

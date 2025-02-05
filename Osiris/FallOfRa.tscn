@@ -87,6 +87,7 @@ extents = Vector2( 251, 16 )
 level_index = 4
 sky_color = Color( 0.164706, 0, 0, 1 )
 boss_level = true
+boss_name = "Ra"
 
 [node name="SpawnPoint" parent="." index="1"]
 position = Vector2( -137, -83 )

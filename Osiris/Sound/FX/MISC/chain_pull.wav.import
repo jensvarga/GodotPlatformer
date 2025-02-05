@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/chain_pull.wav-7f43c9add77bb94fda9a744db0c3edac.sample"
+
+[deps]
+
+source_file="res://Sound/FX/MISC/chain_pull.wav"
+dest_files=[ "res://.import/chain_pull.wav-7f43c9add77bb94fda9a744db0c3edac.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

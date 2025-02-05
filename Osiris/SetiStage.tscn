@@ -773,6 +773,7 @@ extents = Vector2( 219, 123 )
 level_index = 6
 sky_color = Color( 0.0384018, 0.148786, 0.242188, 1 )
 boss_level = true
+boss_name = "Seti I"
 
 [node name="CanvasLayer" parent="." index="0"]
 max_boss_hp = 12
@@ -821,7 +822,7 @@ motion_mirroring = Vector2( 440, 0 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/Ocean/Node2D" index="0"]
 frames = SubResource( 46 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Ocean/Node2D" index="1"]
@@ -833,7 +834,7 @@ position = Vector2( 880, 0 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/Ocean/Node2D2" index="0"]
 frames = SubResource( 46 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Ocean/Node2D2" index="1"]

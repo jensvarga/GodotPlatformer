@@ -75,6 +75,7 @@ shader_param/speed = 0.5
 [node name="BennuStage" instance=ExtResource( 1 )]
 sky_color = Color( 1, 0.592157, 0.211765, 1 )
 boss_level = true
+boss_name = "Bennu"
 
 [node name="CanvasLayer" parent="." index="0"]
 max_boss_hp = 12

@@ -2,6 +2,7 @@ extends Node2D
 
 export (int) var level_index = 0
 export (String, FILE, "*.tscn") var connecting_level_path
+export (String) var level_name := "level name" 
 
 onready var sprite := $Sprite
 
@@ -39,7 +40,11 @@ func _on_transition_completed():
 func _on_Area2D_body_entered(body):
 	if body is OverworldPlayer:
 		is_player_on_carpet = true
+		Events.overworld_level_label = level_name
+		Events.emit_signal("update_overworld_level_label")
 
 func _on_Area2D_body_exited(body):
 	if body is OverworldPlayer:
 		is_player_on_carpet = false
+		Events.overworld_level_label = ""
+		Events.emit_signal("update_overworld_level_label")
