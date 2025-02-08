@@ -40,3 +40,5 @@ export var levels_cleared = {
 	8: false,
 	9: false
 }
+
+export var lapis_ids := []

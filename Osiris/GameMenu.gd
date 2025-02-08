@@ -2,6 +2,8 @@ extends Node2D
 
 onready var menu_control := $Control
 onready var return_button := $Control/Vbox/Return
+onready var lapis_count := $Control/LapisCounter
+onready var lapis_sprite := $Control/Lapis
 
 var main_menu_path = "res://MainMenu.tscn"
 var overworld_path = "res://Levels/OverworldLevel.tscn"
@@ -27,6 +29,7 @@ func activate_game_menu():
 	menu_control.show()
 	menu_active = true
 	get_tree().paused = true
+	update_lapis_count()
 	
 func return_to_game():
 	menu_control.hide()
@@ -39,6 +42,18 @@ func return_to_game():
 func exit_level():
 	AudioManager.stop_music()
 	Events.check_point_reached = false
+
+func update_lapis_count():
+	if not is_instance_valid(lapis_sprite) or not is_instance_valid(lapis_count):
+		return
+		
+	var elements = Events.lapis_ids.size()
+	if elements <= 0:
+		lapis_sprite.hide()
+		lapis_count.text = ""
+	else:
+		lapis_sprite.show()
+		lapis_count.text = " x " + (elements as String)
 	
 func _on_Return_pressed():
 	return_to_game()

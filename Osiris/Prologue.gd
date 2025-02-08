@@ -38,24 +38,24 @@ func start_displaying_text():
 	_show_next_text(0)
 
 func _show_next_text(index):
-	if index >= texts.size() or not is_active:
+	if index >= texts.size() or not is_active or not is_instance_valid(self):
 		return
 
 	text_label.text = texts[index]
 	tween.interpolate_property(text_label, "modulate:a", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 
-	yield(get_tree().create_timer(display_time), "timeout")
-	if not is_active:
+	var timer = get_tree().create_timer(display_time)
+	yield(timer, "timeout")
+	if not is_active or not is_instance_valid(self):
 		return
 
 	tween.interpolate_property(text_label, "modulate:a", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 
 	yield(tween, "tween_completed")
-	if not is_active:
+	if not is_active or not is_instance_valid(self):
 		return
-	_show_next_text(index + 1)
 
 func _exit_tree():
 	is_active = false

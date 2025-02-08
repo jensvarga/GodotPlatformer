@@ -6,6 +6,7 @@ onready var start_timer := $StartTimer
 onready var price_timer := $PrizeTimer
 onready var tween := $Tween
 onready var head := $"../Head"
+onready var block := $"../InvicibleBlock"
 
 var scroll_bottom = false
 var stopped = false
@@ -38,6 +39,7 @@ func _on_StartTimer_timeout():
 	scroll_bottom = true
 	Events.player.enter_move()
 	price_timer.start()
+	block.position.y += 500
 
 func _on_PrizeTimer_timeout():
 	AudioManager.play_fanfare()

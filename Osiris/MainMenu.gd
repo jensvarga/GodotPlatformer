@@ -178,6 +178,7 @@ func load_event_data(data: Resource):
 		Events.dark_overworld_water = bool(data.dark_overworld_water)
 		Events.levels_cleared = Dictionary(data.levels_cleared)
 		Events.library_burned = bool(data.library_burned)
+		Events.lapis_ids = Array(data.lapis_ids)
 
 func load_saved_settings():
 	if not save_settings_exists(): return

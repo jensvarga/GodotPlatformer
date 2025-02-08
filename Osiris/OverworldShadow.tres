@@ -1,0 +1,67 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform float _vmax = 0.95; // Bottom of the sprite (in UV coordinates.)
+uniform vec4 modulate : hint_color;
+uniform vec2 shadowDirection = vec2(0.5, 0.5);  // direction the point casting the shadow to the shaded point.
+//This direction is in PIXEL space, not UV, to avoid shadow direction depending from the image size ratio.
+
+
+void vertex()
+{
+    // how far to the right is the shadow of the top right corner?	
+    float pixelsAdded = _vmax * shadowDirection.x / TEXTURE_PIXEL_SIZE.y / max( 1.0, 1.0 + shadowDirection.y) ;	
+
+	// is this a right side pixel?
+	int vertexid = VERTEX_ID % 4; // not sure 'WHY' exactly %4 is required, but it's from there: https://www.reddit.com/r/godot/comments/17l9eqn/understanding_vertex_and_sprite_offset_for_simple/
+	bool is_right_vertex = vertexid == 1 || vertexid == 2;    	
+	
+	// moving the right side pixels to the right to cover potential shadow position
+	VERTEX += vec2( pixelsAdded * (is_right_vertex ? 1. : 0.), 0.); 
+}
+
+void fragment() {
+
+	// original image size in pixels
+	vec2 size = 1.0 / TEXTURE_PIXEL_SIZE; 
+	// pixels added in vertex
+    float pixelsAdded = _vmax * shadowDirection.x * size.y / max( 1.0, 1.0 + shadowDirection.y) ;	
+	// size in pixels of the area covered by shader
+	vec2 sizeTotal = vec2(size.x + pixelsAdded, size.y );		
+	// position in pixels. (note that UV is normalised with sizeTotal)
+	vec2 xy = UV * sizeTotal; 
+
+	// height of the pixel
+	float dy =  clamp(_vmax - UV.y, 0.0 , 1.0) ;
+	// point casting the shadow
+	vec2 xyShadow = xy - dy * size.y * shadowDirection;
+		
+	// UV in texture coordinates
+	vec2 correctedUV = xy / size;
+	// point casting shadow in same coordinates
+	vec2 shadowUV = xyShadow / size;
+
+	// read shadow-casting pixel color
+	vec4 shadow = vec4(modulate.rgb, texture(TEXTURE, shadowUV).a * modulate.a);
+
+	// if this pixel is on the border, it may cause artefacts => (smoothly) hide border pixels.
+    vec2 shadowUV_OnBorder = smoothstep(vec2(0.),vec2(1.) , shadowUV *100.  )  ;
+     shadowUV_OnBorder *= smoothstep(vec2(0.),vec2(1.) , (1.-shadowUV) *100.  )  ;
+	shadow.a *= shadowUV_OnBorder.x * shadowUV_OnBorder.y;
+
+	// read color of current pixel
+	vec4 col = texture(TEXTURE, correctedUV);
+	
+	// mix current pixel with shadow behind.
+	COLOR = mix(shadow, col, col.a);
+}
+"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/_vmax = 0.95
+shader_param/modulate = Color( 0, 0, 0, 0.313726 )
+shader_param/shadowDirection = Vector2( 0.5, 0.1 )

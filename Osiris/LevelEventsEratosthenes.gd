@@ -5,18 +5,21 @@ const FIRE := preload("res://FallingFire.tscn")
 onready var fire_rain_timer := $"../FireRainTimer"
 onready var earthquake_timer := $"../EarthQuakeTimer"
 onready var animation_player := $"../AnimationPlayer"
+onready var firestrm := $"../Firestorm"
 
 func _ready():
 	Events.connect("boss_died", self, "_on_boss_died")
 	Events.boss_hit_points = 12
 	Events.has_power_crook = true
 	Events.has_talaria = true
+	firestrm.hide()
 	
 func _on_boss_died():
 	AudioManager.play_fanfare()
 	animation_player.play("LowerFoot")
 	fire_rain_timer.start()
 	earthquake_timer.start()
+	firestrm.show()
 
 func _on_FireRainTimer_timeout():
 	var rand = rand_range(-1, 1)

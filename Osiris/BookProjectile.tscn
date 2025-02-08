@@ -11,7 +11,7 @@ offsets = PoolRealArray( 0, 0.827214, 0.911447 )
 colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 7.5, 6 )
+extents = Vector2( 6.5, 4 )
 
 [node name="BookProjectile" type="Area2D"]
 script = ExtResource( 2 )
@@ -36,7 +36,7 @@ initial_velocity = 85.19
 color_ramp = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.5, 1 )
+position = Vector2( -1, 0 )
 shape = SubResource( 3 )
 
 [connection signal="body_entered" from="." to="." method="_on_BookProjectile_body_entered"]

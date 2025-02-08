@@ -501,9 +501,9 @@ func set_fall_animation():
 
 func get_flying_animation() -> String:
 	if Events.has_talaria:
-		return "Flying"
-	else:
 		return "FlyingTalaria"
+	else:
+		return "Flying"
 
 func get_fire_animation() -> String:
 	if Events.has_talaria:
@@ -555,8 +555,8 @@ func _on_CoyoteTimer_timeout():
 
 func _on_DeathTimer_timeout():
 	Events.emit_signal("player_died")
-	queue_free()
-	get_tree().reload_current_scene()
+	call_deferred("queue_free")
+	get_tree().call_deferred("reload_current_scene")
 
 func _on_ItemCheck_body_entered(body):
 	if not body.has_method("pickup_enabled"): return

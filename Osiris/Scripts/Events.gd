@@ -23,6 +23,7 @@ signal ra_jumped
 signal player_spawned
 signal pick_up_talaria
 signal update_overworld_level_label
+signal update_lapis_count
 
 # Global variables
 var check_point_reached = false
@@ -35,6 +36,8 @@ var boss_hit_points = 6
 var has_power_crook = false
 var lives = 3
 var has_talaria = false
+var lapis_ids = []
+
 var family_friendly_mode = false
 
 # Bodyparts
@@ -54,7 +57,7 @@ var ra_in_cave = false
 var ra_has_jumped = false
 var dark_overworld_water = false
 var library_burned = false
-var overworld_level_label = "" 
+var overworld_level_label = ""
 
 var levels_cleared = {
 	0: false,
@@ -90,7 +93,8 @@ func _ready():
 	Events.connect("pick_up_talaria", self, "_on_pick_up_talaria")
 
 func on_gained_life():
-	lives += 1
+	var count = lives + 1
+	lives = min(count, 99)
 	
 func _on_pick_up_power_crook():
 	has_power_crook = true
@@ -118,7 +122,7 @@ func _on_player_died():
 	if (lives - 1) <= 0:
 		lives = 0
 	else:
-		lives -= 1
+		lives = lives - 1
 	player_hit_points = max_player_hit_points
 	
 func _on_toggle_fullscreen():
@@ -202,6 +206,7 @@ func save_game_data():
 	save_game.library_burned = Events.library_burned
 
 	save_game.levels_cleared = Events.levels_cleared
+	save_game.lapis_ids = Events.lapis_ids
 
 	var file = File.new()
 

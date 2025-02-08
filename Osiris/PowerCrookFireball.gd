@@ -28,6 +28,8 @@ func _physics_process(delta):
 	translate(velocity)
 	
 func _move_trail_particles():
+	if not is_instance_valid(trail_particles):
+		return
 	var parent = trail_particles.get_parent()
 	
 	if parent == self:

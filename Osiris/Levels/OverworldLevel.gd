@@ -22,7 +22,6 @@ var subworld_npcs
 
 func _ready():
 	if Events.ra_in_cave:
-		print("in cve: ", Events.ra_in_cave)
 		subworld_npcs = [isis, ra2]
 	else:
 		subworld_npcs = [isis]

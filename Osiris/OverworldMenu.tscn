@@ -1,8 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://MenuTheme.tres" type="Theme" id=1]
 [ext_resource path="res://GameMenu.gd" type="Script" id=2]
 [ext_resource path="res://BodyPartsControl.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/UI/Fonts/SuperLegendBoy-4w8Y.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=3]
+size = 11
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="StreamTexture" id=2]
+load_path = "res://.import/lapis_lazuli.png-e1ac928f4374bba8f294a997b77686a5.stex"
 
 [node name="OverworldMenu" type="Node2D"]
 pause_mode = 2
@@ -57,6 +67,20 @@ margin_left = -98.5
 margin_top = -28.0
 margin_right = -58.5
 margin_bottom = 12.0
+
+[node name="LapisCounter" type="RichTextLabel" parent="Control"]
+margin_left = -105.76
+margin_top = 0.240002
+margin_right = -55.76
+margin_bottom = 40.24
+custom_colors/default_color = Color( 0.713726, 0.568627, 0.223529, 1 )
+custom_fonts/normal_font = SubResource( 3 )
+text = " x 99"
+
+[node name="Lapis" type="Sprite" parent="Control"]
+position = Vector2( -112.76, 7.24 )
+scale = Vector2( 0.64, 0.64 )
+texture = SubResource( 2 )
 
 [connection signal="pressed" from="Control/Vbox/Return" to="." method="_on_Return_pressed"]
 [connection signal="pressed" from="Control/Vbox/MainMenu" to="." method="_on_MainMenu_pressed"]

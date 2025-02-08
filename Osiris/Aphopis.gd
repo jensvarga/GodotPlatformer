@@ -297,8 +297,6 @@ func hurt():
 		hit_points -= 1
 		enter_hurt()
 	
-	print("hit points:", hit_points)
-	
 func spawn_rock_right(added_height = false):
 	if RIGHT_DROPS.size() > 0:
 		var random_index = randi() % RIGHT_DROPS.size()

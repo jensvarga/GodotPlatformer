@@ -17,6 +17,8 @@ onready var boss_ankh6 := $BossLife/BossAnkh6
 
 onready var power_crook := $PowerCrook
 onready var talaria := $Talaria
+onready var lapis_count := $LapisCounter
+onready var lapis_sprite := $Lapis
 
 func _ready():
 	Events.connect("player_take_damage", self, "_on_player_take_damage")
@@ -26,6 +28,7 @@ func _ready():
 	Events.connect("pick_up_talaria", self, "on_pick_up_talaria")
 	Events.connect("gained_life", self, "_on_gained_life")
 	Events.connect("player_spawned", self, "_on_player_spawned")
+	Events.connect("update_lapis_count", self, "_on_update_lapis_count")
 	
 	if Events.has_power_crook:
 		power_crook.show()
@@ -45,6 +48,16 @@ func _ready():
 	
 	$LifeCounter.text = " x " + (Events.lives as String)
 	call_deferred("update_ankhs")
+	update_lapis_count()
+
+func update_lapis_count():
+	var elements = Events.lapis_ids.size()
+	if elements <= 0:
+		lapis_sprite.hide()
+		lapis_count.text = ""
+	else:
+		lapis_sprite.show()
+		lapis_count.text = " x " + (elements as String)
 	
 func _on_gained_life():
 	$LifeCounter.text = " x " + (Events.lives as String)
@@ -66,6 +79,9 @@ func on_pick_up_talaria():
 
 func _on_player_spawned():
 	call_deferred("update_ankhs")
+
+func _on_update_lapis_count():
+	update_lapis_count()
 
 func update_ankhs():
 	match Events.player_hit_points:

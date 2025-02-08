@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=90 format=2]
 
 [ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/jungle_tiles.png" type="Texture" id=2]
@@ -28,6 +28,9 @@
 [ext_resource path="res://Torso.tscn" type="PackedScene" id=26]
 [ext_resource path="res://ChuggaMonk.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Ankh.tscn" type="PackedScene" id=28]
+[ext_resource path="res://LapisLazul.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Sprites/Backgrounds/Background Sprites/junge_pyramid.png" type="Texture" id=30]
+[ext_resource path="res://OWTree.tres" type="Material" id=31]
 
 [sub_resource type="StreamTexture" id=13]
 flags = 2
@@ -661,6 +664,7 @@ position = Vector2( 1377, 283 )
 
 [node name="LavaBlock" parent="." index="30" instance=ExtResource( 13 )]
 position = Vector2( 1200, 400 )
+frame = 2
 
 [node name="LavaTile" type="Sprite" parent="." index="31"]
 position = Vector2( 1347.5, 401 )
@@ -670,15 +674,19 @@ texture = ExtResource( 14 )
 
 [node name="LavaBlock2" parent="." index="32" instance=ExtResource( 13 )]
 position = Vector2( 1296, 400 )
+frame = 2
 
 [node name="LavaBlock3" parent="." index="33" instance=ExtResource( 13 )]
 position = Vector2( 1328, 400 )
+frame = 2
 
 [node name="LavaBlock4" parent="." index="34" instance=ExtResource( 13 )]
 position = Vector2( 1424, 400 )
+frame = 2
 
 [node name="LavaBlock5" parent="." index="35" instance=ExtResource( 13 )]
 position = Vector2( 1456, 400 )
+frame = 2
 
 [node name="Leaver5" parent="." index="36" instance=ExtResource( 10 )]
 position = Vector2( 1376, 337 )
@@ -1002,16 +1010,38 @@ position = Vector2( 1136, -143 )
 position = Vector2( 1134, -190 )
 
 [node name="Ankh2" parent="." index="70" instance=ExtResource( 28 )]
-position = Vector2( 975, 345 )
+position = Vector2( 905, 370 )
 
 [node name="Ankh4" parent="." index="71" instance=ExtResource( 28 )]
 position = Vector2( 3412, 61 )
 
 [node name="Ankh3" parent="." index="72" instance=ExtResource( 28 )]
-position = Vector2( 1463, -106 )
+position = Vector2( 1480, 74 )
 
 [node name="SpinningWheel9" parent="." index="74" instance=ExtResource( 9 )]
 position = Vector2( 1410, -69 )
+
+[node name="LapisLazul" parent="." index="75" instance=ExtResource( 29 )]
+position = Vector2( 7845, 115 )
+lapis_id = "3"
+
+[node name="BackgroundSprites" type="Node2D" parent="." index="76"]
+z_index = -10
+
+[node name="JungePyramid" type="Sprite" parent="BackgroundSprites" index="0"]
+material = ExtResource( 31 )
+position = Vector2( 315, 12 )
+texture = ExtResource( 30 )
+
+[node name="JungePyramid2" type="Sprite" parent="BackgroundSprites" index="1"]
+material = ExtResource( 31 )
+position = Vector2( 1917, 22 )
+texture = ExtResource( 30 )
+
+[node name="JungePyramid3" type="Sprite" parent="BackgroundSprites" index="2"]
+material = ExtResource( 31 )
+position = Vector2( 4655, 40 )
+texture = ExtResource( 30 )
 
 [connection signal="body_entered" from="DeathArea" to="DeathArea" method="_on_DeathArea_body_entered"]
 [connection signal="body_entered" from="LevelEvents/Area2D" to="LevelEvents" method="_on_Area2D_body_entered"]

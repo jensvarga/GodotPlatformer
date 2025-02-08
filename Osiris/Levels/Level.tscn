@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://SpawnPoint.tscn" type="PackedScene" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://PlayerCamera.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Sprites/Talaria.png" type="Texture" id=16]
 [ext_resource path="res://PowerUpInfoScreen.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Sprites/lapis_lazuli.png" type="Texture" id=18]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 7 )
@@ -66,6 +67,12 @@ animations = [ {
 } ]
 
 [sub_resource type="DynamicFont" id=10]
+size = 11
+outline_size = 1
+outline_color = Color( 0.247059, 0.247059, 0.247059, 1 )
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=11]
 size = 11
 outline_size = 1
 outline_color = Color( 0.247059, 0.247059, 0.247059, 1 )
@@ -150,6 +157,15 @@ custom_colors/default_color = Color( 0.921569, 0.870588, 0.505882, 1 )
 custom_fonts/normal_font = SubResource( 10 )
 text = " x 99"
 
+[node name="LapisCounter" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 213.0
+margin_top = 4.0
+margin_right = 263.0
+margin_bottom = 44.0
+custom_colors/default_color = Color( 0.921569, 0.870588, 0.505882, 1 )
+custom_fonts/normal_font = SubResource( 11 )
+text = " x 99"
+
 [node name="DeathCounter" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
 margin_left = 5.0
@@ -196,6 +212,11 @@ animation = "Empty"
 [node name="PowerUpInfoScreen" parent="CanvasLayer" instance=ExtResource( 17 )]
 pause_mode = 2
 visible = false
+
+[node name="Lapis" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 206, 11 )
+scale = Vector2( 0.64, 0.64 )
+texture = ExtResource( 18 )
 
 [node name="SpawnPoint" parent="." instance=ExtResource( 2 )]
 position = Vector2( 3, -17 )

@@ -133,7 +133,6 @@ func start_level_music(song):
 func start_music_for_level(index):
 	if not LEVEL_MUSIC.has(index):
 		stop_music()
-		print("No music for this level")
 		return
 	if LEVEL_MUSIC[index] == null and not Events.check_point_reached:
 		stop_music()

@@ -16,6 +16,7 @@ func _ready():
 	Transition.skip_animation()
 	AudioManager.play_power_up()
 	AudioManager.play_random_thunder()
+	Events.emit_signal("toggle_fullscreen")
 	
 func _input(event):
 	if (event.is_action_released("ui_accept") || event.is_action_released("ui_cancel")) && not fade:
