@@ -7,6 +7,7 @@ export (String, FILE, "*.tscn") var next_level_path = "res://Levels/OverworldLev
 export (bool) var test_spawn = false
 export (bool) var boss_level = false
 export (String) var boss_name = ""
+export (bool) var lighthouse_level = false
 
 #onready var player: = $Player
 onready var spawn_point: = $SpawnPoint
@@ -15,6 +16,8 @@ onready var test_point: = $TestSpawn
 onready var player_root: = $PlayerRoot
 onready var camera_anchor: = $PlayerRoot/Anchor
 onready var player_camera := $PlayerCamera
+onready var lighthouse_conuter := $CanvasLayer/LighthouseCounter
+onready var best_lighthouse_counter := $CanvasLayer/BestLighthouseCounter
 
 const PlayerScene = preload("res://Player.tscn")
 export (AudioStream) var level_music = null
@@ -32,7 +35,18 @@ func _ready():
 	AudioManager.start_level_music(level_music)
 	Transition.play_start_transition()
 	CameraShaker.connect_anchor(camera_anchor)
-	Events.set_deferred("player_hit_points", Events.max_player_hit_points)
+	Events.lighthouse_level = lighthouse_level
+	if not lighthouse_level:
+		lighthouse_conuter.hide()
+		best_lighthouse_counter.hide()
+		Events.set_deferred("player_hit_points", Events.max_player_hit_points)
+	else:
+		Events.set_deferred("player_hit_points", 1)
+		lighthouse_conuter.show()
+		best_lighthouse_counter.show()
+		lighthouse_conuter.text = " " + (Events.lighthouse_counter as String)
+		best_lighthouse_counter.text = " " + (Events.best_lighthouse_counter as String)
+		
 	call_deferred("spawn_player")
 	
 	if boss_level:
@@ -47,8 +61,6 @@ func _on_checkpoint_reached():
 func _on_stage_cleared():
 	stage_cleared = true
 	Events.check_point_reached = false
-	Events.unlocked_level_2 = true
-	Events.unlocked_level_3 = true
 	Transition.play_exit_transition()
 	
 func spawn_player():
@@ -73,10 +85,8 @@ func _on_transition_started():
 func _on_transition_completed():
 	if not stage_cleared: return
 	if next_level_path == null: return
-	AudioManager.current_level = 0
-	Events.levels_cleared[level_index] = true
+	Events.lighthouse_counter += 1
 	get_tree().change_scene(next_level_path)
 
 func _on_AutosaveTimer_timeout():
 	Events.save_game_data()
-	print("Game autosaved")

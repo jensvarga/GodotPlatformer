@@ -24,15 +24,15 @@ signal player_spawned
 signal pick_up_talaria
 signal update_overworld_level_label
 signal update_lapis_count
+signal advance_dialouge_index
 
 # Global variables
 var check_point_reached = false
 var current_level = 1
 var death_counter = 0
-var collected_items = []
 var player_hit_points = 3
 var max_player_hit_points = 3
-var boss_hit_points = 6
+var boss_hit_points = 12
 var has_power_crook = false
 var lives = 3
 var has_talaria = false
@@ -51,32 +51,17 @@ var has_torso = false
 
 # Overworld values
 var player_overworld_position
-var unlocked_level_2 = false
-var unlocked_level_3 = false
 var ra_in_cave = false
 var ra_has_jumped = false
 var dark_overworld_water = false
-var library_burned = false
 var overworld_level_label = ""
+var granite_block_moved = false
+var hraf_position: Vector2 = Vector2(-297, 854)
 
-var levels_cleared = {
-	0: false,
-	1: false,
-	2: false,
-	3: false,
-	4: false,
-	5: false,
-	6: false,
-	7: false,
-	8: false,
-	9: false
-}
-
-var gates = {
-	0: true,
-	1: false,
-	2: false,
-}
+# Lighthouse (Unsaved)
+var lighthouse_level: bool = false
+var lighthouse_counter = 0
+var best_lighthouse_counter = 0 # Saved
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -119,6 +104,8 @@ func _on_pick_up_ankh():
 func _on_player_died():
 	player = null
 	death_counter += 1
+	if Events.lighthouse_level:
+			return
 	if (lives - 1) <= 0:
 		lives = 0
 	else:
@@ -166,6 +153,16 @@ func change_room(room_position: Vector2, room_size: Vector2) -> void:
 func _on_ra_jumped():
 	ra_has_jumped = true
 
+func has_all_bodyparts() -> bool:
+	if has_head and \
+		has_left_hand and \
+		has_right_hand and \
+		has_left_foot and \
+		has_right_foot and \
+		has_pen15:
+		return true
+	return false
+
 func verify_save_directory(path: String):
 	var dir = Directory.new()
 	
@@ -183,7 +180,6 @@ func save_game_data():
 	var save_game = SaveGame.new()
 
 	save_game.death_counter = Events.death_counter
-	save_game.collected_items = Events.collected_items
 	save_game.player_hit_points = Events.player_hit_points
 	save_game.max_player_hit_points = Events.max_player_hit_points
 
@@ -203,10 +199,11 @@ func save_game_data():
 	save_game.ra_in_cave = Events.ra_in_cave
 	save_game.ra_has_jumped = Events.ra_has_jumped
 	save_game.dark_overworld_water = Events.dark_overworld_water
-	save_game.library_burned = Events.library_burned
+	save_game.granite_block_moved = Events.granite_block_moved
+	save_game.hraf_position = Events.hraf_position
 
-	save_game.levels_cleared = Events.levels_cleared
 	save_game.lapis_ids = Events.lapis_ids
+	save_game.best_lighthouse_counter = Events.best_lighthouse_counter
 
 	var file = File.new()
 
@@ -216,3 +213,50 @@ func save_game_data():
 		print("Game saved successfully!")
 	else:
 		print("Failed to save the game, error code: ", err)
+	
+var lighthouse_levels = [
+	"res://Levels/LightHouseLevels/LighthouseLevel_1.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_2.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_3.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_4.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_5.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_6.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_7.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_8.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_9.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_10.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_11.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_12.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_13.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_14.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_15.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_16.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_17.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_18.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_19.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_20.tscn"
+]
+
+var completed_levels = []
+
+func play_random_lighthouse_level():
+	var nr_of_levels = lighthouse_levels.size()
+	if completed_levels.size() == nr_of_levels:
+		# All levels completed! Wow!
+		return
+	if nr_of_levels <= 1:
+		var scene = load(lighthouse_levels[0])
+		get_tree().change_scene_to(scene)
+		return
+	
+	var i = randi() % nr_of_levels
+	while completed_levels.has(i):
+		i = randi() % nr_of_levels
+	
+	var scene = load(lighthouse_levels[i])
+	completed_levels.append(i)
+	get_tree().change_scene_to(scene)
+
+func update_best_lighthouse_count():
+	if Events.lighthouse_counter > Events.best_lighthouse_counter:
+		Events.best_lighthouse_counter = Events.lighthouse_counter

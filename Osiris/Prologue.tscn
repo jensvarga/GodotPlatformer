@@ -1609,4 +1609,13 @@ anims/Scene4 = SubResource( 12 )
 anims/Scene5 = SubResource( 13 )
 anims/Scene6 = SubResource( 17 )
 
+[node name="Timer1" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_Scene1_animation_finished"]
+[connection signal="timeout" from="Timer1" to="." method="_on_Timer1_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]

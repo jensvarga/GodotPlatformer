@@ -24,10 +24,10 @@ func spawn_particles():
 	var particles = PARTICLES.instance()
 	particles.position = global_position
 	get_parent().call_deferred("add_child", particles)
-	queue_free()
+	call_deferred("queue_free")
 
 func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
+	call_deferred("queue_free")
 
 func _on_BennuFireball_body_entered(body):
 	if body is Player:
@@ -39,4 +39,4 @@ func _on_BennuFireball_body_entered(body):
 		
 func _on_Timer_timeout():
 	spawn_particles()
-	queue_free()
+	call_deferred("queue_free")

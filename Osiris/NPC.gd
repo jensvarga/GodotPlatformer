@@ -1,5 +1,7 @@
 extends Node2D
 
+enum FACING {UP, DOWN, RIGHT, LEFT}
+export (FACING) var facing = FACING.DOWN 
 export (String) var NAME = "RA"
 export (bool) var HIDDEN = false
 export (String, FILE, "*.png") var PORTRAIT_PATH = "res://Sprites/UI/ra_portrait.png"
@@ -31,6 +33,7 @@ var dialouge_index = 0
 func _ready():
 	portrait.texture = load(PORTRAIT_PATH)
 	name_label.text = NAME
+	default_facing()
 
 func _input(event):
 	if player_in_range and event.is_action_released("ui_jump"):
@@ -85,7 +88,17 @@ func face_player():
 		sprite.animation = "Down"
 	else:
 		sprite.animation = "Up"
-	
+
+func default_facing():
+	match facing:
+		FACING.UP:
+			sprite.animation = "Up"
+		FACING.DOWN:
+			sprite.animation = "Down"
+		FACING.LEFT:
+			sprite.animation = "Left"
+		FACING.RIGHT:
+			sprite.animation = "Right"
 
 func _on_InteractionZone_body_entered(body):
 	if body is OverworldPlayer:
@@ -98,4 +111,4 @@ func _on_InteractionZone_body_exited(body):
 		hide_textbox()
 
 func _on_TurnTimer_timeout():
-	sprite.animation = "Down"
+	default_facing()

@@ -5,10 +5,13 @@ export (String, FILE, "*.tscn") var next_scene_path
 onready var tween := $Tween
 onready var text_label := $CanvasLayer/RichTextLabel
 onready var animation_player := $AnimationPlayer
+onready var timer1 := $Timer1
+onready var timer2 := $Timer2
 
 const display_time = 5
 
 var is_active = true
+var _index
 
 onready var texts = [
 	"In the ancient lands of Egypt, where the sands whisper of gods and kings, there reigned Osiris",
@@ -38,24 +41,34 @@ func start_displaying_text():
 	_show_next_text(0)
 
 func _show_next_text(index):
-	if index >= texts.size() or not is_active or not is_instance_valid(self):
+	if index >= texts.size():
 		return
-
+	_index = index
 	text_label.text = texts[index]
+	
+	tween.stop_all()
 	tween.interpolate_property(text_label, "modulate:a", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
+	
+	timer1.wait_time = display_time
+	timer1.start()
+	#yield(get_tree().create_timer(display_time), "timeout")
 
-	var timer = get_tree().create_timer(display_time)
-	yield(timer, "timeout")
-	if not is_active or not is_instance_valid(self):
-		return
+	#tween.interpolate_property(text_label, "modulate:a", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	#tween.start()
 
+	#yield(tween, "tween_completed")
+	#_show_next_text(index + 1)
+
+func _on_Timer1_timeout():
+	tween.stop_all()
 	tween.interpolate_property(text_label, "modulate:a", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
+	timer2.wait_time = 0.5
+	timer2.start()
 
-	yield(tween, "tween_completed")
-	if not is_active or not is_instance_valid(self):
-		return
+func _on_Timer2_timeout():
+	_show_next_text(_index + 1)
 
 func _exit_tree():
 	is_active = false
@@ -87,3 +100,4 @@ func fade_music():
 
 func play_orgasms():
 	AudioManager.play_orgasms()
+

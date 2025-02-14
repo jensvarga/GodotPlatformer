@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Sprites/glyphRocks_alex.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/glyphRocks.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://BurningLibraryLevelEvents.gd" type="Script" id=11]
 [ext_resource path="res://Sprites/black_clouds.png" type="Texture" id=12]
 [ext_resource path="res://DeathAreaBurning.gd" type="Script" id=13]
+[ext_resource path="res://Sound/Music/Original/Deflemask/LeavingALegacy.wav" type="AudioStream" id=14]
 
 [sub_resource type="AtlasTexture" id=78]
 atlas = ExtResource( 3 )
@@ -747,8 +748,101 @@ shader_param/speed = 4.0
 shader_param/wind = 0.1
 shader_param/num_of_layers = 4
 
+[sub_resource type="Shader" id=108]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise_tex;
+uniform sampler2D gradient_tex;
+
+uniform vec4 brighter_color : hint_color = vec4(1.0, 0.8, 0.0, 1.0);
+uniform vec4 middle_color : hint_color  = vec4(1.0, 0.56, 0.0, 1.0);
+uniform vec4 darker_color : hint_color  = vec4(0.64, 0.2, 0.05, 1.0);
+
+uniform float spread : hint_range(0.0, 1.0) = 0.5;
+uniform float pixelation : hint_range(0.0, 100.0) = 0.0;
+
+void fragment()
+{
+    // Step 1: Compute pixelated UV
+    vec2 pixel_uv = UV;
+    if (pixelation > 0.0) {
+        vec2 pixel_size = vec2(pixelation / 200.0); // Adjusted pixel size for better control
+        pixel_uv = floor(UV / pixel_size) * pixel_size;
+    }
+
+    // Step 2: Compute animated noise using unmodified UV
+    float noise_value = texture(noise_tex, UV + vec2(0.0, TIME * 0.1)).x;
+    
+    // Step 3: Sample gradient texture using pixelated UV
+    float gradient_value = texture(gradient_tex, pixel_uv.yx).x;
+    
+    // Step 4: Apply procedural blending
+    gradient_value -= smoothstep(spread, spread + 0.5, length(pixel_uv + vec2(-0.5, -0.5)) / spread);
+    
+    float step1 = step(noise_value, gradient_value);
+    float step2 = step(noise_value, gradient_value - 0.2);
+    float step3 = step(noise_value, gradient_value - 0.4);
+    
+    vec3 bd_color = mix(brighter_color.rgb, darker_color.rgb, step1 - step2);
+    
+    vec4 color = vec4(bd_color, step1);
+    color.rgb = mix(color.rgb, middle_color.rgb, step2 - step3);
+    
+    COLOR = color;
+}
+"
+
+[sub_resource type="OpenSimplexNoise" id=111]
+
+[sub_resource type="NoiseTexture" id=109]
+seamless = true
+noise = SubResource( 111 )
+
+[sub_resource type="ShaderMaterial" id=110]
+shader = SubResource( 108 )
+shader_param/brighter_color = Color( 1, 0.768627, 1, 1 )
+shader_param/middle_color = Color( 1, 0.431373, 0.0509804, 1 )
+shader_param/darker_color = Color( 1, 0.282353, 0, 1 )
+shader_param/spread = 0.514
+shader_param/pixelation = 1.759
+shader_param/noise_tex = SubResource( 109 )
+
+[sub_resource type="Animation" id=112]
+resource_name = "FireWave"
+length = 57.0
+loop = true
+step = 1.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("FireWall:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 57 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 7000, -585 ), Vector2( -890, -585 ) ]
+}
+
+[sub_resource type="Animation" id=113]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("FireWall:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 6665, -585 ) ]
+}
+
 [node name="BurningLibrary" instance=ExtResource( 10 )]
 sky_color = Color( 0.243137, 0.211765, 0.156863, 1 )
+level_music = ExtResource( 14 )
 
 [node name="SpawnPoint" parent="." index="1"]
 position = Vector2( 6608, 44 )
@@ -763,7 +857,6 @@ motion_mirroring = Vector2( 904, 0 )
 position = Vector2( 128.92, -7.56 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 80 )
-frame = 1
 playing = true
 
 [node name="ParallaxLayer6" type="ParallaxLayer" parent="ParallaxBackground" index="1"]
@@ -785,6 +878,7 @@ motion_mirroring = Vector2( 904, 0 )
 position = Vector2( 128.92, -7.56 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 76 )
+frame = 2
 playing = true
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground" index="3"]
@@ -848,6 +942,7 @@ position = Vector2( 6954.5, -2 )
 shape = SubResource( 72 )
 
 [node name="Room3" type="Area2D" parent="." index="12"]
+visible = false
 collision_layer = 524288
 collision_mask = 0
 
@@ -882,7 +977,29 @@ margin_right = 7050.0
 margin_bottom = 3347.0
 color = Color( 1, 1, 1, 0 )
 
+[node name="FireWall" type="Node2D" parent="." index="16"]
+position = Vector2( 6665, -585 )
+
+[node name="ColorRect" type="ColorRect" parent="FireWall" index="0"]
+material = SubResource( 110 )
+margin_top = -499.0
+margin_right = 1188.0
+margin_bottom = 1905.0
+
+[node name="Area2D" type="Area2D" parent="FireWall" index="1"]
+z_index = -1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FireWall/Area2D" index="0"]
+position = Vector2( -1, 1 )
+polygon = PoolVector2Array( 288, 183, 229, 428, 202, 668, 227, 914, 260, 1130, 313, 1282, 635, 1500, 885, 1304, 976, 883, 985, 551, 882, 173, 649, -81, 454, -34 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="17"]
+autoplay = "FireWave"
+anims/FireWave = SubResource( 112 )
+anims/RESET = SubResource( 113 )
+
 [connection signal="timeout" from="LevelEvents/FireRainTimer" to="LevelEvents" method="_on_FireRainTimer_timeout"]
 [connection signal="timeout" from="LevelEvents/EartquakeTimer" to="LevelEvents" method="_on_EartquakeTimer_timeout"]
 [connection signal="body_entered" from="DeathArea" to="DeathArea" method="_on_DeathArea_body_entered"]
 [connection signal="body_entered" from="WinArea" to="LevelEvents" method="_on_WinArea_body_entered"]
+[connection signal="body_entered" from="FireWall/Area2D" to="LevelEvents" method="_on_Area2D_body_entered"]

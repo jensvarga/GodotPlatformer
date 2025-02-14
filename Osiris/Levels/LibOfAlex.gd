@@ -9,7 +9,7 @@ func _ready():
 	update_texture()
 
 func update_texture():
-	if Events.library_burned:
+	if Events.has_left_foot:
 		texture = burned_texture
 		smoke.emitting = true
 	else:

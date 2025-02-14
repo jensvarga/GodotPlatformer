@@ -2,8 +2,10 @@ extends Path2D
 
 const SOMKE_PUFF := preload("res://SmokePuffs.tscn")
 
+export (float) var offset = 0
+
 onready var animator := $AnimationPlayer
-onready var delay := $Timer
+onready var timer := $Timer
 onready var bottom_line := $BottomLine
 
 var in_sight := false
@@ -12,6 +14,7 @@ var player_in_trap_area := false
 func _ready():
 	$PathFollow2D.unit_offset = 0
 	animator.play("RESET")
+	bottom_line.hide()
 
 func Shake():
 	if in_sight:
@@ -24,10 +27,11 @@ func Shake():
 func _on_VisibilityNotifier2D_screen_entered():
 	in_sight = true
 	animator.play("Attack")
+	animator.seek(offset, true)
 	
 func _on_VisibilityNotifier2D_screen_exited():
 	in_sight = false
-	delay.start()
+	timer.start()
 
 func _on_Area2D_body_entered(body):
 	if body is Player:
@@ -38,4 +42,4 @@ func _on_Area2D_body_entered(body):
 		body.die()
 
 func _on_Timer_timeout():
-	animator.play("Attack")
+	animator.stop()

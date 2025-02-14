@@ -90,6 +90,7 @@ const APOPHIS_ARISING = preload("res://Sound/Music/Original/Apophis Arising.wav"
 const SETIS_OATH = preload("res://Sound/Music/Original/Setis Oath.wav")
 const DESERT_OCTOPUS = preload("res://Sound/Music/Original/Deflemask/DesertOctuopus.wav")
 const DREAM_OFF = preload("res://Sound/Music/Original/Deflemask/DreamOff.wav")
+const PYRAMID_FUNK = preload("res://Sound/Music/Original/Deflemask/PyramidFunk.wav")
 
 func play_victori():
 	play_music(VICTORI)
@@ -101,7 +102,7 @@ func play_reaper():
 	play_music(REAPER)
 	
 func play_overworld_music():
-	play_music(DREAM_OFF)
+	play_music(PYRAMID_FUNK)
 
 const LEVEL_MUSIC = {
 	0: CROCODILE_TEARS,

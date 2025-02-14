@@ -41,6 +41,9 @@ func _on_EartquakeTimer_timeout():
 func _on_WinArea_body_entered(body):
 	if body is Player:
 		Events.emit_signal("stage_cleared")
-		Events.library_burned = true
 		Events.has_left_foot = true
 		AudioManager.play_random_checkpoint_sound()
+
+func _on_Area2D_body_entered(body):
+	if body is Player:
+		body.die()

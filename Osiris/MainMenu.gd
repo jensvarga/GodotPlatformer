@@ -126,7 +126,7 @@ func _on_Options_pressed():
 	activate_options_menu()
 
 func _on_Exit_pressed():
-	get_tree().quit()
+	get_tree().call_deferred("quit")
 
 func _on_Back_pressed():
 	deactivate_options_menu()
@@ -154,12 +154,12 @@ func _on_Continue_pressed():
 	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
 	save_game = ResourceLoader.load(full_path).duplicate(true)
 	load_event_data(save_game)
+	Transition.hide_background()
 	get_tree().change_scene(connecting_level_path)
 
 func load_event_data(data: Resource):
 	if data != null:
 		Events.death_counter = int(data.death_counter)
-		Events.collected_items = Array(data.collected_items)
 		Events.player_hit_points = int(data.player_hit_points)
 		Events.max_player_hit_points = int(data.max_player_hit_points)
 		Events.has_power_crook = bool(data.has_power_crook)
@@ -176,9 +176,10 @@ func load_event_data(data: Resource):
 		Events.ra_in_cave = bool(data.ra_in_cave)
 		Events.ra_has_jumped = bool(data.ra_has_jumped)
 		Events.dark_overworld_water = bool(data.dark_overworld_water)
-		Events.levels_cleared = Dictionary(data.levels_cleared)
-		Events.library_burned = bool(data.library_burned)
+		Events.granite_block_moved = bool(data.granite_block_moved)
 		Events.lapis_ids = Array(data.lapis_ids)
+		Events.hraf_position = Vector2(data.hraf_position)
+		Events.best_lighthouse_counter = int(data.best_lighthouse_counter)
 
 func load_saved_settings():
 	if not save_settings_exists(): return
@@ -190,6 +191,7 @@ func load_saved_settings():
 func _on_NewGame_pressed():
 	var new_game_data = SaveGame.new()
 	load_event_data(new_game_data)
+	Transition.hide_background()
 	get_tree().change_scene(connecting_level_path)
 
 func _on_FFM_pressed():

@@ -29,7 +29,7 @@ func _ready():
 	noise.octaves = 2
 	
 func add_trauma(amount):
-	trauma = min(trauma + amount, 1.0)
+	trauma = min(trauma + amount , 1.0)
 	
 func _process(delta):
 	if player == null: return
@@ -44,7 +44,7 @@ func _process(delta):
 		shake()
 
 func shake():
-	var amount = pow(trauma, trauma_power)
+	var amount = pow(min(trauma, 0.6), trauma_power)
 	noise_y += 1
 	camera.rotation = max_roll * amount * noise.get_noise_2d(noise.seed, noise_y)
 	camera.offset.x = max_offset.x * amount * noise.get_noise_2d(noise.seed*2, noise_y)

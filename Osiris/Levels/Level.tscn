@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://SpawnPoint.tscn" type="PackedScene" id=2]
@@ -73,6 +73,18 @@ outline_color = Color( 0.247059, 0.247059, 0.247059, 1 )
 font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=11]
+size = 11
+outline_size = 1
+outline_color = Color( 0.247059, 0.247059, 0.247059, 1 )
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 11
+outline_size = 1
+outline_color = Color( 0.247059, 0.247059, 0.247059, 1 )
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=13]
 size = 11
 outline_size = 1
 outline_color = Color( 0.247059, 0.247059, 0.247059, 1 )
@@ -165,6 +177,26 @@ margin_bottom = 44.0
 custom_colors/default_color = Color( 0.921569, 0.870588, 0.505882, 1 )
 custom_fonts/normal_font = SubResource( 11 )
 text = " x 99"
+
+[node name="LighthouseCounter" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
+margin_left = 397.0
+margin_top = 4.0
+margin_right = 475.0
+margin_bottom = 44.0
+custom_colors/default_color = Color( 0.921569, 0.870588, 0.505882, 1 )
+custom_fonts/normal_font = SubResource( 12 )
+text = " 100"
+
+[node name="BestLighthouseCounter" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
+margin_left = 397.0
+margin_top = 17.0
+margin_right = 475.0
+margin_bottom = 57.0
+custom_colors/default_color = Color( 0.921569, 0.65098, 0.505882, 1 )
+custom_fonts/normal_font = SubResource( 13 )
+text = " 100"
 
 [node name="DeathCounter" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
