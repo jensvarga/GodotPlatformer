@@ -1,0 +1,422 @@
+[gd_scene load_steps=43 format=2]
+
+[ext_resource path="res://Sprites/lighthouse_tiles.png" type="Texture" id=1]
+[ext_resource path="res://Spikes.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Levels/LightHouseLevels/LighthouseLevel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/leaver.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/spike_gate.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/chain.png" type="Texture" id=6]
+[ext_resource path="res://SpikeHit.gd" type="Script" id=7]
+[ext_resource path="res://Camel.tscn" type="PackedScene" id=8]
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=8]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=9]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=10]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=11]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=12]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=13]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=14]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=15]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=16]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=17]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=18]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=19]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=20]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=21]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=22]
+0/name = "lighthouse_tiles.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 128, 160 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 2 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 3 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 4 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 3, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 3, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 6 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 7 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 8 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 9 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 10 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 11 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 12 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 3, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 13 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 3, 3 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 14 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 3 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 15 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 3 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 16 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 3 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 17 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 4 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 18 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 4 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 19 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 4 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 20 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 3, 4 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 21 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="RectangleShape2D" id=57]
+extents = Vector2( 86.5, 12.5 )
+
+[sub_resource type="RectangleShape2D" id=58]
+extents = Vector2( 86.5, 7.5 )
+
+[sub_resource type="GDScript" id=51]
+script/source = "extends StaticBody2D
+
+const CHAIN_PULL := preload(\"res://Sound/FX/MISC/chain_pull.wav\")
+
+onready var sprite := $Sprite
+onready var chain_sprite := $ChainSprite
+onready var timer := $Timer
+onready var animation_player := $AnimationPlayer
+
+func on_shot():
+	sprite.animation = \"Flicked\"
+	AudioManager.play_click()
+	AudioManager.play_sound(CHAIN_PULL)
+	chain_sprite.animation = \"Pull\"
+	animation_player.play(\"OpenGate\")
+	timer.start()
+
+func _on_Timer_timeout():
+	chain_sprite.animation = \"default\"
+"
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=52]
+animations = [ {
+"frames": [ SubResource( 44 ) ],
+"loop": true,
+"name": "Flicked",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 45 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=53]
+extents = Vector2( 10, 7.25 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 480 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 6 )
+region = Rect2( 32, 0, 32, 480 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 480 )
+
+[sub_resource type="SpriteFrames" id=54]
+animations = [ {
+"frames": [ SubResource( 48 ), SubResource( 49 ) ],
+"loop": true,
+"name": "Pull",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 50 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=55]
+resource_name = "OpenGate"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../SpikedGate:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -90.0 ]
+}
+
+[sub_resource type="Animation" id=56]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../SpikedGate:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[node name="LighthouseLevel_22" instance=ExtResource( 3 )]
+
+[node name="TileMap" parent="." index="9"]
+tile_set = SubResource( 22 )
+tile_data = PoolIntArray( -262153, 536870912, 262144, -262152, 536870912, 262144, -262151, 536870912, 262144, -262150, 536870912, 262144, -262149, 536870912, 262144, -262148, 536870912, 262144, -262147, 536870912, 262144, -262146, 536870912, 262144, -262145, 536870912, 262144, -327680, 536870912, 262144, -327679, 536870912, 262144, -327678, 536870912, 262144, -327677, 536870912, 262144, -327676, 536870912, 262144, -327675, 536870912, 262144, -327674, 536870912, 262144, -327673, 536870912, 262144, -196617, 536870912, 262144, -262137, 536870912, 262144, -131081, 536870912, 262144, -196601, 536870912, 262144, -65545, 536870912, 262144, -65544, 536870912, 262144, -65543, 536870912, 262144, -131065, 536870912, 262144, -8, 536870912, 262144, -65529, 536870912, 262144, 65528, 536870912, 262144, 65529, 536870912, 262144, 7, 536870912, 262144, 131064, 536870912, 262144, 131065, 536870912, 262144, 65543, 536870912, 262144, 196600, 536870912, 262144, 196602, 536870912, 262144, 196603, 536870912, 262144, 196604, 536870912, 262144, 196605, 536870912, 262144, 131076, 536870912, 262144, 131077, 536870912, 262144, 131078, 536870912, 262144, 131079, 536870912, 262144, 262136, 536870912, 262144, 196609, 536870912, 262144, 196610, 536870912, 262144, 196611, 536870912, 262144, 196612, 536870912, 262144, 196613, 536870912, 262144, 196614, 536870912, 262144, 196615, 536870912, 262144, 327672, 536870912, 262144, 327673, 536870912, 262144, 327674, 536870912, 262144, 327675, 536870912, 262144, 327676, 536870912, 262144, 327677, 536870912, 262144, 327678, 536870912, 262144, 327679, 536870912, 262144, 262144, 536870912, 262144, 262145, 536870912, 262144, 262146, 536870912, 262144, 262147, 536870912, 262144, 262148, 536870912, 262144, 262149, 536870912, 262144, 262150, 536870912, 262144, 262151, 536870912, 262144 )
+
+[node name="LighthouseGate" parent="." index="11"]
+position = Vector2( -209, 105 )
+
+[node name="InGate" parent="." index="12"]
+position = Vector2( -223, -87 )
+
+[node name="Spikes2" parent="." index="13" instance=ExtResource( 2 )]
+position = Vector2( -176, 49 )
+
+[node name="Spikes3" parent="." index="14" instance=ExtResource( 2 )]
+position = Vector2( -143, 49 )
+
+[node name="Spikes5" parent="." index="15" instance=ExtResource( 2 )]
+position = Vector2( 144, 49 )
+
+[node name="Spikes6" parent="." index="16" instance=ExtResource( 2 )]
+position = Vector2( 176, 49 )
+
+[node name="Spikes7" parent="." index="17" instance=ExtResource( 2 )]
+position = Vector2( 209, 49 )
+
+[node name="Spikes9" parent="." index="18" instance=ExtResource( 2 )]
+position = Vector2( 48, 80 )
+
+[node name="Spikes10" parent="." index="19" instance=ExtResource( 2 )]
+position = Vector2( 80, 80 )
+
+[node name="Spikes11" parent="." index="20" instance=ExtResource( 2 )]
+position = Vector2( 113, 80 )
+
+[node name="Spikes4" parent="." index="21" instance=ExtResource( 2 )]
+position = Vector2( -111, 49 )
+
+[node name="Spikes8" parent="." index="22" instance=ExtResource( 2 )]
+position = Vector2( -79, 49 )
+
+[node name="SpikedGate" type="Node2D" parent="." index="23"]
+position = Vector2( -65, 67 )
+script = ExtResource( 7 )
+
+[node name="SpikeGate" type="Sprite" parent="SpikedGate" index="0"]
+position = Vector2( -17, -216 )
+texture = ExtResource( 5 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="SpikedGate" index="1"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikedGate/StaticBody2D" index="0"]
+position = Vector2( 96.5, -2.5 )
+shape = SubResource( 57 )
+
+[node name="Area2D" type="Area2D" parent="SpikedGate" index="2"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikedGate/Area2D" index="0"]
+position = Vector2( 96.5, -15.5 )
+shape = SubResource( 58 )
+
+[node name="DoorLeaver" type="StaticBody2D" parent="." index="24"]
+position = Vector2( -367, -48 )
+script = SubResource( 51 )
+
+[node name="Sprite" type="AnimatedSprite" parent="DoorLeaver" index="0"]
+position = Vector2( 159, 32 )
+frames = SubResource( 52 )
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorLeaver" index="1"]
+position = Vector2( 159, 40.25 )
+shape = SubResource( 53 )
+
+[node name="ChainSprite" type="AnimatedSprite" parent="DoorLeaver" index="2"]
+position = Vector2( 160, -200 )
+frames = SubResource( 54 )
+playing = true
+
+[node name="Timer" type="Timer" parent="DoorLeaver" index="3"]
+wait_time = 2.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DoorLeaver" index="4"]
+anims/OpenGate = SubResource( 55 )
+anims/RESET = SubResource( 56 )
+
+[node name="Camel" parent="." index="25" instance=ExtResource( 8 )]
+position = Vector2( -146, 17 )
+
+[node name="Camel2" parent="." index="26" instance=ExtResource( 8 )]
+position = Vector2( 185, 17 )
+
+[connection signal="body_entered" from="SpikedGate/Area2D" to="SpikedGate" method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="DoorLeaver/Timer" to="DoorLeaver" method="_on_Timer_timeout"]

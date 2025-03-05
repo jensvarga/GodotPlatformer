@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/elephant_trumpet_2.wav-04361f13b4aa304beca8ecdf4c355ce4.sample"
+
+[deps]
+
+source_file="res://Sound/FX/MISC/elephant_trumpet_2.wav"
+dest_files=[ "res://.import/elephant_trumpet_2.wav-04361f13b4aa304beca8ecdf4c355ce4.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

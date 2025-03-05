@@ -237,14 +237,15 @@ texture = ExtResource( 8 )
 
 [node name="LavaBlock" parent="Lava" index="1" instance=ExtResource( 7 )]
 position = Vector2( -48, 142 )
+frame = 3
 
 [node name="LavaBlock2" parent="Lava" index="2" instance=ExtResource( 7 )]
 position = Vector2( -16, 142 )
-frame = 3
+frame = 2
 
 [node name="LavaBlock3" parent="Lava" index="3" instance=ExtResource( 7 )]
 position = Vector2( 16, 142 )
-frame = 3
+frame = 2
 
 [node name="Paro" parent="." index="11" instance=ExtResource( 9 )]
 position = Vector2( 184, 29 )

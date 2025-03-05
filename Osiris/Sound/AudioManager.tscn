@@ -44,3 +44,7 @@ bus = "Music"
 
 [node name="LaserPlayer" type="AudioStreamPlayer" parent="."]
 bus = "Effects"
+
+[node name="LavaPlayer" type="Node2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="LavaPlayer"]

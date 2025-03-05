@@ -895,9 +895,8 @@ lighthouse_level = true
 [node name="LevelCarpet7" parent="Carpets" instance=ExtResource( 10 )]
 visible = false
 position = Vector2( -175, -1218 )
-connecting_level_path = "res://Levels/LightHouseLevels/LighthouseLevel_1.tscn"
+connecting_level_path = "res://Levels/BlackPyramid.tscn"
 level_name = "The Black Pyramid"
-lighthouse_level = true
 
 [node name="Shadows" type="Node2D" parent="."]
 
@@ -1466,11 +1465,11 @@ position = Vector2( -2, -91 )
 
 [node name="Sprite" type="Sprite" parent="YSort/LightHouse/KinematicBody2D"]
 material = ExtResource( 48 )
-position = Vector2( 233, 23 )
+position = Vector2( 235, 12 )
 scale = Vector2( 1.5, 1 )
 texture = ExtResource( 47 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 512, 411 )
+region_rect = Rect2( 0, 0, 512, 435 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="YSort/LightHouse/KinematicBody2D"]
 polygon = PoolVector2Array( 54, -9, 59, -9, 81, -9, 104, -9, 104, 4, 124, 37, 123, 208, 24, 220, 19, 216, 20, 149, 6, 149, 6, 145, 97, 145, 97, 8, 79, 8, 79, -6, 61, -6, 61, 8, -88, 8, -88, 145, -14, 145, -14, 149, -27, 149, -23, 161, -23, 220, -93, 211, -112, 194, -112, 29, -88, -10, 44, -9 )
@@ -1501,7 +1500,7 @@ NPC_DIALOGUE = [ "Ah, so you come before me, Horus. I am Hraf-Haf, ferryman of t
 [node name="Thoth2" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( 57, 872 )
 NAME = "THOT"
-NPC_DIALOGUE = [ "Behold, the Lighthouse of Alexandria, a wonder of the ages. Within its towering heights lies a trial meant only for the strongest of challengers", "It is said that Seth himself ascended to the 100th floor", "Do you have the strength to follow in his footsteps?", "Be wary, This gauntlet so relentless, that even gods have lost their minds within its depths" ]
+NPC_DIALOGUE = [ "Behold, the Lighthouse of Alexandria, a wonder of the ages. Within its towering heights lies a trial meant only for the strongest of challengers", "It is said that Seth himself ascended to the 42nd floor", "Do you have the strength to follow in his footsteps?", "Be wary, This gauntlet so relentless, that even gods have lost their minds within its depths" ]
 
 [node name="Sekhmet" parent="YSort" instance=ExtResource( 52 )]
 position = Vector2( 136, 665 )
@@ -1525,6 +1524,7 @@ collision_mask = 0
 
 [node name="Fountain" type="AnimatedSprite" parent="YSort/Fountain"]
 frames = SubResource( 59 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="YSort/Fountain"]

@@ -66,10 +66,15 @@ position = Vector2( 0, 17 )
 [node name="Timer" type="Timer" parent="."]
 process_mode = 0
 wait_time = 2.76
-autostart = true
+one_shot = true
 
 [node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
 process_parent = true
 physics_process_parent = true
 
+[node name="FirstDropTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="screen_entered" from="VisibilityEnabler2D" to="." method="_on_VisibilityEnabler2D_screen_entered"]
+[connection signal="timeout" from="FirstDropTimer" to="." method="_on_FirstDropTimer_timeout"]

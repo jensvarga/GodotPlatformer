@@ -10,10 +10,10 @@ export(Array, String) var NPC_DIALOGUE = ["Greetings, traveler",\
 "Farewell, I have revealed all that is known, until we meet again"\
 ]
 
-export(Array, String) var CONTINUE_DIALOGUE = [\
-"You have passed the triels",
-"Contuniue forth",\
-"Farewell"\
+export(Array, String) var CONTINUE_DIALOGUE = [
+	"You have passed the triels",
+	"Contuniue forth",
+	"Farewell"
 ]
 
 export(bool) var CONTINUE_DIALOGUE_UNLOCKED = false

@@ -1,0 +1,148 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/lighthouse_tiles.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Backgrounds/lighthouse_summit_bg.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/lighouse_gate_in.png" type="Texture" id=4]
+[ext_resource path="res://Levels/LightHouseLevels/LighhouseSummitEvents.gd" type="Script" id=5]
+[ext_resource path="res://Ankh.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Sprites/Backgrounds/lighthouse_sky.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Backgrounds/Background Sprites/constellation_sky.png" type="Texture" id=8]
+[ext_resource path="res://FlickerBg.gd" type="Script" id=9]
+[ext_resource path="res://Sprites/black_clouds.png" type="Texture" id=10]
+[ext_resource path="res://ScrollingParallaxLayer.gd" type="Script" id=11]
+[ext_resource path="res://StarrySky.tres" type="Material" id=12]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 240, 1062.5 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=3]
+0/name = "lighthouse_tiles.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 128, 160 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 2 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 4 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[node name="LighthouseSummit" instance=ExtResource( 1 )]
+sky_color = Color( 0, 0, 0, 1 )
+lighthouse_level = true
+
+[node name="SpawnPoint" parent="." index="1"]
+position = Vector2( 159, 111 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="7"]
+
+[node name="Space" type="ColorRect" parent="ParallaxBackground" index="0"]
+material = ExtResource( 12 )
+margin_left = -1442.0
+margin_top = -1680.0
+margin_right = 1429.0
+margin_bottom = 567.0
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground" index="1"]
+motion_mirroring = Vector2( 480, 0 )
+script = ExtResource( 11 )
+scroll_speed = 10.0
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="0"]
+position = Vector2( -4, -569 )
+texture = ExtResource( 10 )
+offset = Vector2( 240, 0 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 480, 275 )
+
+[node name="Sprite3" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="1"]
+position = Vector2( -4, -839 )
+texture = ExtResource( 10 )
+offset = Vector2( 240, 0 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 480, 275 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="2"]
+position = Vector2( -4, -299 )
+texture = ExtResource( 10 )
+offset = Vector2( 240, 0 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 480, 275 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground" index="2"]
+visible = false
+motion_scale = Vector2( 1, 0.95 )
+motion_mirroring = Vector2( 480, 275 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3" index="0"]
+texture = ExtResource( 8 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 960, 275 )
+script = ExtResource( 9 )
+min_alpha = 0.6
+max_alpha = 0.8
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" index="3"]
+visible = false
+motion_scale = Vector2( 1, 0.95 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2" index="0"]
+visible = false
+position = Vector2( 3, 1049 )
+texture = ExtResource( 7 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="4"]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer" index="0"]
+position = Vector2( 1, -637 )
+texture = ExtResource( 3 )
+
+[node name="Room" type="Area2D" parent="." index="8"]
+collision_layer = 524288
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room" index="0"]
+position = Vector2( -6.5, -927.5 )
+shape = SubResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="." index="9"]
+tile_set = SubResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -3473417, 536870912, 262144, -3538936, 536870912, 262144, -3407881, 536870912, 262144, -3473400, 536870912, 262144, -3342345, 536870912, 262144, -3407864, 536870912, 262144, -3276809, 536870912, 262144, -3342328, 536870912, 262144, -3211273, 536870912, 262144, -3276792, 536870912, 262144, -3145737, 536870912, 262144, -3211256, 536870912, 262144, -3080201, 536870912, 262144, -3145720, 536870912, 262144, -3014665, 536870912, 262144, -3080184, 536870912, 262144, -2949129, 536870912, 262144, -3014648, 536870912, 262144, -2883593, 536870912, 262144, -2949112, 536870912, 262144, -2818057, 536870912, 262144, -2883576, 536870912, 262144, -2752521, 536870912, 262144, -2818040, 536870912, 262144, -2686985, 536870912, 262144, -2752504, 536870912, 262144, -2621449, 536870912, 262144, -2686968, 536870912, 262144, -2555913, 536870912, 262144, -2621432, 536870912, 262144, -2490377, 536870912, 262144, -2555896, 536870912, 262144, -2424841, 536870912, 262144, -2490360, 536870912, 262144, -2359305, 536870912, 262144, -2424824, 536870912, 262144, -2293769, 536870912, 262144, -2359288, 536870912, 262144, -2228233, 536870912, 262144, -2293752, 536870912, 262144, -2162697, 536870912, 262144, -2228216, 536870912, 262144, -2097161, 536870912, 262144, -2162680, 536870912, 262144, -2031625, 536870912, 262144, -2097144, 536870912, 262144, -1966089, 536870912, 262144, -2031608, 536870912, 262144, -1900553, 536870912, 262144, -1966072, 536870912, 262144, -1835017, 536870912, 262144, -1900536, 536870912, 262144, -1769481, 536870912, 262144, -1835000, 536870912, 262144, -1703945, 536870912, 262144, -1769464, 536870912, 262144, -1638409, 536870912, 262144, -1703928, 536870912, 262144, -1572873, 536870912, 262144, -1638392, 536870912, 262144, -1507337, 536870912, 262144, -1572856, 536870912, 262144, -1441801, 536870912, 262144, -1507320, 536870912, 262144, -1376265, 536870912, 262144, -1441784, 536870912, 262144, -1310729, 536870912, 262144, -1310724, 536870912, 262144, -1310723, 536870912, 262144, -1310722, 536870912, 262144, -1376248, 536870912, 262144, -1245193, 536870912, 262144, -1310712, 536870912, 262144, -1179657, 536870912, 262144, -1245181, 536870912, 262144, -1245180, 536870912, 262144, -1245176, 536870912, 262144, -1114121, 536870912, 262144, -1179640, 536870912, 262144, -1048585, 536870912, 262144, -1114104, 536870912, 262144, -983049, 536870912, 262144, -1048576, 536870912, 262144, -1048575, 536870912, 262144, -1048568, 536870912, 262144, -917513, 536870912, 262144, -983032, 536870912, 262144, -851976, 536870912, 262144, -917497, 536870912, 262144, -786440, 536870912, 262144, -786436, 536870912, 262144, -786435, 536870912, 262144, -851961, 536870912, 262144, -720904, 536870912, 262144, -786431, 536870912, 262144, -786430, 536870912, 262144, -786425, 536870912, 262144, -655368, 536870912, 262144, -720889, 536870912, 262144, -589832, 536870912, 262144, -655353, 536870912, 262144, -524296, 536870912, 262144, -589819, 536870912, 262144, -589818, 536870912, 262144, -589817, 536870912, 262144, -458760, 536870912, 262144, -524281, 536870912, 262144, -393224, 536870912, 262144, -458751, 536870912, 262144, -458750, 536870912, 262144, -458745, 536870912, 262144, -327688, 536870912, 262144, -393209, 536870912, 262144, -262152, 536870912, 262144, -262147, 536870912, 262144, -262146, 536870912, 262144, -327673, 536870912, 262144, -196616, 536870912, 262144, -262137, 536870912, 262144, -131080, 536870912, 262144, -131079, 536870912, 262144, -131078, 536870912, 262144, -196601, 536870912, 262144, -65544, 536870912, 262144, -131065, 536870912, 262144, -8, 536870912, 262144, -5, 536870912, 262144, -4, 536870912, 262144, -65529, 536870912, 262144, 65528, 536870912, 262144, 7, 536870912, 262144, 131064, 536870912, 262144, 65536, 536870912, 262144, 65537, 536870912, 262144, 65543, 536870912, 262144, 196600, 536870912, 262144, 131079, 536870912, 262144, 262136, 536870912, 262144, 196615, 536870912, 262144, 327672, 536870912, 262144, 327673, 536870912, 262144, 327674, 536870912, 262144, 327675, 536870912, 262144, 327676, 536870912, 262144, 327677, 536870912, 262144, 327678, 536870912, 262144, 327679, 536870912, 262144, 262144, 536870912, 262144, 262145, 536870912, 262144, 262146, 536870912, 262144, 262147, 536870912, 262144, 262148, 536870912, 262144, 262149, 536870912, 262144, 262150, 536870912, 262144, 262151, 536870912, 262144 )
+
+[node name="LighouseGateIn" type="Sprite" parent="." index="10"]
+position = Vector2( 159, 105 )
+z_index = -1
+texture = ExtResource( 4 )
+
+[node name="LighhouseSummitEvents" type="Node2D" parent="." index="11"]
+script = ExtResource( 5 )
+
+[node name="Ankh" parent="." index="12" instance=ExtResource( 6 )]
+position = Vector2( -195, -117 )
+
+[node name="Ankh2" parent="." index="13" instance=ExtResource( 6 )]
+position = Vector2( 196, -311 )

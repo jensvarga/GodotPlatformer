@@ -6,7 +6,8 @@ const EXPLO = preload("res://Explosion1.tscn")
 const SPEED = 10
 const THROW_SPEED = 100
 
-var hp = 5
+export (int) var hp = 5
+var babies := 20
 
 onready var throw_position := $ThrowPosition
 onready var sprite := $AnimatedSprite
@@ -39,6 +40,7 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func throw_egg():
+	babies -= 1
 	sprite.animation = "Throw"
 	animation_timer.start()
 	var player_position = Events.player.global_position
@@ -74,7 +76,8 @@ func on_shot():
 		damage()
 
 func _on_ThrowTimer_timeout():
-	throw_egg()
+	if babies > 0:
+		throw_egg()
 
 func _on_TurnArea_body_entered(body):
 	if body is Player:

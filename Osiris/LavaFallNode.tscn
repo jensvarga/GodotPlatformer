@@ -1,0 +1,222 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://LavaFall.tscn" type="PackedScene" id=1]
+[ext_resource path="res://LavaFallNode.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=39]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/2d-waterfall
+
+Feel free to improve and change this shader according to your needs
+and consider sharing the modified result on godotshaders.com.
+*/
+
+shader_type canvas_item;
+
+uniform vec2 scale; // Used for sprite script. Don't edit this value in the inspector.
+uniform float zoom; // Used for sprite script. Don't edit this value in the inspector.
+
+uniform sampler2D refraction_map;
+uniform sampler2D water_mask;
+
+uniform vec2 gap_stretch = vec2(0.8, 0.05);
+uniform vec2 refraction_stretch = vec2(2.0, 0.8);
+uniform float refraction_strength : hint_range(0.0, 0.1) = 0.02;
+
+uniform vec4 water_tint : hint_color = vec4(0.2, 0.6, 1.0, 0.1);
+uniform vec4 water_highlight : hint_color = vec4(1.0, 1.0, 1.0, 0.3);
+uniform float speed = 1.0;
+uniform float flow_gaps : hint_range(0.0, 1.0) = 0.33;
+uniform float highlight_width : hint_range(0.0, 0.3) = 0.02;
+
+void fragment()
+{
+	// Get the two noise textures and make them move on the y axis. The gaps move twice as fast as the refraction, but you can tweak this by changing (speed * 0.5)
+	vec2 refraction_offset = texture(refraction_map, vec2(UV.x, UV.y + -TIME * speed * 0.5) * scale * refraction_stretch).xy;
+	vec2 gap_mask = texture(water_mask, vec2(UV.x, UV.y + -TIME * speed) * scale * gap_stretch).xy;
+	
+	// Set values between -0.5 and 0.5 (instead of 0 and 1). Otherwise the reflection will move whith increased refraction_strength
+	refraction_offset -= 0.5; 
+	
+	// Get the screen texture and distort it
+	vec4 refraction = texture(SCREEN_TEXTURE, SCREEN_UV - refraction_offset * refraction_strength * zoom);
+	
+	
+	// Create holes and apply colors and textures //
+	
+	vec4 color = vec4(1.0);
+	
+	// Define what values will be the water highlight color (the gap border)
+	float inner_edge = flow_gaps + highlight_width;
+	
+	// See if the pixel is within the edges range and use the water colors alpha to blend between showing color or refraction texture.
+	if (gap_mask.x < inner_edge)
+	{
+		color.rgb = mix(refraction.rgb, water_highlight.rgb, water_highlight.a);
+	}
+	else
+	{
+		color.rgb = mix(refraction.rgb, water_tint.rgb, water_tint.a);
+	}
+	
+	// If the value is below the gap threshhold make it transparent (a gap)
+	if (gap_mask.x < flow_gaps)
+	{
+		color.a = 0.0;
+	}
+	
+	
+	// Crate Edge Shape //
+	
+	// Set the shape for the top and bottom edges. Use water_mask as shape but with other values to flatten it out horizontally. 
+	vec2 water_edge = texture(water_mask, vec2(UV.x, UV.y + -TIME * 0.1) * scale * vec2(0.15, 0.6)).xy;
+	water_edge -= 0.5;
+	
+	// Use the same mask as for the gaps for left and right edge.
+	vec2 vertical_edge_mask = gap_mask - 0.5;
+	
+	// Apply the new masks to the edges. This will make the wobble effect.
+	color.a = mix(0.0, color.a, step(UV.x + vertical_edge_mask.x * 0.2, 0.92)); // Right edge
+	color.a = mix(color.a, 0.0, step(UV.x - vertical_edge_mask.x * 0.2, 0.08)); // Left edge
+	
+	color.a = mix(0.0, color.a, step(UV.y + water_edge.y * 0.1, 0.95));  //Bottom edge
+	color.a = mix(color.a, 0.0, step(UV.y - water_edge.y * 0.05, 0.05)); //Top edge
+	
+	COLOR = color;
+}"
+
+[sub_resource type="OpenSimplexNoise" id=40]
+
+[sub_resource type="NoiseTexture" id=32]
+seamless = true
+noise = SubResource( 40 )
+
+[sub_resource type="OpenSimplexNoise" id=41]
+
+[sub_resource type="NoiseTexture" id=42]
+seamless = true
+noise = SubResource( 41 )
+
+[sub_resource type="ShaderMaterial" id=30]
+shader = SubResource( 39 )
+shader_param/scale = Vector2( 1.28125, 7.75 )
+shader_param/zoom = 2.12856
+shader_param/gap_stretch = Vector2( 0.8, 0.05 )
+shader_param/refraction_stretch = Vector2( 2, 0.8 )
+shader_param/refraction_strength = 0.02
+shader_param/water_tint = Color( 0.709804, 0.266667, 0, 1 )
+shader_param/water_highlight = Color( 0.815686, 0.345098, 0, 1 )
+shader_param/speed = 0.6
+shader_param/flow_gaps = 0.33
+shader_param/highlight_width = 0.068
+shader_param/refraction_map = SubResource( 32 )
+shader_param/water_mask = SubResource( 42 )
+
+[sub_resource type="Gradient" id=35]
+offsets = PoolRealArray( 0, 0.738372, 0.885659, 1 )
+colors = PoolColorArray( 0.890196, 0.85098, 0.0588235, 1, 1, 1, 0.811765, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="RectangleShape2D" id=36]
+extents = Vector2( 13.375, 157.25 )
+
+[sub_resource type="Animation" id=37]
+resource_name = "IncreaseGap"
+length = 6.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("LavaFall:material:shader_param/flow_gaps")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 5, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.33, 0.33, 0.687, 0.33 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 3, 3.6, 5.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=38]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("LavaFall:material:shader_param/flow_gaps")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.33 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[node name="LavaFallNode" type="Node2D"]
+position = Vector2( 976.5, -2.00001 )
+script = ExtResource( 2 )
+
+[node name="LavaFall" parent="." instance=ExtResource( 1 )]
+material = SubResource( 30 )
+position = Vector2( 0, 0 )
+scale = Vector2( 1.28125, 7.75 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 0.5, 102 )
+amount = 20
+emission_shape = 2
+emission_rect_extents = Vector2( 32, 1 )
+direction = Vector2( 0, -1 )
+spread = 90.0
+gravity = Vector2( 0, 10 )
+initial_velocity = 50.0
+damping = 60.0
+scale_amount = 5.0
+scale_amount_random = 1.0
+color = Color( 0.815686, 0.707353, 0, 1 )
+color_ramp = SubResource( 35 )
+hue_variation = 0.07
+hue_variation_random = 0.94
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -0.125, -2.99999 )
+shape = SubResource( 36 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "RESET"
+anims/IncreaseGap = SubResource( 37 )
+anims/RESET = SubResource( 38 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 3.50002, 2 )
+scale = Vector2( 8.4, 5.8 )
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

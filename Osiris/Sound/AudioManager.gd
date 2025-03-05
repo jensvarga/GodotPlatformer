@@ -162,6 +162,7 @@ func fade_in_music(song):
 
 onready var audio_players: = $AudioPlayers
 onready var music_player: = $MusicPlayer/AudioStreamPlayer
+onready var lava_player := $LavaPlayer/AudioStreamPlayer
 
 var audio_stream_players : Array = []
 
@@ -174,6 +175,16 @@ func play_music(track):
 	music_player.volume_db = start_volmue
 	music_player.stream = track
 	music_player.play()
+
+const LAVA_SOUND := preload("res://Sound/FX/MISC/Lava_blob.wav")
+
+func play_lava_sound():
+	if not lava_player.playing:
+		lava_player.stream = LAVA_SOUND
+		lava_player.play()
+
+func stop_lava_sound():
+	lava_player.stop()
 	
 func play_seti_music():
 	play_music(SETIS_OATH)

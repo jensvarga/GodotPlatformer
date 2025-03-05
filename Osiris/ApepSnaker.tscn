@@ -1,0 +1,340 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Sprites/snake_part_2.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/snake_part_1.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/snake_part.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/snake_head.png" type="Texture" id=4]
+[ext_resource path="res://ApepSnaker.gd" type="Script" id=5]
+[ext_resource path="res://SnakePartArea.gd" type="Script" id=6]
+[ext_resource path="res://Sprites/snake_tail.png" type="Texture" id=7]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1242, -3, 149.091, 0.767194, -149.091, -0.767194, 19, 2, 108.174, 0.767193, -108.174, -0.767193, -231, -182, 133.403, 0.406717, -133.403, -0.406717, -327, 213, 142.758, 3.25374, -142.758, -3.25374, -545, -187, 179.769, -2.84702, -179.769, 2.84702, -712, 246, 181.803, -1.62687, -181.803, 1.62687, -925, -164, 217.594, -4.47389, -217.594, 4.47389, -1102, 261, 228.575, -1.62687, -228.575, 1.62687, -1302, -154, -45.959, -82.1569, 45.959, 82.1569, -1469, 289, -256.704, -18.6558, 256.704, 18.6558, -1089, 981, -123.128, 78.3543, 123.128, -78.3543, 860, 962, 17.1633, 102.234, -17.1633, -102.234, 1399, 84, 0, 0, 0, 0, 1242, -3 )
+}
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 23.0177
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 20.3714
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 23.5366, 20.4978 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 12.1758
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 24.9973, 6.13524 )
+
+[node name="ApepSnaker" type="Path2D"]
+scale = Vector2( 2, 2 )
+curve = SubResource( 1 )
+script = ExtResource( 5 )
+
+[node name="SnakePart_2" type="PathFollow2D" parent="."]
+position = Vector2( 185.704, 1.82793 )
+rotation = 3.13869
+scale = Vector2( 1, 1 )
+offset = 1058.34
+
+[node name="Sprite" type="Sprite" parent="SnakePart_2"]
+texture = ExtResource( 1 )
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="SnakePart_2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart_2/Area2D"]
+shape = SubResource( 3 )
+
+[node name="SnakePart_1" type="PathFollow2D" parent="."]
+position = Vector2( 151.096, 1.92267 )
+rotation = 3.13909
+offset = 1092.9
+
+[node name="Sprite" type="Sprite" parent="SnakePart_1"]
+texture = ExtResource( 2 )
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="SnakePart_1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart_1/Area2D"]
+shape = SubResource( 4 )
+
+[node name="SnakeHead" type="PathFollow2D" parent="."]
+position = Vector2( 110.491, 2.01274 )
+rotation = 3.13979
+offset = 1133.5
+
+[node name="Sprite" type="Sprite" parent="SnakeHead"]
+position = Vector2( 5.49141, -9.34969 )
+texture = ExtResource( 4 )
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="SnakeHead"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakeHead/Area2D"]
+position = Vector2( 9.31005, -8.80042 )
+shape = SubResource( 5 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="SnakeHead"]
+
+[node name="SnakePart" type="PathFollow2D" parent="."]
+position = Vector2( 233.185, 1.67935 )
+rotation = 3.13829
+offset = 1010.82
+
+[node name="Sprite" type="Sprite" parent="SnakePart"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart2" type="PathFollow2D" parent="."]
+position = Vector2( 272.429, 1.54441 )
+rotation = 3.13805
+offset = 971.943
+
+[node name="Sprite" type="Sprite" parent="SnakePart2"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart2"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart2/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart3" type="PathFollow2D" parent="."]
+position = Vector2( 311.141, 1.40295 )
+rotation = 3.13785
+offset = 933.065
+
+[node name="Sprite" type="Sprite" parent="SnakePart3"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart3"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart3/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart4" type="PathFollow2D" parent="."]
+position = Vector2( 349.88, 1.25457 )
+rotation = 3.13769
+offset = 894.187
+
+[node name="Sprite" type="Sprite" parent="SnakePart4"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart4"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart4/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart5" type="PathFollow2D" parent="."]
+position = Vector2( 389.273, 1.09782 )
+rotation = 3.13755
+offset = 855.31
+
+[node name="Sprite" type="Sprite" parent="SnakePart5"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart5"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart5/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart6" type="PathFollow2D" parent="."]
+position = Vector2( 428.107, 0.938321 )
+rotation = 3.13743
+offset = 816.432
+
+[node name="Sprite" type="Sprite" parent="SnakePart6"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart6"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart6/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart7" type="PathFollow2D" parent="."]
+position = Vector2( 467.031, 0.774145 )
+rotation = 3.13733
+offset = 777.554
+
+[node name="Sprite" type="Sprite" parent="SnakePart7"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart7"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart7/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart8" type="PathFollow2D" parent="."]
+position = Vector2( 504.96, 0.610501 )
+rotation = 3.13724
+offset = 738.677
+
+[node name="Sprite" type="Sprite" parent="SnakePart8"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart8"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart8/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart9" type="PathFollow2D" parent="."]
+position = Vector2( 543.297, 0.441804 )
+rotation = 3.13716
+offset = 699.799
+
+[node name="Sprite" type="Sprite" parent="SnakePart9"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart9"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart9/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart10" type="PathFollow2D" parent="."]
+position = Vector2( 584.27, 0.258215 )
+rotation = 3.13708
+offset = 658.549
+
+[node name="Sprite" type="Sprite" parent="SnakePart10"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart10"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart10/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart11" type="PathFollow2D" parent="."]
+position = Vector2( 625.244, 0.0715387 )
+rotation = 3.137
+offset = 617.447
+
+[node name="Sprite" type="Sprite" parent="SnakePart11"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart11"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart11/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart12" type="PathFollow2D" parent="."]
+position = Vector2( 666.204, -0.117893 )
+rotation = 3.13694
+offset = 576.345
+
+[node name="Sprite" type="Sprite" parent="SnakePart12"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart12"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart12/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakePart13" type="PathFollow2D" parent="."]
+position = Vector2( 706.993, -0.309101 )
+rotation = 3.13688
+offset = 535.242
+
+[node name="Sprite" type="Sprite" parent="SnakePart13"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart13"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart13/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[node name="SnakeTail" type="PathFollow2D" parent="."]
+position = Vector2( 787.705, -0.694311 )
+rotation = 3.13677
+offset = 453.038
+
+[node name="Sprite" type="Sprite" parent="SnakeTail"]
+texture = ExtResource( 7 )
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="SnakeTail"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakeTail/Area2D"]
+position = Vector2( -7.29456, -3.86476 )
+shape = SubResource( 6 )
+
+[node name="SnakePart14" type="PathFollow2D" parent="."]
+position = Vector2( 747.45, -0.501105 )
+rotation = 3.13682
+offset = 494.14
+
+[node name="Sprite" type="Sprite" parent="SnakePart14"]
+texture = ExtResource( 3 )
+flip_v = true
+
+[node name="SnakePartArea" type="Area2D" parent="SnakePart14"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakePart14/SnakePartArea"]
+rotation = 1.57186
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="SnakePart_2/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="SnakePart_1/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="SnakeHead/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="screen_entered" from="SnakeHead/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="body_entered" from="SnakePart/SnakePartArea" to="SnakePart/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart2/SnakePartArea" to="SnakePart2/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart3/SnakePartArea" to="SnakePart3/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart4/SnakePartArea" to="SnakePart4/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart5/SnakePartArea" to="SnakePart5/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart6/SnakePartArea" to="SnakePart6/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart7/SnakePartArea" to="SnakePart7/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart8/SnakePartArea" to="SnakePart8/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart9/SnakePartArea" to="SnakePart9/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart10/SnakePartArea" to="SnakePart10/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart11/SnakePartArea" to="SnakePart11/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart12/SnakePartArea" to="SnakePart12/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakePart13/SnakePartArea" to="SnakePart13/SnakePartArea" method="_on_SnakePartArea_body_entered"]
+[connection signal="body_entered" from="SnakeTail/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="SnakePart14/SnakePartArea" to="SnakePart14/SnakePartArea" method="_on_SnakePartArea_body_entered"]

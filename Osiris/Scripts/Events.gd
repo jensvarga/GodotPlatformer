@@ -234,15 +234,39 @@ var lighthouse_levels = [
 	"res://Levels/LightHouseLevels/LighthouseLevel_17.tscn",
 	"res://Levels/LightHouseLevels/LighthouseLevel_18.tscn",
 	"res://Levels/LightHouseLevels/LighthouseLevel_19.tscn",
-	"res://Levels/LightHouseLevels/LighthouseLevel_20.tscn"
+	"res://Levels/LightHouseLevels/LighthouseLevel_20.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_21.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_22.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_23.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_24.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_25.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_26.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_27.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_28.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_29.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_30.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_31.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_32.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_33.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_34.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_35.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_36.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_37.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_38.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_39.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_40.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_41.tscn"
 ]
+
+var final_lighthouse_level := "res://Levels/LightHouseLevels/LighthouseSummit.tscn"
 
 var completed_levels = []
 
 func play_random_lighthouse_level():
 	var nr_of_levels = lighthouse_levels.size()
 	if completed_levels.size() == nr_of_levels:
-		# All levels completed! Wow!
+		var final_level = load(final_lighthouse_level)
+		get_tree().change_scene_to(final_level)
 		return
 	if nr_of_levels <= 1:
 		var scene = load(lighthouse_levels[0])

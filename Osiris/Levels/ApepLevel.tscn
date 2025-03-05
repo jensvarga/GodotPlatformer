@@ -1,0 +1,519 @@
+[gd_scene load_steps=40 format=2]
+
+[ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/black_pyramid_tiles.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Backgrounds/osiris_shaft_bg.png" type="Texture" id=3]
+[ext_resource path="res://StarrySky.tres" type="Material" id=4]
+[ext_resource path="res://Sprites/Backgrounds/Background Sprites/constellation_sky.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Backgrounds/Osiris_shaft_clouds.png" type="Texture" id=6]
+[ext_resource path="res://ScrollingSprite.tres" type="Material" id=7]
+[ext_resource path="res://Levels/ApepLevelEvents.gd" type="Script" id=8]
+[ext_resource path="res://Apep.tscn" type="PackedScene" id=9]
+[ext_resource path="res://FlickerBg.gd" type="Script" id=10]
+[ext_resource path="res://Sprites/black_clouds.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/aphopis_bite_attack.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/bite_telegraph.png" type="Texture" id=13]
+[ext_resource path="res://ApepSnaker.tscn" type="PackedScene" id=14]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=8]
+0/name = "black_pyramid_tiles.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 128, 96 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 1 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 3 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 4 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 6 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 3, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 7 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="Shader" id=11]
+code = "shader_type canvas_item;
+
+uniform float speed;
+
+void fragment () {
+	COLOR = texture(TEXTURE, vec2(UV.x + TIME * speed, UV.y));
+}"
+
+[sub_resource type="ShaderMaterial" id=13]
+shader = SubResource( 11 )
+shader_param/speed = -0.01
+
+[sub_resource type="StreamTexture" id=14]
+flags = 2
+load_path = "res://.import/black_clouds.png-a9a806924ebfbeb513ea637d0a54c75f.stex"
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 11 )
+shader_param/speed = -0.01
+
+[sub_resource type="Animation" id=9]
+resource_name = "Intro"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Apep:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 3.3, 6.6, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -9, 242 ), Vector2( -71, 148 ), Vector2( -35, 88 ), Vector2( -39, 12 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("ApepLevelEvents")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 1, 10 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "enter_intro"
+}, {
+"args": [  ],
+"method": "start_music"
+}, {
+"args": [  ],
+"method": "enter_idle"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BlackClouds:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 7.9, 10 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Apep:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -9, 242 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Apep:material:shader_param/color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.199219, 0.180687, 0.180687, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BlackClouds:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("BiteAttack/Telegraph:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "Telegraph" ]
+}
+
+[sub_resource type="Animation" id=26]
+resource_name = "SkipIntro"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Apep:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -56, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("ApepLevelEvents")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "enter_idle"
+}, {
+"args": [  ],
+"method": "start_music"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BlackClouds:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 13 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 13 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=22]
+animations = [ {
+"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
+"loop": true,
+"name": "Telegraph",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 262, 88 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 12 )
+region = Rect2( 262, 0, 262, 88 )
+
+[sub_resource type="SpriteFrames" id=18]
+animations = [ {
+"frames": [ SubResource( 16 ), SubResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Curve2D" id=23]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1242, -3, 149.091, 0.767194, -149.091, -0.767194, 19, 2, 97.0281, -1.75557, -97.0281, 1.75557, -120.5, -100.5, 63.6085, -1.15939, -63.6085, 1.15939, -192.5, 39, 71.1251, -0.672557, -71.1251, 0.672557, -273, -92.5, 72.3756, 0.688606, -72.3756, -0.688606, -339, 39.5, 54.0369, -1.35675, -54.0369, 1.35675, -419, -93.5, 120.131, 0.288124, -120.131, -0.288124, -515, 43, 228.575, -1.62687, -228.575, 1.62687, -1302, -154, -45.959, -82.1569, 45.959, 82.1569, -1469, 289, -256.704, -18.6558, 256.704, 18.6558, -1089, 981, -123.128, 78.3543, 123.128, -78.3543, 860, 962, 17.1633, 102.234, -17.1633, -102.234, 1399, 84, 0, 0, 0, 0, 1242, -3 )
+}
+
+[sub_resource type="Curve2D" id=24]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1242, -3, 149.091, 0.767194, -149.091, -0.767194, 19, 2, 97.0281, -1.75557, -97.0281, 1.75557, -120.5, -100.5, 0, 0, 0, 0, -163.5, -21.5, 63.6085, -1.15939, -63.6085, 1.15939, -192.5, 39, 71.1251, -0.672557, -71.1251, 0.672557, -273, -92.5, 72.3756, 0.688606, -72.3756, -0.688606, -339, 39.5, 54.0369, -1.35675, -54.0369, 1.35675, -419, -93.5, 120.131, 0.288124, -120.131, -0.288124, -515, 43, 228.575, -1.62687, -228.575, 1.62687, -1302, -154, -45.959, -82.1569, 45.959, 82.1569, -1469, 289, -256.704, -18.6558, 256.704, 18.6558, -1089, 981, -123.128, 78.3543, 123.128, -78.3543, 860, 962, 17.1633, 102.234, -17.1633, -102.234, 1399, 84, 0, 0, 0, 0, 1242, -3 )
+}
+
+[sub_resource type="GDScript" id=25]
+script/source = "extends Path2D
+
+const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
+
+export var active = false
+
+var activate = true
+
+const SPEED = 0.025
+
+onready var snake = [
+	$SnakePart_2, 
+	$SnakePart_1, 
+	$SnakeHead, 
+	$SnakePart, 
+	$SnakePart2, 
+	$SnakePart3, 
+	$SnakePart4, 
+	$SnakePart5, 
+	$SnakePart6, 
+	$SnakePart7, 
+	$SnakePart8, 
+	$SnakePart9, 
+	$SnakePart10, 
+	$SnakePart11, 
+	$SnakePart12, 
+	$SnakePart13, 
+	$SnakeTail, 
+	$SnakePart14
+]
+
+var initial_offsets = []
+
+func _ready():
+	for part in snake:
+		initial_offsets.append(part.unit_offset)
+
+func _physics_process(delta):
+	if active:
+		if activate:
+			AudioManager.play_sound(HISS)
+			activate = false
+		for part in snake:
+			var offset = fmod(part.unit_offset + SPEED * delta, 1.0)
+			(part as PathFollow2D).set_deferred(\"unit_offset\", offset)
+
+func reset():
+	active = false
+	activate = true
+	
+	for i in range(snake.size()):
+		snake[i].unit_offset = initial_offsets[i]
+
+func _on_Area2D_body_entered(body):
+	if body is Player:
+		body.hurt()
+"
+
+[node name="ApepLevel" instance=ExtResource( 1 )]
+sky_color = Color( 0.152941, 0.152941, 0.152941, 1 )
+boss_level = true
+boss_name = "APEP"
+
+[node name="SpawnPoint" parent="." index="1"]
+position = Vector2( 134, 102 )
+
+[node name="CheckPoint" parent="." index="2"]
+position = Vector2( 135, 99 )
+
+[node name="TileMap" type="TileMap" parent="." index="7"]
+tile_set = SubResource( 8 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -720904, 0, 65537, -786425, 0, 65537, -655368, 0, 65537, -720889, 0, 65537, -589832, 0, 65537, -655353, 0, 65537, -524296, 0, 65537, -589817, 0, 65537, -458760, 0, 65537, -524281, 0, 65537, -393224, 0, 65537, -458745, 0, 65537, -327688, 0, 65537, -393209, 0, 65537, -262152, 0, 65537, -327673, 0, 65537, -196616, 0, 65537, -262137, 0, 65537, -131080, 0, 65537, -196601, 0, 65537, -65544, 0, 65537, -131065, 0, 65537, -8, 0, 0, -65529, 0, 0, 65528, 0, 65536, 7, 0, 65536, 131064, 0, 65536, 65543, 0, 65536, 196600, 0, 65536, 131079, 0, 65536, 262136, 0, 131072, 196615, 0, 131072, 327672, 536870912, 1, 327673, 0, 1, 327674, 536870912, 2, 327675, 536870912, 1, 327676, 0, 1, 327677, 536870912, 2, 327678, 536870912, 1, 327679, 0, 1, 262144, 536870912, 2, 262145, 536870912, 1, 262146, 0, 1, 262147, 536870912, 2, 262148, 536870912, 1, 262149, 0, 1, 262150, 0, 2, 262151, 536870912, 1 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="8"]
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4" index="0"]
+material = ExtResource( 4 )
+margin_left = -232.0
+margin_top = -145.0
+margin_right = 237.0
+margin_bottom = 136.0
+
+[node name="Sprite3" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="1"]
+position = Vector2( 246, -156 )
+texture = ExtResource( 5 )
+script = ExtResource( 10 )
+flicker_speed = 2.0
+min_alpha = 0.6
+max_alpha = 0.7
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="2"]
+position = Vector2( -302, -20 )
+texture = ExtResource( 5 )
+script = ExtResource( 10 )
+flicker_speed = 3.0
+min_alpha = 0.6
+max_alpha = 0.8
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="3"]
+position = Vector2( 2, -57 )
+texture = ExtResource( 3 )
+
+[node name="Sprite4" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="4"]
+material = ExtResource( 7 )
+position = Vector2( 2, 63 )
+texture = ExtResource( 6 )
+
+[node name="BlackClouds2" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="5"]
+material = SubResource( 13 )
+texture = SubResource( 14 )
+
+[node name="ApepLevelEvents" type="Node2D" parent="." index="9"]
+script = ExtResource( 8 )
+
+[node name="BounceTimer" type="Timer" parent="ApepLevelEvents" index="0"]
+wait_time = 1.5
+one_shot = true
+
+[node name="BounceTimer2" type="Timer" parent="ApepLevelEvents" index="1"]
+wait_time = 1.5
+one_shot = true
+
+[node name="SnakeTimer" type="Timer" parent="ApepLevelEvents" index="2"]
+wait_time = 10.0
+one_shot = true
+
+[node name="SnakeDoneTimer" type="Timer" parent="ApepLevelEvents" index="3"]
+wait_time = 8.0
+one_shot = true
+
+[node name="Apep" parent="." index="10" instance=ExtResource( 9 )]
+position = Vector2( -9, 242 )
+
+[node name="BlackClouds" type="Sprite" parent="." index="11"]
+material = SubResource( 12 )
+texture = ExtResource( 11 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="12"]
+anims/Intro = SubResource( 9 )
+anims/RESET = SubResource( 10 )
+anims/SkipIntro = SubResource( 26 )
+
+[node name="BiteAttack" type="Node2D" parent="." index="13"]
+position = Vector2( -179, 419 )
+
+[node name="Telegraph" type="AnimatedSprite" parent="BiteAttack" index="0"]
+position = Vector2( 7, -315 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 22 )
+animation = "Telegraph"
+playing = true
+
+[node name="Sprite" type="AnimatedSprite" parent="BiteAttack" index="1"]
+position = Vector2( -24, 0 )
+rotation = -1.28727
+scale = Vector2( 2, 2 )
+z_index = -2
+frames = SubResource( 18 )
+playing = true
+
+[node name="Area2D" type="Area2D" parent="BiteAttack/Sprite" index="0"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BiteAttack/Sprite/Area2D" index="0"]
+rotation = 1.28727
+scale = Vector2( 1, 1 )
+polygon = PoolVector2Array( -4, 90, -5, -31, 4, -89, 8, -115, 19, -115, 30, -98, 51, -109, 51, -92, 35, -55, 43, 1, 7, 127, -5, 132 )
+
+[node name="TelegraphTimer" type="Timer" parent="BiteAttack" index="2"]
+wait_time = 0.5
+one_shot = true
+
+[node name="QuakePosition" type="Position2D" parent="BiteAttack" index="3"]
+position = Vector2( 6, -289 )
+
+[node name="Tween" type="Tween" parent="." index="14"]
+
+[node name="ApepSnaker" parent="." index="15" instance=ExtResource( 14 )]
+position = Vector2( 544, 47 )
+z_index = -1
+curve = SubResource( 23 )
+
+[node name="ApepSnaker2" parent="." index="16" instance=ExtResource( 14 )]
+position = Vector2( -670, 59 )
+scale = Vector2( -2, 2 )
+z_index = -1
+curve = SubResource( 24 )
+script = SubResource( 25 )
+
+[connection signal="timeout" from="ApepLevelEvents/BounceTimer" to="ApepLevelEvents" method="_on_BounceTimer_timeout"]
+[connection signal="timeout" from="ApepLevelEvents/BounceTimer2" to="ApepLevelEvents" method="_on_BounceTimer2_timeout"]
+[connection signal="timeout" from="ApepLevelEvents/SnakeTimer" to="ApepLevelEvents" method="_on_SnakeTimer_timeout"]
+[connection signal="timeout" from="ApepLevelEvents/SnakeDoneTimer" to="ApepLevelEvents" method="_on_SnakeDoneTimer_timeout"]
+[connection signal="timeout" from="BiteAttack/TelegraphTimer" to="ApepLevelEvents" method="_on_TelegraphTimer_timeout"]

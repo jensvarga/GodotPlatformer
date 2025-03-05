@@ -11,7 +11,7 @@ func _ready():
 	Transition.connect("pixelation_completed", self, "_on_pixelation_completed")
 	Events.has_talaria = true
 	Events.has_power_crook = true
-	bg_sky.global_position.y += Events.lighthouse_counter * 21
+	bg_sky.global_position.y += Events.lighthouse_counter * 51
 	if Events.lighthouse_counter >= 30:
 		cloud_bg.hide()
 

@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+export (int) var bullets = -1
+
 const BULLET := preload("res://BullyBullet.tscn")
 
 export (float) var delay = 0.05
@@ -12,7 +14,8 @@ func _ready():
 	delay_timer.wait_time = delay
 
 func _on_FireTimer_timeout():
-	fire()
+	if bullets != 0:
+		fire()
 
 func _on_VisibilityNotifier2D_screen_entered():
 	delay_timer.start()
@@ -25,6 +28,7 @@ func _on_DelayTimer_timeout():
 	fire_timer.start()
 	
 func fire():
+	bullets -= 1
 	AudioManager.play_boom()
 	var bullet := BULLET.instance()
 	bullet.position = fire_pos.global_position

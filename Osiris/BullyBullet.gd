@@ -8,6 +8,8 @@ onready var collider := $BounceArea/CollisionShape2D
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
 
+var active = false
+
 func set_direction(_direction: Vector2):
 	direction = _direction.normalized()
 
@@ -23,11 +25,25 @@ func _on_VisibilityNotifier2D_screen_exited():
 	call_deferred("queue_free")
 
 func _on_BounceArea_body_entered(body):
+	if not active:
+		return
+		
 	if body is Player:
-		collider.set_deferred("disabled", true)
-		body.bounce(500)
-		destroy()
+		if body.holding_wall or body.is_on_floor():
+			body.hurt()
+			destroy()
+		else:
+			collider.set_deferred("disabled", true)
+			body.bounce(500)
+			destroy()
 
 func _on_BullyBullet_body_entered(body):
+	if not active:
+		return
+		
 	if body is Player:
 		body.hurt()
+		destroy()
+
+func _on_ActivateTimer_timeout():
+	active = true
