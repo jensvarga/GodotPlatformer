@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Levels/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/black_pyramid_tiles.png" type="Texture" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://Sprites/aphopis_bite_attack.png" type="Texture" id=12]
 [ext_resource path="res://Sprites/bite_telegraph.png" type="Texture" id=13]
 [ext_resource path="res://ApepSnaker.tscn" type="PackedScene" id=14]
+[ext_resource path="res://ApepSpitting.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Levels/SnakeBiteArea.gd" type="Script" id=16]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -123,6 +125,22 @@ load_path = "res://.import/black_clouds.png-a9a806924ebfbeb513ea637d0a54c75f.ste
 shader = SubResource( 11 )
 shader_param/speed = -0.01
 
+[sub_resource type="Animation" id=29]
+resource_name = "BossDied"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ParallaxBackground/ParallaxLayer4/BlackClouds2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [sub_resource type="Animation" id=9]
 resource_name = "Intro"
 length = 10.0
@@ -133,7 +151,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.1, 3.3, 6.6, 10 ),
+"times": PoolRealArray( 0.2, 3.3, 6.6, 10 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -9, 242 ), Vector2( -71, 148 ), Vector2( -35, 88 ), Vector2( -39, 12 ) ]
@@ -221,6 +239,66 @@ tracks/3/keys = {
 "update": 0,
 "values": [ "Telegraph" ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("ApepSpitting:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -367, 174 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ApepSpitting:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 38.1114 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ApepSpitting2:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 395, -130 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("ApepSpitting2:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -37.7799 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("ParallaxBackground/ParallaxLayer4/BlackClouds2:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=26]
 resource_name = "SkipIntro"
@@ -266,6 +344,96 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
+[sub_resource type="Animation" id=28]
+resource_name = "SpitLeft"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ApepSpitting2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 395, -130 ), Vector2( 271, -62 ), Vector2( 271, -62 ), Vector2( 344, -106 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ApepSpitting2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -37.7799, -61.6, -61.6, -14.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("ApepLevelEvents")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "spit_left"
+}, {
+"args": [  ],
+"method": "attack_done"
+} ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "SpitRight"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ApepSpitting:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -367, 174 ), Vector2( -200, 133 ), Vector2( -200, 133 ), Vector2( -367, 174 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("ApepLevelEvents")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "spit_right"
+}, {
+"args": [  ],
+"method": "attack_done"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ApepSpitting:rotation_degrees")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 2.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 38.1114, -15.5, -15.5, 29.1 ]
+}
+
 [sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 13 )
 region = Rect2( 0, 0, 32, 32 )
@@ -307,17 +475,201 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Curve2D" id=23]
+[sub_resource type="Curve2D" id=30]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 1242, -3, 149.091, 0.767194, -149.091, -0.767194, 19, 2, 97.0281, -1.75557, -97.0281, 1.75557, -120.5, -100.5, 63.6085, -1.15939, -63.6085, 1.15939, -192.5, 39, 71.1251, -0.672557, -71.1251, 0.672557, -273, -92.5, 72.3756, 0.688606, -72.3756, -0.688606, -339, 39.5, 54.0369, -1.35675, -54.0369, 1.35675, -419, -93.5, 120.131, 0.288124, -120.131, -0.288124, -515, 43, 228.575, -1.62687, -228.575, 1.62687, -1302, -154, -45.959, -82.1569, 45.959, 82.1569, -1469, 289, -256.704, -18.6558, 256.704, 18.6558, -1089, 981, -123.128, 78.3543, 123.128, -78.3543, 860, 962, 17.1633, 102.234, -17.1633, -102.234, 1399, 84, 0, 0, 0, 0, 1242, -3 )
 }
 
-[sub_resource type="Curve2D" id=24]
+[sub_resource type="GDScript" id=31]
+script/source = "extends Path2D
+
+const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
+
+export var active = false
+
+const SPEED = 0.025
+
+onready var snake = [
+	$SnakePart_2, 
+	$SnakePart_1, 
+	$SnakeHead, 
+	$SnakePart, 
+	$SnakePart2, 
+	$SnakePart3, 
+	$SnakePart4, 
+	$SnakePart5, 
+	$SnakePart6, 
+	$SnakePart7, 
+	$SnakePart8, 
+	$SnakePart9, 
+	$SnakePart10, 
+	$SnakePart11, 
+	$SnakePart12, 
+	$SnakePart13, 
+	$SnakeTail, 
+	$SnakePart14
+]
+
+var initial_offsets = []
+
+func _ready():
+	for part in snake:
+		initial_offsets.append(part.unit_offset)
+
+func _physics_process(delta):
+	if active:
+		for part in snake:
+			var offset = fmod(part.unit_offset + SPEED * delta, 1.0)
+			(part as PathFollow2D).set_deferred(\"unit_offset\", offset)
+
+func reset():
+	active = false
+	
+	for i in range(snake.size()):
+		snake[i].unit_offset = initial_offsets[i]
+
+func _on_Area2D_body_entered(body):
+	if body is Player:
+		body.hurt()
+
+func _on_VisibilityNotifier2D_screen_entered():
+	AudioManager.play_sound(HISS)
+"
+
+[sub_resource type="Curve2D" id=32]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 1242, -3, 149.091, 0.767194, -149.091, -0.767194, 19, 2, 97.0281, -1.75557, -97.0281, 1.75557, -120.5, -100.5, 0, 0, 0, 0, -163.5, -21.5, 63.6085, -1.15939, -63.6085, 1.15939, -192.5, 39, 71.1251, -0.672557, -71.1251, 0.672557, -273, -92.5, 72.3756, 0.688606, -72.3756, -0.688606, -339, 39.5, 54.0369, -1.35675, -54.0369, 1.35675, -419, -93.5, 120.131, 0.288124, -120.131, -0.288124, -515, 43, 228.575, -1.62687, -228.575, 1.62687, -1302, -154, -45.959, -82.1569, 45.959, 82.1569, -1469, 289, -256.704, -18.6558, 256.704, 18.6558, -1089, 981, -123.128, 78.3543, 123.128, -78.3543, 860, 962, 17.1633, 102.234, -17.1633, -102.234, 1399, 84, 0, 0, 0, 0, 1242, -3 )
 }
 
-[sub_resource type="GDScript" id=25]
+[sub_resource type="GDScript" id=33]
+script/source = "extends Path2D
+
+const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
+
+export var active = false
+
+var activate = true
+
+const SPEED = 0.025
+
+onready var snake = [
+	$SnakePart_2, 
+	$SnakePart_1, 
+	$SnakeHead, 
+	$SnakePart, 
+	$SnakePart2, 
+	$SnakePart3, 
+	$SnakePart4, 
+	$SnakePart5, 
+	$SnakePart6, 
+	$SnakePart7, 
+	$SnakePart8, 
+	$SnakePart9, 
+	$SnakePart10, 
+	$SnakePart11, 
+	$SnakePart12, 
+	$SnakePart13, 
+	$SnakeTail, 
+	$SnakePart14
+]
+
+var initial_offsets = []
+
+func _ready():
+	for part in snake:
+		initial_offsets.append(part.unit_offset)
+
+func _physics_process(delta):
+	if active:
+		if activate:
+			AudioManager.play_sound(HISS)
+			activate = false
+		for part in snake:
+			var offset = fmod(part.unit_offset + SPEED * delta, 1.0)
+			(part as PathFollow2D).set_deferred(\"unit_offset\", offset)
+
+func reset():
+	active = false
+	activate = true
+	
+	for i in range(snake.size()):
+		snake[i].unit_offset = initial_offsets[i]
+
+func _on_Area2D_body_entered(body):
+	if body is Player:
+		body.hurt()
+"
+
+[sub_resource type="Curve2D" id=34]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1242, -3, 149.091, 0.767194, -149.091, -0.767194, 19, 2, 97.0281, -1.75557, -97.0281, 1.75557, -124, -79, -33.3962, -32.2904, 33.3962, 32.2904, -519, -72.5, 3.0088, -46.7197, -3.0088, 46.7197, -161, -27, 2.12106, -51.7621, -2.12106, 51.7621, -495.5, -5, -31.5728, -78.7103, 31.5728, 78.7103, -320, 53, 54.0369, -1.35675, -54.0369, 1.35675, -414.5, 122.5, 120.131, 0.288124, -120.131, -0.288124, -515, 43, 228.575, -1.62687, -228.575, 1.62687, -1302, -154, -45.959, -82.1569, 45.959, 82.1569, -1469, 289, -256.704, -18.6558, 256.704, 18.6558, -1089, 981, -123.128, 78.3543, 123.128, -78.3543, 860, 962, 17.1633, 102.234, -17.1633, -102.234, 1399, 84, 0, 0, 0, 0, 1242, -3 )
+}
+
+[sub_resource type="GDScript" id=35]
+script/source = "extends Path2D
+
+const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
+
+export var active = false
+
+var activate = true
+
+const SPEED = 0.025
+
+onready var snake = [
+	$SnakePart_2, 
+	$SnakePart_1, 
+	$SnakeHead, 
+	$SnakePart, 
+	$SnakePart2, 
+	$SnakePart3, 
+	$SnakePart4, 
+	$SnakePart5, 
+	$SnakePart6, 
+	$SnakePart7, 
+	$SnakePart8, 
+	$SnakePart9, 
+	$SnakePart10, 
+	$SnakePart11, 
+	$SnakePart12, 
+	$SnakePart13, 
+	$SnakeTail, 
+	$SnakePart14
+]
+
+var initial_offsets = []
+
+func _ready():
+	for part in snake:
+		initial_offsets.append(part.unit_offset)
+
+func _physics_process(delta):
+	if active:
+		if activate:
+			AudioManager.play_sound(HISS)
+			activate = false
+		for part in snake:
+			var offset = fmod(part.unit_offset + SPEED * delta, 1.0)
+			(part as PathFollow2D).set_deferred(\"unit_offset\", offset)
+
+func reset():
+	active = false
+	activate = true
+	
+	for i in range(snake.size()):
+		snake[i].unit_offset = initial_offsets[i]
+
+func _on_Area2D_body_entered(body):
+	if body is Player:
+		body.hurt()
+"
+
+[sub_resource type="Curve2D" id=36]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1242, -3, 149.091, 0.767194, -149.091, -0.767194, 19, 2, 97.0281, -1.75557, -97.0281, 1.75557, -124, -79, -33.3962, -32.2904, 33.3962, 32.2904, -519, -72.5, 3.0088, -46.7197, -3.0088, 46.7197, -161, -27, 2.12106, -51.7621, -2.12106, 51.7621, -495.5, -5, -31.5728, -78.7103, 31.5728, 78.7103, -320, 53, 54.0369, -1.35675, -54.0369, 1.35675, -414.5, 122.5, 120.131, 0.288124, -120.131, -0.288124, -515, 43, 228.575, -1.62687, -228.575, 1.62687, -1302, -154, -45.959, -82.1569, 45.959, 82.1569, -1469, 289, -256.704, -18.6558, 256.704, 18.6558, -1089, 981, -123.128, 78.3543, 123.128, -78.3543, 860, 962, 17.1633, 102.234, -17.1633, -102.234, 1399, 84, 0, 0, 0, 0, 1242, -3 )
+}
+
+[sub_resource type="GDScript" id=37]
 script/source = "extends Path2D
 
 const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
@@ -391,7 +743,7 @@ position = Vector2( 135, 99 )
 tile_set = SubResource( 8 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( -720904, 0, 65537, -786425, 0, 65537, -655368, 0, 65537, -720889, 0, 65537, -589832, 0, 65537, -655353, 0, 65537, -524296, 0, 65537, -589817, 0, 65537, -458760, 0, 65537, -524281, 0, 65537, -393224, 0, 65537, -458745, 0, 65537, -327688, 0, 65537, -393209, 0, 65537, -262152, 0, 65537, -327673, 0, 65537, -196616, 0, 65537, -262137, 0, 65537, -131080, 0, 65537, -196601, 0, 65537, -65544, 0, 65537, -131065, 0, 65537, -8, 0, 0, -65529, 0, 0, 65528, 0, 65536, 7, 0, 65536, 131064, 0, 65536, 65543, 0, 65536, 196600, 0, 65536, 131079, 0, 65536, 262136, 0, 131072, 196615, 0, 131072, 327672, 536870912, 1, 327673, 0, 1, 327674, 536870912, 2, 327675, 536870912, 1, 327676, 0, 1, 327677, 536870912, 2, 327678, 536870912, 1, 327679, 0, 1, 262144, 536870912, 2, 262145, 536870912, 1, 262146, 0, 1, 262147, 536870912, 2, 262148, 536870912, 1, 262149, 0, 1, 262150, 0, 2, 262151, 536870912, 1 )
+tile_data = PoolIntArray( -1507336, 0, 65537, -1507335, 0, 65537, -1507334, 0, 65537, -1507333, 0, 65537, -1507332, 0, 65537, -1507331, 0, 65537, -1507330, 0, 65537, -1507329, 0, 65537, -1572864, 0, 65537, -1572863, 0, 65537, -1572862, 0, 65537, -1572861, 0, 65537, -1572860, 0, 65537, -1572859, 0, 65537, -1572858, 0, 65537, -1572857, 0, 65537, -1441800, 0, 65537, -1507321, 0, 65537, -1376264, 0, 65537, -1441785, 0, 65537, -1310728, 0, 65537, -1376249, 0, 65537, -1245192, 0, 65537, -1310713, 0, 65537, -1179656, 0, 65537, -1245177, 0, 65537, -1114120, 0, 65537, -1179641, 0, 65537, -1048584, 0, 65537, -1114105, 0, 65537, -983048, 0, 65537, -1048569, 0, 65537, -917512, 0, 65537, -983033, 0, 65537, -851976, 0, 65537, -917497, 0, 65537, -786440, 0, 65537, -851961, 0, 65537, -720904, 0, 65537, -786425, 0, 65537, -655368, 0, 65537, -720889, 0, 65537, -589832, 0, 65537, -655353, 0, 65537, -524296, 0, 65537, -589817, 0, 65537, -458760, 0, 65537, -524281, 0, 65537, -393224, 0, 65537, -458745, 0, 65537, -327688, 0, 65537, -393209, 0, 65537, -262152, 0, 65537, -327673, 0, 65537, -196616, 0, 65537, -262137, 0, 65537, -131080, 0, 65537, -196601, 0, 65537, -65544, 0, 65537, -131065, 0, 65537, -8, 0, 0, -65529, 0, 0, 65528, 0, 65536, 7, 0, 65536, 131064, 0, 65536, 65543, 0, 65536, 196600, 0, 65536, 131079, 0, 65536, 262136, 0, 131072, 196615, 0, 131072, 327672, 536870912, 1, 327673, 0, 1, 327674, 536870912, 2, 327675, 536870912, 1, 327676, 0, 1, 327677, 536870912, 2, 327678, 536870912, 1, 327679, 0, 1, 262144, 536870912, 2, 262145, 536870912, 1, 262146, 0, 1, 262147, 536870912, 2, 262148, 536870912, 1, 262149, 0, 1, 262150, 0, 2, 262151, 536870912, 1 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="8"]
 
@@ -437,7 +789,6 @@ texture = SubResource( 14 )
 script = ExtResource( 8 )
 
 [node name="BounceTimer" type="Timer" parent="ApepLevelEvents" index="0"]
-wait_time = 1.5
 one_shot = true
 
 [node name="BounceTimer2" type="Timer" parent="ApepLevelEvents" index="1"]
@@ -445,7 +796,7 @@ wait_time = 1.5
 one_shot = true
 
 [node name="SnakeTimer" type="Timer" parent="ApepLevelEvents" index="2"]
-wait_time = 10.0
+wait_time = 14.0
 one_shot = true
 
 [node name="SnakeDoneTimer" type="Timer" parent="ApepLevelEvents" index="3"]
@@ -460,9 +811,12 @@ material = SubResource( 12 )
 texture = ExtResource( 11 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="12"]
+anims/BossDied = SubResource( 29 )
 anims/Intro = SubResource( 9 )
 anims/RESET = SubResource( 10 )
 anims/SkipIntro = SubResource( 26 )
+anims/SpitLeft = SubResource( 28 )
+anims/SpitRight = SubResource( 27 )
 
 [node name="BiteAttack" type="Node2D" parent="." index="13"]
 position = Vector2( -179, 419 )
@@ -472,6 +826,7 @@ position = Vector2( 7, -315 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 22 )
 animation = "Telegraph"
+frame = 2
 playing = true
 
 [node name="Sprite" type="AnimatedSprite" parent="BiteAttack" index="1"]
@@ -485,10 +840,10 @@ playing = true
 [node name="Area2D" type="Area2D" parent="BiteAttack/Sprite" index="0"]
 collision_layer = 0
 collision_mask = 2
+script = ExtResource( 16 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BiteAttack/Sprite/Area2D" index="0"]
 rotation = 1.28727
-scale = Vector2( 1, 1 )
 polygon = PoolVector2Array( -4, 90, -5, -31, 4, -89, 8, -115, 19, -115, 30, -98, 51, -109, 51, -92, 35, -55, 43, 1, 7, 127, -5, 132 )
 
 [node name="TelegraphTimer" type="Timer" parent="BiteAttack" index="2"]
@@ -503,17 +858,41 @@ position = Vector2( 6, -289 )
 [node name="ApepSnaker" parent="." index="15" instance=ExtResource( 14 )]
 position = Vector2( 544, 47 )
 z_index = -1
-curve = SubResource( 23 )
+curve = SubResource( 30 )
+script = SubResource( 31 )
 
 [node name="ApepSnaker2" parent="." index="16" instance=ExtResource( 14 )]
 position = Vector2( -670, 59 )
 scale = Vector2( -2, 2 )
 z_index = -1
-curve = SubResource( 24 )
-script = SubResource( 25 )
+curve = SubResource( 32 )
+script = SubResource( 33 )
+
+[node name="ApepSnaker3" parent="." index="17" instance=ExtResource( 14 )]
+position = Vector2( -633, 52 )
+scale = Vector2( -2, 2 )
+z_index = -1
+curve = SubResource( 34 )
+script = SubResource( 35 )
+
+[node name="ApepSnaker4" parent="." index="18" instance=ExtResource( 14 )]
+position = Vector2( 644, 73 )
+z_index = -1
+curve = SubResource( 36 )
+script = SubResource( 37 )
+
+[node name="ApepSpitting" parent="." index="19" instance=ExtResource( 15 )]
+position = Vector2( -367, 174 )
+rotation = 0.66517
+
+[node name="ApepSpitting2" parent="." index="20" instance=ExtResource( 15 )]
+position = Vector2( 395, -130 )
+rotation = -0.659383
+scale = Vector2( -1, 1 )
 
 [connection signal="timeout" from="ApepLevelEvents/BounceTimer" to="ApepLevelEvents" method="_on_BounceTimer_timeout"]
 [connection signal="timeout" from="ApepLevelEvents/BounceTimer2" to="ApepLevelEvents" method="_on_BounceTimer2_timeout"]
 [connection signal="timeout" from="ApepLevelEvents/SnakeTimer" to="ApepLevelEvents" method="_on_SnakeTimer_timeout"]
 [connection signal="timeout" from="ApepLevelEvents/SnakeDoneTimer" to="ApepLevelEvents" method="_on_SnakeDoneTimer_timeout"]
+[connection signal="body_entered" from="BiteAttack/Sprite/Area2D" to="BiteAttack/Sprite/Area2D" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="BiteAttack/TelegraphTimer" to="ApepLevelEvents" method="_on_TelegraphTimer_timeout"]

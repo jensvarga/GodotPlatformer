@@ -84,12 +84,12 @@ void fragment() {
 
 [resource]
 shader = SubResource( 4 )
-shader_param/bg_color = Color( 0, 0, 0, 1 )
+shader_param/bg_color = Color( 0.121569, 0.121569, 0.121569, 1 )
 shader_param/offset = null
 shader_param/bigStarSlow = 2.0
 shader_param/mediumStarSlow = 6.0
 shader_param/smallStarSlow = 8.0
-shader_param/smallStarAmount = 0.002
+shader_param/smallStarAmount = 0.01
 shader_param/mediumStarAmount = 0.01
 shader_param/bigStarAmount = 0.02
 shader_param/pixel_size = 4.0

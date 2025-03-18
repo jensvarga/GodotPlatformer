@@ -16,6 +16,7 @@ signal BiteAttack
 signal BiteAttackDone
 signal SnakeAttack
 signal SnakeAttackDone
+signal SpitAttack
 
 var velocity = Vector2.ZERO
 enum State {Intro, Idle, Dive, BiteAttack, Return, Dead, SnakeAttack}
@@ -34,6 +35,8 @@ func _ready():
 
 func _physics_process(delta):
 	match state:
+		State.Dead:
+			return
 		State.Intro:
 			pass
 		State.Idle:
@@ -45,9 +48,7 @@ func _physics_process(delta):
 		State.Return:
 			update_return(delta)
 		State.SnakeAttack:
-			pass
-		State.Dead:
-			pass
+			pass	
 
 func enter_intro():
 	invincible = true
@@ -85,11 +86,25 @@ func enter_return():
 
 func enter_bite_attack():
 	state = State.BiteAttack
-	emit_signal("BiteAttack")
+	if rand_range(-1, 1) > 0:
+		emit_signal("BiteAttack")
+	else:
+		emit_signal("SpitAttack")
 
 func enter_snake_attack():
 	state = State.SnakeAttack
 	emit_signal("SnakeAttack")
+
+func enter_dead():
+	Events.emit_signal("boss_died")
+	state = State.Dead
+	sprite.animation = "Die"
+	head_collider.set_deferred("disabled", true)
+	body_collider.set_deferred("disabled", true)
+	dive_collider.set_deferred("disabled", true)
+	CameraShaker.add_trauma(.6)
+	AudioManager.play_aphopis_die_sound()
+	AudioManager.stop_music()
 
 func update_dive(delta):
 	if global_position.y > (start_position.y + 300):
@@ -105,6 +120,7 @@ func update_dive(delta):
 		dive_collider.set_deferred("disabled", false)
 	
 	if sprite.frame == 11:
+		dive_collider.set_deferred("disabled", true)
 		sprite.frame = 3
 
 func update_return(delta):
@@ -133,6 +149,8 @@ func random_attack():
 	last_attack = random
 
 func _on_IdleTimer_timeout():
+	if state == State.Dead:
+		return
 	enter_dive()
 
 func _on_BiteAttackDone():
@@ -142,19 +160,32 @@ func _on_SnakeAttackDone():
 	enter_return()
 
 func hurt():
+	if state == State.Dead:
+		return
+		
 	if not invincible:
 		if (Events.boss_hit_points - 1) > 0:
 			Events.emit_signal("damage_boss")
 			animation_player.play("Hurt")
 			AudioManager.play_aphopis_hurt_sound()
+		else:
+			Events.emit_signal("damage_boss")
+			enter_dead()
 			
 		invincible = true
 		invincibility_timer.start()
 
 func _on_InvincibilityTimer_timeout():
+	if state == State.Dead:
+		return
 	invincible = false
 
 func _on_HeadArea_body_entered(body):
+	if state == State.Dead:
+		return
 	if body is Player:
 		body.hurt()
 		body.bounce(200)
+
+func on_shot():
+	AudioManager.play_ding()

@@ -90,3 +90,4 @@ func _on_transition_completed():
 
 func _on_AutosaveTimer_timeout():
 	Events.save_game_data()
+

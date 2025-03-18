@@ -17,18 +17,27 @@ onready var bounce_timer_2 := $BounceTimer2
 
 onready var snakey_snake := $"../ApepSnaker"
 onready var snakey_snake_2 := $"../ApepSnaker2"
+onready var snakey_snake_3 := $"../ApepSnaker3"
+onready var snakey_snake_4 := $"../ApepSnaker4"
 onready var snake_timer := $SnakeTimer
 onready var snake_done_timer := $SnakeDoneTimer
 
+onready var spitter_right := $"../ApepSpitting"
+onready var spitter_left := $"../ApepSpitting2"
+
 var nr_of_bites = 3
+var boss_dead = false
 
 func _ready():
 	Events.boss_hit_points = 12
 	apep.connect("BiteAttack", self, "_on_BiteAttack")
 	apep.connect("SnakeAttack", self, "_on_SnakeAttack")
+	apep.connect("SpitAttack", self, "_on_SpitAttack")
+	Events.connect("boss_died", self, "_on_boss_died")
 	Events.has_talaria = true
 	Events.has_power_crook = true
 	telegraph_bite_sprite.animation = "default"
+	call_deferred("reset_snakers")
 	
 	if Events.check_point_reached:
 		animation_player.play("SkipIntro")
@@ -86,20 +95,57 @@ func _on_BounceTimer_timeout():
 	bounce_timer_2.start()
 
 func _on_BounceTimer2_timeout():
+	if boss_dead:
+		return
 	_bite_attack()
+	
+func _on_SpitAttack():
+	if boss_dead:
+		return
+	var ran = rand_range(-1, 1)
+	if ran < 0:
+		animation_player.play("SpitLeft")
+	else:
+		animation_player.play("SpitRight")
 
 func _on_SnakeAttack():
-	if rand_range(-1, 1) > 0:
+	if boss_dead:
+		return
+	var ran = rand_range(0, 4)
+	
+	if ran <= 1:
 		snakey_snake.active = true
-	else:
+	elif ran <= 2:
 		snakey_snake_2.active = true
+	elif ran <= 3:
+		snakey_snake_3.active = true
+	else:
+		snakey_snake_4.active = true
 		
 	snake_timer.start()
 	snake_done_timer.start()
 
 func _on_SnakeTimer_timeout():
+	reset_snakers()
+
+func reset_snakers():
 	snakey_snake.reset()
 	snakey_snake_2.reset()
+	snakey_snake_2.reset()
+	snakey_snake_4.reset()
 
 func _on_SnakeDoneTimer_timeout():
 	apep.emit_signal("SnakeAttackDone")
+
+func spit_right():
+	spitter_right.emit_signal("spit")
+
+func spit_left():
+	spitter_left.emit_signal("spit")
+
+func attack_done():
+	apep.emit_signal("BiteAttackDone")
+
+func _on_boss_died():
+	boss_dead = true
+	animation_player.play("BossDied")
