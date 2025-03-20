@@ -25,6 +25,8 @@ onready var snake_done_timer := $SnakeDoneTimer
 onready var spitter_right := $"../ApepSpitting"
 onready var spitter_left := $"../ApepSpitting2"
 
+onready var exit_timer := $ExitTimer
+
 var nr_of_bites = 3
 var boss_dead = false
 
@@ -131,7 +133,7 @@ func _on_SnakeTimer_timeout():
 func reset_snakers():
 	snakey_snake.reset()
 	snakey_snake_2.reset()
-	snakey_snake_2.reset()
+	snakey_snake_3.reset()
 	snakey_snake_4.reset()
 
 func _on_SnakeDoneTimer_timeout():
@@ -148,4 +150,10 @@ func attack_done():
 
 func _on_boss_died():
 	boss_dead = true
+	reset_snakers()
+	AudioManager.stop_music()
 	animation_player.play("BossDied")
+	exit_timer.start()
+
+func _on_ExitTimer_timeout():
+	Events.emit_signal("stage_cleared")

@@ -16,6 +16,7 @@ func _input(event):
 		exit_timer.start()
 
 func _ready():
+	Transition.skip_animation()
 	VisualServer.set_default_clear_color(sky_color)
 	throne_room_ap.play("FadeInThroneRoom")
 	AudioManager.play_music(MUSIC)

@@ -548,9 +548,8 @@ const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
 
 export var active = false
 
-var activate = true
-
 const SPEED = 0.025
+const QUICK_SPEED = 0.04
 
 onready var snake = [
 	$SnakePart_2, 
@@ -581,16 +580,15 @@ func _ready():
 
 func _physics_process(delta):
 	if active:
-		if activate:
-			AudioManager.play_sound(HISS)
-			activate = false
 		for part in snake:
-			var offset = fmod(part.unit_offset + SPEED * delta, 1.0)
+			var speed = SPEED
+			if Events.boss_hit_points < 4:
+				speed = QUICK_SPEED
+			var offset = fmod(part.unit_offset + speed * delta, 1.0)
 			(part as PathFollow2D).set_deferred(\"unit_offset\", offset)
 
 func reset():
 	active = false
-	activate = true
 	
 	for i in range(snake.size()):
 		snake[i].unit_offset = initial_offsets[i]
@@ -598,6 +596,9 @@ func reset():
 func _on_Area2D_body_entered(body):
 	if body is Player:
 		body.hurt()
+
+func _on_VisibilityNotifier2D_screen_entered():
+	AudioManager.play_sound(HISS)
 "
 
 [sub_resource type="Curve2D" id=34]
@@ -612,9 +613,8 @@ const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
 
 export var active = false
 
-var activate = true
-
 const SPEED = 0.025
+const QUICK_SPEED = 0.04
 
 onready var snake = [
 	$SnakePart_2, 
@@ -645,16 +645,15 @@ func _ready():
 
 func _physics_process(delta):
 	if active:
-		if activate:
-			AudioManager.play_sound(HISS)
-			activate = false
 		for part in snake:
-			var offset = fmod(part.unit_offset + SPEED * delta, 1.0)
+			var speed = SPEED
+			if Events.boss_hit_points < 4:
+				speed = QUICK_SPEED
+			var offset = fmod(part.unit_offset + speed * delta, 1.0)
 			(part as PathFollow2D).set_deferred(\"unit_offset\", offset)
 
 func reset():
 	active = false
-	activate = true
 	
 	for i in range(snake.size()):
 		snake[i].unit_offset = initial_offsets[i]
@@ -662,6 +661,9 @@ func reset():
 func _on_Area2D_body_entered(body):
 	if body is Player:
 		body.hurt()
+
+func _on_VisibilityNotifier2D_screen_entered():
+	AudioManager.play_sound(HISS)
 "
 
 [sub_resource type="Curve2D" id=36]
@@ -676,9 +678,8 @@ const HISS := preload(\"res://Sound/FX/MISC/snake_hiss.wav\")
 
 export var active = false
 
-var activate = true
-
 const SPEED = 0.025
+const QUICK_SPEED = 0.04
 
 onready var snake = [
 	$SnakePart_2, 
@@ -709,16 +710,15 @@ func _ready():
 
 func _physics_process(delta):
 	if active:
-		if activate:
-			AudioManager.play_sound(HISS)
-			activate = false
 		for part in snake:
-			var offset = fmod(part.unit_offset + SPEED * delta, 1.0)
+			var speed = SPEED
+			if Events.boss_hit_points < 4:
+				speed = QUICK_SPEED
+			var offset = fmod(part.unit_offset + speed * delta, 1.0)
 			(part as PathFollow2D).set_deferred(\"unit_offset\", offset)
 
 func reset():
 	active = false
-	activate = true
 	
 	for i in range(snake.size()):
 		snake[i].unit_offset = initial_offsets[i]
@@ -726,10 +726,14 @@ func reset():
 func _on_Area2D_body_entered(body):
 	if body is Player:
 		body.hurt()
+
+func _on_VisibilityNotifier2D_screen_entered():
+	AudioManager.play_sound(HISS)
 "
 
 [node name="ApepLevel" instance=ExtResource( 1 )]
 sky_color = Color( 0.152941, 0.152941, 0.152941, 1 )
+next_level_path = "res://Levels/EndCinematic.tscn"
 boss_level = true
 boss_name = "APEP"
 
@@ -803,6 +807,10 @@ one_shot = true
 wait_time = 8.0
 one_shot = true
 
+[node name="ExitTimer" type="Timer" parent="ApepLevelEvents" index="4"]
+wait_time = 15.0
+one_shot = true
+
 [node name="Apep" parent="." index="10" instance=ExtResource( 9 )]
 position = Vector2( -9, 242 )
 
@@ -835,6 +843,7 @@ rotation = -1.28727
 scale = Vector2( 2, 2 )
 z_index = -2
 frames = SubResource( 18 )
+frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="BiteAttack/Sprite" index="0"]
@@ -883,16 +892,17 @@ script = SubResource( 37 )
 
 [node name="ApepSpitting" parent="." index="19" instance=ExtResource( 15 )]
 position = Vector2( -367, 174 )
-rotation = 0.66517
+rotation = 0.665169
 
 [node name="ApepSpitting2" parent="." index="20" instance=ExtResource( 15 )]
 position = Vector2( 395, -130 )
-rotation = -0.659383
+rotation = -0.659384
 scale = Vector2( -1, 1 )
 
 [connection signal="timeout" from="ApepLevelEvents/BounceTimer" to="ApepLevelEvents" method="_on_BounceTimer_timeout"]
 [connection signal="timeout" from="ApepLevelEvents/BounceTimer2" to="ApepLevelEvents" method="_on_BounceTimer2_timeout"]
 [connection signal="timeout" from="ApepLevelEvents/SnakeTimer" to="ApepLevelEvents" method="_on_SnakeTimer_timeout"]
 [connection signal="timeout" from="ApepLevelEvents/SnakeDoneTimer" to="ApepLevelEvents" method="_on_SnakeDoneTimer_timeout"]
+[connection signal="timeout" from="ApepLevelEvents/ExitTimer" to="ApepLevelEvents" method="_on_ExitTimer_timeout"]
 [connection signal="body_entered" from="BiteAttack/Sprite/Area2D" to="BiteAttack/Sprite/Area2D" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="BiteAttack/TelegraphTimer" to="ApepLevelEvents" method="_on_TelegraphTimer_timeout"]

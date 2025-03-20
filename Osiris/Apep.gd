@@ -36,7 +36,7 @@ func _ready():
 func _physics_process(delta):
 	match state:
 		State.Dead:
-			return
+			pass
 		State.Intro:
 			pass
 		State.Idle:
@@ -48,8 +48,8 @@ func _physics_process(delta):
 		State.Return:
 			update_return(delta)
 		State.SnakeAttack:
-			pass	
-
+			pass
+			
 func enter_intro():
 	invincible = true
 	state = State.Intro
@@ -57,6 +57,8 @@ func enter_intro():
 	animation_player.play("Intro")
 	
 func enter_idle():
+	if state == State.Dead:
+		return
 	state = State.Idle
 	sprite.animation = "Idle"
 	invincible = false
@@ -72,6 +74,8 @@ func enter_idle():
 		first = false
 
 func enter_dive():
+	if state == State.Dead:
+		return
 	head_collider.set_deferred("disabled", true)
 	body_collider.set_deferred("disabled", true)
 	state = State.Dive
@@ -79,12 +83,16 @@ func enter_dive():
 	AudioManager.play_aphopis_bite_sound()
 
 func enter_return():
+	if state == State.Dead:
+		return
 	invincible = false
 	state = State.Return
 	head_collider.set_deferred("disabled", false)
 	sprite.animation = "Idle"
 
 func enter_bite_attack():
+	if state == State.Dead:
+		return
 	state = State.BiteAttack
 	if rand_range(-1, 1) > 0:
 		emit_signal("BiteAttack")
@@ -92,6 +100,8 @@ func enter_bite_attack():
 		emit_signal("SpitAttack")
 
 func enter_snake_attack():
+	if state == State.Dead:
+		return
 	state = State.SnakeAttack
 	emit_signal("SnakeAttack")
 

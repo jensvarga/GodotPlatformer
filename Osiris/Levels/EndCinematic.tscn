@@ -605,7 +605,7 @@ texture = ExtResource( 10 )
 [node name="Horus" type="AnimatedSprite" parent="CanvasLayer/ThroneRoom"]
 position = Vector2( 245, 192 )
 frames = SubResource( 15 )
-frame = 2
+frame = 5
 playing = true
 
 [node name="Credits" type="Node2D" parent="CanvasLayer"]

@@ -718,97 +718,95 @@ texture = ExtResource( 12 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="0"]
 position = Vector2( 70, 414 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite17" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="1"]
 position = Vector2( -370, 414 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="2"]
 position = Vector2( 510, 414 )
 frames = SubResource( 63 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimatedSprite3" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="3"]
 position = Vector2( 950, 413.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite4" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="4"]
 position = Vector2( 1390, 413.5 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite5" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="5"]
 position = Vector2( 1830, 414 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite6" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="6"]
 position = Vector2( 2270, 414 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite7" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="7"]
 position = Vector2( 2710, 413.5 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="AnimatedSprite8" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="8"]
 position = Vector2( 3150, 413.5 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="AnimatedSprite9" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="9"]
 position = Vector2( 3589, 413 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite10" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="10"]
 position = Vector2( 4029, 413 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite11" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="11"]
 position = Vector2( 4469, 412.5 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="AnimatedSprite12" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="12"]
 position = Vector2( 4909, 412.5 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="AnimatedSprite13" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="13"]
 position = Vector2( 5349, 413 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite14" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="14"]
 position = Vector2( 5789, 413 )
 frames = SubResource( 63 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite15" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="15"]
 position = Vector2( 6229, 412.5 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="AnimatedSprite16" type="AnimatedSprite" parent="ParallaxBackground/Ocean/AnimatedTop" index="16"]
 position = Vector2( 6669, 412.5 )
 frames = SubResource( 63 )
+frame = 2
 playing = true
 
 [node name="Middle" type="Node2D" parent="ParallaxBackground/Ocean" index="3"]
@@ -1132,7 +1130,7 @@ position = Vector2( -75.5889, 35.4453 )
 rotation = 3.03244
 z_index = -1000
 frames = SubResource( 74 )
-frame = 8
+frame = 2
 playing = true
 
 [node name="Brazier" parent="." index="33" instance=ExtResource( 20 )]
@@ -1328,61 +1326,56 @@ texture = ExtResource( 33 )
 material = ExtResource( 34 )
 position = Vector2( 1118, 738 )
 frames = SubResource( 112 )
-frame = 1
 playing = true
 
 [node name="Seeweed2" type="AnimatedSprite" parent="BackgroundSprites" index="4"]
 material = ExtResource( 34 )
 position = Vector2( 2316, 1113 )
 frames = SubResource( 112 )
-frame = 1
 playing = true
 
 [node name="Seeweed4" type="AnimatedSprite" parent="BackgroundSprites" index="5"]
 material = ExtResource( 34 )
 position = Vector2( 2074, 677 )
 frames = SubResource( 112 )
-frame = 1
 playing = true
 
 [node name="Seeweed3" type="AnimatedSprite" parent="BackgroundSprites" index="6"]
 material = ExtResource( 34 )
 position = Vector2( 3114, 1241 )
 frames = SubResource( 112 )
-frame = 1
 playing = true
 
 [node name="SeeweedV2" type="AnimatedSprite" parent="BackgroundSprites" index="7"]
 material = ExtResource( 34 )
 position = Vector2( 1549, 771 )
 frames = SubResource( 115 )
-frame = 1
 playing = true
 
 [node name="SeeweedV6" type="AnimatedSprite" parent="BackgroundSprites" index="8"]
 material = ExtResource( 34 )
 position = Vector2( 1994, 689 )
 frames = SubResource( 115 )
+frame = 1
 playing = true
 
 [node name="SeeweedV3" type="AnimatedSprite" parent="BackgroundSprites" index="9"]
 material = ExtResource( 34 )
 position = Vector2( 2001, 1260 )
 frames = SubResource( 115 )
+frame = 1
 playing = true
 
 [node name="SeeweedV4" type="AnimatedSprite" parent="BackgroundSprites" index="10"]
 material = ExtResource( 34 )
 position = Vector2( 2674, 1280 )
 frames = SubResource( 115 )
-frame = 1
 playing = true
 
 [node name="SeeweedV5" type="AnimatedSprite" parent="BackgroundSprites" index="11"]
 material = ExtResource( 34 )
 position = Vector2( 3736, 1256 )
 frames = SubResource( 115 )
-frame = 1
 playing = true
 
 [node name="Pyramid1" type="Sprite" parent="BackgroundSprites" index="12"]
