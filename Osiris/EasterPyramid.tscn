@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Sprites/Backgrounds/Background Sprites/easter_pyramid.png" type="Texture" id=1]
+[ext_resource path="res://EasterPyramid.gd" type="Script" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 305, 0, 305, 253 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 305, 253 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "Left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "Right",
+"speed": 5.0
+} ]
+
+[node name="EasterPyramid" type="AnimatedSprite"]
+position = Vector2( 1062, 8 )
+frames = SubResource( 3 )
+animation = "Left"
+script = ExtResource( 2 )

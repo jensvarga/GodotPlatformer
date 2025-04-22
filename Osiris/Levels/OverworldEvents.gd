@@ -3,6 +3,10 @@ extends Node
 onready var darkwater_trigger_1 := $TriggerDarkWater/CollisionShape2D
 onready var darkwater_trigger_2 := $TriggerDarkWater/CollisionShape2D2
 onready var animation_player := $"../AnimationPlayer"
+onready var heket := $"../YSort/Heket"
+onready var heket2 := $"../YSort/Heket2"
+onready var isis := $"../YSort/Isis"
+onready var isis2 := $"../YSort/Isis2"
 
 onready var water_tile := $"../Tiles/WaterTiles/Water"
 const SONG := preload("res://Sound/Music/Original/Deflemask/PyramidFunk.wav")
@@ -11,6 +15,13 @@ const LIGHTHOUSE_SONG := preload("res://Sound/Music/Original/Deflemask/CrystalLi
 func _ready():
 	if Events.granite_block_moved:
 		animation_player.play("MoveGraniteBlock")
+	
+	if Events.has_all_bodyparts():
+		heket.call_deferred("queue_free")
+		isis.call_deferred("queue_free")
+	else:
+		heket2.call_deferred("queue_free")
+		isis2.call_deferred("queue_free")
 		
 	if Events.dark_overworld_water:
 		water_tile.material.set_shader_param("darken_amount", 1)

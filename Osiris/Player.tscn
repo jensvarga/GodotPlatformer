@@ -533,7 +533,7 @@ extents = Vector2( 0, 0 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 65
+collision_mask = 321
 script = ExtResource( 2 )
 player_move_data = ExtResource( 3 )
 
@@ -550,7 +550,7 @@ material = ExtResource( 10 )
 position = Vector2( 0, 1 )
 frames = SubResource( 3 )
 animation = "FlyingTalaria"
-frame = 2
+frame = 1
 playing = true
 
 [node name="LadderCheck" type="RayCast2D" parent="."]
@@ -613,6 +613,7 @@ anims/PowerUp = SubResource( 76 )
 anims/RESET = SubResource( 62 )
 
 [node name="InvincibleTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 
 [node name="RoomDetector" type="Area2D" parent="."]

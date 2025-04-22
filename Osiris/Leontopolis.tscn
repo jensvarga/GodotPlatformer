@@ -1130,7 +1130,7 @@ position = Vector2( -75.5889, 35.4453 )
 rotation = 3.03244
 z_index = -1000
 frames = SubResource( 74 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Brazier" parent="." index="33" instance=ExtResource( 20 )]
@@ -1326,24 +1326,28 @@ texture = ExtResource( 33 )
 material = ExtResource( 34 )
 position = Vector2( 1118, 738 )
 frames = SubResource( 112 )
+frame = 1
 playing = true
 
 [node name="Seeweed2" type="AnimatedSprite" parent="BackgroundSprites" index="4"]
 material = ExtResource( 34 )
 position = Vector2( 2316, 1113 )
 frames = SubResource( 112 )
+frame = 1
 playing = true
 
 [node name="Seeweed4" type="AnimatedSprite" parent="BackgroundSprites" index="5"]
 material = ExtResource( 34 )
 position = Vector2( 2074, 677 )
 frames = SubResource( 112 )
+frame = 1
 playing = true
 
 [node name="Seeweed3" type="AnimatedSprite" parent="BackgroundSprites" index="6"]
 material = ExtResource( 34 )
 position = Vector2( 3114, 1241 )
 frames = SubResource( 112 )
+frame = 1
 playing = true
 
 [node name="SeeweedV2" type="AnimatedSprite" parent="BackgroundSprites" index="7"]

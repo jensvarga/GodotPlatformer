@@ -3,6 +3,7 @@ extends Node2D
 const FILIUS_SOLIS := preload("res://Sound/Music/Original/Deflemask/FiliusSolis.wav")
 const AMBIENT_SCREECHES := preload("res://Sound/FX/MISC/ambient_screeches.wav")
 const SNAKE_HISS := preload("res://Sound/FX/MISC/snake_hiss.wav")
+const LAUGH := preload("res://Sound/FX/MISC/seth_laugh.wav")
 
 export (String, FILE, "*.tscn") var next_scene_path
 
@@ -15,7 +16,7 @@ onready var apep_animator := $ApepSpriteAnimator
 onready var sprite := $CanvasLayer/Control/SethsEyes
 
 func _ready():
-	Transition.play_start_transition()
+	Transition.skip_animation()
 	AudioManager.play_music(FILIUS_SOLIS)
 	AudioManager.play_sound(AMBIENT_SCREECHES)
 	sprite.animation ="Closed"
@@ -53,6 +54,7 @@ func _display_line():
 	
 	if text_index == 3 or text_index == 6:
 		sprite.animation ="Blink"
+		AudioManager.play_sound(LAUGH)
 	
 	if text_index == 8:
 		sprite.animation ="Blink"

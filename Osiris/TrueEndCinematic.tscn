@@ -1,0 +1,406 @@
+[gd_scene load_steps=45 format=2]
+
+[ext_resource path="res://Sprites/Backgrounds/Background Sprites/true_end_bg.png" type="Texture" id=1]
+[ext_resource path="res://TrueEndCinematic.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/Backgrounds/true_sky_bg.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Backgrounds/bg_spinx.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Backgrounds/Cinematic_fram.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/CinematicCharacters/Horus_adult.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/UI/Fonts/SuperLegendBoy-4w8Y.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Sprites/CinematicCharacters/thot_face.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/CinematicCharacters/pangeaSplit.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Backgrounds/battle_bg.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Backgrounds/battle-background_bg.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/green_clouds.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/Backgrounds/horseRider.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/Backgrounds/map_bg.png" type="Texture" id=14]
+[ext_resource path="res://laborynth.png" type="Texture" id=15]
+[ext_resource path="res://laborynth_real_loc.png" type="Texture" id=16]
+
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+
+uniform float speed;
+
+void fragment () {
+	COLOR = texture(TEXTURE, vec2(UV.x + TIME * speed, UV.y));
+}"
+
+[sub_resource type="ShaderMaterial" id=32]
+shader = SubResource( 9 )
+shader_param/speed = 0.0
+
+[sub_resource type="ShaderMaterial" id=33]
+shader = SubResource( 9 )
+shader_param/speed = 0.0
+
+[sub_resource type="ShaderMaterial" id=36]
+shader = SubResource( 9 )
+shader_param/speed = 0.0
+
+[sub_resource type="StreamTexture" id=37]
+flags = 2
+load_path = "res://.import/green_clouds.png-11fdaf225d5916fd82f0e87e6e232d41.stex"
+
+[sub_resource type="ShaderMaterial" id=34]
+shader = SubResource( 9 )
+shader_param/speed = 0.0
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 484, 366 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 9 )
+region = Rect2( 484, 0, 484, 366 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 9 )
+region = Rect2( 968, 0, 484, 366 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 9 )
+region = Rect2( 1452, 0, 484, 366 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 9 )
+region = Rect2( 1936, 0, 484, 366 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 9 )
+region = Rect2( 2420, 0, 484, 366 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 9 )
+region = Rect2( 2904, 0, 484, 366 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 9 )
+region = Rect2( 3388, 0, 484, 366 )
+
+[sub_resource type="SpriteFrames" id=29]
+animations = [ {
+"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ) ],
+"loop": false,
+"name": "default",
+"speed": 0.5
+} ]
+
+[sub_resource type="Shader" id=35]
+code = "shader_type canvas_item;
+
+uniform float speed;
+
+void fragment () {
+	COLOR = texture(TEXTURE, vec2(UV.x + TIME * speed, UV.y));
+}"
+
+[sub_resource type="ShaderMaterial" id=10]
+shader = SubResource( 35 )
+shader_param/speed = 0.1
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 35 )
+shader_param/speed = 0.1
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 200, 200 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 6 )
+region = Rect2( 200, 0, 200, 200 )
+
+[sub_resource type="SpriteFrames" id=14]
+animations = [ {
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="Gradient" id=30]
+colors = PoolColorArray( 0.121569, 0.121569, 0.121569, 1, 0.121569, 0.121569, 0.121569, 1 )
+
+[sub_resource type="GradientTexture" id=31]
+gradient = SubResource( 30 )
+
+[sub_resource type="DynamicFont" id=15]
+use_mipmaps = true
+font_data = ExtResource( 7 )
+
+[sub_resource type="Theme" id=16]
+default_font = SubResource( 15 )
+
+[sub_resource type="Theme" id=17]
+default_font = SubResource( 15 )
+
+[sub_resource type="Animation" id=38]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Scene4/Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 243, 71.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Scene4/Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Scene4/Sprite2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 243, 71.5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Scene4/Sprite2:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Scene4/Sprite2:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=39]
+resource_name = "ZoomLab"
+length = 60.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Scene4/Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 60 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 243, 71.5 ), Vector2( 245, 97 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Scene4/Sprite:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 60 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.28, 0.28 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Scene4/Sprite2:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 60 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 243, 71.5 ), Vector2( 242, 97 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Scene4/Sprite2:scale")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 60 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.28, 0.28 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Scene4/Sprite2:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 25.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="TrueEndCinematic" type="Node2D"]
+script = ExtResource( 2 )
+sky_color = Color( 0.121569, 0.121569, 0.121569, 1 )
+next_scene_path = "res://Levels/OverworldLevel.tscn"
+
+[node name="Scene4" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Scene4"]
+position = Vector2( 243, 71.5 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 16 )
+
+[node name="Sprite2" type="Sprite" parent="Scene4"]
+position = Vector2( 243, 71.5 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 15 )
+
+[node name="Scene3" type="Node2D" parent="."]
+
+[node name="BG" type="Sprite" parent="Scene3"]
+position = Vector2( 309, 86 )
+texture = ExtResource( 11 )
+
+[node name="Clouds" type="Sprite" parent="Scene3"]
+material = SubResource( 32 )
+position = Vector2( 221, 138 )
+texture = ExtResource( 12 )
+
+[node name="Battle" type="Sprite" parent="Scene3"]
+material = SubResource( 33 )
+position = Vector2( 314, 134 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 10 )
+
+[node name="Clouds2" type="Sprite" parent="Scene3"]
+material = SubResource( 36 )
+position = Vector2( 221, 138 )
+texture = SubResource( 37 )
+
+[node name="Sprite" type="Sprite" parent="Scene3"]
+material = SubResource( 34 )
+position = Vector2( 298, 192 )
+texture = ExtResource( 13 )
+
+[node name="Scene2" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Scene2"]
+position = Vector2( 123, 105 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 14 )
+
+[node name="Pangea" type="AnimatedSprite" parent="Scene2"]
+visible = false
+position = Vector2( 238, 148 )
+scale = Vector2( 0.961477, 0.961477 )
+frames = SubResource( 29 )
+
+[node name="Thot" type="Sprite" parent="Scene2"]
+position = Vector2( 318, 146 )
+texture = ExtResource( 8 )
+
+[node name="Tween" type="Tween" parent="Scene2"]
+
+[node name="Scene1" type="Node2D" parent="."]
+
+[node name="Sky" type="Sprite" parent="Scene1"]
+position = Vector2( 455, 133 )
+texture = ExtResource( 3 )
+
+[node name="PyramidBg" type="Sprite" parent="Scene1"]
+material = SubResource( 10 )
+position = Vector2( 673, 106 )
+texture = ExtResource( 1 )
+
+[node name="Sphinx" type="Sprite" parent="Scene1"]
+material = SubResource( 11 )
+position = Vector2( 191, 211 )
+texture = ExtResource( 4 )
+
+[node name="Horus" type="AnimatedSprite" parent="Scene1"]
+position = Vector2( 109, 165 )
+frames = SubResource( 14 )
+playing = true
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="SceneFade" type="Sprite" parent="."]
+position = Vector2( 239.5, 214 )
+scale = Vector2( 0.209473, 196 )
+texture = SubResource( 31 )
+
+[node name="Frame" type="Sprite" parent="."]
+position = Vector2( 240, 135 )
+texture = ExtResource( 5 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 82.0
+margin_top = 220.0
+margin_right = 422.0
+margin_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource( 16 )
+custom_colors/default_color = Color( 0.921569, 0.858824, 0.341176, 1 )
+text = "At last, the usurper falls, Egypt is whole again"
+
+[node name="TextTween" type="Tween" parent="RichTextLabel"]
+
+[node name="FadeInTextTimer" type="Timer" parent="RichTextLabel"]
+wait_time = 5.0
+autostart = true
+
+[node name="FadeOutTextTimer" type="Timer" parent="RichTextLabel"]
+wait_time = 3.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 157.0
+margin_top = 220.0
+margin_right = 454.0
+margin_bottom = 260.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = SubResource( 17 )
+custom_colors/default_color = Color( 0.290196, 0.376471, 0.152941, 1 )
+text = "Seth was chaos, but also strength. He fought Apep so the sun might rise. Who now will stand in his place?"
+
+[node name="TextTween2" type="Tween" parent="RichTextLabel2"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 38 )
+anims/ZoomLab = SubResource( 39 )
+
+[connection signal="timeout" from="RichTextLabel/FadeInTextTimer" to="." method="_on_FadeInTextTimer_timeout"]
+[connection signal="timeout" from="RichTextLabel/FadeOutTextTimer" to="." method="_on_FadeOutTextTimer_timeout"]

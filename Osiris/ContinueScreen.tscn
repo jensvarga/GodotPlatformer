@@ -1,0 +1,206 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://MenuTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Sprites/UI/egyptian_count.png" type="Texture" id=2]
+[ext_resource path="res://ContinueScreen.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/CinematicCharacters/horus_hurt.png" type="Texture" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 184, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 368, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 552, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 736, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 920, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 1104, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 1288, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 1472, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 1656, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 1840, 0, 184, 184 )
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"loop": false,
+"name": "default",
+"speed": 0.5
+} ]
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 4 )
+region = Rect2( 552, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 184, 0, 184, 184 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 368, 0, 184, 184 )
+
+[sub_resource type="SpriteFrames" id=15]
+animations = [ {
+"frames": [ SubResource( 17 ) ],
+"loop": true,
+"name": "Continue",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 16 ) ],
+"loop": true,
+"name": "Dead",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 3.0
+} ]
+
+[node name="ContinueScreen" type="Node2D"]
+script = ExtResource( 3 )
+sky_color = Color( 0.588235, 0.513726, 0.364706, 1 )
+select_color = Color( 0.890196, 0.741176, 0.211765, 1 )
+deselect_color = Color( 0.717647, 0.662745, 0.466667, 1 )
+time_up_color = Color( 0.578125, 0.575273, 0.569569, 1 )
+
+[node name="Control" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+theme = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 101.0
+margin_top = 57.0
+margin_right = 248.0
+margin_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 2, 2 )
+size_flags_vertical = 1
+custom_colors/font_color = Color( 0.717647, 0.662745, 0.466667, 1 )
+custom_colors/font_outline_modulate = Color( 0.247059, 0.247059, 0.247059, 1 )
+text = "Continue?"
+uppercase = true
+
+[node name="Label2" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 101.0
+margin_top = 217.0
+margin_right = 248.0
+margin_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 2, 2 )
+size_flags_vertical = 1
+custom_colors/font_color = Color( 0.717647, 0.662745, 0.466667, 1 )
+custom_colors/font_outline_modulate = Color( 0.247059, 0.247059, 0.247059, 1 )
+text = "Yes"
+uppercase = true
+
+[node name="Label3" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 277.0
+margin_top = 219.0
+margin_right = 424.0
+margin_bottom = 262.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 2, 2 )
+size_flags_vertical = 1
+custom_colors/font_color = Color( 0.717647, 0.662745, 0.466667, 1 )
+custom_colors/font_outline_modulate = Color( 0.247059, 0.247059, 0.247059, 1 )
+text = "No"
+uppercase = true
+
+[node name="NoArrow" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 348.0
+margin_top = 219.0
+margin_right = 495.0
+margin_bottom = 262.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 2, 2 )
+size_flags_vertical = 1
+custom_colors/font_color = Color( 0.890196, 0.741176, 0.211765, 1 )
+custom_colors/font_outline_modulate = Color( 0.247059, 0.247059, 0.247059, 1 )
+text = "<"
+uppercase = true
+
+[node name="YesArrow" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 204.0
+margin_top = 219.0
+margin_right = 351.0
+margin_bottom = 262.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 2, 2 )
+size_flags_vertical = 1
+custom_colors/font_color = Color( 0.890196, 0.741176, 0.211765, 1 )
+custom_colors/font_outline_modulate = Color( 0.247059, 0.247059, 0.247059, 1 )
+text = "<"
+uppercase = true
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 316, 133 )
+scale = Vector2( 0.599999, 0.599999 )
+frames = SubResource( 12 )
+
+[node name="HorusSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 162, 95 )
+frames = SubResource( 15 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

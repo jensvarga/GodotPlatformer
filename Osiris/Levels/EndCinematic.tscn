@@ -583,7 +583,7 @@ texture = ExtResource( 2 )
 [node name="Seth" type="AnimatedSprite" parent="CanvasLayer/DesertScene"]
 position = Vector2( -11, 60 )
 frames = SubResource( 2 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Sprite" type="Sprite" parent="CanvasLayer/DesertScene"]
@@ -605,7 +605,7 @@ texture = ExtResource( 10 )
 [node name="Horus" type="AnimatedSprite" parent="CanvasLayer/ThroneRoom"]
 position = Vector2( 245, 192 )
 frames = SubResource( 15 )
-frame = 5
+frame = 2
 playing = true
 
 [node name="Credits" type="Node2D" parent="CanvasLayer"]

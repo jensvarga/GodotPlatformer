@@ -3,6 +3,7 @@ extends Node2D
 const LIGHTHOUSE_SONG := preload("res://Sound/Music/Original/Deflemask/CrystalLine.wav")
 
 export (Color) var bg_color = Color.deepskyblue
+export (bool) var test_position = false
 
 onready var water_tiles := $Tiles/WaterTiles
 onready var player := $YSort/OverwoldPlayer
@@ -23,6 +24,7 @@ onready var ra := $YSort/RA
 onready var sekhmet := $YSort/Sekhmet
 onready var hapi := $YSort/Hapi
 onready var ihy := $YSort/Ihy
+onready var isis2 := $YSort/Isis2
 
 onready var thot2 := $YSort/Thoth2
 onready var lighthouse_door := $LightHouseDoor
@@ -37,9 +39,16 @@ var subworld_npcs
 
 func _ready():
 	if Events.ra_in_cave:
-		subworld_npcs = [isis, ra2, sekhmet, hapi, ihy]
+		if Events.has_all_bodyparts():
+			subworld_npcs = [isis2, ra2, sekhmet, hapi, ihy]
+		else:
+			subworld_npcs = [isis, ra2, sekhmet, hapi, ihy]
 	else:
-		subworld_npcs = [isis]
+		if Events.has_all_bodyparts():
+			subworld_npcs = [isis2]
+		else:
+			subworld_npcs = [isis]
+		
 	if Events.ra_in_cave or Events.ra_has_jumped:
 		ra.queue_free()
 		
@@ -72,8 +81,11 @@ func _ready():
 	if Events.player_overworld_position == null:
 		Events.player_overworld_position = start_point.position
 	var player_position = Events.player_overworld_position
-	player.position = player_position
-	anubis.position = Vector2(player_position.x + anubis_offset, player_position.y - anubis_offset)
+	
+	if !test_position:
+		player.position = player_position
+		anubis.position = Vector2(player_position.x + anubis_offset, player_position.y - anubis_offset)
+		
 	show_subworld_npcs(is_displaying_subworld)
 	fountain.hide()
 	place_hathor()

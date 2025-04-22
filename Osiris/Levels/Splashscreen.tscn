@@ -76,10 +76,12 @@ margin_right = 144.0
 margin_bottom = 27.5
 custom_colors/font_color = Color( 0.745098, 0.862745, 0.498039, 1 )
 custom_fonts/font = SubResource( 1 )
-text = "Conium"
+text = "Bread & 
+Circuses"
 align = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/Label"]
+visible = false
 margin_left = 171.0
 margin_top = -4.0
 margin_right = 211.0

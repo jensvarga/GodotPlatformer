@@ -8,6 +8,7 @@ export (bool) var test_spawn = false
 export (bool) var boss_level = false
 export (String) var boss_name = ""
 export (bool) var lighthouse_level = false
+export (bool) var lighthouse_level_boss = false
 
 #onready var player: = $Player
 onready var spawn_point: = $SpawnPoint
@@ -36,12 +37,16 @@ func _ready():
 	Transition.play_start_transition()
 	CameraShaker.connect_anchor(camera_anchor)
 	Events.lighthouse_level = lighthouse_level
+	Events.lighthouse_level_boss = lighthouse_level_boss
 	if not lighthouse_level:
 		lighthouse_conuter.hide()
 		best_lighthouse_counter.hide()
 		Events.set_deferred("player_hit_points", Events.max_player_hit_points)
 	else:
-		Events.set_deferred("player_hit_points", 1)
+		if Events.check_point_reached:
+			Events.set_deferred("player_hit_points", Events.max_player_hit_points)
+		else:
+			Events.set_deferred("player_hit_points", 1)
 		lighthouse_conuter.show()
 		best_lighthouse_counter.show()
 		lighthouse_conuter.text = " " + (Events.lighthouse_counter as String)

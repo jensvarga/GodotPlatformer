@@ -71,7 +71,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.9 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -156,7 +156,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = SubResource( 8 )
-shader_param/pixel_size = 100.0
+shader_param/pixel_size = 300.0
 
 [sub_resource type="DynamicFont" id=12]
 outline_size = 1

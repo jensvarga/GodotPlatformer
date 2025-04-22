@@ -14,6 +14,7 @@ signal toggle_music
 signal toggle_sound_effects
 signal pick_up_ankh
 signal damage_boss
+signal heal_boss
 signal boss_died
 signal pick_up_power_crook
 signal pick_up_power_up
@@ -62,6 +63,7 @@ var hraf_position: Vector2 = Vector2(-297, 854)
 var lighthouse_level: bool = false
 var lighthouse_counter = 0
 var best_lighthouse_counter = 0 # Saved
+var lighthouse_level_boss: bool = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -72,10 +74,12 @@ func _ready():
 	Events.connect("player_take_damage", self, "_on_player_take_damage")
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
+	Events.connect("heal_boss", self, "_on_heal_boss")
 	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
 	Events.connect("gained_life", self, "on_gained_life")
 	Events.connect("ra_jumped", self, "_on_ra_jumped")
 	Events.connect("pick_up_talaria", self, "_on_pick_up_talaria")
+	Transition.connect("pixelation_completed", self, "_on_pixelation_completed")
 
 func on_gained_life():
 	var count = lives + 1
@@ -104,8 +108,8 @@ func _on_pick_up_ankh():
 func _on_player_died():
 	player = null
 	death_counter += 1
-	if Events.lighthouse_level:
-			return
+	if Events.lighthouse_level or Events.lighthouse_level_boss:
+		return
 	if (lives - 1) <= 0:
 		lives = 0
 	else:
@@ -127,6 +131,17 @@ func _on_damage_boss():
 		boss_hit_points = 0
 	else:
 		boss_hit_points = boss_hit_points - 1
+
+func _on_heal_boss():
+	if boss_hit_points + 1 >= 12:
+		pass
+	else:
+		if boss_hit_points < 6:
+			boss_hit_points = boss_hit_points + 2
+		elif boss_hit_points < 2:
+			boss_hit_points = boss_hit_points + 3
+		else:
+			boss_hit_points = boss_hit_points + 1
 
 # Smooth camera transitions
 var player_camera: PlayerCamera
@@ -213,6 +228,19 @@ func save_game_data():
 		print("Game saved successfully!")
 	else:
 		print("Failed to save the game, error code: ", err)
+
+func eraze_saved_game():
+	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
+	var dir = Directory.new()
+
+	if dir.file_exists(full_path):
+		var err = dir.remove(full_path)
+		if err == OK:
+			print("Save file erased successfully.")
+		else:
+			print("Failed to delete save file. Error code: ", err)
+	else:
+		print("No save file found at: ", full_path)
 	
 var lighthouse_levels = [
 	"res://Levels/LightHouseLevels/LighthouseLevel_1.tscn",
@@ -284,3 +312,24 @@ func play_random_lighthouse_level():
 func update_best_lighthouse_count():
 	if Events.lighthouse_counter > Events.best_lighthouse_counter:
 		Events.best_lighthouse_counter = Events.lighthouse_counter
+
+#### --------------------------------
+
+func continue_game():
+	var overworld_path := "res://Levels/OverworldLevel.tscn"
+	check_point_reached = false
+	lives = 3
+	get_tree().change_scene(overworld_path)
+
+func dont_continue():
+	var main_menu_path := "res://MainMenu.tscn"
+	eraze_saved_game()
+	get_tree().change_scene(main_menu_path) 
+
+func launch_continue_screen():
+	var CONTINTUE_SCEEN_PATH := "res://ContinueScreen.tscn"
+	get_tree().change_scene(CONTINTUE_SCEEN_PATH)
+
+func _on_pixelation_completed():
+	if lives == 1:
+		launch_continue_screen()

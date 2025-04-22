@@ -555,9 +555,10 @@ func _on_CoyoteTimer_timeout():
 
 func _on_DeathTimer_timeout():
 	Events.emit_signal("player_died")
-	call_deferred("queue_free")
 	if not Events.lighthouse_level:
-		get_tree().call_deferred("reload_current_scene")
+		if not Events.lighthouse_level_boss:
+			get_tree().call_deferred("reload_current_scene")
+	call_deferred("queue_free")
 
 func _on_ItemCheck_body_entered(body):
 	if not body.has_method("pickup_enabled"): return

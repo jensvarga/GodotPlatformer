@@ -305,6 +305,7 @@ bordeless=false
 print=true
 collision=false
 layer=false
+rcedit=true
 
 [gui]
 

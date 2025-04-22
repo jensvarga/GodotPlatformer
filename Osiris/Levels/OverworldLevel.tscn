@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=130 format=2]
 
 [ext_resource path="res://OverworldTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/OverworldLevel.gd" type="Script" id=2]
@@ -63,6 +63,10 @@
 [ext_resource path="res://Amunet.tscn" type="PackedScene" id=61]
 [ext_resource path="res://Ptah.tscn" type="PackedScene" id=62]
 [ext_resource path="res://Hesat.tscn" type="PackedScene" id=63]
+[ext_resource path="res://Sprites/blocked_cave.png" type="Texture" id=64]
+[ext_resource path="res://Levels/BlockedCave.gd" type="Script" id=65]
+[ext_resource path="res://NPC.tscn" type="PackedScene" id=66]
+[ext_resource path="res://Sprites/Overworld/NPCs/ra_npc.png" type="Texture" id=67]
 
 [sub_resource type="DynamicFont" id=50]
 size = 18
@@ -385,6 +389,162 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=30]
 extents = Vector2( 44.5, 15.5 )
 
+[sub_resource type="GDScript" id=71]
+script/source = "extends Node2D
+
+enum FACING {UP, DOWN, RIGHT, LEFT}
+export (FACING) var facing = FACING.DOWN 
+export (String) var NAME = \"RA\"
+export (bool) var HIDDEN = false
+export (String, FILE, \"*.png\") var PORTRAIT_PATH = \"res://Sprites/UI/ra_portrait.png\"
+export(Array, String) var NPC_DIALOGUE = [\"Greetings, traveler\",\\
+\"Behold, that woven mat yonder, it possesses the power of flight. Step upon it, and it shall transport you to your inaugural trial\",\\
+\"Farewell, I have revealed all that is known, until we meet again\"\\
+]
+
+export(Array, String) var CONTINUE_DIALOGUE = [
+	\"You have passed the triels\",
+	\"Contuniue forth\",
+	\"Farewell\"
+]
+
+export(bool) var CONTINUE_DIALOGUE_UNLOCKED = false
+
+onready var name_label := $UI/AspectRatioContainer/Sprite/Portrait/NameLabel
+onready var portrait := $UI/AspectRatioContainer/Sprite/Portrait
+onready var text_label := $UI/AspectRatioContainer/Sprite/TextLabel
+onready var animator := $AnimationPlayer
+onready var sprite := $AnimatedSprite
+onready var turn_timer := $TurnTimer
+
+var is_showing_textbox = false
+var player_in_range = false
+var player: OverworldPlayer
+var dialouge_index = 0
+
+func _ready():
+	portrait.texture = load(PORTRAIT_PATH)
+	name_label.text = NAME
+	default_facing()
+
+func _input(event):
+	if player_in_range and event.is_action_released(\"ui_jump\"):
+		if is_showing_textbox:
+			advance_dialouge()
+		else:
+			interact()
+	
+func interact():
+	face_player()
+	show_textbox()
+	start_dialouge()
+	
+func start_dialouge():
+	display_dialouge(dialouge_index)
+	
+func advance_dialouge():
+	dialouge_index += 1
+	if dialouge_index > NPC_DIALOGUE.size() - 1:
+		hide_textbox()
+		return
+		
+	display_dialouge(dialouge_index)
+	
+func display_dialouge(index: int):
+	if CONTINUE_DIALOGUE_UNLOCKED:
+		text_label.text = CONTINUE_DIALOGUE[index]
+	else:
+		text_label.text = NPC_DIALOGUE[dialouge_index]
+	
+func show_textbox():
+	dialouge_index = 0
+	is_showing_textbox = true
+	animator.play(\"ShowTextBox\")
+	
+func hide_textbox():
+	dialouge_index = 0
+	is_showing_textbox = false
+	animator.play_backwards(\"ShowTextBox\")
+	
+func face_player():
+	var direction = (player.global_position - global_position).normalized()
+	var angle = atan2(direction.y, direction.x)
+	var rotation_degrees = rad2deg(angle)
+	turn_timer.start()
+	
+	if abs(rotation_degrees) < 45:
+		sprite.animation = \"Right\"
+	elif abs(rotation_degrees) > 135:
+		sprite.animation = \"Left\"
+	elif rotation_degrees > 45 and rotation_degrees < 135:
+		sprite.animation = \"Down\"
+	else:
+		sprite.animation = \"Up\"
+
+func default_facing():
+	match facing:
+		FACING.UP:
+			sprite.animation = \"Up\"
+		FACING.DOWN:
+			sprite.animation = \"Down\"
+		FACING.LEFT:
+			sprite.animation = \"Left\"
+		FACING.RIGHT:
+			sprite.animation = \"Right\"
+
+func _on_InteractionZone_body_entered(body):
+	if body is OverworldPlayer:
+		player = body
+	player_in_range = true
+
+func _on_InteractionZone_body_exited(body):
+	player_in_range = false
+	if is_showing_textbox:
+		hide_textbox()
+
+func _on_TurnTimer_timeout():
+	default_facing()
+"
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 67 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 67 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 67 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 67 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "Down",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "Left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "Right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "Up",
+"speed": 5.0
+} ]
+
 [sub_resource type="RectangleShape2D" id=46]
 extents = Vector2( 32, 4 )
 
@@ -540,6 +700,243 @@ animations = [ {
 "name": "Open",
 "speed": 5.0
 } ]
+
+[sub_resource type="RectangleShape2D" id=68]
+extents = Vector2( 16, 16 )
+
+[sub_resource type="GDScript" id=69]
+script/source = "extends Node2D
+
+enum FACING {UP, DOWN, RIGHT, LEFT}
+export (FACING) var facing = FACING.DOWN 
+export (String) var NAME = \"RA\"
+export (bool) var HIDDEN = false
+export (String, FILE, \"*.png\") var PORTRAIT_PATH = \"res://Sprites/UI/ra_portrait.png\"
+export(Array, String) var NPC_DIALOGUE = [\"Greetings, traveler\",\\
+\"Behold, that woven mat yonder, it possesses the power of flight. Step upon it, and it shall transport you to your inaugural trial\",\\
+\"Farewell, I have revealed all that is known, until we meet again\"\\
+]
+
+export(Array, String) var CONTINUE_DIALOGUE = [
+	\"You have passed the triels\",
+	\"Contuniue forth\",
+	\"Farewell\"
+]
+
+export(bool) var CONTINUE_DIALOGUE_UNLOCKED = false
+
+onready var name_label := $UI/AspectRatioContainer/Sprite/Portrait/NameLabel
+onready var portrait := $UI/AspectRatioContainer/Sprite/Portrait
+onready var text_label := $UI/AspectRatioContainer/Sprite/TextLabel
+onready var animator := $AnimationPlayer
+onready var sprite := $AnimatedSprite
+onready var turn_timer := $TurnTimer
+
+var is_showing_textbox = false
+var player_in_range = false
+var player: OverworldPlayer
+var dialouge_index = 0
+
+func _ready():
+	portrait.texture = load(PORTRAIT_PATH)
+	name_label.text = NAME
+	default_facing()
+
+func _input(event):
+	if player_in_range and event.is_action_released(\"ui_jump\"):
+		if is_showing_textbox:
+			advance_dialouge()
+		else:
+			interact()
+	
+func interact():
+	face_player()
+	show_textbox()
+	start_dialouge()
+	
+func start_dialouge():
+	display_dialouge(dialouge_index)
+	
+func advance_dialouge():
+	dialouge_index += 1
+	if dialouge_index > NPC_DIALOGUE.size() - 1:
+		hide_textbox()
+		return
+		
+	display_dialouge(dialouge_index)
+	
+func display_dialouge(index: int):
+	if CONTINUE_DIALOGUE_UNLOCKED:
+		text_label.text = CONTINUE_DIALOGUE[index]
+	else:
+		text_label.text = NPC_DIALOGUE[dialouge_index]
+	
+func show_textbox():
+	dialouge_index = 0
+	is_showing_textbox = true
+	animator.play(\"ShowTextBox\")
+	
+func hide_textbox():
+	dialouge_index = 0
+	is_showing_textbox = false
+	animator.play_backwards(\"ShowTextBox\")
+	
+func face_player():
+	var direction = (player.global_position - global_position).normalized()
+	var angle = atan2(direction.y, direction.x)
+	var rotation_degrees = rad2deg(angle)
+	turn_timer.start()
+	
+	if abs(rotation_degrees) < 45:
+		sprite.animation = \"Right\"
+	elif abs(rotation_degrees) > 135:
+		sprite.animation = \"Left\"
+	elif rotation_degrees > 45 and rotation_degrees < 135:
+		sprite.animation = \"Down\"
+	else:
+		sprite.animation = \"Up\"
+
+func default_facing():
+	match facing:
+		FACING.UP:
+			sprite.animation = \"Up\"
+		FACING.DOWN:
+			sprite.animation = \"Down\"
+		FACING.LEFT:
+			sprite.animation = \"Left\"
+		FACING.RIGHT:
+			sprite.animation = \"Right\"
+
+func _on_InteractionZone_body_entered(body):
+	if body is OverworldPlayer:
+		player = body
+	player_in_range = true
+
+func _on_InteractionZone_body_exited(body):
+	player_in_range = false
+	if is_showing_textbox:
+		hide_textbox()
+
+func _on_TurnTimer_timeout():
+	default_facing()
+"
+
+[sub_resource type="GDScript" id=70]
+script/source = "extends Node2D
+
+enum FACING {UP, DOWN, RIGHT, LEFT}
+export (FACING) var facing = FACING.DOWN 
+export (String) var NAME = \"RA\"
+export (bool) var HIDDEN = false
+export (String, FILE, \"*.png\") var PORTRAIT_PATH = \"res://Sprites/UI/ra_portrait.png\"
+export(Array, String) var NPC_DIALOGUE = [\"Greetings, traveler\",\\
+\"Behold, that woven mat yonder, it possesses the power of flight. Step upon it, and it shall transport you to your inaugural trial\",\\
+\"Farewell, I have revealed all that is known, until we meet again\"\\
+]
+
+export(Array, String) var CONTINUE_DIALOGUE = [
+	\"You have passed the triels\",
+	\"Contuniue forth\",
+	\"Farewell\"
+]
+
+export(bool) var CONTINUE_DIALOGUE_UNLOCKED = false
+
+onready var name_label := $UI/AspectRatioContainer/Sprite/Portrait/NameLabel
+onready var portrait := $UI/AspectRatioContainer/Sprite/Portrait
+onready var text_label := $UI/AspectRatioContainer/Sprite/TextLabel
+onready var animator := $AnimationPlayer
+onready var sprite := $AnimatedSprite
+onready var turn_timer := $TurnTimer
+
+var is_showing_textbox = false
+var player_in_range = false
+var player: OverworldPlayer
+var dialouge_index = 0
+
+func _ready():
+	portrait.texture = load(PORTRAIT_PATH)
+	name_label.text = NAME
+	default_facing()
+
+func _input(event):
+	if player_in_range and event.is_action_released(\"ui_jump\"):
+		if is_showing_textbox:
+			advance_dialouge()
+		else:
+			interact()
+	
+func interact():
+	face_player()
+	show_textbox()
+	start_dialouge()
+	
+func start_dialouge():
+	display_dialouge(dialouge_index)
+	
+func advance_dialouge():
+	dialouge_index += 1
+	if dialouge_index > NPC_DIALOGUE.size() - 1:
+		hide_textbox()
+		return
+		
+	display_dialouge(dialouge_index)
+	
+func display_dialouge(index: int):
+	if CONTINUE_DIALOGUE_UNLOCKED:
+		text_label.text = CONTINUE_DIALOGUE[index]
+	else:
+		text_label.text = NPC_DIALOGUE[dialouge_index]
+	
+func show_textbox():
+	dialouge_index = 0
+	is_showing_textbox = true
+	animator.play(\"ShowTextBox\")
+	
+func hide_textbox():
+	dialouge_index = 0
+	is_showing_textbox = false
+	animator.play_backwards(\"ShowTextBox\")
+	
+func face_player():
+	var direction = (player.global_position - global_position).normalized()
+	var angle = atan2(direction.y, direction.x)
+	var rotation_degrees = rad2deg(angle)
+	turn_timer.start()
+	
+	if abs(rotation_degrees) < 45:
+		sprite.animation = \"Right\"
+	elif abs(rotation_degrees) > 135:
+		sprite.animation = \"Left\"
+	elif rotation_degrees > 45 and rotation_degrees < 135:
+		sprite.animation = \"Down\"
+	else:
+		sprite.animation = \"Up\"
+
+func default_facing():
+	match facing:
+		FACING.UP:
+			sprite.animation = \"Up\"
+		FACING.DOWN:
+			sprite.animation = \"Down\"
+		FACING.LEFT:
+			sprite.animation = \"Left\"
+		FACING.RIGHT:
+			sprite.animation = \"Right\"
+
+func _on_InteractionZone_body_entered(body):
+	if body is OverworldPlayer:
+		player = body
+	player_in_range = true
+
+func _on_InteractionZone_body_exited(body):
+	player_in_range = false
+	if is_showing_textbox:
+		hide_textbox()
+
+func _on_TurnTimer_timeout():
+	default_facing()
+"
 
 [sub_resource type="RectangleShape2D" id=33]
 extents = Vector2( 16, 4.5 )
@@ -1132,6 +1529,7 @@ polygon = PoolVector2Array( -30, 160, -30, 81, -44, 81, -62, 70, -17, 60, -15, 1
 [node name="YSort" type="YSort" parent="."]
 
 [node name="OverwoldPlayer" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( -275, -248 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/OverwoldPlayer"]
 current = true
@@ -1160,6 +1558,12 @@ NPC_DIALOGUE = [ "Oh, Horus, bearer of the divine legacy, it falls upon you to r
 position = Vector2( -125, -318 )
 PORTRAIT_PATH = "res://Sprites/UI/isis_portrait.png"
 NPC_DIALOGUE = [ "Horus, my beloved son, the hour has arrived", "In your heart beats the strength to avenge your father's honor and reclaim the rightful throne that is your divine inheritance", "May the blessings of the gods be upon you, my son, as you embark on this noble quest. May you find success and triumph in your endeavors" ]
+
+[node name="Isis2" parent="YSort" instance=ExtResource( 14 )]
+position = Vector2( -125, -318 )
+script = SubResource( 71 )
+PORTRAIT_PATH = "res://Sprites/UI/isis_portrait.png"
+NPC_DIALOGUE = [ "My son! You have done what none before you could!", "Each fragment of your father, once lost to the sands, now rests in my care", "I shall weave the rites, whisper the sacred words, and breathe life into the Lord of the Dead", "He shall rise, not to walk among the living, but to rule the underworld in eternal majesty", "Now go, Horus… the path ahead is yours to claim" ]
 
 [node name="Thoth" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( 1433, -516 )
@@ -1331,6 +1735,9 @@ position = Vector2( 535, 379 )
 
 [node name="RA2" parent="YSort" instance=ExtResource( 32 )]
 position = Vector2( 611, -229 )
+
+[node name="AnimatedSprite" parent="YSort/RA2" index="1"]
+frames = SubResource( 6 )
 
 [node name="RaEvents" parent="YSort/RA2" index="6"]
 pit_path = NodePath("../../../Subworld/Pit")
@@ -1634,6 +2041,30 @@ position = Vector2( -1, -14 )
 z_as_relative = false
 frames = SubResource( 29 )
 animation = "Open"
+
+[node name="BlockedCave" type="StaticBody2D" parent="YSort"]
+position = Vector2( 624, -112 )
+script = ExtResource( 65 )
+
+[node name="Sprite" type="Sprite" parent="YSort/BlockedCave"]
+texture = ExtResource( 64 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BlockedCave"]
+shape = SubResource( 68 )
+
+[node name="Heket" parent="YSort" instance=ExtResource( 66 )]
+position = Vector2( -210, -362 )
+script = SubResource( 69 )
+NAME = "HEKET"
+PORTRAIT_PATH = "res://Sprites/UI/Heket_portrait.png"
+NPC_DIALOGUE = [ "Beyond lies the realm of Seth", "You are not yet shaped for its trials", "The body of Osiris still sleeps, scattered across the land.His spirit cannot guide you, not yet" ]
+
+[node name="Heket2" parent="YSort" instance=ExtResource( 66 )]
+position = Vector2( -243, -351 )
+script = SubResource( 70 )
+NAME = "HEKET"
+PORTRAIT_PATH = "res://Sprites/UI/Heket_portrait.png"
+NPC_DIALOGUE = [ "The scattered soul of your father has been made whole.You have walked the land, gathered his essence,and now he watches from the veil beyond", "The time has come.The path before you is no longer sealed", "Step forward into the realm of Seth, where strength is tested, and balance trembles" ]
 
 [node name="Gates" type="Node2D" parent="."]
 

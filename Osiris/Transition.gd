@@ -15,6 +15,9 @@ func _ready():
 func skip_animation():
 	rect.hide()
 
+func hide_pixelation():
+	pixel_rect.hide()
+	
 func hide_background():
 	rect.show()
 
@@ -43,4 +46,4 @@ func _on_AnimationPlayer_animation_started(anim_name):
 	emit_signal("transition_started")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-		emit_signal("transition_completed")
+	emit_signal("transition_completed")

@@ -2,14 +2,18 @@ extends Node2D
 
 var at_gate = false
 
+onready var ankh1 := $"../Ankh"
+onready var ankh2 := $"../Ankh2"
+
 func _ready():
 	Events.has_talaria = true
 	Events.has_power_crook = true
 	if Events.check_point_reached:
-		Events.set_deferred("player_hit_points", Events.max_player_hit_points)
+		ankh1.call_deferred("queue_free")
+		ankh2.call_deferred("queue_free")
 
 func _input(event):
-	if event.is_action_released("ui_up") and at_gate:
+	if event.is_action_pressed("ui_up") and at_gate:
 		at_gate = false
 		AudioManager.play_random_checkpoint_sound()
 		AudioManager.play_key_sound()

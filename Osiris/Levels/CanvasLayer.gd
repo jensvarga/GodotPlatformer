@@ -24,6 +24,7 @@ func _ready():
 	Events.connect("player_take_damage", self, "_on_player_take_damage")
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
+	Events.connect("heal_boss", self, "_on_heal_boss")
 	Events.connect("pick_up_power_crook", self, "_on_pick_up_power_crook")
 	Events.connect("pick_up_talaria", self, "on_pick_up_talaria")
 	Events.connect("gained_life", self, "_on_gained_life")
@@ -66,6 +67,9 @@ func _on_player_take_damage():
 	call_deferred("update_ankhs")
 	
 func _on_damage_boss():
+	call_deferred("update_boss_ankhs")
+
+func _on_heal_boss():
 	call_deferred("update_boss_ankhs")
 	
 func _on_pick_up_ankh():
