@@ -51,7 +51,7 @@ func _ready():
 		
 	if Events.ra_in_cave or Events.ra_has_jumped:
 		ra.queue_free()
-		
+	
 	subworld_tiles.hide()
 	main_world_tiles.show()
 	water_tiles.show()
@@ -148,6 +148,13 @@ func _on_CameraSmoothingTimer_timeout():
 	camera.smoothing_enabled = true
 
 func place_hathor():
+	if hathor == null or not is_instance_valid(hathor):
+		return
+		
+	if Events.has_ressurected_osiris:
+		hathor.call_deferred("queue_free")
+		return
+		
 	if Events.has_all_bodyparts():
 		var dialouge = [
 			"Horus, you have done it! You have gathered all the scattered pieces of your father",

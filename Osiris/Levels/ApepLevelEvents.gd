@@ -154,6 +154,6 @@ func _on_boss_died():
 	AudioManager.stop_music()
 	animation_player.play("BossDied")
 	exit_timer.start()
-
+	
 func _on_ExitTimer_timeout():
 	Events.emit_signal("stage_cleared")

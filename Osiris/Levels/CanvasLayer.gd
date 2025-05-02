@@ -21,7 +21,7 @@ onready var lapis_count := $LapisCounter
 onready var lapis_sprite := $Lapis
 
 func _ready():
-	Events.connect("player_take_damage", self, "_on_player_take_damage")
+	Events.connect("update_ankhs", self, "_on_update_ankhs")
 	Events.connect("pick_up_ankh", self, "_on_pick_up_ankh")
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("heal_boss", self, "_on_heal_boss")
@@ -63,7 +63,7 @@ func update_lapis_count():
 func _on_gained_life():
 	$LifeCounter.text = " x " + (Events.lives as String)
 	
-func _on_player_take_damage():
+func _on_update_ankhs():
 	call_deferred("update_ankhs")
 	
 func _on_damage_boss():

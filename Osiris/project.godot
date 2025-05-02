@@ -277,10 +277,13 @@ run/main_scene="res://Levels/Splashscreen.tscn"
 run/disable_stderr=true
 run/delta_smoothing=false
 config/icon="res://icon.png"
+config/macos_native_icon="res://icon.png"
+config/windows_native_icon="res://icon.png"
 
 [autoload]
 
 Events="*res://Scripts/Events.gd"
+SaveManager="*res://Scripts/SaveManager.gd"
 AudioManager="*res://Sound/AudioManager.tscn"
 Transition="*res://Transition.tscn"
 CameraShaker="*res://CameraShaker.tscn"

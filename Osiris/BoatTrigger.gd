@@ -4,7 +4,7 @@ onready var root := $".."
 
 var dialgue = [
 	"Ah, so you come before me, Horus. I am Hraf-Haf, ferryman of the afterlife. My boat does not carry the unworthy",
-	"I see you have gathered all seven Lapis Lazuli, proof of your worth",
+	"I see you have gathered all Eight Lapis Lazuli, proof of your worth",
 	"Step aboard, Horus. The waters await, and we shall sail"
 ]
 
@@ -12,7 +12,7 @@ var island_dialgue = [
 	"Come now, Horus. Let us sail back to the mainland"
 ]
 
-var required_lapis = 7
+var required_lapis = 8
 var _index = 0
 var mainland_pos := Vector2(-297, 854)
 var island_position := Vector2(20, 1035)

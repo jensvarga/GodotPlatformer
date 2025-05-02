@@ -33,9 +33,9 @@ func _input(event):
 	if time_up:
 		return
 		
-	if event.is_action_released("ui_right"):
+	if event.is_action_pressed("ui_right"):
 		select_no()
-	if event.is_action_released("ui_left"):
+	if event.is_action_pressed("ui_left"):
 		select_yes()
 	if yes_selected && (event.is_action_released("ui_accept") or event.is_action_released("ui_fire") or event.is_action_released("ui_jump")):
 		continue_selected()

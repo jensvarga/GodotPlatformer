@@ -32,7 +32,6 @@ var input_actions = {
 }
 
 func _ready():
-	Events.verify_save_directory(SAVE_FILE_PATH)
 	load_custom_inputs()
 	_create_action_list()
 	update_input()

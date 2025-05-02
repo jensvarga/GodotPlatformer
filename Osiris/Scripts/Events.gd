@@ -1,7 +1,7 @@
 extends Node
 
 const SAVE_FILE_PATH := "user://save/"
-const SAVE_FILE_NAME := "SaveGame.tres"
+const SAVE_FILE_NAME := "SaveGame.res"
 
 # Events
 signal player_died
@@ -26,6 +26,7 @@ signal pick_up_talaria
 signal update_overworld_level_label
 signal update_lapis_count
 signal advance_dialouge_index
+signal update_ankhs
 
 # Global variables
 var check_point_reached = false
@@ -65,6 +66,8 @@ var lighthouse_counter = 0
 var best_lighthouse_counter = 0 # Saved
 var lighthouse_level_boss: bool = false
 
+var has_ressurected_osiris = false
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Events.connect("player_died", self, "_on_player_died")
@@ -97,6 +100,8 @@ func _on_player_take_damage():
 		player_hit_points = 0
 	else:
 		player_hit_points = player_hit_points - 1
+	
+	emit_signal("update_ankhs")
 
 func _on_pick_up_ankh():
 	if player_hit_points + 1 >= max_player_hit_points:
@@ -118,6 +123,7 @@ func _on_player_died():
 	
 func _on_toggle_fullscreen():
 	OS.window_fullscreen = !OS.window_fullscreen
+	SaveManager.save_settings()
 
 func _on_toggle_music():
 	AudioServer.set_bus_mute(1, not AudioServer.is_bus_mute(1))
@@ -178,69 +184,11 @@ func has_all_bodyparts() -> bool:
 		return true
 	return false
 
-func verify_save_directory(path: String):
-	var dir = Directory.new()
-	
-	if not dir.dir_exists(path):
-		var err = dir.make_dir_recursive(path)
-		if err != OK:
-			print("Failed to create directory: ", path)
-		else:
-			print("Directory created successfully: ", path)
-	else:
-		print("Directory already exists: ", path)
-
 func save_game_data():
-	verify_save_directory(SAVE_FILE_PATH)
-	var save_game = SaveGame.new()
-
-	save_game.death_counter = Events.death_counter
-	save_game.player_hit_points = Events.player_hit_points
-	save_game.max_player_hit_points = Events.max_player_hit_points
-
-	save_game.has_power_crook = Events.has_power_crook
-	save_game.has_talaria = Events.has_talaria
-	save_game.lives = Events.lives
-
-	save_game.has_left_hand = Events.has_left_hand
-	save_game.has_right_hand = Events.has_right_hand
-	save_game.has_pen15 = Events.has_pen15
-	save_game.has_head = Events.has_head
-	save_game.has_left_foot = Events.has_left_foot
-	save_game.has_right_foot = Events.has_right_foot
-	save_game.has_torso = Events.has_torso
-
-	save_game.player_overworld_position = Events.player_overworld_position
-	save_game.ra_in_cave = Events.ra_in_cave
-	save_game.ra_has_jumped = Events.ra_has_jumped
-	save_game.dark_overworld_water = Events.dark_overworld_water
-	save_game.granite_block_moved = Events.granite_block_moved
-	save_game.hraf_position = Events.hraf_position
-
-	save_game.lapis_ids = Events.lapis_ids
-	save_game.best_lighthouse_counter = Events.best_lighthouse_counter
-
-	var file = File.new()
-
-	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
-	var err = ResourceSaver.save(full_path, save_game)
-	if err == OK:
-		print("Game saved successfully!")
-	else:
-		print("Failed to save the game, error code: ", err)
+	SaveManager.save_game()
 
 func eraze_saved_game():
-	var full_path = SAVE_FILE_PATH + SAVE_FILE_NAME
-	var dir = Directory.new()
-
-	if dir.file_exists(full_path):
-		var err = dir.remove(full_path)
-		if err == OK:
-			print("Save file erased successfully.")
-		else:
-			print("Failed to delete save file. Error code: ", err)
-	else:
-		print("No save file found at: ", full_path)
+	SaveManager.erase_save()
 	
 var lighthouse_levels = [
 	"res://Levels/LightHouseLevels/LighthouseLevel_1.tscn",

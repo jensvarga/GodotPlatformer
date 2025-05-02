@@ -8,9 +8,6 @@ onready var lapis_sprite := $Control/Lapis
 var main_menu_path = "res://MainMenu.tscn"
 var overworld_path = "res://Levels/OverworldLevel.tscn"
 
-const SAVE_FILE_PATH := "user://save/"
-const SAVE_FILE_NAME := "SaveGame.tres"
-
 var menu_active = false
 
 func _ready():

@@ -17,11 +17,15 @@ func _ready():
 		animation_player.play("MoveGraniteBlock")
 	
 	if Events.has_all_bodyparts():
-		heket.call_deferred("queue_free")
 		isis.call_deferred("queue_free")
 	else:
-		heket2.call_deferred("queue_free")
+		
 		isis2.call_deferred("queue_free")
+	
+	if Events.has_ressurected_osiris:
+		heket.call_deferred("queue_free")
+	else:
+		heket2.call_deferred("queue_free")
 		
 	if Events.dark_overworld_water:
 		water_tile.material.set_shader_param("darken_amount", 1)
