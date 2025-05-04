@@ -19,7 +19,6 @@ func _ready():
 	if Events.has_all_bodyparts():
 		isis.call_deferred("queue_free")
 	else:
-		
 		isis2.call_deferred("queue_free")
 	
 	if Events.has_ressurected_osiris:

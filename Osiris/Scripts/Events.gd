@@ -27,6 +27,7 @@ signal update_overworld_level_label
 signal update_lapis_count
 signal advance_dialouge_index
 signal update_ankhs
+signal returned_body
 
 # Global variables
 var check_point_reached = false

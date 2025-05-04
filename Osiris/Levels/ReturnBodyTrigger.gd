@@ -9,13 +9,16 @@ func _input(event):
 	if not Events.has_all_bodyparts():
 		return
 	
-	if event.is_action_pressed("ui_jump"):
+	if event.is_action_pressed("ui_jump") and player_on_area and Events.has_all_bodyparts():
 		Events.has_ressurected_osiris = true
+		Events.emit_signal("returned_body")
 		$"..".place_hathor()
 		call_deferred("queue_free")
 
 func _on_ReturnBodyTrigger_body_entered(body):
-	player_on_area = true
+	if body is OverworldPlayer:
+		player_on_area = true
 
 func _on_ReturnBodyTrigger_body_exited(body):
-	player_on_area = false
+	if body is OverworldPlayer:
+		player_on_area = false

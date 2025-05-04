@@ -275,6 +275,7 @@ _global_script_class_icons={
 config/name="Osiris"
 run/main_scene="res://Levels/Splashscreen.tscn"
 run/disable_stderr=true
+config/use_custom_user_dir=true
 run/delta_smoothing=false
 config/icon="res://icon.png"
 config/macos_native_icon="res://icon.png"

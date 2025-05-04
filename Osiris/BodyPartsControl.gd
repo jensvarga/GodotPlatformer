@@ -11,6 +11,7 @@ onready var eggplant := $EggplantTexture
 
 func _ready():
 	Events.connect("stage_cleared", self, "_on_stage_cleared")
+	Events.connect("returned_body", self, "_on_retruned_body")
 	call_deferred("_update_body_parts")
 	
 	if Events.has_ressurected_osiris:
@@ -18,6 +19,9 @@ func _ready():
 
 func _on_stage_cleared():
 	call_deferred("_update_body_parts")
+
+func _on_retruned_body():
+	hide()
 	
 func _update_body_parts():
 	if Events.has_head:
