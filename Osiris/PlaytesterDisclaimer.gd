@@ -3,7 +3,7 @@ extends Node2D
 export (String, FILE, "*.tscn") var next_scene_path
 
 func _ready():
-	Events.emit_signal("toggle_fullscreen")
+	#Events.emit_signal("toggle_fullscreen")
 	Transition.skip_animation()
 
 func _input(event):

@@ -513,6 +513,10 @@ focus_next = NodePath("../FullscreenHbox/Fullscreen")
 focus_previous = NodePath("../FxHBox/Fx")
 text = "Back"
 
+[node name="ToggleFullscreenTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [connection signal="pressed" from="MarginContainer/Control/Hbox/Vbox/Continue" to="." method="_on_Continue_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/Hbox/Vbox/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/Hbox/Vbox/Options" to="." method="_on_Options_pressed"]
@@ -523,3 +527,4 @@ text = "Back"
 [connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/FFMBox/FFM" to="." method="_on_FFM_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/ControlsButton" to="." method="_on_ControlsButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/Hbox/VBoxContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="timeout" from="ToggleFullscreenTimer" to="." method="_on_ToggleFullscreenTimer_timeout"]

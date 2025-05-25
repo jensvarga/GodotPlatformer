@@ -24,12 +24,16 @@ onready var menu := $MarginContainer
 onready var actions_list := $ActionMapControl/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList
 onready var options_button := $MarginContainer/Control/Hbox/Vbox/Options
 onready var ffm_checkbox := $MarginContainer/Control/Hbox/VBoxContainer/FFMBox/CheckBox
+onready var toggle_fullscreen_timer := $ToggleFullscreenTimer
+
+var toggle_delay = false
 
 var phi = (1 + sqrt(5)) / 2  
 var growth_rate = phi / (phi * 60 * 60)
 var controls_open = false
 
 func _ready():
+	Events.connect("updated_fullscreen", self, "_on_updated_fullscreen")
 	SaveManager.load_settings()
 	AudioManager.play_main_theme()
 	VisualServer.set_default_clear_color(sky_color)
@@ -52,7 +56,7 @@ func _ready():
 	VisualServer.set_default_clear_color(Color.black)
 	Transition.skip_animation()
 	ffm_checkbox.pressed = Events.family_friendly_mode
-	fullscreen_checkbox.pressed = OS.window_fullscreen
+	fullscreen_checkbox.pressed = Events.fullscreen
 
 var initial_scale = Vector2(1, 1)
 var target_scale = Vector2(1, 1)
@@ -120,9 +124,16 @@ func _on_Fx_pressed():
 	Events.emit_signal("toggle_sound_effects")
 
 func _on_Fullscreen_pressed():
-	fullscreen_checkbox.pressed = not fullscreen_checkbox.pressed
+	if toggle_delay:
+		return
 	Events.emit_signal("toggle_fullscreen")
 	fullscreen_button.call_deferred("grab_focus")
+	toggle_fullscreen_timer.start()
+	toggle_delay = true
+
+func _on_updated_fullscreen():
+	fullscreen_checkbox.pressed = Events.fullscreen
+
 
 func _on_ControlsButton_pressed():
 	controls_open = true
@@ -163,3 +174,6 @@ func toggle_ffm():
 
 func save_settings():
 	pass
+
+func _on_ToggleFullscreenTimer_timeout():
+	toggle_delay = false

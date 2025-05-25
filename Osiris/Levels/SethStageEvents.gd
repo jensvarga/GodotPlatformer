@@ -29,7 +29,7 @@ func _ready():
 	Events.connect("damage_boss", self, "_on_damage_boss")
 	Events.connect("boss_died", self, "_on_boss_died")
 	Transition.connect("pixelation_completed", self , "_on_pixelation_completed")
-	Events.boss_hit_points = 1
+	Events.boss_hit_points = 12
 	Events.has_power_crook = true
 	Events.has_talaria = true
 	lightning_timer.wait_time = rand_range(2, 10)

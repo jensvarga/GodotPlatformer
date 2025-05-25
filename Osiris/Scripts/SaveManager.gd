@@ -54,14 +54,15 @@ func load_settings():
 	if not file.file_exists(settings_path):
 		reset_settings()
 		Events.family_friendly_mode = settings["family_friendly_mode"]
-		OS.window_fullscreen = settings["fullscreen"]
+		Events.fullscreen = settings["fullscreen"]
 		return
 	
 	file.open(settings_path, file.READ)
 	var text = file.get_as_text()
 	settings = parse_json(text)
 	Events.family_friendly_mode = settings["family_friendly_mode"]
-	OS.window_fullscreen = settings["fullscreen"]
+	Events.fullscreen = settings["fullscreen"]
+	Events.emit_signal("updated_fullscreen")
 	file.close()
 
 func reset_settings():
@@ -79,8 +80,8 @@ func save_settings():
 	print("Save settings path: ", settings_path)
 	var file = File.new()
 	file.open(settings_path, file.WRITE)
-	settings["family_friendly_mode"] = Events.family_friendly_mode 
-	settings["fullscreen"] = OS.window_fullscreen
+	settings["family_friendly_mode"] = Events.family_friendly_mode
+	settings["fullscreen"] = Events.fullscreen
 	file.store_line(to_json(settings))
 	file .close()
 

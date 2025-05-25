@@ -28,6 +28,7 @@ signal update_lapis_count
 signal advance_dialouge_index
 signal update_ankhs
 signal returned_body
+signal updated_fullscreen
 
 # Global variables
 var check_point_reached = false
@@ -68,6 +69,7 @@ var best_lighthouse_counter = 0 # Saved
 var lighthouse_level_boss: bool = false
 
 var has_ressurected_osiris = false
+var fullscreen = true
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -123,8 +125,15 @@ func _on_player_died():
 	player_hit_points = max_player_hit_points
 	
 func _on_toggle_fullscreen():
-	OS.window_fullscreen = !OS.window_fullscreen
+	Events.fullscreen = not Events.fullscreen
+	
+	if Events.fullscreen:
+		OS.window_fullscreen = true
+	else:
+		OS.window_fullscreen = false
+	
 	SaveManager.save_settings()
+	Events.emit_signal("updated_fullscreen")
 
 func _on_toggle_music():
 	AudioServer.set_bus_mute(1, not AudioServer.is_bus_mute(1))
@@ -191,6 +200,10 @@ func save_game_data():
 func eraze_saved_game():
 	SaveManager.erase_save()
 	
+var _lighthouse_levels = [
+	"res://Levels/LightHouseLevels/LighthouseLevel_14.tscn",
+	"res://Levels/LightHouseLevels/LighthouseLevel_15.tscn"
+]
 var lighthouse_levels = [
 	"res://Levels/LightHouseLevels/LighthouseLevel_1.tscn",
 	"res://Levels/LightHouseLevels/LighthouseLevel_2.tscn",
